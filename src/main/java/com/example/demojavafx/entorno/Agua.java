@@ -1,4 +1,4 @@
-package com.example.demojavafx.recursos;
+package com.example.demojavafx.entorno;
 
 public class Agua extends Recursos {
 

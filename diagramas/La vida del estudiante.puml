@@ -1,0 +1,220 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+package TableroGame {
+    class Tablero {
+        fila: int
+        columna: int
+        crearMatriz(fila, columna)
+        asignarPosicionObjeto(fila, columna)
+        max3elementos()
+        eliminarElemento(celda)
+        botonStart()
+        botonStop()
+        introducirParam()
+    }
+
+    class BucleDeControl {
+        ind: Individuos
+        actualizarIndividuos()
+        ActualizarRecursos()
+        movimiento()
+        actualizarindividuosRecursos()
+        reproduccion()
+        nuevosRecursos()
+        haFinalizado(): boolean
+    }
+}
+
+package EstructurasDatos {
+    class ArbolBinario {
+        -raiz:NodoArbol
+        +isVacia():boolean
+        -add(dato:TipoDelDato, raiz NodoArbol)
+        +add(dato:TipoDelDato)
+        +getGrado(nodo:NodoArbol, int:result):int
+        -getCamino(nodo:NodoArbol, raiz:NodoArbol, lista:ListaEnlazada):ListaEnlazada
+        +getCamino(nodo:NodoArbol)
+        +getLongitud(nodo:NodoArbol)
+        +getSubArbolIzquierda():ArbolBinarioDeBusqueda
+        +getSubArbolDerecha():ArbolBinarioDeBusqueda
+        -getListaPreOrden(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
+        +getListaPreOrden():ListaEnlazada
+        -getListaPostOrden(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
+        +getListaPostOrden():ListaEnlazada
+        -getListaOrdenCentral(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
+        +getListaOrdenCentral():ListaEnlazada
+        -getAltura(nodo:NodoArbol, p:int):int
+        +getAltura():int
+        +getListaDatosNivel(nivel:int, nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
+        +getListaDatosNivel(nivel:int):ListaEnlazada
+        -isArbolCompleto(nodo:NodoArbol):boolean
+        +isArbolHomogeneo():Boolean
+        -isArbolCompleto(nodo:NodoArbol, numero:int):Boolean
+        +isArbolCompleto():Boolean
+        -isArbolCasiCompleto(nodo:NodoArbol, numero:int):Boolean
+        +isArbolCasiCompleto():Boolean
+    }
+
+    class NodoArbol {
+        -derecha:NodoArbol
+        -izquierda:NodoArbol
+        -dato:TipoDelDato
+        +getDerecha():NodoArbol
+        +setDerecha(nodo:NodoArbol)
+        +getIzquierda():NodoArbol
+        +setIzquierda(nodo:NodoArbol)
+        +getDato():TipoDelDato
+        +setDato(dato:TipoDelDato)
+        +gradoNodo():int
+        +esHoja():boolean
+    }
+
+    class ListaEnlazada {
+        -primero:ElementoLE
+        +isVacia():boolean
+        +vaciar()
+        -add(el:ElementoLE):int
+        +add(s:String)
+        +add(o:Object)
+        +insert(s:String,posicion:int)
+        +insert(o:Object,posicion:int)
+        +del(posicion:int):int
+        +getNumeroElementos():int
+        +getPosicion(el:ElementoLE):int
+        +getPrimero():ElementoLE
+        +getUltimo():ElementoLE
+        +getSiguiente(el:ElementoLE):ElementoLE
+        +getElemento(posicion:int):ElementoLE
+    }
+
+    class ElementoLE {
+        -siguiente:ElementoLE
+        -data:Object
+        -insertarmeEn(el:ElementoLE)
+        -getSiguiente():ElementoLE
+        +getData():Object
+        +setData():Object
+    }
+
+    class Cola {
+        -cabeza:ElementoLE
+        -cola:ElementoLE
+        +esVacia():boolean
+        +push(el:ElementoLE)
+        +pop():ElementoLE
+    }
+}
+
+package entorno {
+    class Entorno {
+        maximo3
+    }
+
+    abstract class Recursos {
+        tiempoDeVida: int
+        interactuar()
+    }
+
+    class Agua {
+        -AumentoDeVida
+        +Agua(turnosRestantes:int,aumentoDeVida:int)
+        +getAumentoDeVida():int
+        +setAumentoDeVida(aumentoDeVida:int):void
+    }
+
+    class Comida {
+        +Comida(turnosRestantes:int,aumentoDeVida:int)
+        +getAumentoDeVida():int
+        +setAumentoDeVida(aumentoDeVida:int):void
+    }
+
+    class Montaña {
+        -DisminucionDeVida
+        +Montana(turnosRestantes:int,disminucionDeVida:int)
+        +getDisminucionDeVida():int
+        +setDisminucionDeVida(DisminucionDeVida:int):void
+    }
+
+    class Tesoro {
+        -AumentoPorcenRep
+        +Tesoro(turnosRestantes:int,AumentoPorcenRep:int)
+        +getAumentoPorcenRep():int
+        +setAumentoPorcenRep(AumentoPorcenRep:int):void
+    }
+
+    class Biblioteca {
+        -AumentoPorcenClon
+        +Biblioteca(turnosRestantes:int,AumentoPorcenClon:int)
+        +getAumentoPorcenClon():int
+        +setAumentoPorcenClon(AumentoPorcenClon:int):void
+    }
+
+    class Pozo {}
+}
+
+package individuos {
+    class Individuos {
+        Individuos():void
+        -identiticador:int
+        -generacion:int
+        -turno_vida:int
+        -probabilidad_reproduccion:int
+        -probabilidad_clonacion:int
+        -probabilidad_muerte:int
+        +abstract moverse()
+        +abstract reproduccion_entre_iguales()
+        +reproduccion_entre_distintos()
+        +restar_turno_vida()
+        +cambiar_prob_reproduccion()
+        +cambiar_prob_clonacion()
+    }
+
+    class IndBasico {
+        +moverse_en_celda()
+    }
+
+    class IndNormal {
+        +moverse_en_celda()
+    }
+
+    class IndAvanzados {
+        +moverse_en_celda()
+    }
+}
+
+class JSON {
+    guardarArchivo()
+    cargarArchivo()
+}
+
+class Grafo {}
+
+Individuos "0,1,2,3" --o BucleDeControl
+Entorno "0,1,2,3" --o BucleDeControl
+Tablero "NxM" --o BucleDeControl
+
+IndAvanzados --|> Individuos
+IndBasico --|> Individuos
+IndNormal --|> Individuos
+
+Recursos --|> Entorno
+Agua ---|> Recursos
+Montaña ---|> Recursos
+Comida --|> Recursos
+Tesoro --|> Recursos
+Biblioteca ---|> Recursos
+Pozo --|> Recursos
+
+ElementoLE --> Cola
+NodoArbol --> ArbolBinario
+ArbolBinario --|> JSON
+ListaEnlazada --|> JSON
+Grafo --|> JSON
+Cola --|> JSON
+Individuos <-- ArbolBinario
+
+ElementoLE --> ElementoLE:siguiente
+ListaEnlazada -left-> ElementoLE:primero
+
+@enduml

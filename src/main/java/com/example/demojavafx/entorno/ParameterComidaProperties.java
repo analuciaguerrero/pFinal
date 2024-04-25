@@ -1,4 +1,4 @@
-package com.example.demojavafx.recursos;
+package com.example.demojavafx.entorno;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
