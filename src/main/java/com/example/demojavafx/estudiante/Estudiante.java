@@ -1,109 +1,127 @@
 package com.example.demojavafx.estudiante;
+import com.example.demojavafx.entorno.Recursos;
+import com.example.demojavafx.excepciones.ProbabilidadInvalida;
+
+import java.util.Random;
 public class Estudiante {
-    private int id;  //Identificacion del estudiante
-    private int generacion; //Turno en el que se creo
-    private int vida; //Turnos de vidas que le quedan
-    private float probreproduccion; //Probabilidad de reproduccion
-    private float probclonacion; //Probabilidad de clonacion
-    private float probmuerte= 1-probreproduccion; //Probabilidad de muerte
-    private String tipo; //Tipo de estudiante
+    private int posicionX;
+    private int posicionY;
+    private int id;
+    private int generacion;
+    private int tiempoDeVida;
+    private float probReproduccion;
+    private float probClonacion;
+    private float probMuerte;
 
-    public Estudiante(int id, int vida, float probreproduccion, float probclonacion, String tipo){
+    public Estudiante(int I, int G, int T, float PR, float PC) {
+        this.id = I;
+        this.generacion = G;
+        this.tiempoDeVida = T;
+        if (PR < 0 || PR > 100 || PC < 0 || PC > 100) throw new ProbabilidadInvalida();
+        this.probReproduccion = PR;
+        this.probClonacion = PC;
+        this.probMuerte = 1-PR;
+    }
+
+    public int getPosicionX() {
+        return posicionX;
+    }
+
+    public void setPosicionX(int posicionX) {
+        this.posicionX = posicionX;
+    }
+
+    public int getPosicionY() {
+        return posicionY;
+    }
+
+    public void setPosicionY(int posicionY) {
+        this.posicionY = posicionY;
+    }
+
+    public int[] getPosicion () {
+        int[] posicion = new int[2];
+        posicion[0] = posicionX;
+        posicion[1] = posicionY;
+        return posicion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
-        this.vida= vida;
-        this.probreproduccion= probreproduccion;
-        this.probclonacion= probreproduccion;
-        this.tipo= tipo;
     }
 
-    public int getId(){
-        return this.id;
-    }
-    public void setId(int id){
-        id= this.id;
-    }
-    //public int getGeneracion(){}    Depende del turno
-    //public void setGeneracion(){}
-
-    public int getvida(){
-        return this.vida;
-    }
-    public void setVida(int vida){
-        vida= this.vida;
-    }
-    public float getProbreproduccion(){
-        return this.probreproduccion;
-    }
-    public void setProbreproduccion(float probreproduccion){
-        probreproduccion= this.probreproduccion;
-    }
-    public float getProbclonacion(){
-        return this.probclonacion;
-    }
-    public void setProbclonacion(float probclonacion){
-        probclonacion= this.probclonacion;
+    public int getGeneracion() {
+        return generacion;
     }
 
-    public void setProbmuerte(float probmuerte){
-        probmuerte=this.probmuerte;
-    }
-    public String getTipo(){
-        return this.tipo;
-    }
-    public void setTipo(int param){
-        if(param==1){
-            tipo= "basico";
-        }
-        else if(param==2){
-            tipo="normal";
-        }
-        else if(param==3){
-            tipo="avanzado";
-        }
+    public void setGeneracion(int generacion) {
+        this.generacion = generacion;
     }
 
-    public void bajarvida(int numvidas){
-        int newvida= this.getvida()-numvidas;
-        setVida(newvida);
+    public int getTiempoDeVida() {
+        return tiempoDeVida;
     }
-    public void subirvida(int numvidas){
-        int newvida= this.getvida()+numvidas;
-        setVida(newvida);
+
+    public void setTiempoDeVida(int tiempoDeVida) {
+        this.tiempoDeVida = tiempoDeVida;
     }
-    public void bajarprobreproduccion(float prob){
-        float newprobreproduccion = (float) (this.getProbreproduccion()-prob);
-        setProbreproduccion(newprobreproduccion);
+
+    public float getProbReproduccion() {
+        return probReproduccion;
     }
-    public void bajarprobclonacion(float prob){
-        float newprobclonacion = (float) (this.getProbclonacion()-prob);
-        setProbreproduccion(newprobclonacion);
+
+    public void setProbReproduccion(float probReproduccion) {
+        if (probReproduccion < 0 || probReproduccion > 100) throw new ProbabilidadInvalida();
+        this.probReproduccion = probReproduccion;
+        this.probMuerte = 1 - probReproduccion;
     }
-    public void subirprobreproduccion(float prob){
-        float newprobreproduccion = (float) (this.getProbreproduccion()+prob);
-        setProbreproduccion(newprobreproduccion);
+
+    public float getProbClonacion() {
+        return probClonacion;
     }
-    public void subirprobclonacion(float prob){
-        float newprobclonacion = (float) (this.getProbclonacion()+prob);
-        setProbreproduccion(newprobclonacion);
+
+    public void setProbClonacion(float probClonacion) {
+        if (probClonacion < 0 || probClonacion > 100) throw new ProbabilidadInvalida();
+        this.probClonacion = probClonacion;
     }
-    public void mover(){  //En funcion del tablero y recursos
-        if (getTipo()=="basico"){}
-        else if(getTipo()=="normal"){}
-        else if(getTipo()=="avanzado"){}
+
+    public float getProbMuerte() {
+        return probMuerte;
     }
-    public void subirtipo(){
-        if (getTipo()=="basico"){
-            setTipo(2);  //Tipo normal
-        }
-        else if(getTipo()=="normal"){
-            setTipo(3); //Tipo avanzado
-        }
-        else if (getTipo()=="avanzado"){
-            setTipo(3); //Tipo maximo
+
+    public String getTipo () {return null;}
+
+    public String setTipo (String tipo) {return null;}
+
+    public void morir () {
+
+    }
+    public void actualizarTV () {
+        tiempoDeVida -= 1;
+        if (tiempoDeVida == 0) morir();
+    }
+
+    public void mover() {}
+
+    public void moverAleatorio() {
+        Random r = new Random();
+        int movimiento = r.nextInt(4);
+        if (movimiento == 1) {
+            this.setPosicionX(this.getPosicionX() - 1);
+        } else if (movimiento == 2) {
+            this.setPosicionX(this.getPosicionX() + 1);
+        } else if (movimiento == 3) {
+            this.setPosicionY(this.getPosicionY() - 1);
+        } else {
+            this.setPosicionY(this.getPosicionY() + 1);
         }
     }
 
-    public void matar(){ //muerte instantanea
-        setProbmuerte(1);
-    }
+    public void mejorar (Recursos recurso) {}
+
+
 }
