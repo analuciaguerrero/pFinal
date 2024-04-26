@@ -2,25 +2,25 @@ package com.example.demojavafx.entorno;
 
 public class Agua extends Recursos {
 
-    private int AumentoDeVida;
+    private int AumentoVida;
     private float probAgua;
 
 
-    public Agua(int turnosRestantes, int aumentoDeVida) {
+    public Agua(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        AumentoDeVida = aumentoDeVida;
+        AumentoVida = aumentoVida;
     }
     public Agua(int tiempoVida, float probAgua) {
         super(tiempoVida);
         this.probAgua = probAgua;
     }
 
-    public int getAumentoDeVida() {
-        return AumentoDeVida;
+    public int getAumentoVida() {
+        return AumentoVida;
     }
 
-    public void setAumentoDeVida(int aumentoDeVida) {
-        AumentoDeVida = aumentoDeVida;
+    public void setAumentoVida(int aumentoVida) {
+        AumentoVida = aumentoVida;
     }
 
     public float getProbAgua() {

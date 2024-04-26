@@ -1,7 +1,7 @@
 package com.example.demojavafx.entorno;
 
 public class Montaña extends Recursos{
-    private int disminucionDeVida;
+    private int disminucionVida;
     private float probMontaña;
 
     public Montaña(int tiempoVida, float probMontaña) {
@@ -9,17 +9,17 @@ public class Montaña extends Recursos{
         this.probMontaña = probMontaña;
     }
 
-    public Montaña(int turnosRestantes, int aumentoDeVida) {
+    public Montaña(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        disminucionDeVida = aumentoDeVida;
+        disminucionVida = aumentoVida;
     }
 
-    public int getDisminucionDeVida() {
-        return disminucionDeVida;
+    public int getDisminucionVida() {
+        return disminucionVida;
     }
 
-    public void setDisminucionDeVida(int disminucionDeVida) {
-        this.disminucionDeVida = disminucionDeVida;
+    public void setDisminucionVida(int disminucionVida) {
+        this.disminucionVida = disminucionVida;
     }
 
     public float getProbMontaña() {

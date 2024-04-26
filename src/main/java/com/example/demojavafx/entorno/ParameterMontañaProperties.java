@@ -9,8 +9,8 @@ public class ParameterMontañaProperties {
     protected Montaña original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private IntegerProperty disminucionDeVida = new SimpleIntegerProperty();
-    private FloatProperty probMontana = new SimpleFloatProperty();
+    private IntegerProperty disminucionVida = new SimpleIntegerProperty();
+    private FloatProperty probMontaña = new SimpleFloatProperty();
 
 
 
@@ -20,14 +20,14 @@ public class ParameterMontañaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setDisminucionDeVida(disminucionDeVida.get());
-        original.setProbMontaña(probMontana.get());
+        original.setDisminucionVida(disminucionVida.get());
+        original.setProbMontaña(probMontaña.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        disminucionDeVida.set(original.getDisminucionDeVida());
-        probMontana.set(original.getProbMontaña());
+        disminucionVida.set(original.getDisminucionVida());
+        probMontaña.set(original.getProbMontaña());
     }
 
     public Montaña getOriginal() {
@@ -43,10 +43,10 @@ public class ParameterMontañaProperties {
         return turnosRestantes;
     }
 
-    public IntegerProperty disminucionDeVidaProperty() {
-        return disminucionDeVida;
+    public IntegerProperty disminucionVidaProperty() {
+        return disminucionVida;
     }
 
-    public FloatProperty probMontanaProperty() {return probMontana;}
+    public FloatProperty probMontañaProperty() {return probMontaña;}
 }
 

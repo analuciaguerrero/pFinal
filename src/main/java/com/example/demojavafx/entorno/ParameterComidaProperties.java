@@ -9,7 +9,7 @@ public class ParameterComidaProperties {
     protected Comida original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private IntegerProperty aumentoDeVida = new SimpleIntegerProperty();
+    private IntegerProperty aumentoVida = new SimpleIntegerProperty();
     private FloatProperty probComida = new SimpleFloatProperty();
 
 
@@ -20,13 +20,13 @@ public class ParameterComidaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoDeVida(aumentoDeVida.get());
+        original.setAumentoVida(aumentoVida.get());
         original.setProbComida(probComida.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoDeVida.set(original.getAumentoDeVida());
+        aumentoVida.set(original.getAumentoVida());
         probComida.set(original.getProbComida());
     }
 
@@ -43,8 +43,8 @@ public class ParameterComidaProperties {
         return turnosRestantes;
     }
 
-    public IntegerProperty aumentoDeVidaProperty() {
-        return aumentoDeVida;
+    public IntegerProperty aumentoVidaProperty() {
+        return aumentoVida;
     }
 
     public FloatProperty probComidaProperty() {return probComida;}

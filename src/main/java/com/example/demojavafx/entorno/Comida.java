@@ -1,7 +1,7 @@
 package com.example.demojavafx.entorno;
 
 public class Comida extends Recursos{
-    private int AumentoDeVida;
+    private int AumentoVida;
     private float probComida;
 
     public Comida(int tiempoVida, float probComida) {
@@ -9,17 +9,17 @@ public class Comida extends Recursos{
         this.probComida = probComida;
     }
 
-    public Comida(int turnosRestantes, int aumentoDeVida) {
+    public Comida(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        AumentoDeVida = aumentoDeVida;
+        AumentoVida = aumentoVida;
     }
 
-    public int getAumentoDeVida() {
-        return AumentoDeVida;
+    public int getAumentoVida() {
+        return AumentoVida;
     }
 
-    public void setAumentoDeVida(int aumentoDeVida) {
-        AumentoDeVida = aumentoDeVida;
+    public void setAumentoVida(int aumentoVida) {
+        AumentoVida = aumentoVida;
     }
 
     public float getProbComida() {

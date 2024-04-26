@@ -9,7 +9,7 @@ public class ParameterTesoroProperties {
     protected Tesoro original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private FloatProperty aumentoDePorcenRep = new SimpleFloatProperty();
+    private FloatProperty aumentoPorcentajeRep = new SimpleFloatProperty();
     private FloatProperty probTesoro = new SimpleFloatProperty();
 
 
@@ -19,13 +19,13 @@ public class ParameterTesoroProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoDePorcenRep(aumentoDePorcenRep.get());
+        original.setAumentoPorcentajeRep(aumentoPorcentajeRep.get());
         original.setProbTesoro(probTesoro.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoDePorcenRep.set(original.getAumentoDePorcenRep());
+        aumentoPorcentajeRep.set(original.getAumentoPorcentajeRep());
         probTesoro.set(original.getProbTesoro());
     }
 
@@ -42,8 +42,8 @@ public class ParameterTesoroProperties {
         return turnosRestantes;
     }
 
-    public FloatProperty aumentoDePorenRepProperty() {
-        return aumentoDePorcenRep;
+    public FloatProperty aumentoPorcetajeRepProperty() {
+        return aumentoPorcentajeRep;
     }
 
     public FloatProperty probTesoroProperty() {return probTesoro;}

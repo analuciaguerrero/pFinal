@@ -1,12 +1,12 @@
 package com.example.demojavafx.entorno;
 
 public class Tesoro extends Recursos{
-    private float AumentoDePorcenRep;
+    private float AumentoPorcentajeRep;
     private float probTesoro;
 
-    public Tesoro(int turnosRestantes, int aumentoDeVida) {
+    public Tesoro(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        AumentoDePorcenRep = aumentoDeVida;
+        AumentoPorcentajeRep = aumentoVida;
     }
 
     public Tesoro(int tiempoVida, float probTesoro) {
@@ -14,12 +14,12 @@ public class Tesoro extends Recursos{
         this.probTesoro = probTesoro;
     }
 
-    public float getAumentoDePorcenRep() {
-        return AumentoDePorcenRep;
+    public float getAumentoPorcentajeRep() {
+        return AumentoPorcentajeRep;
     }
 
-    public void setAumentoDePorcenRep(float aumentoDePorcenRep) {
-        AumentoDePorcenRep = aumentoDePorcenRep;
+    public void setAumentoPorcentajeRep(float aumentoPorcentajeRep) {
+        AumentoPorcentajeRep = aumentoPorcentajeRep;
     }
 
     public float getProbTesoro() {

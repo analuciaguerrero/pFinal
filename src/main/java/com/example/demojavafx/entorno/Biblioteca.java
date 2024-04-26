@@ -2,33 +2,33 @@ package com.example.demojavafx.entorno;
 
 public class Biblioteca extends Recursos{
 
-    private float aumentoDePorcenClon;
-    private float probBiblioteca;
+    private float aumentoPorcentajeClon;
+    private float probBiblio;
 
-    public Biblioteca(int tiempoVida, float probBiblioteca) {
+    public Biblioteca(int tiempoVida, float probBiblio) {
         super(tiempoVida);
-        this.probBiblioteca = probBiblioteca;
+        this.probBiblio = probBiblio;
     }
 
-    public Biblioteca(int turnosRestantes, int aumentoDeVida) {
+    public Biblioteca(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        aumentoDePorcenClon = aumentoDeVida;
+        aumentoPorcentajeClon = aumentoVida;
     }
 
-    public float getAumentoDePorcenClon() {
-        return aumentoDePorcenClon;
+    public float getAumentoPorcentajeClon() {
+        return aumentoPorcentajeClon;
     }
 
-    public void setAumentoDePorcenClon(float aumentoDePorcenClon) {
-        this.aumentoDePorcenClon = aumentoDePorcenClon;
+    public void setAumentoPorcentajeClon(float aumentoPorcentajeClon) {
+        this.aumentoPorcentajeClon = aumentoPorcentajeClon;
     }
 
-    public float getProbBiblioteca() {
-        return probBiblioteca;
+    public float getProbBiblio() {
+        return probBiblio;
     }
 
-    public void setProbBiblioteca(float probBiblioteca) {
-        this.probBiblioteca = probBiblioteca;
+    public void setProbBiblio(float probBiblio) {
+        this.probBiblio = probBiblio;
     }
 }
 

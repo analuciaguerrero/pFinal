@@ -112,42 +112,42 @@ package entorno {
     }
 
     abstract class Recursos {
-        tiempoDeVida: int
+        tiempoVida: int
         interactuar()
     }
 
     class Agua {
-        -AumentoDeVida
-        +Agua(turnosRestantes:int,aumentoDeVida:int)
-        +getAumentoDeVida():int
-        +setAumentoDeVida(aumentoDeVida:int):void
+        -AumentoVida
+        +Agua(turnosRestantes:int,aumentoVida:int)
+        +getAumentoVida():int
+        +setAumentoVida(aumentoVida:int):void
     }
 
     class Comida {
-        +Comida(turnosRestantes:int,aumentoDeVida:int)
-        +getAumentoDeVida():int
-        +setAumentoDeVida(aumentoDeVida:int):void
+        +Comida(turnosRestantes:int,aumentoVida:int)
+        +getAumentoVida():int
+        +setAumentoVida(aumentoVida:int):void
     }
 
     class Montaña {
-        -DisminucionDeVida
-        +Montana(turnosRestantes:int,disminucionDeVida:int)
-        +getDisminucionDeVida():int
-        +setDisminucionDeVida(DisminucionDeVida:int):void
+        -DisminucionVida
+        +Montaña(turnosRestantes:int,disminucionVida:int)
+        +getDisminucionVida():int
+        +setDisminucionVida(DisminucionVida:int):void
     }
 
     class Tesoro {
-        -AumentoPorcenRep
-        +Tesoro(turnosRestantes:int,AumentoPorcenRep:int)
-        +getAumentoPorcenRep():int
-        +setAumentoPorcenRep(AumentoPorcenRep:int):void
+        -AumentoPorcentajeRep
+        +Tesoro(turnosRestantes:int,AumentoPorcentajeRep:int)
+        +getAumentoPorcentajeRep():int
+        +setAumentoPorcentajeRep(AumentoPorcentajeRep:int):void
     }
 
     class Biblioteca {
-        -AumentoPorcenClon
-        +Biblioteca(turnosRestantes:int,AumentoPorcenClon:int)
-        +getAumentoPorcenClon():int
-        +setAumentoPorcenClon(AumentoPorcenClon:int):void
+        -AumentoPorcentajeClon
+        +Biblioteca(turnosRestantes:int,AumentoPorcentajeClon:int)
+        +getAumentoPorcentajeClon():int
+        +setAumentoPorcentajeClon(AumentoPorcentajeClon:int):void
     }
 
     class Pozo {}

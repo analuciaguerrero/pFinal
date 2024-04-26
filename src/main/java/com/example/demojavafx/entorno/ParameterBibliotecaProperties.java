@@ -9,7 +9,7 @@ public class ParameterBibliotecaProperties {
     protected Biblioteca original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private FloatProperty aumentoDePorenClon = new SimpleFloatProperty();
+    private FloatProperty aumentoPorentajeClon = new SimpleFloatProperty();
     private FloatProperty probBilio= new SimpleFloatProperty();
 
 
@@ -19,14 +19,14 @@ public class ParameterBibliotecaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoDePorcenClon(aumentoDePorenClon.get());
-        original.setProbBiblioteca(probBilio.get());
+        original.setAumentoPorcentajeClon(aumentoPorentajeClon.get());
+        original.setProbBiblio(probBilio.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoDePorenClon.set(original.getAumentoDePorcenClon());
-        probBilio.set(original.getProbBiblioteca());
+        aumentoPorentajeClon.set(original.getAumentoPorcentajeClon());
+        probBilio.set(original.getProbBiblio());
     }
 
     public Biblioteca getOriginal() {
@@ -42,8 +42,8 @@ public class ParameterBibliotecaProperties {
         return turnosRestantes;
     }
 
-    public FloatProperty aumentoDePorenClonProperty() {
-        return aumentoDePorenClon;
+    public FloatProperty aumentoPorentajeClonProperty() {
+        return aumentoPorentajeClon;
     }
 
     public FloatProperty probBibliotecaProperty() {return probBilio; }
