@@ -47,6 +47,18 @@ public class Recursos {
         this.posM = posM;
     }
 
+    public int[] getPosicion () {
+        int[] posicion = new int[2];
+        posicion[0] = posN;
+        posicion[1] = posM;
+        return posicion;
+    }
+
+    public void setPosicion (int[] posicion) {
+        posN = posicion[0];
+        posM = posicion[1];
+    }
+
     public float getProbNuevoRecurso() {
         return probNuevoRecurso;
     }

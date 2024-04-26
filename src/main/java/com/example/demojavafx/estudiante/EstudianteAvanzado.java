@@ -1,7 +1,7 @@
 package com.example.demojavafx.estudiante;
 
 import com.example.demojavafx.entorno.Recursos;
-import com.example.demojavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
+import com.example.demojavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada2;
 
 public class EstudianteAvanzado extends Estudiante {
     public EstudianteAvanzado(int I, int G, int T, float PR, float PC) {
@@ -9,15 +9,15 @@ public class EstudianteAvanzado extends Estudiante {
     }
     @Override
     public String getTipo () {
-        return "estudianteAvanzado";
+        return "EstudianteAvanzado";
     }
 
-    public void mover (ListaDoblementeEnlazada<Recursos> recursos, int caminoMaximo) {
+    public void mover (ListaDoblementeEnlazada2<Recursos> recursos, int caminoMaximo) {
         if (!recursos.isVacia()) {
             Recursos recursoCercano = null;
             int recursoCercanoPasos = caminoMaximo + 1;
             for (int i = 0; i != recursos.getNumeroElementos(); i++) {
-                int pasosRecurso = Math.abs(recursos.getElemento(i).getData().getPosicionX() - this.getPosicionX()) + Math.abs(recursos.getElemento(i).getData().getPosicionY() - this.getPosicionY());
+                int pasosRecurso = Math.abs(recursos.getElemento(i).getData().getPosN() - this.getPosicionX()) + Math.abs(recursos.getElemento(i).getData().getPosM() - this.getPosicionY());
                 if (pasosRecurso < recursoCercanoPasos) {
                     recursoCercano = recursos.getElemento(i).getData();
                     recursoCercanoPasos = pasosRecurso;

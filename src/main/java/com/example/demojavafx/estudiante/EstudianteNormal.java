@@ -1,7 +1,7 @@
 package com.example.demojavafx.estudiante;
 
 import com.example.demojavafx.entorno.Recursos;
-import com.example.demojavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
+import com.example.demojavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada2;
 
 import java.util.Random;
 
@@ -11,10 +11,10 @@ public class EstudianteNormal extends Estudiante{
     }
     @Override
     public String getTipo () {
-        return "individuoNormal";
+        return "EstudianteNormal";
     }
 
-    public void mover(ListaDoblementeEnlazada<Recursos> recursos) {
+    public void mover(ListaDoblementeEnlazada2<Recursos> recursos) {
         if (!recursos.isVacia()) {
             Random r = new Random();
             int recursoRandom = r.nextInt(recursos.getNumeroElementos());
