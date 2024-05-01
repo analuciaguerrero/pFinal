@@ -1,7 +1,6 @@
 package com.example.demojavafx.zombieStudentsLife;
-import javafx.scene.layout.StackPane;
 
-public class Celda extends StackPane {
+public class Celda{
     int x;
     int y;
     boolean ocupado;

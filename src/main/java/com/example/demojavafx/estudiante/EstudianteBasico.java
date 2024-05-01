@@ -1,17 +1,11 @@
 package com.example.demojavafx.estudiante;
 
 public class EstudianteBasico extends Estudiante {
-    public EstudianteBasico(int I, int G, int T, float PR, float PC) {
-        super(I, G, T, PR, PC);
+    public EstudianteBasico(int id, int tiempoDeVida) {
+        super(id,tiempoDeVida);
     }
-
     @Override
-    public String getTipo () {
+    public String getTipo(){
         return "EstudianteBasico";
-    }
-
-    @Override
-    public void mover() {
-        this.moverAleatorio();
     }
 }

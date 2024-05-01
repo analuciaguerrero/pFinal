@@ -1,6 +1,6 @@
 package com.example.demojavafx.entorno;
 
-public class Recursos {
+public abstract class Recursos {
     protected int turnosRestantes;
     protected int posN;
     protected int posM;
