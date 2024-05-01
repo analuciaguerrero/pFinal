@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class Tablero {
+    ////MIRAR BIEN(REVISAR)
     GridPane tablero;
     String temaTablero;
     public ArrayList<Celda> celdas = new ArrayList<Celda>();
@@ -24,15 +25,14 @@ public class Tablero {
             for(int j=0; j<25; j++){
                 Celda celda = new Celda(i,j);
                 celda.setNombre("Celda" + i + j);
-                celda.setPrefHeight(10);
-                celda.setPrefWidth(10);
-                celda.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                //celda.setPrefHeight(10);
+                //celda.setPrefWidth(10);
+                //celda.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 setTema(celda, temaTablero, i, j);
-                tableroJuego.add(celda,i,j,1,1);
+                //tableroJuego.add(celda,i,j,1,1);
                 celdas.add(celda);
             }
         }
-        addIndividuos();
     }
 
     private void setTema(Celda celda, String temaTablero, int i, int j){
@@ -51,14 +51,10 @@ public class Tablero {
         }
 
         if((i+j)%2==0){
-            celda.setBackground(new Background(new BackgroundFill(color1, CornerRadii.EMPTY, Insets.EMPTY)));
+            //celda.setBackground(new Background(new BackgroundFill(color1, CornerRadii.EMPTY, Insets.EMPTY)));
         } else {
-            celda.setBackground(new Background(new BackgroundFill(color2, CornerRadii.EMPTY, Insets.EMPTY)));
+            //celda.setBackground(new Background(new BackgroundFill(color2, CornerRadii.EMPTY, Insets.EMPTY)));
         }
     }
-
-    private void addIndividuo(){}
-
-    private void addIndividuos(){}
 
 }
