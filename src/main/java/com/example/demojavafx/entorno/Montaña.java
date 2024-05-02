@@ -1,33 +1,18 @@
 package com.example.demojavafx.entorno;
 
+import com.example.demojavafx.estudiante.Estudiante;
+
 public class Montaña extends Recursos{
-    private int disminucionVida;
-    private float probMontaña;
+    private final int reduccionVida;
 
-    public Montaña(int tiempoVida, float probMontaña) {
-        super(tiempoVida);
-        this.probMontaña = probMontaña;
-    }
-
-    public Montaña(int turnosRestantes, int aumentoVida) {
+    public Montaña(int turnosRestantes, int reduccionVida) {
         super(turnosRestantes);
-        disminucionVida = aumentoVida;
+        this.reduccionVida = reduccionVida;
     }
 
-    public int getDisminucionVida() {
-        return disminucionVida;
-    }
-
-    public void setDisminucionVida(int disminucionVida) {
-        this.disminucionVida = disminucionVida;
-    }
-
-    public float getProbMontaña() {
-        return probMontaña;
-    }
-
-    public void setProbMontaña(float probMontaña) {
-        this.probMontaña = probMontaña;
+    @Override
+    public void aplicarEfecto(Estudiante estudiante) {
+        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() - reduccionVida);
     }
 }
 

@@ -1,32 +1,17 @@
 package com.example.demojavafx.entorno;
 
+import com.example.demojavafx.estudiante.Estudiante;
+
 public class Tesoro extends Recursos{
-    private float AumentoPorcentajeRep;
-    private float probTesoro;
+    private final double aumentoProbReproduccion;
 
-    public Tesoro(int turnosRestantes, int aumentoVida) {
+    public Tesoro(int turnosRestantes, double aumentoProbReproduccion) {
         super(turnosRestantes);
-        AumentoPorcentajeRep = aumentoVida;
+        this.aumentoProbReproduccion = aumentoProbReproduccion;
     }
 
-    public Tesoro(int tiempoVida, float probTesoro) {
-        super(tiempoVida);
-        this.probTesoro = probTesoro;
-    }
-
-    public float getAumentoPorcentajeRep() {
-        return AumentoPorcentajeRep;
-    }
-
-    public void setAumentoPorcentajeRep(float aumentoPorcentajeRep) {
-        AumentoPorcentajeRep = aumentoPorcentajeRep;
-    }
-
-    public float getProbTesoro() {
-        return probTesoro;
-    }
-
-    public void setProbTesoro(float probTesoro) {
-        this.probTesoro = probTesoro;
+    @Override
+    public void aplicarEfecto(Estudiante estudiante) {
+        estudiante.setProbReproduccion(estudiante.getProbReproduccion() + aumentoProbReproduccion);
     }
 }

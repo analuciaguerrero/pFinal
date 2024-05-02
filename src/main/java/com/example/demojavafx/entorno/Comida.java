@@ -1,33 +1,18 @@
 package com.example.demojavafx.entorno;
 
-public class Comida extends Recursos{
-    private int AumentoVida;
-    private float probComida;
+import com.example.demojavafx.estudiante.Estudiante;
 
-    public Comida(int tiempoVida, float probComida) {
-        super(tiempoVida);
-        this.probComida = probComida;
-    }
+public class Comida extends Recursos{
+    private final int aumentoVida;
 
     public Comida(int turnosRestantes, int aumentoVida) {
         super(turnosRestantes);
-        AumentoVida = aumentoVida;
+        this.aumentoVida = aumentoVida;
     }
 
-    public int getAumentoVida() {
-        return AumentoVida;
-    }
-
-    public void setAumentoVida(int aumentoVida) {
-        AumentoVida = aumentoVida;
-    }
-
-    public float getProbComida() {
-        return probComida;
-    }
-
-    public void setProbComida(float probComida) {
-        this.probComida = probComida;
+    @Override
+    public void aplicarEfecto(Estudiante estudiante) {
+        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() + aumentoVida);
     }
 }
 
