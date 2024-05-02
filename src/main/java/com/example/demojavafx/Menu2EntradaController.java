@@ -282,5 +282,8 @@ public class Menu2EntradaController extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNombre;
     public static javax.swing.JTextField jTextFieldDNI;
     public static javax.swing.JTextField jTextFieldNombre;
+
+    public void setPreviousController(MenuInicialApplication menuInicialApplication) {
+    }
 // End of variables declaration//GEN-END:variables
 }

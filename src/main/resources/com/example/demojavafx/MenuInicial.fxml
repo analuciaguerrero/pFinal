@@ -1,54 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="402.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ElJuegoDeLaVida.ControllerMenuInicial">
-   <children>
-      <GridPane prefHeight="368.0" prefWidth="716.0">
-        <columnConstraints>
-          <ColumnConstraints />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="261.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="123.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="55.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="54.0" minHeight="0.0" prefHeight="54.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.MenuInicialController">
+    <children>
+      <AnchorPane>
          <children>
-            <ImageView fitHeight="456.0" fitWidth="710.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <image>
-                  <Image url="@../../../../java/com/example/demojavafx/imagenes/fondo.jpg" />
-               </image>
-            </ImageView>
-              <Button fx:id="buttonCargar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CARGAR JUEGO" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                  <font>
-                      <Font name="Subway Novella" size="16.0" />
-                  </font>
-              </Button>
-              <Button fx:id="buttonPlay" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#goNewPlay" text="INICIAR JUEGO" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                  <font>
-                      <Font name="Subway Novella" size="16.0" />
-                  </font>
-              </Button>
+                <!-- La imagen de fondo -->
+                <ImageView fitWidth="1835" preserveRatio="true" smooth="true">
+                    <image>
+                        <!-- Corregir la ruta de la imagen -->
+                        <Image url="file:/home/ana/IdeaProjects/pFinal/src/main/java/com/example/demojavafx/imagenes/fondo.jpg" />
+                    </image>
+                </ImageView>
+         </children>
+      </AnchorPane>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="318.0" minHeight="10.0" prefHeight="318.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="188.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="99.0" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+               <Button fx:id="buttonPlay" onMouseClicked="#goNewPlay" prefHeight="173.0" prefWidth="392.0" text="INICIAR" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                   <font>
+                       <Font name="Subway Novella" size="16.0" />
+                   </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               </Button>
+               <Button fx:id="buttonCargar" prefHeight="151.0" prefWidth="340.0" text="SALIR" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                   <font>
+                       <Font name="Subway Novella" size="16.0" />
+                   </font>
+               </Button>
          </children>
       </GridPane>
-   </children>
-</VBox>
+    </children>
+</StackPane>

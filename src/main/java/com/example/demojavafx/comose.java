@@ -1,7 +1,6 @@
 package com.example.demojavafx;
 
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +13,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 
-public class ControllerMenuInicial {
+class ControllerMenuInicial1 {
 
     @FXML
     private Button buttonCargar;
