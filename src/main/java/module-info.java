@@ -12,6 +12,6 @@ module com.example.demojavafx {
     requires com.google.gson;
 
 
-    opens com.example.demojavafx to javafx.fxml;
-    exports com.example.demojavafx;
+    opens com.example.demoJavafx to javafx.fxml;
+    exports com.example.demoJavafx;
 }
