@@ -152,7 +152,7 @@ public class MenuEntradaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ruta/del/archivo/fxml/Menu3Personalizacion.fxml"));
             Parent root = loader.load();
-            Menu3PersonalizacionController controller = loader.getController();
+            MenuPersonalizacionController controller = loader.getController();
             // Here you can pass any necessary information to the customization window controller
             // For example:
             //controller.initData(jugador);

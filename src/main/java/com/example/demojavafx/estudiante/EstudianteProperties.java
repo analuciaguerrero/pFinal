@@ -24,7 +24,6 @@ public class EstudianteProperties {
         rollback();
     }
 
-
     public void rollback() {
         tiempoDeVida.set(origen.getTiempoDeVida());
         probReproduccion.set((int)origen.getProbReproduccion());
