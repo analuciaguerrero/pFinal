@@ -3,15 +3,15 @@ package com.example.demojavafx.estructurasDeDatos.ArbolAVL;
 import com.example.demojavafx.excepciones.DuplicateElement;
 import com.example.demojavafx.excepciones.NonexistentElement;
 
-public class Nodo<TipoDelDato>{
+public class NodoAVL<TipoDelDato>{
     private TipoDelDato dato;
-    private Nodo<TipoDelDato> nodoIzq;
-    private Nodo<TipoDelDato> nodoDch;
-    public Nodo() {
+    private NodoAVL<TipoDelDato> nodoIzq;
+    private NodoAVL<TipoDelDato> nodoDch;
+    public NodoAVL() {
         this.dato = null;
     }
 
-    public Nodo(TipoDelDato dato) {
+    public NodoAVL(TipoDelDato dato) {
         this.dato = dato;
     }
 
@@ -21,11 +21,11 @@ public class Nodo<TipoDelDato>{
         return dato1.compareTo(dato2);
     }
 
-    protected int alturaNodo(Nodo<TipoDelDato> nodo) {
+    protected int alturaNodo(NodoAVL<TipoDelDato> nodo) {
         return calcularAlturaRecursivo(nodo);
     }
 
-    private int calcularAlturaRecursivo(Nodo<TipoDelDato> nodo) {
+    private int calcularAlturaRecursivo(NodoAVL<TipoDelDato> nodo) {
         if (nodo == null) {
             return 0;
         } else {
@@ -46,7 +46,7 @@ public class Nodo<TipoDelDato>{
         return grado;
     }
 
-    protected void del(Nodo<TipoDelDato> padre, Nodo<TipoDelDato> actual, TipoDelDato a) throws NonexistentElement {
+    protected void del(NodoAVL<TipoDelDato> padre, NodoAVL<TipoDelDato> actual, TipoDelDato a) throws NonexistentElement {
         if (this.compararDatos(a, actual.getDato()) == 1) {
             if (actual.getNodoDch() != null) {
                 del(actual, actual.getNodoDch(), a);
@@ -75,7 +75,7 @@ public class Nodo<TipoDelDato>{
                     }
                 }
             } else if (actual.getGrado() == 1) {
-                Nodo<TipoDelDato> temporal = new Nodo<>();
+                NodoAVL<TipoDelDato> temporal = new NodoAVL<>();
                 if (actual.getNodoIzq() != null) {
                     temporal.copiaLigera(actual.getNodoIzq());
                 } else {
@@ -83,8 +83,8 @@ public class Nodo<TipoDelDato>{
                 }
                 actual.copiaLigera(temporal);
             } else {
-                Nodo<TipoDelDato> nodoDespués = actual.getNodoDch();
-                Nodo<TipoDelDato> nodoAntDespués = actual;
+                NodoAVL<TipoDelDato> nodoDespués = actual.getNodoDch();
+                NodoAVL<TipoDelDato> nodoAntDespués = actual;
                 while (nodoDespués.getNodoIzq() != null) {
                     nodoAntDespués = nodoDespués;
                     nodoDespués = nodoDespués.getNodoIzq();
@@ -97,7 +97,7 @@ public class Nodo<TipoDelDato>{
         }
     }
 
-    protected void add(Nodo<TipoDelDato> nodo, TipoDelDato dato) throws DuplicateElement {
+    protected void add(NodoAVL<TipoDelDato> nodo, TipoDelDato dato) throws DuplicateElement {
         Integer comparacion = this.compararDatos(dato, nodo.getDato());
         if (comparacion == 0) {
             throw (new DuplicateElement("Este elemento ya está en el arbol"));
@@ -106,19 +106,19 @@ public class Nodo<TipoDelDato>{
                 add(nodo.getNodoIzq(), dato);
                 this.equilibrar(nodo);
             } else {
-                nodo.setNodoIzq(new Nodo<>(dato));
+                nodo.setNodoIzq(new NodoAVL<>(dato));
             }
         } else {
             if (nodo.getNodoDch() != null) {
                 add(nodo.getNodoDch(), dato);
                 this.equilibrar(nodo);
             } else {
-                nodo.setNodoDch(new Nodo<>(dato));
+                nodo.setNodoDch(new NodoAVL<>(dato));
             }
         }
     }
 
-    private void copiaLigera(Nodo<TipoDelDato> nodoCopiado) {
+    private void copiaLigera(NodoAVL<TipoDelDato> nodoCopiado) {
         this.dato = nodoCopiado.getDato();
         this.nodoDch = nodoCopiado.getNodoDch();
         this.nodoIzq = nodoCopiado.getNodoIzq();
@@ -138,7 +138,7 @@ public class Nodo<TipoDelDato>{
         return 0;
     }
 
-    private void equilibrar(Nodo<TipoDelDato> nodo) {
+    private void equilibrar(NodoAVL<TipoDelDato> nodo) {
         if (nodo.reconocerDesequilibrio() == 1) {
             this.rotacionII(nodo);
         } else if (nodo.reconocerDesequilibrio() == 3) {
@@ -150,30 +150,30 @@ public class Nodo<TipoDelDato>{
         }
     }
 
-    private void rotacionDD(Nodo<TipoDelDato> nodo) {
-        Nodo<TipoDelDato> temporal = new Nodo<>();
+    private void rotacionDD(NodoAVL<TipoDelDato> nodo) {
+        NodoAVL<TipoDelDato> temporal = new NodoAVL<>();
         temporal.copiaLigera(nodo);
-        Nodo<TipoDelDato> nuevaRaiz = temporal.getNodoDch();
+        NodoAVL<TipoDelDato> nuevaRaiz = temporal.getNodoDch();
         temporal.setNodoDch(nuevaRaiz.getNodoIzq());
         nuevaRaiz.setNodoIzq(temporal);
         nodo.copiaLigera(nuevaRaiz);
     }
 
-    private void rotacionII(Nodo<TipoDelDato> nodo) {
-        Nodo<TipoDelDato> temporal = new Nodo<>();
+    private void rotacionII(NodoAVL<TipoDelDato> nodo) {
+        NodoAVL<TipoDelDato> temporal = new NodoAVL<>();
         temporal.copiaLigera(nodo);
-        Nodo<TipoDelDato> nuevaRaiz = temporal.getNodoIzq();
+        NodoAVL<TipoDelDato> nuevaRaiz = temporal.getNodoIzq();
         temporal.setNodoIzq(nuevaRaiz.getNodoDch());
         nuevaRaiz.setNodoDch(temporal);
         nodo.copiaLigera(nuevaRaiz);
     }
 
-    private void rotacionID(Nodo<TipoDelDato> nodo) {
+    private void rotacionID(NodoAVL<TipoDelDato> nodo) {
         this.rotacionDD(nodo.getNodoIzq());
         this.rotacionII(nodo);
     }
 
-    private void rotacionDI(Nodo<TipoDelDato> nodo) {
+    private void rotacionDI(NodoAVL<TipoDelDato> nodo) {
         this.rotacionII(nodo.getNodoDch());
         this.rotacionDD(nodo);
     }
@@ -185,19 +185,19 @@ public class Nodo<TipoDelDato>{
         this.dato = dato;
     }
 
-    public Nodo<TipoDelDato> getNodoIzq() {
+    public NodoAVL<TipoDelDato> getNodoIzq() {
         return nodoIzq;
     }
 
-    public void setNodoIzq(Nodo<TipoDelDato> nodo) {
+    public void setNodoIzq(NodoAVL<TipoDelDato> nodo) {
         this.nodoIzq = nodo;
     }
 
-    public Nodo<TipoDelDato> getNodoDch() {
+    public NodoAVL<TipoDelDato> getNodoDch() {
         return nodoDch;
     }
 
-    public void setNodoDch(Nodo<TipoDelDato> nodoDch) {
+    public void setNodoDch(NodoAVL<TipoDelDato> nodoDch) {
         this.nodoDch = nodoDch;
     }
 }

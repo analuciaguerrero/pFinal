@@ -7,20 +7,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class NodoTest {
     @Test
     void getDerecha() {
-        Nodo a1 = new Nodo<>(3);
-        Nodo a2 = new Nodo<>(4);
-        Nodo a4 = new Nodo<>(6);
-        Nodo a3 = new Nodo<>(a1,a2,5);
+        Nodo<Integer> a1 = new Nodo<>(3);
+        Nodo<Integer> a2 = new Nodo<>(4);
+        Nodo<Integer> a4 = new Nodo<>(6);
+        Nodo<Integer> a3 = new Nodo<>(a1,a2,5);
         assertDoesNotThrow(()->a3.setDerecha(a4));
         assertEquals(a4,a3.getDerecha(), "Los nodos derecha no son iguales");
     }
 
     @Test
     void setDerecha() {
-        Nodo a1 = new Nodo<>(3);
-        Nodo a2 = new Nodo<>(4);
-        Nodo a4 = new Nodo<>(6);
-        Nodo a3 = new Nodo<>(a1,a2,5);
+        Nodo<Integer> a1 = new Nodo<>(3);
+        Nodo<Integer> a2 = new Nodo<>(4);
+        Nodo<Integer> a4 = new Nodo<>(6);
+        Nodo<Integer> a3 = new Nodo<>(a1,a2,5);
         assertDoesNotThrow(()->a3.setDerecha(a4));
         assertEquals(a4,a3.getDerecha(), "Los nodos derecha no son iguales");
 
@@ -28,20 +28,20 @@ class NodoTest {
 
     @Test
     void getIzquierda() {
-        Nodo a1 = new Nodo<>(3);
-        Nodo a2 = new Nodo<>(4);
-        Nodo a4 = new Nodo<>(6);
-        Nodo a3 = new Nodo<>(a1,a2,5);
+        Nodo<Integer> a1 = new Nodo<>(3);
+        Nodo<Integer> a2 = new Nodo<>(4);
+        Nodo<Integer> a4 = new Nodo<>(6);
+        Nodo<Integer> a3 = new Nodo<>(a1,a2,5);
         assertDoesNotThrow(()->a3.setIzquierda(a4));
         assertEquals(a4,a3.getIzquierda(), "Los nodos izquierda no son iguales");
     }
 
     @Test
     void setIzquierda() {
-        Nodo a1 = new Nodo<>(3);
-        Nodo a2 = new Nodo<>(4);
-        Nodo a4 = new Nodo<>(6);
-        Nodo a3 = new Nodo<>(a1,a2,5);
+        Nodo<Integer> a1 = new Nodo<>(3);
+        Nodo<Integer> a2 = new Nodo<>(4);
+        Nodo<Integer> a4 = new Nodo<>(6);
+        Nodo<Integer> a3 = new Nodo<>(a1,a2,5);
         assertDoesNotThrow(()->a3.setIzquierda(a4));
         assertEquals(a4,a3.getIzquierda(), "Los nodos izquierda no son iguales");
     }

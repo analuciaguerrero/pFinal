@@ -4,28 +4,28 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.example.demojavafx.excepciones.*;
-class NodoTest {
+class NodoAVLTest {
     @Test
     void alturaNodo() {
-        Nodo<Integer> nodo1 = new Nodo<>(3);
-        nodo1.setNodoDch(new Nodo<>(5));
-        nodo1.getNodoDch().setNodoDch(new Nodo<>(7));
+        NodoAVL<Integer> nodo1 = new NodoAVL<>(3);
+        nodo1.setNodoDch(new NodoAVL<>(5));
+        nodo1.getNodoDch().setNodoDch(new NodoAVL<>(7));
         assertEquals(3, nodo1.alturaNodo(nodo1));
     }
 
     @Test
     void getGrado() {
-        Nodo<Integer> nodo1 = new Nodo<>(3);
+        NodoAVL<Integer> nodo1 = new NodoAVL<>(3);
         assertEquals(0, nodo1.getGrado());
-        nodo1.setNodoDch(new Nodo<>(5));
+        nodo1.setNodoDch(new NodoAVL<>(5));
         assertEquals(1, nodo1.getGrado());
-        nodo1.setNodoIzq(new Nodo<>(2));
+        nodo1.setNodoIzq(new NodoAVL<>(2));
         assertEquals(2, nodo1.getGrado());
     }
 
     @Test
     void del() {
-        Nodo<Integer> nodo1 = new Nodo<>(30);
+        NodoAVL<Integer> nodo1 = new NodoAVL<>(30);
         Integer[] listaDatosAñadir = new Integer[]{60, 10, 50, 40, 12, 20, 45, 42, 6, 59, 63};
         int contador1 = 0;
         while (listaDatosAñadir.length > contador1) {
@@ -51,7 +51,7 @@ class NodoTest {
 
     @Test
     void add() {
-        Nodo<Integer> nodo1 = new Nodo<>(30);
+        NodoAVL<Integer> nodo1 = new NodoAVL<>(30);
         try {
             nodo1.add(nodo1, 60);
             nodo1.add(nodo1, 10);
@@ -71,42 +71,42 @@ class NodoTest {
 
     @Test
     void getDato() {
-        Nodo<Integer> nodo1 = new Nodo<>();
+        NodoAVL<Integer> nodo1 = new NodoAVL<>();
         assertNull(nodo1.getDato());
     }
 
     @Test
     void setDato() {
-        Nodo<String> nodo1 = new Nodo<>();
+        NodoAVL<String> nodo1 = new NodoAVL<>();
         nodo1.setDato("Hola");
         assertEquals("Hola", nodo1.getDato());
     }
 
     @Test
     void getNodoIzq() {
-        Nodo<String> nodo1 = new Nodo<>("Hola");
-        nodo1.setNodoIzq(new Nodo<>("Adios"));
+        NodoAVL<String> nodo1 = new NodoAVL<>("Hola");
+        nodo1.setNodoIzq(new NodoAVL<>("Adios"));
         assertEquals("Adios", nodo1.getNodoIzq().getDato());
     }
 
     @Test
     void setNodoIzq() {
-        Nodo<String> nodo1 = new Nodo<>("Hola");
-        nodo1.setNodoIzq(new Nodo<>("Adios"));
+        NodoAVL<String> nodo1 = new NodoAVL<>("Hola");
+        nodo1.setNodoIzq(new NodoAVL<>("Adios"));
         assertEquals("Adios", nodo1.getNodoIzq().getDato());
     }
 
     @Test
     void getNodoDch() {
-        Nodo<String> nodo1 = new Nodo<>("Hola");
-        nodo1.setNodoDch(new Nodo<>("Adios"));
+        NodoAVL<String> nodo1 = new NodoAVL<>("Hola");
+        nodo1.setNodoDch(new NodoAVL<>("Adios"));
         assertEquals("Adios", nodo1.getNodoDch().getDato());
     }
 
     @Test
     void setNodoDch() {
-        Nodo<String> nodo1 = new Nodo<>("Hola");
-        nodo1.setNodoDch(new Nodo<>("Adios"));
+        NodoAVL<String> nodo1 = new NodoAVL<>("Hola");
+        nodo1.setNodoDch(new NodoAVL<>("Adios"));
         assertEquals("Adios", nodo1.getNodoDch().getDato());
     }
 }
