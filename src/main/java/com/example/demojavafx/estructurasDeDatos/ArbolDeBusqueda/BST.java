@@ -2,7 +2,7 @@ package com.example.demojavafx.estructurasDeDatos.ArbolDeBusqueda;
 import com.example.demojavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 
 public class BST<TipoDeDatos>{
-    Nodo<TipoDeDatos> raiz;
+    public Nodo<TipoDeDatos> raiz;
     public BST(Nodo<TipoDeDatos> raiz, Nodo<TipoDeDatos> derecha, Nodo<TipoDeDatos> izquierda) {
         this.raiz = raiz;
         this.raiz.setDerecha(derecha);

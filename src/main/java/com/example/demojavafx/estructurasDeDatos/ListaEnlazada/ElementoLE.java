@@ -16,7 +16,7 @@ public class ElementoLE<TipoDelDato> {
     public void setSiguiente(ElementoLE<TipoDelDato> siguiente) {
         this.siguiente = siguiente;
     }
-    protected void insertarmeEn(ElementoLE<TipoDelDato> el){ //Si no pone nada es void
+    public void insertarmeEn(ElementoLE<TipoDelDato> el){ //Si no pone nada es void
         el.siguiente= this.siguiente;
         this.siguiente=el;
     }

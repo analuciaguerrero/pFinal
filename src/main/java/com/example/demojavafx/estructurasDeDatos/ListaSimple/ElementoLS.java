@@ -1,17 +1,18 @@
 package com.example.demojavafx.estructurasDeDatos.ListaSimple;
 
-public class ElementoLS {
-    private Object data;
-    protected ElementoLS siguiente;
-    public ElementoLS(Object data){
-        this.data=data;
-        this.siguiente = null;
+public class ElementoLS<TipoDelDato> {
+    TipoDelDato data;
+
+    public ElementoLS(TipoDelDato dato) {
+        this.setData(dato);
     }
-    public Object getData() {
+
+    public TipoDelDato getData() {
         return data;
     }
-    public Object setData(Object data) {
-        this.data = data;
-        return this.data;
+
+    public void setData(TipoDelDato a) {
+        this.data = a;
     }
 }
+

@@ -1,5 +1,8 @@
 package com.example.demojavafx.estudiante;
 
+import com.example.demojavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
+import com.example.demojavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
+import com.example.demojavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demojavafx.zombieStudentsLife.Celda;
 
 import java.util.Random;
@@ -14,6 +17,7 @@ public abstract class Estudiante {
     private double probReproduccion;
     private double probClonacion;
     private double probMuerte;
+    BST<Estudiante> arbolGenealogico;
 
     public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
         this.id = id;
@@ -25,6 +29,20 @@ public abstract class Estudiante {
         this.posicionM = posicionM;
         this.posicionN = posicionN;
         this.vivo = true;
+        this.arbolGenealogico = new BST<>();
+        this.arbolGenealogico.raiz = new Nodo<>(this);
+    }
+    public Estudiante(int id) {
+        this.id = id;
+        this.arbolGenealogico = new BST<>();
+        this.arbolGenealogico.raiz = new Nodo<>(this);
+    }
+
+    public Estudiante(int id, int tiempoDeVida) {
+        this.id = id;
+        this.tiempoDeVida = tiempoDeVida;
+        this.arbolGenealogico = new BST<>();
+        this.arbolGenealogico.raiz = new Nodo<>(this);
     }
 
     public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
@@ -34,6 +52,8 @@ public abstract class Estudiante {
         this.probReproduccion = probReproduccion;
         this.probClonacion = probClonacion;
         this.probMuerte = probMuerte;
+        this.arbolGenealogico = new BST<>();
+        this.arbolGenealogico.raiz = new Nodo<>(this);
     }
 
     public int getPosicionN() {
@@ -122,7 +142,7 @@ public abstract class Estudiante {
         probMuerte = 1 - probReproduccion;
     }
 
-    public abstract void mover(Celda[][] tablero);
+    public abstract void mover(ListaEnlazada<Celda> tablero);
 
     public boolean puedeReproducirse() {
         return tiempoDeVida > 0 && probReproduccion > 0;
@@ -136,6 +156,14 @@ public abstract class Estudiante {
         Random rand = new Random();
         return rand.nextDouble() >= probMuerte;
     }
+    public BST<Estudiante> getArbolGenealogico() {
+        return arbolGenealogico;
+    }
+
+    public void setArbolGenealogico(BST<Estudiante> arbolGenealogico) {
+        this.arbolGenealogico = arbolGenealogico;
+    }
+
 }
 
 

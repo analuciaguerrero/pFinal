@@ -115,7 +115,6 @@ public class Nodo<TipoDelDato>{
             } else {
                 nodo.setNodoDch(new Nodo<>(dato));
             }
-
         }
     }
 
@@ -202,4 +201,3 @@ public class Nodo<TipoDelDato>{
         this.nodoDch = nodoDch;
     }
 }
-

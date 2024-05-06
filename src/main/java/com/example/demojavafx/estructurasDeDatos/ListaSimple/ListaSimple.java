@@ -1,18 +1,29 @@
 package com.example.demojavafx.estructurasDeDatos.ListaSimple;
 
-public class ListaSimple {
-    protected ElementoLS[] datos;
+public class ListaSimple<TipoDeldato> {
+    protected ElementoLS<TipoDeldato>[] datos;
 
-    private Integer maximo = 9;
-
-    //////////////
+    private Integer maximo = 10000;
 
     public ListaSimple() {
         this.datos = new ElementoLS[maximo];
     }
 
-    ////////////////
+    public ListaSimple(TipoDeldato a) {
+        this.datos = new ElementoLS[maximo];
+        datos[0] = new ElementoLS<>(a);
+    }
 
+    public ListaSimple<TipoDeldato> copiaLista(){
+        ListaSimple<TipoDeldato> nuevaLista = new ListaSimple<>();
+        Integer contador=0;
+        while (contador<this.getNumeroElementos()){
+            nuevaLista.add(datos[contador].getData());
+            contador++;
+        }
+        nuevaLista.setMaximo(this.maximo);
+        return nuevaLista;
+    }
     public Integer getMaximo() {
         return maximo;
     }
@@ -34,52 +45,12 @@ public class ListaSimple {
         }
     }
 
-    private Integer add(ElementoLS el) {
-        Integer i = 0;
-        while (i < maximo && datos[i] != null) {
+    public void add(TipoDeldato el) {
+        int i = 0;
+        while (datos[i] != null) {
             i++;
         }
-        datos[i] = el;
-        return getNumeroElementos();
-    }
-
-    public void add(String s) {
-        ElementoLS elem = new ElementoLS(s);
-        add(elem);
-    }
-
-    public void add(Object o) {
-        ElementoLS elem = new ElementoLS(o);
-        add(elem);
-    }
-
-    private void insert(ElementoLS el, Integer pos) {
-        if (pos >= 0 && pos <= getNumeroElementos()) {  // Comprobar que la posición sea válida
-            if (pos == getNumeroElementos()) {
-                add(el);
-            } else {
-                Integer elementosIniciales = getNumeroElementos();
-                ElementoLS SiguienteElemento = datos[pos];
-                datos[pos] = el;
-                pos++;
-                while (elementosIniciales == getNumeroElementos()) {
-                    ElementoLS nextEl = datos[pos];
-                    datos[pos] = SiguienteElemento;
-                    SiguienteElemento = nextEl;
-                    pos++;
-                }
-            }
-        }
-    }
-
-    public void insert(String s, Integer pos) {
-        ElementoLS elem = new ElementoLS(s);
-        insert(elem, pos);
-    }
-
-    public void insert(Object o, Integer pos) {
-        ElementoLS elem = new ElementoLS(o);
-        insert(elem, pos);
+        datos[i] = new ElementoLS<>(el);
     }
 
     public int del(int pos) {
@@ -94,11 +65,11 @@ public class ListaSimple {
         return num_elem - 1;
     }
 
-    public Integer getPosicion(ElementoLS el) {
-        Integer cont = 0;
+    public Integer getPosicion(TipoDeldato el) {
+        int cont = 0;
         Integer posicion = null;
         while (cont < maximo && datos[cont] != null) {
-            if (datos[cont].getData() == el.getData()) {
+            if (datos[cont].getData() == el) {
                 posicion = cont;
             }
             cont++;
@@ -106,13 +77,13 @@ public class ListaSimple {
         return posicion;
     }
 
-    public ElementoLS getPrimero() {
+    public ElementoLS<TipoDeldato> getPrimero() {
         return datos[0];
     }
 
-    public ElementoLS getUltimo() {
+    public ElementoLS<TipoDeldato> getUltimo() {
         if (!isVacia()) {
-            Integer contador = 0;
+            int contador = 0;
             while (datos[contador] != null && contador < maximo) {
                 contador++;
             }
@@ -122,8 +93,8 @@ public class ListaSimple {
         }
     }
 
-    private ElementoLS getSiguiente(ElementoLS el) {
-        ElementoLS devolver = null;
+    private ElementoLS<TipoDeldato> getSiguiente(ElementoLS<TipoDeldato> el) {
+        ElementoLS<TipoDeldato> devolver = null;
         for (int i = 0; i < maximo; i++) {
             if (datos[i] != null && datos[i + 1] != null && datos[i].getData() == el.getData())
                 devolver = datos[i + 1];
@@ -131,7 +102,7 @@ public class ListaSimple {
         return devolver;
     }
 
-    public ElementoLS getElemento(int pos) {
+    public ElementoLS<TipoDeldato> getElemento(int pos) {
         if (pos < maximo && pos >= 0) {
             return datos[pos];
         } else {
@@ -143,13 +114,38 @@ public class ListaSimple {
         if (datos[0]==null) {
             return 0;
         } else {
-            Integer contador = 1;
-            ElementoLS el = datos[contador-1];
+            int contador = 1;
+            ElementoLS<TipoDeldato> el = datos[contador-1];
             while (this.getSiguiente(el) != null) {
                 el=this.getSiguiente(el);
                 contador++;
             }
             return contador;
         }
+    }
+
+    public ListaSimple<TipoDeldato> voltear() {
+        ListaSimple<TipoDeldato> nuevaLista = new ListaSimple<>();
+        Integer contador=this.getNumeroElementos()-1;
+        while (contador>=0){
+            nuevaLista.add(this.getElemento(contador).getData());
+            contador--;
+        }
+        return nuevaLista;
+    }
+
+    @Override
+    public String toString() {
+        int contador = 0;
+        StringBuilder lista = new StringBuilder("[");
+        while (contador < this.getNumeroElementos()) {
+            if (this.getElemento(contador + 1) != null) {
+                lista.append(this.getElemento(contador).getData()).append(", ");
+            } else {
+                lista.append(this.getElemento(contador).getData()).append("]");
+            }
+            contador++;
+        }
+        return lista.toString();
     }
 }

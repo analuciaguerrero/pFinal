@@ -9,6 +9,7 @@ module com.example.demojavafx {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
     requires java.logging;
+    requires com.google.gson;
 
 
     opens com.example.demojavafx to javafx.fxml;

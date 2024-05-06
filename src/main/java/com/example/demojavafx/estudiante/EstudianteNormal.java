@@ -1,6 +1,7 @@
 package com.example.demojavafx.estudiante;
 
-import com.example.demojavafx.entorno.Recursos;
+import com.example.demojavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
+import com.example.demojavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demojavafx.zombieStudentsLife.Celda;
 
 import java.util.Random;
@@ -11,7 +12,7 @@ public class EstudianteNormal extends Estudiante {
     }
 
     @Override
-    public void mover(Celda[][] tablero) {
+    public void mover(ListaEnlazada<Celda> tablero) {
         Random rand = new Random();
         int filaActual = getPosicionN();
         int columnaActual = getPosicionM();
@@ -34,12 +35,23 @@ public class EstudianteNormal extends Estudiante {
         }
 
         // Verificar si la nueva posición es válida
-        if (filaActual >= 0 && filaActual < tablero.length && columnaActual >= 0 && columnaActual < tablero[0].length) {
+        if (filaActual >= 0 && filaActual < tablero.getNumeroElementos()) {
             // Mover el estudiante a la nueva posición
-            tablero[getPosicionN()][getPosicionM()].eliminarEstudiante(this);
-            setPosicionN(filaActual);
-            setPosicionM(columnaActual);
-            tablero[getPosicionN()][getPosicionM()].agregarEstudiante(this);
+            ElementoLE<Celda> elementoActual = tablero.getElemento(filaActual);
+            ElementoLE<Celda> elementoAnterior = null;
+            for (int i = 0; i < columnaActual; i++) {
+                elementoAnterior = elementoActual;
+                elementoActual = elementoActual.getSiguiente();
+            }
+            if (elementoAnterior != null) {
+                elementoAnterior.setSiguiente(elementoActual.getSiguiente());
+                elementoActual.getSiguiente().setData(elementoAnterior.getData());
+            } else {
+                tablero.getPrimero().setSiguiente(elementoActual.getSiguiente());
+            }
+            ElementoLE<Celda> nuevoElemento = new ElementoLE<>(elementoActual.getData());
+            nuevoElemento.setSiguiente(tablero.getElemento(filaActual + 1));
+            tablero.getElemento(filaActual + 1).setSiguiente(nuevoElemento);
         }
     }
 

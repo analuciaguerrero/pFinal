@@ -12,8 +12,6 @@ public class Nodo<TipoDelDato>{
         this.dato = dato;
     }
 
-
-
     public Nodo(TipoDelDato dato) {
         this.dato = dato;
     }
@@ -58,4 +56,3 @@ public class Nodo<TipoDelDato>{
         return n.getDerecha()== null && n.getIzquierda()==null;
     }
 }
-

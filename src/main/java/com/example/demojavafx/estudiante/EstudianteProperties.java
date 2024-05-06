@@ -27,9 +27,9 @@ public class EstudianteProperties {
 
     public void rollback() {
         tiempoDeVida.set(origen.getTiempoDeVida());
-        probReproduccion.set(origen.getProbReproduccion());
-        probClonacion.set(origen.getProbClonacion());
-        probMuerte.set(origen.getProbMuerte());
+        probReproduccion.set((int)origen.getProbReproduccion());
+        probClonacion.set((int)origen.getProbClonacion());
+        probMuerte.set((int)origen.getProbMuerte());
     }
 
     public void commit() {
