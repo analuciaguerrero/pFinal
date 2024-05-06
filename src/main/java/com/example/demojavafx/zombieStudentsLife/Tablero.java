@@ -4,6 +4,8 @@ import com.example.demojavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demojavafx.estudiante.Estudiante;
 import com.example.demojavafx.entorno.*;
 import com.example.demojavafx.excepciones.MasDe3Estudiantes;
+import com.example.demojavafx.excepciones.MasDe3Recursos;
+
 import java.util.Random;
 public class Tablero {
     protected int tamañoN;
@@ -66,10 +68,10 @@ public class Tablero {
                     // Agregar el nuevo estudiante a la celda
                     int indiceCelda = rand.nextInt(celdas.getNumeroElementos());
                     ElementoLE<Celda> celda = celdas.getElemento(indiceCelda);
-                    if (celda.getListaEstudiantes().getNumeroElementos() < maxEstudiantesPorCelda) {
-                        celda.agregarEstudiante(nuevoEstudiante);
+                    if (celda.getData().getListaEstudiantes().getNumeroElementos() < maxEstudiantesPorCelda) {
+                        celda.getData().getListaEstudiantes().add(nuevoEstudiante);
                     } else {
-                        System.out.println("No se pudo agregar un nuevo estudiante: Máximo de estudiantes alcanzado en la celda.");
+                        throw new MasDe3Estudiantes(celda.getData().getListaEstudiantes());
                     }
                 }
             }
@@ -77,6 +79,7 @@ public class Tablero {
             System.out.println("No se pudo agregar un nuevo estudiante: " + e.getMessage());
         }
     }
+
     private Estudiante obtenerEstudianteEnIndice(int indice) {
         // Obtener el estudiante en la posición dada
         int contador = 0;
@@ -93,14 +96,26 @@ public class Tablero {
 
     public void evaluarClonacion() {
         ElementoLE<Celda> nodoCelda = celdas.getPrimero();
+        Random rand = new Random();
         while (nodoCelda != null) {
             Estudiante estudiante = nodoCelda.getData().obtenerEstudianteAleatorio();
             if (estudiante != null && Math.random() < estudiante.getProbClonacion()) {
                 try {
                     // Clonar el estudiante
                     Estudiante clon = estudiante.clonar();
-                    // Agregar el clon a la celda
-                    agregarEstudiante(clon);
+
+                    // Insertar el clon en la lista de estudiantes de la celda
+                    ListaEnlazada<Estudiante> listaEstudiantes = nodoCelda.getData().getListaEstudiantes();
+                    if (listaEstudiantes.getNumeroElementos() < maxEstudiantesPorCelda) {
+                        ElementoLE<Estudiante> nuevoElemento = new ElementoLE<>(clon);
+                        if (listaEstudiantes.isVacia()) {
+                            listaEstudiantes.getEl().insertarmeEn(nuevoElemento);
+                        } else {
+                            listaEstudiantes.getUltimo().insertarmeEn(nuevoElemento);
+                        }
+                    } else {
+                        throw new MasDe3Estudiantes(listaEstudiantes);
+                    }
                 } catch (MasDe3Estudiantes e) {
                     System.out.println("No se pudo clonar al estudiante: " + e.getMessage());
                 }
@@ -108,6 +123,7 @@ public class Tablero {
             nodoCelda = nodoCelda.getSiguiente();
         }
     }
+
     public void evaluarDesaparicionEstudiantes() {
         if (celdas.getNumeroElementos() > maxEstudiantesPorCelda) {
             // Eliminar estudiantes si hay más de los máximos permitidos por celda
@@ -122,10 +138,8 @@ public class Tablero {
         }
     }
 
-    private Recursos generarNuevoRecurso() {
+    private Recursos generarNuevoRecurso(double probabilidad) {
         Random rand = new Random();
-        double probabilidad = rand.nextDouble(); // Genera un número aleatorio entre 0 y 1
-
         // Calcula el tipo de recurso basado en las probabilidades
         if (probabilidad < probAgua) {
             return new Agua(rand.nextInt(), 2);
@@ -138,26 +152,28 @@ public class Tablero {
         } else if (probabilidad < probAgua + probComida + probMontaña + probTesoro + probBiblioteca) {
             return new Biblioteca(rand.nextInt(), 0.25);
         } else {
-            return new Pozo(generarNuevoRecurso().getTurnosRestantes());
+            return new Pozo(generarNuevoRecurso(rand.nextDouble()).getTurnosRestantes());
         }
     }
-    public void evaluarAparicionRecursos() {
+
+    public void evaluarAparicionRecursos() throws MasDe3Recursos {
         Random rand = new Random();
         for (int i = 0; i < tamañoN; i++) {
             for (int j = 0; j < tamañoM; j++) {
                 double probabilidad = rand.nextDouble();
-                if (probabilidad < probAgua) {
-                    celdas.agregarRecurso(new Agua());
-                } else if (probabilidad < probAgua + probComida) {
-                    celdas[i][j].agregarRecurso(new Comida());
-                } else if (probabilidad < probAgua + probComida + probMontaña) {
-                    celdas[i][j].agregarRecurso(new Montaña());
-                } else if (probabilidad < probAgua + probComida + probMontaña + probTesoro) {
-                    celdas[i][j].agregarRecurso(new Tesoro());
-                } else if (probabilidad < probAgua + probComida + probMontaña + probTesoro + probBiblioteca) {
-                    celdas[i][j].agregarRecurso(new Biblioteca());
+                Recursos nuevoRecurso = generarNuevoRecurso(probabilidad);
+
+                // Insertar el nuevo recurso en la lista de recursos de la celda
+                ListaEnlazada<Recursos> listaRecursos = celdas.getElemento(i * tamañoM + j).getData().getListaRecursos();
+                if (listaRecursos.getNumeroElementos() < maxRecursosPorCelda) {
+                    ElementoLE<Recursos> nuevoElemento = new ElementoLE<>(nuevoRecurso);
+                    if (listaRecursos.isVacia()) {
+                        listaRecursos.getEl().insertarmeEn(nuevoElemento);
+                    } else {
+                        listaRecursos.getUltimo().insertarmeEn(nuevoElemento);
+                    }
                 } else {
-                    celdas[i][j].agregarRecurso(new Pozo());
+                    throw new MasDe3Recursos(listaRecursos);
                 }
             }
         }
