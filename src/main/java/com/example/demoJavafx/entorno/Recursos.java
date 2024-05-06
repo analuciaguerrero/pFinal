@@ -11,6 +11,9 @@ public abstract class Recursos {
     public int getTurnosRestantes() {
         return turnosRestantes;
     }
+    public void actualizarRecursos(){
+        turnosRestantes--;
+    }
 
     public void setTurnosRestantes(int turnosRestantes) {
         this.turnosRestantes = turnosRestantes;

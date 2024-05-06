@@ -3,6 +3,9 @@ import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.entorno.*;
+import com.example.demoJavafx.estudiante.EstudianteAvanzado;
+import com.example.demoJavafx.estudiante.EstudianteBasico;
+import com.example.demoJavafx.estudiante.EstudianteNormal;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
 
@@ -178,4 +181,73 @@ public class Tablero {
             }
         }
     }
+    public void actualizarTiempoDeVida() {
+        ElementoLE<Celda> nodoCelda = celdas.getPrimero();
+        while (nodoCelda != null) {
+            Celda celda = nodoCelda.getData();
+            ListaEnlazada<Estudiante> listaEstudiantes = celda.getListaEstudiantes();
+            ElementoLE<Estudiante> nodoEstudiante = listaEstudiantes.getPrimero();
+            int posicion = 1; // Posición del estudiante en la lista
+            while (nodoEstudiante != null) {
+                Estudiante estudiante = nodoEstudiante.getData();
+                estudiante.actualizar();
+                if (estudiante.getTiempoDeVida() <= 0) {
+                    // Eliminar estudiante si su tiempo de vida llega a cero o menos
+                    listaEstudiantes.delete(posicion);
+                } else {
+                    posicion++; // Incrementar la posición si no se elimina el estudiante
+                }
+                nodoEstudiante = nodoEstudiante.getSiguiente();
+            }
+            nodoCelda = nodoCelda.getSiguiente();
+        }
+    }
+    public void evaluarEliminacionRecursos() {
+        ElementoLE<Celda> nodoCelda = celdas.getPrimero();
+        while (nodoCelda != null) {
+            Celda celda = nodoCelda.getData();
+            ListaEnlazada<Recursos> listaRecursos = celda.getListaRecursos();
+            ElementoLE<Recursos> nodoRecurso = listaRecursos.getPrimero();
+            int posicion = 1; // Posición del recurso en la lista
+            while (nodoRecurso != null) {
+                Recursos recurso = nodoRecurso.getData();
+                recurso.actualizarRecursos(); // Disminuir el contador de turnos restantes
+                if (recurso.getTurnosRestantes() <= 0) {
+                    // Eliminar recurso si los turnos restantes llegan a cero o menos
+                    listaRecursos.delete(posicion);
+                } else {
+                    posicion++; // Incrementar la posición si no se elimina el recurso
+                }
+                nodoRecurso = nodoRecurso.getSiguiente();
+            }
+            nodoCelda = nodoCelda.getSiguiente();
+        }
+    }
+    public void moverEstudiantes() {
+        ElementoLE<Celda> nodoCelda = celdas.getPrimero();
+        while (nodoCelda != null) {
+            Celda celda = nodoCelda.getData();
+            ListaEnlazada<Estudiante> listaEstudiantes = celda.getListaEstudiantes();
+            ElementoLE<Estudiante> nodoEstudiante = listaEstudiantes.getPrimero();
+            while (nodoEstudiante != null) {
+                Estudiante estudiante = nodoEstudiante.getData();
+                estudiante.mover(celdas);
+
+                // Verificar el tipo de estudiante para actualizar la posición
+                if (estudiante instanceof EstudianteBasico) {
+                    EstudianteBasico estudianteBasico = (EstudianteBasico) estudiante;
+                    estudianteBasico.mover(celdas);
+                } else if (estudiante instanceof EstudianteNormal) {
+                    EstudianteNormal estudianteNormal = (EstudianteNormal) estudiante;
+                    estudianteNormal.mover(celdas);
+                } else if (estudiante instanceof EstudianteAvanzado) {
+                    EstudianteAvanzado estudianteAvanzado = (EstudianteAvanzado) estudiante;
+                    estudianteAvanzado.mover(celdas);
+                }
+                nodoEstudiante = nodoEstudiante.getSiguiente();
+            }
+            nodoCelda = nodoCelda.getSiguiente();
+        }
+    }
+
 }
