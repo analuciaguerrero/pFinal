@@ -19,14 +19,14 @@ public class ParameterBibliotecaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoPorcentajeClon(aumentoPorentajeClon.get());
-        original.setProbBiblio(probBilio.get());
+        //original.setAumentoPorcentajeClon(aumentoPorentajeClon.get());
+        //original.setProbBiblio(probBilio.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoPorentajeClon.set(original.getAumentoPorcentajeClon());
-        probBilio.set(original.getProbBiblio());
+        //aumentoPorentajeClon.set(original.getAumentoPorcentajeClon());
+        //probBilio.set(original.getProbBiblio());
     }
 
     public Biblioteca getOriginal() {

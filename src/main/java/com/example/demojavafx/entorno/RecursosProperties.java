@@ -22,15 +22,15 @@ public class RecursosProperties {
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        posN.set(original.getPosN());
-        posM.set(original.getPosM());
-        probNuevoRecurso.set(original.getProbNuevoRecurso());
+        //posN.set(original.getPosN());
+        //posM.set(original.getPosM());
+        //probNuevoRecurso.set(original.getProbNuevoRecurso());
     }
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setPosN(posN.get());
-        original.setPosM(posM.get());
-        original.setProbNuevoRecurso(probNuevoRecurso.get());
+        //original.setPosN(posN.get());
+        //original.setPosM(posM.get());
+        //original.setProbNuevoRecurso(probNuevoRecurso.get());
 
     }
     public Property<Number> turnosRestantesProperty() {

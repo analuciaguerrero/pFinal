@@ -19,14 +19,14 @@ public class ParameterTesoroProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoPorcentajeRep(aumentoPorcentajeRep.get());
-        original.setProbTesoro(probTesoro.get());
+        //original.setAumentoPorcentajeRep(aumentoPorcentajeRep.get());
+        //original.setProbTesoro(probTesoro.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoPorcentajeRep.set(original.getAumentoPorcentajeRep());
-        probTesoro.set(original.getProbTesoro());
+        //aumentoPorcentajeRep.set(original.getAumentoPorcentajeRep());
+        //probTesoro.set(original.getProbTesoro());
     }
 
     public Tesoro getOriginal() {

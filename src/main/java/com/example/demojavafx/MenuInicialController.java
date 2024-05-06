@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -25,14 +26,7 @@ public class MenuInicialController {
         try {
             // Cargar el archivo FXML de la nueva ventana
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
-            Pane root = fxmlLoader.load();
-
-            // Crear un ImageView con la imagen de fondo
-            Image backgroundImage = new Image("file:/home/ana/IdeaProjects/pFinal/src/main/java/com/example/demojavafx/imagenes/fondo.jpg");
-            ImageView backgroundImageView = new ImageView(backgroundImage);
-
-            // Añadir la imagen de fondo al contenedor principal
-            root.getChildren().add(backgroundImageView);
+            AnchorPane root = fxmlLoader.load();
 
             // Obtener el Stage de la escena actual
             Stage currentStage = (Stage) buttonPlay.getScene().getWindow();
@@ -42,6 +36,7 @@ public class MenuInicialController {
 
             // Establecer la nueva escena en el Stage actual
             currentStage.setScene(newScene);
+            currentStage.show(); // Mostrar la nueva ventana
 
         } catch (IOException e) {
             e.printStackTrace();

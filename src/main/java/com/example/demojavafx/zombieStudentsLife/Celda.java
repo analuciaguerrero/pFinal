@@ -9,6 +9,7 @@ import com.example.demojavafx.excepciones.MasDe3Recursos;
 import java.util.Random;
 import static com.example.demojavafx.zombieStudentsLife.Tablero.*;
 
+
 public class Celda {
     private ListaEnlazada<Estudiante> listaEstudiantes;
     private ListaEnlazada<Recursos> listaRecursos;

@@ -20,14 +20,14 @@ public class ParameterComidaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setAumentoVida(aumentoVida.get());
-        original.setProbComida(probComida.get());
+        //original.setAumentoVida(aumentoVida.get());
+        //original.setProbComida(probComida.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoVida.set(original.getAumentoVida());
-        probComida.set(original.getProbComida());
+        //aumentoVida.set(original.getAumentoVida());
+        //probComida.set(original.getProbComida());
     }
 
     public Comida getOriginal() {

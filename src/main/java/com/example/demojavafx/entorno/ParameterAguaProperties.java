@@ -17,14 +17,14 @@ public class ParameterAguaProperties {
 
     public void commit(){
         originalAgua.setTurnosRestantes(turnosRestantes.get());
-        originalAgua.setAumentoVida(aumentoVida.get());
-        originalAgua.setProbAgua(probAgua.get());
+        //originalAgua.setAumentoVida(aumentoVida.get());
+        //originalAgua.setProbAgua(probAgua.get());
     }
 
     public void rollback(){
         turnosRestantes.set(originalAgua.getTurnosRestantes());
-        aumentoVida.set(originalAgua.getAumentoVida());
-        probAgua.set(originalAgua.getProbAgua());
+        //aumentoVida.set(originalAgua.getAumentoVida());
+        //probAgua.set(originalAgua.getProbAgua());
     }
 
     public Agua getOriginalAgua() {

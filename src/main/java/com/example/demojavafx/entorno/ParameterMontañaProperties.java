@@ -20,14 +20,14 @@ public class ParameterMontañaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setDisminucionVida(disminucionVida.get());
-        original.setProbMontaña(probMontaña.get());
+        //original.setDisminucionVida(disminucionVida.get());
+        //original.setProbMontaña(probMontaña.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        disminucionVida.set(original.getDisminucionVida());
-        probMontaña.set(original.getProbMontaña());
+        //disminucionVida.set(original.getDisminucionVida());
+        //probMontaña.set(original.getProbMontaña());
     }
 
     public Montaña getOriginal() {

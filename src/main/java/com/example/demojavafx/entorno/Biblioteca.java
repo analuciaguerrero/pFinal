@@ -1,7 +1,7 @@
 package com.example.demojavafx.entorno;
 
 import com.example.demojavafx.estudiante.Estudiante;
-import com.example.demojavafx.estudiante.EstudianteAvanzado;
+//import com.example.demojavafx.estudiante.EstudianteAvanzado;
 import com.example.demojavafx.estudiante.EstudianteBasico;
 import com.example.demojavafx.estudiante.EstudianteNormal;
 
@@ -36,12 +36,12 @@ public class Biblioteca extends Recursos{
                 }
                 break;
             case 3:
-                if (!(estudiante instanceof EstudianteAvanzado)) {
+                //if (!(estudiante instanceof EstudianteAvanzado)) {
                     // Convertir a individuo avanzado
-                    estudiante = new EstudianteAvanzado(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
+                    //estudiante = new EstudianteAvanzado(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
                 }
-                break;
+                //break;
         }
     }
-}
+
 

@@ -19,12 +19,12 @@ public class ParameterPozoProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        original.setProbPozo(probPozo.get());
+        //original.setProbPozo(probPozo.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        probPozo.set(original.getProbPozo());
+        //probPozo.set(original.getProbPozo());
     }
 
     public Pozo getOriginal() {
