@@ -18,7 +18,6 @@
                 <ImageView fitWidth="1835" preserveRatio="true">
                     <image>
                         <Image url="@imagenes/fondo.jpg" />
-
                     </image>
                 </ImageView>
          </children>
