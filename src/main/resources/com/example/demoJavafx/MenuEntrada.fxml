@@ -17,7 +17,7 @@
         <ImageView fitWidth="1835" preserveRatio="true" smooth="true">
             <image>
                 <!-- Corregir la ruta de la imagen -->
-                <Image url="file:/home/ana/IdeaProjects/pFinal/src/main/java/com/example/demojavafx/imagenes/entrada.png" />
+                <Image url="entrada.png"/>
             </image>
         </ImageView>
         <Label fx:id="labelNombre" layoutX="667.0" layoutY="331.0" prefHeight="66.0" prefWidth="212.0" text="NOMBRE:" textFill="WHITE">

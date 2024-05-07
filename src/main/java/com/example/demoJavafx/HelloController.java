@@ -108,6 +108,7 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.print("Inicialización en ejecución del controlador\n");
         labelTextoEjemplo.textProperty().bind(texto);
+        miSlider = new Slider();
         miSlider.valueProperty().bindBidirectional(medida);
         labelValorSlider.textProperty().bind(medida.asString());
     }
