@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MenuInicialController {
+public class Menu1InicialController {
 
     @FXML
     private Button buttonPlay;

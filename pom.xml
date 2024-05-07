@@ -117,10 +117,10 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.demoJavafx/com.example.demoJavafx.HelloApplication</mainClass>
+                            <mainClass>com.example.demoJavafx/com.example.demoJavafx.ApplicationMenuInicial</mainClass>
                             <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <linkZipName>app</linkZipName>
+                            <linkImageName>app</linkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
