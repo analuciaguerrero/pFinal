@@ -1,73 +1,102 @@
 package com.example.demoJavafx;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 
 public class MenuPersonalizacionController {
 
     @FXML
-    private ComboBox<String> ComboBoxDificultad;
+    private Spinner<Integer> aguaTurnosRestantesSpinner;
 
     @FXML
-    private Button ButtonCrear;
+    private Spinner<Integer> aguaAumentoVidaSpinner;
 
     @FXML
-    private Button ButtonVolver;
+    private Spinner<Float> aguaProbabilidadSpinner;
 
     @FXML
-    private Button ButtonSalir;
+    private Spinner<Integer> bibliotecaTurnosRestantesSpinner;
 
     @FXML
-    private void handleButtonCrear() {
-        // Assuming you want to hide the current window when creating a new one
-        Stage stage = (Stage) ButtonCrear.getScene().getWindow();
-        stage.hide(); // Hide the current window
-
-        // Show the new window or scene
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
-            Parent root = loader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private Spinner<Float> bibliotecaAumentoClonSpinner;
 
     @FXML
-    private void handleButtonVolver() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
-            Parent root = loader.load();
-            MenuEntradaController controller = loader.getController();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-            // Close the current window
-            Stage currentStage = (Stage) ButtonVolver.getScene().getWindow();
-            currentStage.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private Spinner<Float> bibliotecaProbabilidadSpinner;
 
     @FXML
-    private void handleButtonSalir() {
-        System.exit(0);
-    }
+    private Spinner<Integer> comidaTurnosRestantesSpinner;
 
-    private void closeWindow() {
-        Stage stage = (Stage) ButtonVolver.getScene().getWindow();
-        stage.close();
+    @FXML
+    private Spinner<Integer> comidaAumentoVidaSpinner;
+
+    @FXML
+    private Spinner<Float> comidaProbabilidadSpinner;
+
+    @FXML
+    private Spinner<Integer> montañaTurnosRestantesSpinner;
+
+    @FXML
+    private Spinner<Integer> montañaDisminuciónVidaSpinner;
+
+    @FXML
+    private Spinner<Float> montañaProbabilidadSpinner;
+
+    @FXML
+    private Spinner<Integer> pozoTurnosRestantesSpinner;
+
+    @FXML
+    private Spinner<Float> pozoProbabilidadSpinner;
+
+    @FXML
+    private Spinner<Integer> tesoroTurnosRestantesSpinner;
+
+    @FXML
+    private Spinner<Float> tesoroAumentoRepSpinner;
+
+    @FXML
+    private Spinner<Float> tesoroProbabilidadSpinner;
+
+    @FXML
+    private TextField tamañoTableroTextField;
+
+    @FXML
+    protected void guardarConfiguracion(ActionEvent event) {
+        int aguaTurnosRestantes = aguaTurnosRestantesSpinner.getValue();
+        int aguaAumentoVida = aguaAumentoVidaSpinner.getValue();
+        float aguaProbabilidad = aguaProbabilidadSpinner.getValue();
+
+        int bibliotecaTurnosRestantes = bibliotecaTurnosRestantesSpinner.getValue();
+        float bibliotecaAumentoClon = bibliotecaAumentoClonSpinner.getValue();
+        float bibliotecaProbabilidad = bibliotecaProbabilidadSpinner.getValue();
+
+        int comidaTurnosRestantes = comidaTurnosRestantesSpinner.getValue();
+        int comidaAumentoVida = comidaAumentoVidaSpinner.getValue();
+        float comidaProbabilidad = comidaProbabilidadSpinner.getValue();
+
+        int montañaTurnosRestantes = montañaTurnosRestantesSpinner.getValue();
+        int montañaDisminuciónVida = montañaDisminuciónVidaSpinner.getValue();
+        float montañaProbabilidad = montañaProbabilidadSpinner.getValue();
+
+        int pozoTurnosRestantes = pozoTurnosRestantesSpinner.getValue();
+        float pozoProbabilidad = pozoProbabilidadSpinner.getValue();
+
+        int tesoroTurnosRestantes = tesoroTurnosRestantesSpinner.getValue();
+        float tesoroAumentoRep = tesoroAumentoRepSpinner.getValue();
+        float tesoroProbabilidad = tesoroProbabilidadSpinner.getValue();
+
+        String tamañoTablero = tamañoTableroTextField.getText();
+
+        // Aquí podrías guardar la configuración en un archivo XML, en una base de datos, etc.
+        System.out.println("Configuración guardada:");
+        System.out.println("Agua - Turnos Restantes: " + aguaTurnosRestantes + ", Aumento de Vida: " + aguaAumentoVida + ", Probabilidad: " + aguaProbabilidad);
+        System.out.println("Biblioteca - Turnos Restantes: " + bibliotecaTurnosRestantes + ", Aumento de Clon: " + bibliotecaAumentoClon + ", Probabilidad: " + bibliotecaProbabilidad);
+        System.out.println("Comida - Turnos Restantes: " + comidaTurnosRestantes + ", Aumento de Vida: " + comidaAumentoVida + ", Probabilidad: " + comidaProbabilidad);
+        System.out.println("Montaña - Turnos Restantes: " + montañaTurnosRestantes + ", Disminución de Vida: " + montañaDisminuciónVida + ", Probabilidad: " + montañaProbabilidad);
+        System.out.println("Pozo - Turnos Restantes: " + pozoTurnosRestantes + ", Probabilidad: " + pozoProbabilidad);
+        System.out.println("Tesoro - Turnos Restantes: " + tesoroTurnosRestantes + ", Aumento de Rep: " + tesoroAumentoRep + ", Probabilidad: " + tesoroProbabilidad);
+        System.out.println("Tamaño del Tablero: " + tamañoTablero);
     }
 }
