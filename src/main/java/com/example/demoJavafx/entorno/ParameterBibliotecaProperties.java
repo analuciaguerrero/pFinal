@@ -1,16 +1,13 @@
 package com.example.demoJavafx.entorno;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterBibliotecaProperties {
     protected Biblioteca original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private FloatProperty aumentoPorentajeClon = new SimpleFloatProperty();
-    private FloatProperty probBilio= new SimpleFloatProperty();
+    private DoubleProperty aumentoPorentajeClon = new SimpleDoubleProperty();
+    private DoubleProperty probBilio= new SimpleDoubleProperty();
 
 
     public ParameterBibliotecaProperties(Biblioteca original) {
@@ -19,14 +16,14 @@ public class ParameterBibliotecaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setAumentoPorcentajeClon(aumentoPorentajeClon.get());
-        //original.setProbBiblio(probBilio.get());
+        original.setAumentoProbClonacion(aumentoPorentajeClon.get());
+        original.setProbBiblioteca(probBilio.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //aumentoPorentajeClon.set(original.getAumentoPorcentajeClon());
-        //probBilio.set(original.getProbBiblio());
+        aumentoPorentajeClon.set(original.getAumentoProbClonacion());
+        probBilio.set(original.getProbBiblioteca());
     }
 
     public Biblioteca getOriginal() {
@@ -42,10 +39,10 @@ public class ParameterBibliotecaProperties {
         return turnosRestantes;
     }
 
-    public FloatProperty aumentoPorentajeClonProperty() {
+    public DoubleProperty aumentoPorentajeClonProperty() {
         return aumentoPorentajeClon;
     }
 
-    public FloatProperty probBibliotecaProperty() {return probBilio; }
+    public DoubleProperty probBibliotecaProperty() {return probBilio; }
 }
 

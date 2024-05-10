@@ -1,18 +1,13 @@
 package com.example.demoJavafx.entorno;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterComidaProperties {
     protected Comida original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
     private IntegerProperty aumentoVida = new SimpleIntegerProperty();
-    private FloatProperty probComida = new SimpleFloatProperty();
-
-
+    private DoubleProperty probComida = new SimpleDoubleProperty();
 
     public ParameterComidaProperties(Comida original) {
         setOriginal(original);
@@ -20,14 +15,14 @@ public class ParameterComidaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setAumentoVida(aumentoVida.get());
-        //original.setProbComida(probComida.get());
+        original.setAumentoVida(aumentoVida.get());
+        original.setProbComida(probComida.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //aumentoVida.set(original.getAumentoVida());
-        //probComida.set(original.getProbComida());
+        aumentoVida.set(original.getAumentoVida());
+        probComida.set(original.getProbComida());
     }
 
     public Comida getOriginal() {
@@ -47,6 +42,6 @@ public class ParameterComidaProperties {
         return aumentoVida;
     }
 
-    public FloatProperty probComidaProperty() {return probComida;}
+    public DoubleProperty probComidaProperty() {return probComida;}
 }
 

@@ -7,9 +7,7 @@ public class ParameterAguaProperties {
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
     private IntegerProperty aumentoVida = new SimpleIntegerProperty();
-    private FloatProperty probAgua = new SimpleFloatProperty();
-
-
+    private DoubleProperty probAgua = new SimpleDoubleProperty();
 
     public ParameterAguaProperties(Agua original) {
         setOriginalAgua(original);
@@ -17,14 +15,14 @@ public class ParameterAguaProperties {
 
     public void commit(){
         originalAgua.setTurnosRestantes(turnosRestantes.get());
-        //originalAgua.setAumentoVida(aumentoVida.get());
-        //originalAgua.setProbAgua(probAgua.get());
+        originalAgua.setAumentoVida(aumentoVida.get());
+        originalAgua.setProbAgua(probAgua.get());
     }
 
     public void rollback(){
         turnosRestantes.set(originalAgua.getTurnosRestantes());
-        //aumentoVida.set(originalAgua.getAumentoVida());
-        //probAgua.set(originalAgua.getProbAgua());
+        aumentoVida.set(originalAgua.getAumentoVida());
+        probAgua.set(originalAgua.getProbAgua());
     }
 
     public Agua getOriginalAgua() {
@@ -44,7 +42,7 @@ public class ParameterAguaProperties {
         return aumentoVida;
     }
 
-    public FloatProperty probAguaProperty() {
+    public DoubleProperty probAguaProperty() {
         return probAgua;
     }
 }

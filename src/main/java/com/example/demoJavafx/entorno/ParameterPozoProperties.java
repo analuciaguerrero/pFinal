@@ -1,15 +1,12 @@
 package com.example.demoJavafx.entorno;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterPozoProperties {
     protected Pozo original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private FloatProperty probPozo = new SimpleFloatProperty();
+    private DoubleProperty probPozo = new SimpleDoubleProperty();
 
 
 
@@ -19,12 +16,12 @@ public class ParameterPozoProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setProbPozo(probPozo.get());
+        original.setProbPozo(probPozo.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //probPozo.set(original.getProbPozo());
+        probPozo.set(original.getProbPozo());
     }
 
     public Pozo getOriginal() {
@@ -40,7 +37,7 @@ public class ParameterPozoProperties {
         return turnosRestantes;
     }
 
-    public FloatProperty probPozoProperty() {return probPozo;}
+    public DoubleProperty probPozoProperty() {return probPozo;}
 
 }
 

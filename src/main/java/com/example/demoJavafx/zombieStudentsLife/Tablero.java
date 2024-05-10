@@ -8,45 +8,64 @@ import com.example.demoJavafx.estudiante.EstudianteBasico;
 import com.example.demoJavafx.estudiante.EstudianteNormal;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
-
 import java.util.Random;
 public class Tablero {
-    protected int tamañoN;
-    protected int tamañoM;
-    protected ListaEnlazada<Celda> celdas;
-    private int numEstudiantes;
-    private int numRecursos;
+    protected int fila; //Número de filas
+    protected int columna; //Número de columnas
+    protected ListaEnlazada<Celda> celdas; //Matriz de celdas
     protected static final int maxEstudiantesPorCelda = 3;
     protected static final int maxRecursosPorCelda = 3;
 
-    protected static final double probAgua = 0.15; // Probabilidad de aparición del 15%
-    protected static final double probComida = 0.20; // Probabilidad de aparición del 20%
-    protected static final double probMontaña = 0.10; // Probabilidad de aparición del 10%
-    protected static final double probTesoro = 0.15; // Probabilidad de aparición del 15%
-    protected static final double probBiblioteca = 0.20; // Probabilidad de aparición del 20%
-    protected static final double probPozo = 0.20; // Probabilidad de aparición del 20%
-
-    public Tablero(int tamañoN, int tamañoM) {
-        this.tamañoN = tamañoN;
-        this.tamañoM = tamañoM;
+    public Tablero(int fila, int columna) {
+        this.fila = fila;
+        this.columna = columna;
         celdas = new ListaEnlazada<>();
         inicializarTablero();
     }
 
     private void inicializarTablero() {
-        for (int i = 0; i < tamañoN; i++) {
-            for (int j = 0; j < tamañoM; j++) {
-                celdas.add(new Celda());
+        // Crear las celdas y agregarlas al tablero
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
+                celdas.add(new Celda(i, j)); // Crear celda con coordenadas
             }
         }
     }
+    // Obtener una celda específica del tablero
+    public Celda getCelda(int fila, int columna) {
+        ElementoLE<Celda> current = celdas.getPrimero();
+        while (current != null) {
+            Celda celda = current.getData();
+            if (celda.getX() == fila && celda.getY() == columna) {
+                return celda;
+            }
+            current = current.getSiguiente();
+        }
+        return null;
+    }
+    public int getFilas(){
+        return fila;
+    }
+    public void setFilas(int fila){
+        this.fila = fila;
+    }
+    public int getColumnas(){
+        return columna;
+    }
+    public void setColumnas(int columna){
+        this.columna = columna;
+    }
+    public ListaEnlazada<Celda> getMatriz() {
+        return celdas;
+    }
+    public void setMatriz(ListaEnlazada<Celda> celdas) {
+        this.celdas = celdas;
+    }
 
     public void evaluarMejoras() {
-        ElementoLE<Celda> nodoCelda = celdas.getPrimero();
-        while (nodoCelda != null) {
-            Celda celda = nodoCelda.getData();
+        for (int i = 0; i < celdas.getNumeroElementos(); i++) {
+            Celda celda = celdas.getElemento(i).getData();
             celda.evaluarMejoras();
-            nodoCelda = nodoCelda.getSiguiente();
         }
     }
 
@@ -141,33 +160,33 @@ public class Tablero {
         }
     }
 
-    private Recursos generarNuevoRecurso(double probabilidad) {
+    private Recursos generarNuevoRecurso(int posicionN, int posicionM) {
         Random rand = new Random();
-        // Calcula el tipo de recurso basado en las probabilidades
-        if (probabilidad < probAgua) {
-            return new Agua(rand.nextInt(), 2);
-        } else if (probabilidad < probAgua + probComida) {
-            return new Comida(rand.nextInt(), 10);
-        } else if (probabilidad < probAgua + probComida + probMontaña) {
-            return new Montaña(rand.nextInt(), 2);
-        } else if (probabilidad < probAgua + probComida + probMontaña + probTesoro) {
-            return new Tesoro(rand.nextInt(), 0.40);
-        } else if (probabilidad < probAgua + probComida + probMontaña + probTesoro + probBiblioteca) {
-            return new Biblioteca(rand.nextInt(), 0.25);
-        } else {
-            return new Pozo(generarNuevoRecurso(rand.nextDouble()).getTurnosRestantes());
+        double probabilidad = rand.nextDouble(); // Genera una probabilidad aleatoria entre 0 y 1
+        if (probabilidad < Agua.getProbAgua()) { // Utiliza la probabilidad definida en la clase Agua
+            return new Agua(posicionN, posicionM, rand.nextInt(), probabilidad, 2, Agua.getProbAgua());
+        } else if (probabilidad < Agua.getProbAgua() + Comida.getProbComida()) { // Utiliza la probabilidad definida en la clase Comida
+            return new Comida(posicionN, posicionM, rand.nextInt(), probabilidad, 10, Comida.getProbComida());
+        } else if (probabilidad < Agua.getProbAgua() + Comida.getProbComida() + Montaña.getProbMontaña()) { // Utiliza la probabilidad definida en la clase Montaña
+            return new Montaña(posicionN, posicionM, rand.nextInt(), probabilidad, 2, Montaña.getProbMontaña());
+        } else if (probabilidad < Agua.getProbAgua() + Comida.getProbComida() + Montaña.getProbMontaña() + Tesoro.getProbTesoro()) { // Utiliza la probabilidad definida en la clase Tesoro
+            return new Tesoro(posicionN, posicionM, rand.nextInt(), probabilidad, 0.40, Tesoro.getProbTesoro());
+        } else if (probabilidad < Agua.getProbAgua() + Comida.getProbComida() + Montaña.getProbMontaña() + Tesoro.getProbTesoro() + Biblioteca.getProbBiblioteca()) { // Utiliza la probabilidad definida en la clase Biblioteca
+            return new Biblioteca(posicionN, posicionM, rand.nextInt(), probabilidad, 0.25, Biblioteca.getProbBiblioteca());
+        } else { // El resto de la probabilidad se asigna a Pozo
+            return new Pozo(generarNuevoRecurso(posicionN, posicionM).getTurnosRestantes());
         }
     }
 
     public void evaluarAparicionRecursos() throws MasDe3Recursos {
         Random rand = new Random();
-        for (int i = 0; i < tamañoN; i++) {
-            for (int j = 0; j < tamañoM; j++) {
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
                 double probabilidad = rand.nextDouble();
-                Recursos nuevoRecurso = generarNuevoRecurso(probabilidad);
+                Recursos nuevoRecurso = generarNuevoRecurso(i, j); // Llama al método con las coordenadas de la celda
 
                 // Insertar el nuevo recurso en la lista de recursos de la celda
-                ListaEnlazada<Recursos> listaRecursos = celdas.getElemento(i * tamañoM + j).getData().getListaRecursos();
+                ListaEnlazada<Recursos> listaRecursos = celdas.getElemento(i * columna + j).getData().getListaRecursos();
                 if (listaRecursos.getNumeroElementos() < maxRecursosPorCelda) {
                     ElementoLE<Recursos> nuevoElemento = new ElementoLE<>(nuevoRecurso);
                     if (listaRecursos.isVacia()) {

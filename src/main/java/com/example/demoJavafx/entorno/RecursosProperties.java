@@ -5,48 +5,47 @@ import javafx.beans.property.*;
 public class RecursosProperties {
     protected Recursos original;
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private IntegerProperty posN = new SimpleIntegerProperty();
-    private IntegerProperty posM = new SimpleIntegerProperty();
-    private FloatProperty probNuevoRecurso = new SimpleFloatProperty();
+    private IntegerProperty posicionN = new SimpleIntegerProperty();
+    private IntegerProperty posicionM = new SimpleIntegerProperty();
+    private DoubleProperty probRecurso = new SimpleDoubleProperty();
 
     public RecursosProperties(Recursos original){
         setOriginal(original);
+    }
+    public Recursos getOriginal(){
+        return original;
     }
     public void setOriginal(Recursos original){
         this.original = original;
         rollback();
     }
-    public Recursos getOriginal(){
-        return original;
-    }
-
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //posN.set(original.getPosN());
-        //posM.set(original.getPosM());
-        //probNuevoRecurso.set(original.getProbNuevoRecurso());
+        posicionN.set(original.getPosicionN());
+        posicionM.set(original.getPosicionM());
+        probRecurso.set(original.getProbRecurso());
     }
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setPosN(posN.get());
-        //original.setPosM(posM.get());
-        //original.setProbNuevoRecurso(probNuevoRecurso.get());
+        original.setPosicionN(posicionN.get());
+        original.setPosicionM(posicionM.get());
+        original.setProbRecurso(probRecurso.get());
 
     }
     public Property<Number> turnosRestantesProperty() {
         return turnosRestantes;
     }
 
-    public Property<Number> posNProperty() {
-        return posN;
+    public Property<Number> posicionNProperty() {
+        return posicionN;
     }
 
-    public Property<Number> posMProperty() {
-        return posM;
+    public Property<Number> posicionMProperty() {
+        return posicionM;
     }
 
-    public Property<Number> probNuevoRecursoProperty() {
-        return probNuevoRecurso;
+    public Property<Number> probRecursoProperty() {
+        return probRecurso;
     }
 }
 

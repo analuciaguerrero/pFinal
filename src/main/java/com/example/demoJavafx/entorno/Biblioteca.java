@@ -2,18 +2,40 @@ package com.example.demoJavafx.entorno;
 
 import com.example.demoJavafx.estudiante.Estudiante;
 //import com.example.demojavafx.estudiante.EstudianteAvanzado;
+import com.example.demoJavafx.estudiante.EstudianteAvanzado;
 import com.example.demoJavafx.estudiante.EstudianteBasico;
 import com.example.demoJavafx.estudiante.EstudianteNormal;
 
 import java.util.Random;
 
-public class Biblioteca extends Recursos{
+public class Biblioteca extends Recursos {
 
-    private final double aumentoProbClonacion;
-
-    public Biblioteca(int turnosRestantes, double aumentoProbClonacion) {
-        super(turnosRestantes);
+    private double aumentoProbClonacion;
+    private static double probBiblioteca;
+    public Biblioteca(int posicionN, int posicionM, int turnosRestantes, double probRecurso, double aumentoProbClonacion, double probBiblioteca) {
+        super(posicionN, posicionM, turnosRestantes, probRecurso);
         this.aumentoProbClonacion = aumentoProbClonacion;
+        Biblioteca.probBiblioteca = probBiblioteca;
+    }
+
+    public Biblioteca() {
+    }
+
+    public Biblioteca(double probBiblioteca) {
+        Biblioteca.probBiblioteca = probBiblioteca;
+    }
+    public double getAumentoProbClonacion(){
+        return aumentoProbClonacion;
+    }
+    public void setAumentoProbClonacion(double aumentoProbClonacion){
+        this.aumentoProbClonacion = aumentoProbClonacion;
+    }
+    public static double getProbBiblioteca() {
+        return probBiblioteca;
+    }
+
+    public void setProbBiblioteca(double probBiblioteca) {
+        Biblioteca.probBiblioteca = probBiblioteca;
     }
 
     @Override
@@ -36,12 +58,13 @@ public class Biblioteca extends Recursos{
                 }
                 break;
             case 3:
-                //if (!(estudiante instanceof EstudianteAvanzado)) {
+                if (!(estudiante instanceof EstudianteAvanzado)) {
                     // Convertir a individuo avanzado
-                    //estudiante = new EstudianteAvanzado(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
+                    estudiante = new EstudianteAvanzado(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
                 }
-                //break;
+                break;
         }
     }
+}
 
 

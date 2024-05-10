@@ -1,15 +1,23 @@
 package com.example.demoJavafx.bucleDeControl;
 
+import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
+import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
+import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
 
 public class BucleDeControl {
     private Tablero tablero;
-
     public BucleDeControl(Tablero tablero) {
         this.tablero = tablero;
     }
-
+    public Tablero getTablero(){
+        return tablero;
+    }
+    public void setTablero(Tablero tablero){
+        this.tablero = tablero;
+    }
     public void ejecutar() {
         // Paso 1: Actualizar tiempo de vida de cada individuo y eliminar si ha muerto
         tablero.actualizarTiempoDeVida();
@@ -38,5 +46,16 @@ public class BucleDeControl {
         } catch (MasDe3Recursos e) {
             System.out.println("No se pudo agregar un nuevo recurso: " + e.getMessage());
         }
+    }
+    public boolean condicionFinalizacion(){
+        ListaEnlazada<Estudiante> lista = new ListaEnlazada<>();
+        for(int i=0;i<tablero.getFilas();i++) {
+            for (int j = 0; j < tablero.getColumnas(); j++) {
+                for (int k = 0; k < tablero.getCelda(i, j).getListaEstudiantes().getNumeroElementos(); k++) {
+                    lista.add(new ElementoLE<>(tablero.getCelda(i, j).getListaEstudiantes().getElemento(k).getData()));
+                }
+            }
+        }
+        return lista.getNumeroElementos() == 1;
     }
 }

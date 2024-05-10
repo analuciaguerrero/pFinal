@@ -1,16 +1,13 @@
 package com.example.demoJavafx.entorno;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterMontañaProperties {
     protected Montaña original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
     private IntegerProperty disminucionVida = new SimpleIntegerProperty();
-    private FloatProperty probMontaña = new SimpleFloatProperty();
+    private DoubleProperty probMontaña = new SimpleDoubleProperty();
 
 
 
@@ -20,14 +17,14 @@ public class ParameterMontañaProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setDisminucionVida(disminucionVida.get());
-        //original.setProbMontaña(probMontaña.get());
+        original.setReduccionVida(disminucionVida.get());
+        original.setProbMontaña(probMontaña.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //disminucionVida.set(original.getDisminucionVida());
-        //probMontaña.set(original.getProbMontaña());
+        disminucionVida.set(original.getReduccionVida());
+        probMontaña.set(original.getProbMontaña());
     }
 
     public Montaña getOriginal() {
@@ -47,6 +44,6 @@ public class ParameterMontañaProperties {
         return disminucionVida;
     }
 
-    public FloatProperty probMontañaProperty() {return probMontaña;}
+    public DoubleProperty probMontañaProperty() {return probMontaña;}
 }
 
