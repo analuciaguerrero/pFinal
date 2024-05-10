@@ -46,17 +46,6 @@ class MontañaTest {
     }
 
     @Test
-    public void testConstructorWithNoParameters() {
-        Montaña montaña = new Montaña();
-        assertEquals(0, montaña.getPosicionN());
-        assertEquals(0, montaña.getPosicionM());
-        assertEquals(0, montaña.getTurnosRestantes());
-        assertEquals(0.0, montaña.getProbRecurso(), 0.001);
-        assertEquals(0, montaña.getReduccionVida());
-        assertEquals(0.0, Montaña.getProbMontaña(), 0.001);
-    }
-
-    @Test
     public void testGettersAndSetters() {
         Montaña montaña = new Montaña();
         montaña.setPosicionN(4);

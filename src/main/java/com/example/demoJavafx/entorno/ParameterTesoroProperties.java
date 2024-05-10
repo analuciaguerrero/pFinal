@@ -1,16 +1,13 @@
 package com.example.demoJavafx.entorno;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterTesoroProperties {
     protected Tesoro original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
-    private FloatProperty aumentoPorcentajeRep = new SimpleFloatProperty();
-    private FloatProperty probTesoro = new SimpleFloatProperty();
+    private DoubleProperty aumentoPorcentajeRep = new SimpleDoubleProperty();
+    private DoubleProperty probTesoro = new SimpleDoubleProperty();
 
 
     public ParameterTesoroProperties(Tesoro original) {
@@ -19,14 +16,14 @@ public class ParameterTesoroProperties {
 
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
-        //original.setAumentoPorcentajeRep(aumentoPorcentajeRep.get());
-        //original.setProbTesoro(probTesoro.get());
+        original.setAumentoProbReproduccion(aumentoPorcentajeRep.get());
+        original.setProbTesoro(probTesoro.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        //aumentoPorcentajeRep.set(original.getAumentoPorcentajeRep());
-        //probTesoro.set(original.getProbTesoro());
+        aumentoPorcentajeRep.set(original.getAumentoProbReproduccion());
+        probTesoro.set(original.getProbTesoro());
     }
 
     public Tesoro getOriginal() {
@@ -42,10 +39,10 @@ public class ParameterTesoroProperties {
         return turnosRestantes;
     }
 
-    public FloatProperty aumentoPorcetajeRepProperty() {
+    public DoubleProperty aumentoPorcetajeRepProperty() {
         return aumentoPorcentajeRep;
     }
 
-    public FloatProperty probTesoroProperty() {return probTesoro;}
+    public DoubleProperty probTesoroProperty() {return probTesoro;}
 }
 

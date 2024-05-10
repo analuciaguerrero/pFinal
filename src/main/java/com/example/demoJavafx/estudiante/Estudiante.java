@@ -12,6 +12,7 @@ public abstract class Estudiante {
     private int posicionM;
     private boolean vivo;
     private int id;
+    private String tipo;
     private int generacion;
     private int tiempoDeVida;
     private double probReproduccion;
@@ -133,6 +134,13 @@ public abstract class Estudiante {
 
     public void setVivo(boolean vivo){
         this.vivo = vivo;
+    }
+    public String getTipo(){
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public void actualizar() {

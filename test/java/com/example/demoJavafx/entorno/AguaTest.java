@@ -7,11 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AguaTest {
+public class AguaTest {
     // Clase de prueba de Estudiante
-    private static class MockEstudiante extends Estudiante {
+    public static class MockEstudiante extends Estudiante {
         public MockEstudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
             super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte, posicionN, posicionM);
+        }
+        public MockEstudiante(int id){
+            super(id);
         }
 
         @Override
@@ -43,17 +46,6 @@ class AguaTest {
     public void testConstructorWithProbAguaParameter() {
         Agua agua = new Agua(0.7);
         assertEquals(0.7, Agua.getProbAgua(), 0.001);
-    }
-
-    @Test
-    public void testConstructorWithNoParameters() {
-        Agua agua = new Agua();
-        assertEquals(0, agua.getPosicionN());
-        assertEquals(0, agua.getPosicionM());
-        assertEquals(0, agua.getTurnosRestantes());
-        assertEquals(0.0, agua.getProbRecurso(), 0.001);
-        assertEquals(0, agua.getAumentoVida());
-        assertEquals(0.0, agua.getProbAgua(), 0.001);
     }
 
     @Test

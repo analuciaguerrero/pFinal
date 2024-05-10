@@ -41,28 +41,14 @@ public class Biblioteca extends Recursos {
     @Override
     public void aplicarEfecto(Estudiante estudiante) {
         estudiante.setProbClonacion(estudiante.getProbClonacion() + aumentoProbClonacion);
+
         // Ajustar el tipo del individuo
-        Random rand = new Random();
-        int tipo = rand.nextInt(3) + 1; // Seleccionar aleatoriamente un tipo de individuo (entre 1 y 3)
-        switch (tipo) {
-            case 1:
-                if (!(estudiante instanceof EstudianteBasico)) {
-                    // Convertir a individuo básico
-                    estudiante = new EstudianteBasico(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
-                }
-                break;
-            case 2:
-                if (!(estudiante instanceof EstudianteNormal)) {
-                    // Convertir a individuo normal
-                    estudiante = new EstudianteNormal(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
-                }
-                break;
-            case 3:
-                if (!(estudiante instanceof EstudianteAvanzado)) {
-                    // Convertir a individuo avanzado
-                    estudiante = new EstudianteAvanzado(estudiante.getId(), estudiante.getGeneracion(), estudiante.getTiempoDeVida(), estudiante.getProbReproduccion(), estudiante.getProbClonacion(), estudiante.getProbMuerte());
-                }
-                break;
+        if (estudiante.getProbClonacion() >= 0.3 && estudiante.getProbClonacion() < 0.5) {
+            estudiante.setTipo("EstudianteBasico");
+        } else if (estudiante.getProbClonacion() >= 0.5 && estudiante.getProbClonacion() < 0.7) {
+            estudiante.setTipo("EstudianteNormal");
+        } else if (estudiante.getProbClonacion() >= 0.7 && estudiante.getProbClonacion() <= 1.0) {
+            estudiante.setTipo("EstudianteAvanzado");
         }
     }
 }

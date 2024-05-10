@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RecursosTest {
+public class RecursosTest {
     // Clase de prueba de Recursos
-    private static class MockRecursos extends Recursos {
+    public static class MockRecursos extends Recursos {
         // Constructor que llama al constructor de la clase base
         public MockRecursos(int posicionN, int posicionM, int turnosRestantes, double probRecurso) {
             super(posicionN, posicionM, turnosRestantes, probRecurso);
@@ -15,6 +15,7 @@ class RecursosTest {
         public MockRecursos(int posicionN, int posicionM, int turnosRestantes){
             super(posicionN, posicionM, turnosRestantes);
         }
+        public MockRecursos(){}
 
         @Override
         public void aplicarEfecto(Estudiante estudiante) {

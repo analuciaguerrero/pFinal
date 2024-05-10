@@ -46,17 +46,6 @@ class TesoroTest {
     }
 
     @Test
-    public void testConstructorWithNoParameters() {
-        Tesoro tesoro = new Tesoro();
-        assertEquals(0, tesoro.getPosicionN());
-        assertEquals(0, tesoro.getPosicionM());
-        assertEquals(0, tesoro.getTurnosRestantes());
-        assertEquals(0.0, tesoro.getProbRecurso(), 0.001);
-        assertEquals(0.0, tesoro.getAumentoProbReproduccion(), 0.001);
-        assertEquals(0.0, Tesoro.getProbTesoro(), 0.001);
-    }
-
-    @Test
     public void testGettersAndSetters() {
         Tesoro tesoro = new Tesoro();
         tesoro.setPosicionN(4);

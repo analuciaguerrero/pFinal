@@ -146,6 +146,22 @@ class EstudianteTest {
         estudiante.setId(2);
         assertEquals(2, estudiante.getId());
     }
+    @Test
+    public void testGetSetTipo() {
+        MockEstudiante estudiante = new MockEstudiante(1);
+
+        // Establecer el tipo y comprobar si se obtiene correctamente
+        estudiante.setTipo("Basico");
+        assertEquals("Basico", estudiante.getTipo());
+
+        // Establecer un nuevo tipo y comprobar si se actualiza correctamente
+        estudiante.setTipo("Normal");
+        assertEquals("Normal", estudiante.getTipo());
+
+        // Establecer otro tipo y comprobar si se actualiza correctamente
+        estudiante.setTipo("Avanzado");
+        assertEquals("Avanzado", estudiante.getTipo());
+    }
     // Prueba para el método puedeReproducirse cuando el tiempo de vida y la probabilidad de reproducción son mayores que 0
     @Test
     public void testPuedeReproducirseTrue() {

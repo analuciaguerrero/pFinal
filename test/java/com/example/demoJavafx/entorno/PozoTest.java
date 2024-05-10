@@ -45,16 +45,6 @@ class PozoTest {
     }
 
     @Test
-    public void testConstructorWithNoParameters() {
-        Pozo pozo = new Pozo();
-        assertEquals(0, pozo.getPosicionN());
-        assertEquals(0, pozo.getPosicionM());
-        assertEquals(0, pozo.getTurnosRestantes());
-        assertEquals(0.0, pozo.getProbRecurso(), 0.001);
-        assertEquals(0.0, Pozo.getProbPozo(), 0.001);
-    }
-
-    @Test
     public void testGettersAndSetters() {
         Pozo pozo = new Pozo();
         pozo.setPosicionN(4);

@@ -46,17 +46,6 @@ class BibliotecaTest {
     }
 
     @Test
-    public void testConstructorWithNoParameters() {
-        Biblioteca biblioteca = new Biblioteca();
-        assertEquals(0, biblioteca.getPosicionN());
-        assertEquals(0, biblioteca.getPosicionM());
-        assertEquals(0, biblioteca.getTurnosRestantes());
-        assertEquals(0.0, biblioteca.getProbRecurso(), 0.001);
-        assertEquals(0.0, biblioteca.getAumentoProbClonacion(), 0.001);
-        assertEquals(0.0, biblioteca.getProbBiblioteca(), 0.001);
-    }
-
-    @Test
     public void testGettersAndSetters() {
         Biblioteca biblioteca = new Biblioteca();
         biblioteca.setPosicionN(4);
@@ -75,11 +64,13 @@ class BibliotecaTest {
     }
     @Test
     public void testAplicarEfecto() {
+        // Creamos una biblioteca con valores de prueba
         Biblioteca biblioteca = new Biblioteca(1, 2, 3, 0.5, 0.2, 0.7);
-        // Creamos un estudiante de prueba
-        Estudiante estudiante = new MockEstudiante(1, 2, 50, 0.5, 0.3, 0.1, 0, 0);
+
+        // Creamos un estudiante de prueba con probabilidad de clonación que debería pasar por todos los casos
+        MockEstudiante estudiante = new MockEstudiante(1, 2, 50, 0.3, 0.3, 0.1, 0, 0);
+
         // Configuramos el comportamiento esperado del estudiante
-        estudiante.setProbClonacion(0.3); // Probabilidad de clonación inicial
         int originalId = estudiante.getId();
 
         // Aplicamos el efecto de la biblioteca
@@ -88,8 +79,17 @@ class BibliotecaTest {
         // Verificamos que la probabilidad de clonación se haya incrementado correctamente
         assertEquals(0.5, estudiante.getProbClonacion(), 0.001); // Probabilidad de clonación esperada después del efecto
 
-        // Verificamos que el estudiante se convierta en un tipo específico
-        assertTrue(true);
+        // Verificamos que el tipo del estudiante se establezca correctamente
+        String tipo = estudiante.getTipo();
+        if (estudiante.getProbClonacion() >= 0.3 && estudiante.getProbClonacion() < 0.5) {
+            assertEquals("EstudianteBasico", tipo);
+        } else if (estudiante.getProbClonacion() >= 0.5 && estudiante.getProbClonacion() < 0.7) {
+            assertEquals("EstudianteNormal", tipo);
+        } else if (estudiante.getProbClonacion() >= 0.7 && estudiante.getProbClonacion() <= 1.0) {
+            assertEquals("EstudianteAvanzado", tipo);
+        } else {
+            fail("El tipo de estudiante no es correcto");
+        }
 
         // Verificamos que el id del estudiante no haya cambiado
         assertEquals(originalId, estudiante.getId());

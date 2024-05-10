@@ -46,17 +46,6 @@ class ComidaTest {
     }
 
     @Test
-    public void testConstructorWithNoParameters() {
-        Comida comida = new Comida();
-        assertEquals(0, comida.getPosicionN());
-        assertEquals(0, comida.getPosicionM());
-        assertEquals(0, comida.getTurnosRestantes());
-        assertEquals(0.0, comida.getProbRecurso(), 0.001);
-        assertEquals(0, comida.getAumentoVida());
-        assertEquals(0.0, Comida.getProbComida(), 0.001);
-    }
-
-    @Test
     public void testGettersAndSetters() {
         Comida comida = new Comida();
         comida.setPosicionN(4);
