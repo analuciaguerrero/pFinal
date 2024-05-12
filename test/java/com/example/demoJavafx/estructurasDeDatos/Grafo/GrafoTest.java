@@ -348,5 +348,4 @@ class GrafoTest {
             grafo.validarArista(arista);
         });
     }
-
 }

@@ -7,7 +7,9 @@ public class CeldaProperties {
 
     protected ListaEnlazada<Celda> properties;
 
-    public CeldaProperties(ListaEnlazada<Celda> original) {}
+    public CeldaProperties(ListaEnlazada<Celda> original) {
+        this.original = original;
+    }
 
     public ListaEnlazada<Celda> getOriginal() {
         return original;

@@ -7,48 +7,87 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CeldaPropertiesTest {
     @Test
-    void testCommit() {
-        // Creamos la lista original y la lista de propiedades
-        ListaEnlazada<Celda> original = new ListaEnlazada<>();
-        ListaEnlazada<Celda> properties = new ListaEnlazada<>();
+    public void testCommit() {
+        // Crear una instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> lista = new ListaEnlazada<>();
+        // Agregar una celda a la lista
+        lista.add(new Celda());
 
-        // Agregamos algunas celdas a la lista de propiedades
-        Celda celda1 = new Celda();
-        Celda celda2 = new Celda();
-        properties.add(celda1);
-        properties.add(celda2);
+        // Crear una instancia de CeldaProperties con la lista creada
+        CeldaProperties properties = new CeldaProperties(lista);
 
-        // Creamos un objeto CeldaProperties
-        CeldaProperties celdaProperties = new CeldaProperties(original);
+        // Crear otra instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> otraLista = new ListaEnlazada<>();
+        // Agregar una celda a la otra lista
+        otraLista.add(new Celda());
 
-        // Establecemos las propiedades y luego confirmamos
-        celdaProperties.setProperties(properties);
-        celdaProperties.commit();
+        // Establecer la otra lista como la lista properties
+        properties.setProperties(otraLista);
 
-        // Verificamos si la lista original se actualizó correctamente
-        assertEquals(properties, original);
+        // Realizar el commit
+        properties.commit();
+
+        // Verificar si la lista original se ha actualizado a la lista properties
+        assertEquals(otraLista, properties.getOriginal());
     }
 
     @Test
-    void testRollback() {
-        // Creamos la lista original y la lista de propiedades
-        ListaEnlazada<Celda> original = new ListaEnlazada<>();
-        ListaEnlazada<Celda> properties = new ListaEnlazada<>();
+    public void testRollback() {
+        // Crear una instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> lista = new ListaEnlazada<>();
+        // Agregar una celda a la lista
+        lista.add(new Celda());
 
-        // Agregamos algunas celdas a la lista de propiedades
-        Celda celda1 = new Celda();
-        Celda celda2 = new Celda();
-        properties.add(celda1);
-        properties.add(celda2);
+        // Crear una instancia de CeldaProperties con la lista creada
+        CeldaProperties properties = new CeldaProperties(lista);
 
-        // Creamos un objeto CeldaProperties
-        CeldaProperties celdaProperties = new CeldaProperties(original);
+        // Crear otra instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> otraLista = new ListaEnlazada<>();
+        // Agregar una celda a la otra lista
+        otraLista.add(new Celda());
 
-        // Establecemos las propiedades, luego realizamos un rollback y verificamos
-        celdaProperties.setProperties(properties);
-        celdaProperties.rollback();
+        // Establecer la otra lista como la lista properties
+        properties.setProperties(otraLista);
 
-        // Verificamos si la lista original se mantuvo sin cambios
-        assertEquals(original, celdaProperties.getProperties());
+        // Realizar el rollback
+        properties.rollback();
+
+        // Verificar si la lista properties se ha actualizado a la lista original
+        assertEquals(lista, properties.getProperties());
+    }
+    @Test
+    public void testGetOriginal() {
+        // Crear una instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> lista = new ListaEnlazada<>();
+        // Agregar una celda a la lista
+        lista.add(new Celda());
+
+        // Crear una instancia de CeldaProperties con la lista creada
+        CeldaProperties properties = new CeldaProperties(lista);
+
+        // Verificar si la lista original es la misma que la lista creada
+        assertEquals(lista, properties.getOriginal());
+    }
+
+    @Test
+    public void testSetOriginal() {
+        // Crear una instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> lista = new ListaEnlazada<>();
+        // Agregar una celda a la lista
+        lista.add(new Celda());
+
+        // Crear una instancia de CeldaProperties
+        CeldaProperties properties = new CeldaProperties(lista);
+
+        // Crear otra instancia de ListaEnlazada<Celda>
+        ListaEnlazada<Celda> otraLista = new ListaEnlazada<>();
+        // Agregar una celda a la otra lista
+        otraLista.add(new Celda());
+
+        // Establecer la otra lista como la lista original
+        properties.setOriginal(otraLista);
+
+        // Verificar si la lista original es la misma que la otra lista
+        assertEquals(otraLista, properties.getOriginal());
     }
 }

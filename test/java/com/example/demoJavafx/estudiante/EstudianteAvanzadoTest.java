@@ -12,87 +12,66 @@ import static org.junit.jupiter.api.Assertions.*;
 class EstudianteAvanzadoTest {
     // Prueba para el método mover con dirección hacia arriba y recurso disponible
     @Test
-    public void testMoverArribaConRecurso() {
-        // Configuración del escenario
-        int filaInicial = 1;
-        int columnaInicial = 1;
+    void testGetTipo() {
+        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 1, 10, 0.5, 0.3, 0.2);
+        assertEquals("EstudianteAvanzado", estudiante.getTipo());
+    }
+
+    @Test
+    void testMover() {
+        // Crear un tablero pequeño para las pruebas
         ListaEnlazada<Celda> tablero = new ListaEnlazada<>();
-        Celda celda = new Celda();
-        Recursos recurso = new Comida(0, 0, 0, 0, 5, 0.5);
-        celda.getListaRecursos().add(new ElementoLE<>(recurso));
-        tablero.add(new ElementoLE<>(celda));
+        for (int i = 0; i < 3; i++) {
+            tablero.add(new Celda());
+        }
 
-        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 0, 1, 0.5, 0.2, 0.7);
-        estudiante.setPosicionN(filaInicial);
-        estudiante.setPosicionM(columnaInicial);
+        // Crear un estudiante en la posición (0, 0)
+        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 1, 10, 0.5, 0.3, 0.2);
+        estudiante.setPosicionN(0);
+        estudiante.setPosicionM(0);
 
-        // Ejecución del método
+        // Obtener la cantidad de recursos en la celda actual del estudiante
+        int recursosAntesDeMover = tablero.getElemento(0).getSiguiente().getData().getListaRecursos().getNumeroElementos();
+
+        // Simular el movimiento del estudiante
         estudiante.mover(tablero);
 
-        // Comprobación de la nueva posición
-        assertEquals(0, estudiante.getPosicionN());
-        assertEquals(1, estudiante.getPosicionM());
+        // Obtener la cantidad de recursos después de mover al estudiante
+        int recursosDespuesDeMover = tablero.getElemento(0).getSiguiente().getData().getListaRecursos().getNumeroElementos();
 
-        // Comprobación de los efectos aplicados por el recurso
-        assertEquals(6, estudiante.getTiempoDeVida());
+        // Verificar que la cantidad de recursos en la celda actual haya disminuido
+        assertTrue(recursosDespuesDeMover < recursosAntesDeMover);
+    }
+    @Test
+    void testReproducirse() {
+        // Crear dos estudiantes para la reproducción
+        EstudianteAvanzado estudiante1 = new EstudianteAvanzado(1, 1, 10, 0.5, 0.3, 0.2);
+        EstudianteAvanzado estudiante2 = new EstudianteAvanzado(2, 1, 10, 0.5, 0.3, 0.2);
+
+        // Reproducir los estudiantes
+        EstudianteAvanzado nuevoEstudiante = (EstudianteAvanzado) estudiante1.reproducirse(estudiante2);
+
+        // Comprobar que el nuevo estudiante tiene valores promedio
+        assertEquals((estudiante1.getGeneracion() + estudiante2.getGeneracion()) / 2, nuevoEstudiante.getGeneracion());
+        assertEquals((estudiante1.getTiempoDeVida() + estudiante2.getTiempoDeVida()) / 2, nuevoEstudiante.getTiempoDeVida());
+        assertEquals((estudiante1.getProbReproduccion() + estudiante2.getProbReproduccion()) / 2, nuevoEstudiante.getProbReproduccion());
+        assertEquals((estudiante1.getProbClonacion() + estudiante2.getProbClonacion()) / 2, nuevoEstudiante.getProbClonacion());
+        assertEquals((estudiante1.getProbMuerte() + estudiante2.getProbMuerte()) / 2, nuevoEstudiante.getProbMuerte());
     }
 
-    // Prueba para el método mover con dirección hacia arriba y sin recurso disponible
     @Test
-    public void testMoverArribaSinRecurso() {
-        // Configuración del escenario
-        int filaInicial = 1;
-        int columnaInicial = 1;
-        ListaEnlazada<Celda> tablero = new ListaEnlazada<>();
-        Celda celda = new Celda();
-        tablero.add(new ElementoLE<>(celda));
+    void testClonar() {
+        // Crear un estudiante para clonar
+        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 1, 10, 0.5, 0.3, 0.2);
 
-        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 0, 1, 0.5, 0.2, 0.7);
-        estudiante.setPosicionN(filaInicial);
-        estudiante.setPosicionM(columnaInicial);
+        // Clonar el estudiante
+        EstudianteAvanzado nuevoEstudiante = (EstudianteAvanzado) estudiante.clonar();
 
-        // Ejecución del método
-        estudiante.mover(tablero);
-
-        // Comprobación de que la posición no cambió
-        assertEquals(filaInicial, estudiante.getPosicionN());
-        assertEquals(columnaInicial, estudiante.getPosicionM());
-    }
-
-    // Prueba para el método reproducirse
-    @Test
-    public void testReproducirse() {
-        // Configuración del escenario
-        EstudianteAvanzado estudiante1 = new EstudianteAvanzado(1, 0, 2, 0.5, 0.2, 0.7);
-        EstudianteAvanzado estudiante2 = new EstudianteAvanzado(2, 1, 3, 0.6, 0.3, 0.8);
-
-        // Ejecución del método
-        Estudiante nuevoEstudiante = estudiante1.reproducirse(estudiante2);
-
-        // Comprobación de los valores del nuevo estudiante
-        assertEquals(0, nuevoEstudiante.getId()); // El id se establece aleatoriamente, no se puede predecir
-        assertEquals(1, nuevoEstudiante.getGeneracion());
-        assertEquals((2 + 3) / 2, nuevoEstudiante.getTiempoDeVida());
-        assertEquals((0.5 + 0.6) / 2, nuevoEstudiante.getProbReproduccion(), 0.001);
-        assertEquals((0.2 + 0.3) / 2, nuevoEstudiante.getProbClonacion(), 0.001);
-        assertEquals((0.7 + 0.8) / 2, nuevoEstudiante.getProbMuerte(), 0.001);
-    }
-
-    // Prueba para el método clonar
-    @Test
-    public void testClonar() {
-        // Configuración del escenario
-        EstudianteAvanzado estudiante = new EstudianteAvanzado(1, 0, 2, 0.5, 0.2, 0.7);
-
-        // Ejecución del método
-        Estudiante nuevoEstudiante = estudiante.clonar();
-
-        // Comprobación de los valores del nuevo estudiante
-        assertEquals(0, nuevoEstudiante.getId()); // El id se establece aleatoriamente, no se puede predecir
-        assertEquals(0, nuevoEstudiante.getGeneracion());
-        assertEquals(2, nuevoEstudiante.getTiempoDeVida());
-        assertEquals(0.5, nuevoEstudiante.getProbReproduccion(), 0.001);
-        assertEquals(0.2, nuevoEstudiante.getProbClonacion(), 0.001);
-        assertEquals(0.7, nuevoEstudiante.getProbMuerte(), 0.001);
+        // Comprobar que el nuevo estudiante tiene los mismos valores que el original
+        assertEquals(estudiante.getGeneracion(), nuevoEstudiante.getGeneracion());
+        assertEquals(estudiante.getTiempoDeVida(), nuevoEstudiante.getTiempoDeVida());
+        assertEquals(estudiante.getProbReproduccion(), nuevoEstudiante.getProbReproduccion());
+        assertEquals(estudiante.getProbClonacion(), nuevoEstudiante.getProbClonacion());
+        assertEquals(estudiante.getProbMuerte(), nuevoEstudiante.getProbMuerte());
     }
 }

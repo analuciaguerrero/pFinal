@@ -63,35 +63,228 @@ class BibliotecaTest {
         assertEquals(0.8, biblioteca.getProbBiblioteca(), 0.001);
     }
     @Test
-    public void testAplicarEfecto() {
-        // Creamos una biblioteca con valores de prueba
-        Biblioteca biblioteca = new Biblioteca(1, 2, 3, 0.5, 0.2, 0.7);
+    public void testAplicarEfecto_EstudianteBasicoProbabilidadClonacionEntre0_5Y0_7_TipoEstudianteNormal() {
+        // Arrange
+        Estudiante estudiante = new EstudianteBasico(1, 1, 10, 0.6, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
 
-        // Creamos un estudiante de prueba con probabilidad de clonación que debería pasar por todos los casos
-        MockEstudiante estudiante = new MockEstudiante(1, 2, 50, 0.3, 0.3, 0.1, 0, 0);
-
-        // Configuramos el comportamiento esperado del estudiante
-        int originalId = estudiante.getId();
-
-        // Aplicamos el efecto de la biblioteca
+        // Act
         biblioteca.aplicarEfecto(estudiante);
 
-        // Verificamos que la probabilidad de clonación se haya incrementado correctamente
-        assertEquals(0.5, estudiante.getProbClonacion(), 0.001); // Probabilidad de clonación esperada después del efecto
+        // Assert
+        assertTrue(estudiante instanceof EstudianteNormal);
+    }
 
-        // Verificamos que el tipo del estudiante se establezca correctamente
-        String tipo = estudiante.getTipo();
-        if (estudiante.getProbClonacion() >= 0.3 && estudiante.getProbClonacion() < 0.5) {
-            assertEquals("EstudianteBasico", tipo);
-        } else if (estudiante.getProbClonacion() >= 0.5 && estudiante.getProbClonacion() < 0.7) {
-            assertEquals("EstudianteNormal", tipo);
-        } else if (estudiante.getProbClonacion() >= 0.7 && estudiante.getProbClonacion() <= 1.0) {
-            assertEquals("EstudianteAvanzado", tipo);
-        } else {
-            fail("El tipo de estudiante no es correcto");
+    @Test
+    public void testAplicarEfecto_EstudianteBasicoProbabilidadClonacionMayor0_7_TipoEstudianteAvanzado() {
+        // Arrange
+        Estudiante estudiante = new EstudianteBasico(1, 1, 10, 0.8, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteAvanzado);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteBasicoProbabilidadClonacionMenor0_5_TipoEstudianteBasico() {
+        // Arrange
+        Estudiante estudiante = new EstudianteBasico(1, 1, 10, 0.4, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteBasico);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteNormalProbabilidadClonacionMenor0_5_TipoEstudianteBasico() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.4, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteBasico);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteNormalProbabilidadClonacionEntre0_5Y0_7_TipoEstudianteNormal() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.6, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteNormal);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteNormalProbabilidadClonacionMayor0_7_TipoEstudianteAvanzado() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.8, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteAvanzado);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteAvanzadoProbabilidadClonacionMenor0_5_TipoEstudianteBasico() {
+        // Arrange
+        Estudiante estudiante = new EstudianteAvanzado(1, 1, 10, 0.4, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteBasico);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteAvanzadoProbabilidadClonacionEntre0_5Y0_7_TipoEstudianteNormal() {
+        // Arrange
+        Estudiante estudiante = new EstudianteAvanzado(1, 1, 10, 0.6, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteNormal);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteAvanzadoProbabilidadClonacionMayor0_7_TipoEstudianteAvanzado() {
+        // Arrange
+        Estudiante estudiante = new EstudianteAvanzado(1, 1, 10, 0.8, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertTrue(estudiante instanceof EstudianteAvanzado);
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteTipoDesconocido_NoSeModificaTipo() {
+        // Arrange
+        class EstudianteDesconocido extends Estudiante {
+            public EstudianteDesconocido() {
+                super(0, 0, 0, 0.0, 0.0, 0.0);
+            }
+            @Override
+            public String getTipo() {
+                return "Desconocido";
+            }
+            @Override
+            public void mover(ListaEnlazada<Celda> tablero) {}
+            @Override
+            public Estudiante reproducirse(Estudiante pareja) {
+                return null;
+            }
+            @Override
+            public Estudiante clonar() {
+                return null;
+            }
         }
 
-        // Verificamos que el id del estudiante no haya cambiado
-        assertEquals(originalId, estudiante.getId());
+        Estudiante estudiante = new EstudianteDesconocido();
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+        String tipoOriginal = estudiante.getTipo();
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals(tipoOriginal, estudiante.getTipo());
+    }
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadBaja_TipoEstudianteBasico() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.1, 0.1, 0.1);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteBasico", estudiante.getTipo());
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadMedia_TipoEstudianteNormal() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.6, 0.6, 0.6);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteNormal", estudiante.getTipo());
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadAlta_TipoEstudianteAvanzado() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.9, 0.9, 0.9);
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteAvanzado", estudiante.getTipo());
+    }
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadAlta_TipoEstudianteAvanzado1() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.9, 0.9, 0.9); // Alta probabilidad de clonación
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteAvanzado", estudiante.getTipo());
+    }
+
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadMedia_TipoEstudianteNormal1() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.6, 0.6, 0.6); // Probabilidad media de clonación
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteNormal", estudiante.getTipo());
+    }
+    @Test
+    public void testAplicarEfecto_EstudianteProbabilidadIntermedia_TipoEstudianteNormal() {
+        // Arrange
+        Estudiante estudiante = new EstudianteNormal(1, 1, 10, 0.6, 0.6, 0.6); // Probabilidad de clonación entre 0.5 y 0.7
+        Biblioteca biblioteca = new Biblioteca(0, 0, 0, 0.1, 0.2, 0.3);
+
+        // Act
+        biblioteca.aplicarEfecto(estudiante);
+
+        // Assert
+        assertEquals("EstudianteNormal", estudiante.getTipo());
     }
 }

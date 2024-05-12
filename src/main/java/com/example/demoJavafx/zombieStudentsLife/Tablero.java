@@ -27,21 +27,14 @@ public class Tablero {
         // Crear las celdas y agregarlas al tablero
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                celdas.add(new Celda(i, j)); // Crear celda con coordenadas
+                celdas.add(new Celda());
             }
         }
     }
     // Obtener una celda específica del tablero
     public Celda getCelda(int fila, int columna) {
-        ElementoLE<Celda> current = celdas.getPrimero();
-        while (current != null) {
-            Celda celda = current.getData();
-            if (celda.getX() == fila && celda.getY() == columna) {
-                return celda;
-            }
-            current = current.getSiguiente();
-        }
-        return null;
+        int indice = fila * this.columna + columna;
+        return celdas.getElemento(indice).getData();
     }
     public int getFilas(){
         return fila;
@@ -61,7 +54,6 @@ public class Tablero {
     public void setMatriz(ListaEnlazada<Celda> celdas) {
         this.celdas = celdas;
     }
-
     public void evaluarMejoras() {
         for (int i = 0; i < celdas.getNumeroElementos(); i++) {
             Celda celda = celdas.getElemento(i).getData();
@@ -242,7 +234,7 @@ public class Tablero {
             nodoCelda = nodoCelda.getSiguiente();
         }
     }
-    public void moverEstudiantes() {
+    public void moverEstudiantes() throws MasDe3Estudiantes {
         ElementoLE<Celda> nodoCelda = celdas.getPrimero();
         while (nodoCelda != null) {
             Celda celda = nodoCelda.getData();

@@ -3,6 +3,7 @@ package com.example.demoJavafx.estudiante;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.zombieStudentsLife.Celda;
 
 import java.util.Random;
@@ -56,6 +57,7 @@ public abstract class Estudiante {
         this.arbolGenealogico = new BST<>();
         this.arbolGenealogico.raiz = new Nodo<>(this);
     }
+    public Estudiante(){}
 
     public int getPosicionN() {
         return posicionN;
@@ -150,15 +152,15 @@ public abstract class Estudiante {
         probMuerte = 1 - probReproduccion;
     }
 
-    public abstract void mover(ListaEnlazada<Celda> tablero);
+    public abstract void mover(ListaEnlazada<Celda> tablero) throws MasDe3Estudiantes;
 
     public boolean puedeReproducirse() {
         return tiempoDeVida > 0 && probReproduccion > 0;
     }
 
-    public abstract Estudiante reproducirse(Estudiante pareja);
+    public abstract Estudiante reproducirse(Estudiante pareja) throws MasDe3Estudiantes;
 
-    public abstract Estudiante clonar();
+    public abstract Estudiante clonar() throws MasDe3Estudiantes;
 
     public boolean sobrevive() {
         Random rand = new Random();
@@ -173,26 +175,3 @@ public abstract class Estudiante {
     }
 
 }
-
-
-
-
-
-
-
-
-
-    //public String getTipo(){
-        //return null;
-    //}
-
-    //public String setTipo(String tipo){
-       // return null;
-    //}
-
-    //@Override
-    //public String toString(){
-        //return "Estudiante[" +"id=" + id + ", generacion=" + generacion + ", tiempoDeVidaRestante=" + tiempoDeVida + ", probReproduccion=" + probReproduccion + ", probClonacion=" + probClonacion + ", probMuerte=" + probMuerte + "]";
-    //}
-
-//}

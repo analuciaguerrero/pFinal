@@ -21,6 +21,7 @@ class EstudianteTest {
         public MockEstudiante(int id, int tiempoDeVida){
             super(id, tiempoDeVida);
         }
+        public MockEstudiante(){}
 
         @Override
         public void mover(ListaEnlazada<Celda> tablero) {
@@ -49,6 +50,18 @@ class EstudianteTest {
         assertEquals(0.1, estudiante.getProbMuerte(), 0.001);
         assertEquals(3, estudiante.getPosicionN());
         assertEquals(4, estudiante.getPosicionM());
+    }
+    @Test
+    public void testConstructorPorDefecto() {
+        MockEstudiante estudiante = new MockEstudiante();
+
+        // Verificar que los valores iniciales son los esperados
+        assertEquals(0, estudiante.getId());
+        assertEquals(0, estudiante.getGeneracion());
+        assertEquals(0, estudiante.getTiempoDeVida(), 0);
+        assertEquals(0.0, estudiante.getProbReproduccion(), 0);
+        assertEquals(0.0, estudiante.getProbClonacion(), 0);
+        assertEquals(0.0, estudiante.getProbMuerte(), 0);
     }
 
     // Prueba para el constructor con solo el ID

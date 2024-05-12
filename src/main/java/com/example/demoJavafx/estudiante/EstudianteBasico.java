@@ -12,6 +12,11 @@ public class EstudianteBasico extends Estudiante {
     }
 
     @Override
+    public String getTipo() {
+        return "EstudianteBasico";
+    }
+
+    @Override
     public void mover(ListaEnlazada<Celda> tablero) {
         Random rand = new Random();
         int filaActual = getPosicionN();

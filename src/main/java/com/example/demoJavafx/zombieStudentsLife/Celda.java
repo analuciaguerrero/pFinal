@@ -11,13 +11,10 @@ import static com.example.demoJavafx.zombieStudentsLife.Tablero.*;
 
 
 public class Celda {
-    private int x;
-    private int y;
     private ListaEnlazada<Estudiante> listaEstudiantes;
     private ListaEnlazada<Recursos> listaRecursos;
     private int numEstudiantes;
     private int numRecursos;
-    private boolean ocupada;
 
 
     public Celda() {
@@ -34,31 +31,6 @@ public class Celda {
         numRecursos = listaRecursos.getNumeroElementos();
     }
 
-    public Celda(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.ocupada = false;
-    }
-    public int getX(){
-        return x;
-    }
-    public void setX(int x){
-        this.x = x;
-    }
-    public int getY(){
-        return y;
-    }
-    public void setY(int y){
-        this.y = y;
-    }
-    public boolean estaOcupada(){
-        return ocupada;
-    }
-    public void setOcupada(boolean ocupada){
-        this.ocupada = ocupada;
-    }
-
-
     public void agregarEstudiante(Estudiante estudiante) throws MasDe3Estudiantes {
         if (numEstudiantes < maxEstudiantesPorCelda) {
             listaEstudiantes.add(estudiante);
@@ -66,6 +38,18 @@ public class Celda {
         } else {
             throw new MasDe3Estudiantes(listaEstudiantes);
         }
+    }
+    public int getNumRecursos(){
+        return numRecursos;
+    }
+    public void setNumRecursos(int numRecursos){
+        this.numRecursos = numRecursos;
+    }
+    public int getNumEstudiantes(){
+        return numEstudiantes;
+    }
+    public void setNumEstudiantes(int numEstudiantes){
+        this.numEstudiantes = numEstudiantes;
     }
 
     public ListaEnlazada<Recursos> getListaRecursos() {

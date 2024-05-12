@@ -211,7 +211,6 @@ public class Grafo {
         }
     }
 
-
     private Mapa<Vertice,Camino> dijkstra(Vertice origen) {
         Mapa<Vertice, Double> distancias = new Mapa<>();
         Cola<Vertice> colaPendientes = new Cola<>();

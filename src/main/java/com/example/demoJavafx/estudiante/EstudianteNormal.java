@@ -10,6 +10,10 @@ public class EstudianteNormal extends Estudiante {
         public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte);
     }
+    @Override
+    public String getTipo() {
+        return "EstudianteNormal";
+    }
 
     @Override
     public void mover(ListaEnlazada<Celda> tablero) {

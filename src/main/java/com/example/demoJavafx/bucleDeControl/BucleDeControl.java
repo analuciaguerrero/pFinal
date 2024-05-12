@@ -3,6 +3,7 @@ package com.example.demoJavafx.bucleDeControl;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
+import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
 import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
@@ -18,7 +19,7 @@ public class BucleDeControl {
     public void setTablero(Tablero tablero){
         this.tablero = tablero;
     }
-    public void ejecutar() {
+    public void ejecutar() throws MasDe3Estudiantes {
         // Paso 1: Actualizar tiempo de vida de cada individuo y eliminar si ha muerto
         tablero.actualizarTiempoDeVida();
 

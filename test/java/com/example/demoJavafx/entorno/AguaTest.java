@@ -13,6 +13,9 @@ public class AguaTest {
         public MockEstudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
             super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte, posicionN, posicionM);
         }
+        public MockEstudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
+            super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte);
+        }
         public MockEstudiante(int id){
             super(id);
         }
