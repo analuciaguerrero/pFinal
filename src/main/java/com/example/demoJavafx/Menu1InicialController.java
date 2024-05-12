@@ -7,8 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,22 +46,16 @@ public class Menu1InicialController {
 
     @FXML
     private void goToSettings(ActionEvent event) {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("Personalizacion.fxml"));
+
         try {
-            // Load the FXML file for the previous XML layout
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Personalizacion.fxml"));
-            VBox root = loader.load();
-
-
-            // Create a new Scene with the loaded root node
-            Scene scene = new Scene(root);
-
-            // Get the Stage from the button's Scene
-            Stage stage = (Stage) buttonAjustes.getScene().getWindow();
-
-            // Set the new Scene to the Stage
+            Scene scene = new Scene((Parent)fxmlLoader.load(), 840.0, 803.0);
+            stage.setTitle("Ajustes");
             stage.setScene(scene);
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception var4) {
+            Exception e = var4;
             e.printStackTrace();
         }
     }

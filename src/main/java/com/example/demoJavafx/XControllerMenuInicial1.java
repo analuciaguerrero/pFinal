@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 
-class ControllerMenuInicial1 {
+class XControllerMenuInicial1 {
 
     @FXML
     private Button buttonCargar;

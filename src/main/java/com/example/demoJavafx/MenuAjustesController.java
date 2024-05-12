@@ -21,7 +21,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 
-public class PersonalizacionController {
+public class MenuAjustesController {
+
+    @FXML private Stage primaryStage; // Referencia al Stage principal
 
     @FXML private Slider estudiantesProbClonado;
     @FXML private Spinner<Integer> estudiantesTurnosRestantesSpinner;
@@ -91,7 +93,23 @@ public class PersonalizacionController {
     @FXML private Button buttonReestablecer;
     @FXML private Button buttonGuardar;
 
+    public void setStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     private static final Logger log = LogManager.getLogger(PersonalizacionController.class);
+
+    private void initializeSliderAndLabel(Slider slider, Text label, IntegerProperty valorEstablecido) {
+        // Enlazar slider y label
+        slider.valueProperty().bindBidirectional(valorEstablecido);
+        label.textProperty().bind(valorEstablecido.asString());
+
+        // Configurar event handler para el slider
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            label.setText(String.valueOf(newValue.intValue()));
+            valorEstablecido.set(newValue.intValue());
+        });
+    }
 
     @FXML
     void initialize() {
@@ -129,16 +147,95 @@ public class PersonalizacionController {
 
     }
 
-    private void initializeSliderAndLabel(Slider slider, Text label, IntegerProperty valorEstablecido) {
-        // Enlazar slider y label
-        slider.valueProperty().bindBidirectional(valorEstablecido);
-        label.textProperty().bind(valorEstablecido.asString());
+    @FXML
+    void next(MouseEvent event) throws IOException {
+        DatosCompartidos.setVidaInicial(String.valueOf((int)estudiantesTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setProbReproduccion(String.valueOf((int)estudiantesProbReproduccion.getValue()));
+        DatosCompartidos.setProbClonacion(String.valueOf((int)estudiantesProbClonado.getValue()));
 
-        // Configurar event handler para el slider
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            label.setText(String.valueOf(newValue.intValue()));
-            valorEstablecido.set(newValue.intValue());
-        });
+        DatosCompartidos.setAguaEfecto(String.valueOf((int)aguaAumentoVidaSlider.getValue()));
+        DatosCompartidos.setComidaEfecto(String.valueOf((int)comidaAumentoVidaSlider.getValue()));
+        DatosCompartidos.setMontanaEfecto(String.valueOf((int)montanaDisminucionVidaSlider.getValue()));
+        DatosCompartidos.setBibliotecaEfecto(String.valueOf((int)bibliotecaAumentoClonSlider.getValue()));
+        DatosCompartidos.setTesoroEfecto(String.valueOf((int)tesoroAumentoRepSlider.getValue()));
+
+        DatosCompartidos.setAguaVida(String.valueOf((int)aguaProbabilidadSlider.getValue()));
+        DatosCompartidos.setComidaVida(String.valueOf((int)comidaProbabilidadSlider.getValue()));
+        DatosCompartidos.setMontanaVida(String.valueOf((int)montanaProbabilidadSlider.getValue()));
+        DatosCompartidos.setBibliotecaVida(String.valueOf((int)bibliotecaProbabilidadSlider.getValue()));
+        DatosCompartidos.setTesoroVida(String.valueOf((int)tesoroProbabilidadSlider.getValue()));
+        DatosCompartidos.setPozoVida(String.valueOf((int)pozoProbabilidadSlider.getValue()));
+
+        DatosCompartidos.setAguaAparicion(String.valueOf((int)aguaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setComidaAparicion(String.valueOf((int)comidaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setMontanaAparicion(String.valueOf((int)montanaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setBibliotecaAparicion(String.valueOf((int)bibliotecaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setTesoroAparicion(String.valueOf((int)tesoroTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setPozoAparicion(String.valueOf((int)pozoTurnosRestantesSpinner.getValue()));
+
+        DatosCompartidos.setAltoMatriz(String.valueOf((int) filasSlider.getValue()));
+        DatosCompartidos.setAnchoMatriz(String.valueOf((int) columnasSlider.getValue()));
+        tablero.makeBoard(tablero.tableroJuego, tablero.theme);
+
+        // Cerrar la ventana actual
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+
+        // Cargar y mostrar la ventana de configuración de propiedades del tablero
+        URL fxmlUrl = getClass().getResource("InterfazRecursosVida.fxml");
+        Parent root = FXMLLoader.load(fxmlUrl);
+
+        Stage configStage = new Stage();
+        configStage.setScene(new Scene(root));
+        configStage.setResizable(true); // Evitar que la ventana sea redimensionable
+        configStage.initModality(Modality.APPLICATION_MODAL); // Impide la interacción con la ventana principal
+        configStage.initOwner(primaryStage);
+
+        configStage.initStyle(StageStyle.UNDECORATED);
+        configStage.getScene().getRoot().setStyle("-fx-border-width: 3px; -fx-border-color: black;");
+
+        configStage.show();
+
+        log.info("Parametrización de las propiedades iniciales de los individuos correcta");
+    }
+
+    @FXML
+    void nextAleatorio(MouseEvent event) {
+        DatosCompartidos.setAguaAparicion(String.valueOf((int)aguaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setComidaAparicion(String.valueOf((int)comidaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setMontanaAparicion(String.valueOf((int)montanaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setBibliotecaAparicion(String.valueOf((int)bibliotecaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setTesoroAparicion(String.valueOf((int)tesoroTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setPozoAparicion(String.valueOf((int)pozoTurnosRestantesSpinner.getValue()));
+
+        // Cerrar la ventana actual
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        ControllerMainStage.initializeAudio();
+
+        DatosCompartidos.getGame().crearTableroAleatorio();
+        DatosCompartidos.getGame().actualizarTablero();
+        log.info("Parametrización de la probabilidad de aparición de los recursos correcta");
+        log.info("Creación del tablero aleatorio correcta");
+    }
+
+    @FXML
+    void nextClear(MouseEvent event) {
+        DatosCompartidos.setAguaAparicion(String.valueOf((int)aguaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setComidaAparicion(String.valueOf((int)comidaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setMontanaAparicion(String.valueOf((int)montanaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setBibliotecaAparicion(String.valueOf((int)bibliotecaTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setTesoroAparicion(String.valueOf((int)tesoroTurnosRestantesSpinner.getValue()));
+        DatosCompartidos.setPozoAparicion(String.valueOf((int)pozoTurnosRestantesSpinner.getValue()));
+
+        // Cerrar la ventana actual
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        ControllerMainStage.initializeAudio();
+        log.info("Parametrización de la probabilidad de aparición de los recursos correcta");
     }
 
     @FXML

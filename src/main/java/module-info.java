@@ -8,6 +8,7 @@ module com.example.demojavafx {
     requires java.logging;
     requires com.google.gson;
     requires org.apache.logging.log4j;
+    requires javafx.media;
 
 
     opens com.example.demoJavafx to javafx.fxml;

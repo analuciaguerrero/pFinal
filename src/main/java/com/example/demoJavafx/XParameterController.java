@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ParameterController implements Initializable {
+public class XParameterController implements Initializable {
 
 
     /**
@@ -28,7 +28,7 @@ public class ParameterController implements Initializable {
     /**
      * Controlador con modelo de datos en el que trabajar
      **/
-    private ParameterDataModelProperties model;
+    private XParameterDataModelProperties model;
     private Stage scene;
 
 
@@ -77,7 +77,7 @@ public class ParameterController implements Initializable {
     /**
      * Este método recibe los datos del modelo y los establece
      **/
-    public void loadUserData(ParameterDataModelProperties parametrosData) {
+    public void loadUserData(XParameterDataModelProperties parametrosData) {
         this.model = parametrosData;
         this.updateGUIwithModel();
     }
