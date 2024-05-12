@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import static com.example.demoJavafx.game.Game.tablero;
 import java.io.IOException;
 import java.net.URL;
 

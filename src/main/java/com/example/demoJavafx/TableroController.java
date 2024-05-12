@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.function.Consumer;
 
-import static com.example.demoJavafx.Game.tablero;
+import static com.example.demoJavafx.game.Game.tablero;
 
 public class ControllerTableroPropiedades {
 

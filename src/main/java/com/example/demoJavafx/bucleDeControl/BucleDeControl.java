@@ -59,4 +59,5 @@ public class BucleDeControl {
         }
         return lista.getNumeroElementos() == 1;
     }
+
 }
