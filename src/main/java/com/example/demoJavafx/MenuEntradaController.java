@@ -132,7 +132,7 @@ public class MenuEntradaController {
             mostrarAlerta("Este jugador no está registrado");
         } else {
             jugador = jugadores.get(dni);
-            abrirMenuPersonalizacion();
+            abrirJuegoCargando();
         }
     }
 
@@ -144,11 +144,11 @@ public class MenuEntradaController {
             jugador = new Jugador(dni);
             jugador.setNombre(textFieldNombre.getText());
             jugadores.put(dni, jugador);
-            abrirMenuPersonalizacion();
+            abrirJuegoCargando();
         }
     }
 
-    private void abrirMenuPersonalizacion() {
+    private void abrirJuegoCargando() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ruta/del/archivo/fxml/Menu3Personalizacion.fxml"));
             Parent root = loader.load();
