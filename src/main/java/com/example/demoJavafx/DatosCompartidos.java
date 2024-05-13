@@ -30,13 +30,13 @@ public class DatosCompartidos {
     private static String pozoAparicion = "0";
     private static int anadir = 0;
     private static boolean anadirTab = false;
-    private static int numIndividuos = 0;
+    private static int numEstudiantes = 0;
     private static int turnoJuego = 0;
     private static double velocidadJuego = 1;
     private static boolean gameIniciado = false;
     private static boolean tableroAleatorio = false;
     private static ListaSimple<Recursos> listaRecursos= new ListaSimple<Recursos>();
-    private static ListaSimple<Estudiante> listaIndividuos = new ListaSimple<Estudiante>();
+    private static ListaSimple<Estudiante> listaEstudiantes = new ListaSimple<Estudiante>();
     private static BucleDeControl game = null;
 
 
@@ -232,12 +232,12 @@ public class DatosCompartidos {
         DatosCompartidos.anadirTab = anadirTab;
     }
 
-    public static int getNumIndividuos() {
-        return numIndividuos;
+    public static int getNumEstudiantes() {
+        return numEstudiantes;
     }
 
-    public static void setNumIndividuos(int numIndividuos) {
-        DatosCompartidos.numIndividuos = numIndividuos;
+    public static void setNumEstudiantes(int numEstudiantes) {
+        DatosCompartidos.numEstudiantes = numEstudiantes;
     }
 
     public static int getTurnoJuego() {
@@ -280,12 +280,12 @@ public class DatosCompartidos {
         DatosCompartidos.listaRecursos = listaRecursos;
     }
 
-    public static ListaSimple<Estudiante> getListaIndividuos() {
-        return listaIndividuos;
+    public static ListaSimple<Estudiante> getListaEstudiantes() {
+        return listaEstudiantes;
     }
 
-    public static void setListaIndividuos(ListaSimple<Estudiante> listaIndividuos) {
-        DatosCompartidos.listaIndividuos = listaIndividuos;
+    public static void setListaEstudiantes(ListaSimple<Estudiante> listaEstudiantes) {
+        DatosCompartidos.listaEstudiantes = listaEstudiantes;
     }
 
     public static BucleDeControl getGame() {

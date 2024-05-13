@@ -1,7 +1,12 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaEnlazada;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ListaEnlazada<TipoDelDato> {
+    private static final Logger log = LogManager.getLogger();
     private ElementoLE<TipoDelDato> primero;
+    private ElementoLE<TipoDelDato>[] datos;
 
     public ElementoLE<TipoDelDato> getEl() {
         return primero;
@@ -84,6 +89,19 @@ public class ListaEnlazada<TipoDelDato> {
         }
 
     }
+    public void del (TipoDelDato el) {
+        Integer indiceAEliminar = null;
+        for (int i=0; i != getNumeroElementos(); i++) {
+            if (getElemento(i).getData() == el) {
+                indiceAEliminar = i;
+            }
+        }
+        if (indiceAEliminar == null) {
+            log.warn("Se ha tratado de eliminar un elemento que no pertenece a la lista");
+        } else {
+            delete(indiceAEliminar);
+        }
+    }
 
     public int getNumeroElementos() {
         int contador = 0;
@@ -153,6 +171,10 @@ public class ListaEnlazada<TipoDelDato> {
             return null;
         }
 
+    }
+    public void setElemento(int posicion, TipoDelDato elemento) {
+        ElementoLE<TipoDelDato> e = new ElementoLE<>(elemento);
+        datos[posicion] = e;
     }
 
     public ListaEnlazada<TipoDelDato> invertir(ElementoLE<TipoDelDato> aux,ListaEnlazada<TipoDelDato> lista  ) {
