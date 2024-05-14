@@ -24,6 +24,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     private double probReproduccion;
     private double probClonacion;
     private double probMuerte;
+    private boolean isVivo = true;
     BST<Estudiante<Tipo>> arbolGenealogico;
     private static final Logger log = LogManager.getLogger(Estudiante.class);
 
@@ -53,7 +54,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
         this.arbolGenealogico.raiz = new Nodo<>(this);
     }
 
-    public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
+    public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         this.id = id;
         this.generacion = generacion;
         this.tiempoDeVida = tiempoDeVida;
@@ -105,7 +106,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             posicionN = posicion[0];
             posicionM = posicion[1];
         } catch (TamañoArrayInvalido e) {
-            log.error("Se ha intentado establecer la posición de un individuo con un array que no contiene 2 elementos");
+            log.error("El array no contiene 2 elementos y por tanto, no se ha podido establecer la posición del estudiante");
         }
     }
 
@@ -159,23 +160,26 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     public double getProbMuerte() {
         return probMuerte;
     }
+    public boolean isVivo(){
+        return isVivo;
+    }
     public abstract Class<Tipo> getTipo();
     public int getNumTipo() {
-        int grado = -1;
+        int num = -1;
         switch (this.getClass().getSimpleName()) {
             case "EstudianteBasico":
-                grado = 0;
+                num = 0;
                 break;
             case "EstudianteNormal":
-                grado = 1;
+                num = 1;
                 break;
             case "EstudianteAvanzado":
-                grado = 2;
+                num = 2;
                 break;
             default:
                 log.error("El grado del tipo no es ninguno de los requeridos");
         }
-        return grado;
+        return num;
     }
     private double getProbMejorar(Estudiante estudiante, DatosJuego dato) {
         double probMejora = -1;
@@ -197,7 +201,8 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             celda.getListaEstudiantes().add(this);
             this.setPosicion(celda.getPosicion());
 
-            Constructor<? extends Estudiante> constructor = getClass().getConstructor(this.getTipo());
+            Class<? extends Estudiante> claseEstudiante = this.getTipo();
+            Constructor<? extends Estudiante> constructor = getClass().getConstructor(Estudiante.class);
             dato.getHistorialEstudiantes().add(constructor.newInstance(this));
 
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
@@ -208,6 +213,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     public void morir(DatosJuego dato, Celda celda) {
         celda.getListaEstudiantes().del(this);
         dato.getEstudiantes().del(this);
+        isVivo = false;
     }
     public abstract void mover(DatosJuego dato, Tablero tablero) throws MasDe3Estudiantes;
     protected void cambiarDePosicion (int nuevaPosicionN, int nuevaPosicionM, Tablero tablero) {
@@ -255,7 +261,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             moverseAleatorio(tablero);
         }
     }
-    public <Tipo extends Estudiante<Tipo>> void reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
+    public <Tipo extends Estudiante<Tipo>> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
         int num = getNumTipo();
         int numPareja = pareja.getNumTipo();
         Random a = new Random();
@@ -285,34 +291,37 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
                 hijoTipo = estudiante2.getTipo();
             }
             try {
-                Constructor<Tipo> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, float.class, float.class);
+                Constructor<Tipo> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, double.class, double.class);
                 int id = dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1;
                 Tipo hijo = constructor.newInstance(id, getPosicionN(), getPosicionM(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
                 hijo.add(dato, celda);
+                return false; //No mueren
             } catch (Exception e) {
                 log.error("No se ha podido crear una instancia para el estudiante hijo");
                 e.printStackTrace();
+                return false; //No mueren
             }
         } else {
-            pareja.morir(dato, celda);
-            this.morir(dato, celda);
+            return true; //Sí mueren
         }
     }
     public void clonar(DatosJuego dato, Celda celda) {
         try {
-            Constructor<? extends Estudiante> constructor = getClass().getConstructor(this.getTipo());
+            Constructor<? extends Estudiante> constructor = getClass().getConstructor(Estudiante.class);
             Estudiante clon = constructor.newInstance(this);
             clon.add(dato, celda);
         } catch (Exception e) {
             log.error("No se ha podido crear un clon del estudiante");
         }
     }
-    public void actualizarTiempoDeVida(DatosJuego dato, Celda celda){
+    public boolean actualizarTiempoDeVida(DatosJuego dato, Celda celda){
         tiempoDeVida--;
-        if (tiempoDeVida==0){
-            morir(dato,celda);
-        }
         log.info("El tiempo de vida ha sido actualizado");
+        if (tiempoDeVida<=0){
+            celda.eliminarEstudiante(this);
+            return true;
+        }
+        return false;
     }
     public BST<Estudiante<Tipo>> getArbolGenealogico() {
         return arbolGenealogico;
