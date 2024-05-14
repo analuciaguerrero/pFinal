@@ -11,6 +11,7 @@ public class BucleDeControlProperties {
     private IntegerProperty tableroColumnas = new SimpleIntegerProperty();
     private IntegerProperty tableroFilas = new SimpleIntegerProperty();
     private ListaEnlazada<Celda> tableroMatriz;
+    private IntegerProperty turnoProperty = new SimpleIntegerProperty();
 
     public BucleDeControlProperties(BucleDeControl original) {
         setOriginal(original);
@@ -66,5 +67,12 @@ public class BucleDeControlProperties {
 
     public ListaEnlazada<Celda> tableroMatrizProperty() {
         return tableroMatriz;
+    }
+    public IntegerProperty getTurnoProperty() {
+        return turnoProperty;
+    }
+
+    public void setTurnoProperty(Integer turnoProperty) {
+        this.turnoProperty.set(turnoProperty);
     }
 }

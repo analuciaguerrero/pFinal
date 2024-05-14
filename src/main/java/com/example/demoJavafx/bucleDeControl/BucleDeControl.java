@@ -20,12 +20,31 @@ public class BucleDeControl implements Runnable {
     private ListaEnlazada<Recursos> recursos;
     private DatosJuego dato;
     private Tablero tablero;
-    private boolean unTurno;
+    private boolean turno;
     public BucleDeControl(Tablero tablero, DatosJuego dato) {
         this.tablero = tablero;
         this.estudiantes = dato.getEstudiantes();
         this.recursos = dato.getRecursos();
         this.dato = dato;
+    }
+    public Tablero getTablero(){
+        return tablero;
+    }
+    public void setTablero(Tablero tablero){
+        this.tablero = tablero;
+    }
+    public DatosJuego getDatos(){
+        return dato;
+    }
+    public void setDatos(DatosJuego dato){
+        this.dato = dato;
+    }
+    public boolean isTurno() {
+        return turno;
+    }
+
+    public void setTurno(boolean turno) {
+        this.turno = turno;
     }
     private void evaluarMejoras() {
         if (!estudiantes.isVacia() && !recursos.isVacia()) {

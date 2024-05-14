@@ -242,7 +242,8 @@ public class Celda {
             ElementoLE<Estudiante> nodoEstudiante = listaEstudiantes.getPrimero();
             while (nodoEstudiante != null) {
                 Estudiante estudiante = nodoEstudiante.getData();
-                recurso.aplicarEfecto(estudiante);
+                Celda celda = tablero.getCelda(posicionN, posicionM);
+                recurso.aplicarEfecto(estudiante, celda);
                 log.info("Se aplicó el efecto del recurso " + recurso.toString() + " al estudiante " + estudiante.toString());
                 nodoEstudiante = nodoEstudiante.getSiguiente();
             }

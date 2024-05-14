@@ -124,5 +124,4 @@ public abstract class Recursos<Tipo extends Recursos<Tipo>> {
     }
 
     public abstract void aplicarEfecto(Estudiante estudiante, Celda celda);
-
 }
