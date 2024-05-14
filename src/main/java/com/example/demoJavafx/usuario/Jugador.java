@@ -1,7 +1,8 @@
 package com.example.demoJavafx.usuario;
 
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Jugador implements Serializable {
     public String nombre;
@@ -11,8 +12,8 @@ public class Jugador implements Serializable {
     public int partidasJugadas;
     public int partidasGanadas;
     public int partidasPerdidas;
-    private ArrayList<String> dificultades = new ArrayList();
-    private ArrayList<Integer> puntosPartidas = new ArrayList();
+    private ListaSimple<String> dificultades = new ListaSimple<>();
+    private ListaSimple<Integer> puntosPartidas = new ListaSimple<>();
 
     public Jugador(String dni) {
         this.nombre = this.nombre;
@@ -24,7 +25,7 @@ public class Jugador implements Serializable {
         this.partidasPerdidas = 0;
     }
 
-    public ArrayList<String> getDificultades() {
+    public ListaSimple<String> getDificultades() {
         return this.dificultades;
     }
 
@@ -32,7 +33,7 @@ public class Jugador implements Serializable {
         this.dificultades.add(dificultad);
     }
 
-    public ArrayList<Integer> getPuntosPartida() {
+    public ListaSimple<Integer> getPuntosPartida() {
         return this.puntosPartidas;
     }
 
