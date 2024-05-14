@@ -1,66 +1,40 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada;
 
-public class ElementoLDE {
-    protected ElementoLDE siguiente;
-    protected ElementoLDE anterior;
-    private Object data;
+public class ElementoLDE<Tipo> {
+    private Tipo data;
+    private ElementoLDE<Tipo> siguiente;
+    private ElementoLDE<Tipo> anterior;
 
-    public ElementoLDE(String s) {
-        this.setData(s);
+    protected void insertarmeEn(ElementoLDE<Tipo> el) {
+        this.siguiente = el.siguiente;
+        this.anterior = el;
+        el.siguiente = this;
+        if (this.siguiente != null)
+            this.siguiente.anterior = this;
     }
 
-    public ElementoLDE(Object o) {
-        this.setData(o);
-    }
-
-    private ElementoLDE getSiguiente() {
+    protected ElementoLDE<Tipo> getSiguiente() {
         return siguiente;
     }
 
-    public void setSiguiente(ElementoLDE siguiente) {
-        this.siguiente = siguiente;
-    }
-
-    private ElementoLDE getAnterior() {
+    protected ElementoLDE<Tipo> getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(ElementoLDE anterior) {
-        this.anterior = anterior;
-    }
-
-    public Object getDato() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public void insertBefore(ElementoLDE el) {
-        el.anterior = this.anterior;
-        el.siguiente = this;
-        if (this.anterior != null) {
-            this.anterior.siguiente = el;
-        }
-        this.anterior = el;
-    }
-
-    public void insertAfter(ElementoLDE el) {
-        el.anterior = this;
-        el.siguiente = this.siguiente;
-        if (this.siguiente != null) {
-            this.siguiente.anterior = el;
-        }
+    protected void setSiguiente(ElementoLDE<Tipo> el) {
         this.siguiente = el;
     }
 
-    public void del() {
-        if (this.getSiguiente() != null) {
-            this.siguiente.anterior = this.anterior;
-        }
-        if (this.getAnterior() != null) {
-            this.anterior.siguiente = this.siguiente;
-        }
+    protected void setAnterior(ElementoLDE<Tipo> el) {
+        this.anterior = el;
+    }
+
+
+    public Tipo getData() {
+        return this.data;
+    }
+
+    public void setData(Tipo dato) {
+        this.data = dato;
     }
 }

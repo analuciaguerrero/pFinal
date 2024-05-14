@@ -8,6 +8,7 @@ import com.example.demoJavafx.excepciones.ProbabilidadNoValida;
 import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
 import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,15 +17,25 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
+    @Expose
     private int posicionN;
+    @Expose
     private int posicionM;
+    @Expose
     private int id;
+    @Expose
     private int generacion;
+    @Expose
     private int tiempoDeVida;
+    @Expose
     private double probReproduccion;
+    @Expose
     private double probClonacion;
+    @Expose
     private double probMuerte;
+    @Expose
     private boolean isVivo = true;
+    @Expose
     BST<Estudiante<Tipo>> arbolGenealogico;
     private static final Logger log = LogManager.getLogger(Estudiante.class);
 
@@ -100,7 +111,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
         posicion[1] = posicionM;
         return posicion;
     }
-    public void setPosicion(int[] posicion){
+    public void setPosicion(int[] posicion) throws TamañoArrayInvalido{
         try {
                 if (posicion.length != 2) throw new TamañoArrayInvalido();
             posicionN = posicion[0];
@@ -217,12 +228,21 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     }
     public abstract void mover(DatosJuego dato, Tablero tablero) throws MasDe3Estudiantes;
     protected void cambiarDePosicion (int nuevaPosicionN, int nuevaPosicionM, Tablero tablero) {
-        Celda celda = tablero.getCelda(nuevaPosicionN, nuevaPosicionM);
-        Celda celdaActual = tablero.getCelda(getPosicion());
-        celdaActual.getListaEstudiantes().del(this);
+        Celda celdaNueva = tablero.getCelda(nuevaPosicionN, nuevaPosicionM);
+        Celda celdaActual = tablero.getCelda(getPosicionN(), getPosicionM());
+        if (celdaActual != null) {
+            // Eliminar el estudiante de la celda actual
+            celdaActual.eliminarEstudiante(this);
+        }
+
+        // Actualizar la posición del estudiante
         setPosicionN(nuevaPosicionN);
         setPosicionM(nuevaPosicionM);
-        celda.getListaEstudiantes().add(this);
+
+        if (celdaNueva != null) {
+            // Agregar el estudiante a la nueva celda
+            celdaNueva.agregarEstudiante(this);
+        }
     }
     protected void moverseAleatorio(Tablero tablero) {
         log.info("Inicio de un movimiento aleatorio");

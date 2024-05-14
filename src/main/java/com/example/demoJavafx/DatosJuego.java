@@ -1,18 +1,27 @@
 package com.example.demoJavafx;
 
 import com.example.demoJavafx.entorno.Recursos;
+import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
+import com.example.demoJavafx.zombieStudentsLife.Celda;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DatosJuego {
 
+    private static final Logger log = LogManager.getLogger(DatosJuego.class);
     //Listas con los estudiantes y recursos
     private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
     private ListaEnlazada<Recursos> recursos = new ListaEnlazada<>();
     private ListaEnlazada<Estudiante> HistorialEstudiantes = new ListaEnlazada<>();
     private ListaEnlazada<Recursos> HistorialRecursos = new ListaEnlazada<>();
+    private int numRecursos; // Almacenar la cantidad de recursos
+    private int numEstudiantes; //Almacenar la cantidad de estudiantes
 
     //Datos del tablero
     private int MaximoEstudiantesPorCelda = 3;
@@ -104,7 +113,18 @@ public class DatosJuego {
     public void setProbRecurso(double probRecurso) {
         ProbRecurso = probRecurso;
     }
-
+    public int getNumEstudiantes(){
+        return numEstudiantes;
+    }
+    public void setNumEstudiantes(int numEstudiantes){
+        this.numEstudiantes = numEstudiantes;
+    }
+    public int getNumRecursos(){
+        return numRecursos;
+    }
+    public void setNumRecursos(int numRecursos){
+        this.numRecursos = numRecursos;
+    }
     public double getProbAgua() {
         return ProbAgua;
     }
@@ -282,6 +302,57 @@ public class DatosJuego {
 
     public void setTurnosIniciales(int turnosIniciales) {
         TurnosIniciales = turnosIniciales;
+    }
+    public int generarEnteroAleatorio(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt(max - min + 1) + min;
+    }
+    public Celda celdaAleatoria(int filas, int columnas) {
+        int filaAleatoria = generarEnteroAleatorio(0, filas - 1);
+        int columnaAleatoria = generarEnteroAleatorio(0, columnas - 1);
+        return new Celda(filaAleatoria, columnaAleatoria);
+    }
+    public Estudiante obtenerEstudianteAleatorio() {
+        ListaEnlazada<Estudiante> estudiantesDisponibles = new ListaEnlazada<>();
+        // Agregar los estudiantes disponibles a la lista
+        ElementoLE<Estudiante> nodoEstudiante = estudiantes.getPrimero();
+        while (nodoEstudiante != null) {
+            Estudiante estudiante = nodoEstudiante.getData();
+            estudiantesDisponibles.add(estudiante);
+            nodoEstudiante = nodoEstudiante.getSiguiente();
+        }
+
+        if (!estudiantesDisponibles.isVacia()) {
+            Random rand = new Random();
+            int indiceAleatorio = rand.nextInt(estudiantesDisponibles.getNumeroElementos());
+            Estudiante estudianteAleatorio = estudiantesDisponibles.getElemento(indiceAleatorio).getData();
+            log.info("Se ha obtenido aleatoriamente el estudiante: " + estudianteAleatorio.toString());
+            return estudianteAleatorio;
+        } else {
+            log.warn("No hay estudiantes disponibles en la lista.");
+        }
+        return null;
+    }
+    public Recursos obtenerRecursoAleatorio() {
+        ListaEnlazada<Recursos> recursosDisponibles = new ListaEnlazada<>();
+        // Agregar los recursos disponibles a la lista
+        ElementoLE<Recursos> nodoRecurso = recursos.getPrimero();
+        while (nodoRecurso != null) {
+            Recursos recurso = nodoRecurso.getData();
+            recursosDisponibles.add(recurso);
+            nodoRecurso = nodoRecurso.getSiguiente();
+        }
+
+        if (!recursosDisponibles.isVacia()) {
+            Random rand = new Random();
+            int indiceAleatorio = rand.nextInt(recursosDisponibles.getNumeroElementos());
+            Recursos recursoAleatorio = recursosDisponibles.getElemento(indiceAleatorio).getData();
+            log.info("Se ha obtenido aleatoriamente el recurso: " + recursoAleatorio.toString());
+            return recursoAleatorio;
+        } else {
+            log.warn("No hay recursos disponibles en la lista.");
+        }
+        return null;
     }
 
     public ListaEnlazada<Estudiante> getHistorialEstudiantes() {

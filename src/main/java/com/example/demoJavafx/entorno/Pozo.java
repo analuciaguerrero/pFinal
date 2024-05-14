@@ -1,14 +1,25 @@
 package com.example.demoJavafx.entorno;
 
+import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estudiante.Estudiante;
+import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.google.gson.annotations.Expose;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Pozo extends Recursos{
+public class Pozo extends Recursos<Pozo>{
+    @Expose
+    private final String nombreTipo = "Pozo";
     private static double probPozo;
-    public Pozo(int posicionN, int posicionM, int turnosRestantes, double probRecurso, double probPozo) {
-        super(posicionN, posicionM, turnosRestantes, probRecurso);
+    private static final Logger logger = LogManager.getLogger(Pozo.class);
+    public Pozo(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double probPozo) {
+        super(id, posicionN, posicionM, turnosRestantes, probRecurso);
         Pozo.probPozo = probPozo;
     }
     public Pozo(){
+    }
+    public Pozo(int id, int posicionN, int posicionM, DatosJuego dato) {
+        super (id, posicionN, posicionM, dato);
     }
     public Pozo(double probPozo){
         Pozo.probPozo = probPozo;
@@ -19,10 +30,14 @@ public class Pozo extends Recursos{
     public void setProbPozo(double probPozo){
         Pozo.probPozo = probPozo;
     }
-
     @Override
-    public void aplicarEfecto(Estudiante estudiante) {
-        estudiante.setTiempoDeVida(0); // Muerte instantánea
+    public Class<Pozo> getTipo () {
+        return Pozo.class;
+    }
+    @Override
+    public void aplicarEfecto(Estudiante estudiante, Celda celda) {
+        celda.eliminarEstudiante(estudiante);// Muerte instantánea
+        logger.info("Efecto aplicado");
     }
 }
 

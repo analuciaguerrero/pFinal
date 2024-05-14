@@ -1,143 +1,182 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada;
 
-public class ListaDoblementeEnlazada {
-    private ElementoLDE primero;
-    private ElementoLDE ultimo;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-    public ListaDoblementeEnlazada(ElementoLDE primero, ElementoLDE ultimo) {
-        this.primero = primero;
-        this.ultimo = ultimo;
-        this.primero.setSiguiente(ultimo);
-        this.ultimo.setAnterior(primero);
-    }
+public class ListaDoblementeEnlazada<Tipo>{
+    private static final Logger log = LogManager.getLogger();
+    private ElementoLDE<Tipo> primero;
+    private ElementoLDE<Tipo> ultimo;
 
     public ListaDoblementeEnlazada() {
+        this.primero = null;
+        this.ultimo = null;
     }
 
-
-    public boolean isVacia() {
-        return getNumeroElementos() == 0;
+    public Boolean isVacia() {
+        return this.primero == null;
     }
 
     public void vaciar() {
-        primero = null;
-        ultimo = null;
+        this.primero = null;
+        this.ultimo = null;
     }
 
-    private int add(ElementoLDE el) {
-        if (getNumeroElementos() == 1) { // Si la lista tiene un solo elemento se declara el elemento a añadir como "ultimo"
-            ultimo = el;
-            primero.insertAfter(ultimo);
-        } else if (isVacia()) {
-            primero = el;
-            primero.setAnterior(null);
-            primero.setSiguiente(null);
-            ultimo = el;
+    protected int add(ElementoLDE<Tipo> el) {
+        int pos = 1;
+        if (isVacia()) {
+            this.primero = el;
+            this.ultimo = el;
+            return 0;
         } else {
-            ultimo.insertAfter(el);
-            ultimo = el;
+            ElementoLDE<Tipo> actual = this.primero;
+            while (actual != this.ultimo) {
+                actual = actual.getSiguiente();
+                pos += 1;
+            }
+            el.insertarmeEn(this.ultimo);
+            this.ultimo = el;
+            return pos;
         }
-        return getNumeroElementos();
     }
 
-    public int add(String s) {
-        ElementoLDE sLDE = new ElementoLDE(s);
-        add(sLDE); // Llamamos a la función add(ElementoLDE)
-        return getNumeroElementos();
+    public void add(Tipo o) {
+        ElementoLDE<Tipo> e = new ElementoLDE<>();
+        e.setData(o);
+        add(e);
     }
 
-    public int add(Object o) {
-        ElementoLDE oLDE = new ElementoLDE(o);
-        add(oLDE); // Llamamos a la función add(ElementoLDE)
-        return getNumeroElementos();
-
-    }
-
-    private void insert(ElementoLDE el, int pos) { // Si se mete un número de posición no válido no se hace nada
-        if (0 <= pos && pos <= getNumeroElementos()) { // Comprobar que el numero de posición introducido es válido
-            if (pos == 0) {
-                if (this.isVacia()) {
-                    add(el);
-                } else {
-                    primero.anterior = el;
-                    el.siguiente = primero;
-                    primero = el;
-                }
-            } else if (pos == getNumeroElementos()) {
-                add(el);
+    public void insert(Tipo o, int posicion) {
+        ElementoLDE<Tipo> objeto = new ElementoLDE<>();
+        objeto.setData(o);
+        if (posicion == 0) {
+            objeto.setSiguiente(this.primero);
+            if (this.primero != null) {
+                this.primero.setAnterior(objeto);
             } else {
-                ElementoLDE elementoDeDespués = primero;
-                while (pos > 0) {
-                    elementoDeDespués = elementoDeDespués.siguiente;
-                    pos--;
-                }
-                elementoDeDespués.insertBefore(el);
+                this.ultimo = objeto;
+            }
+            this.primero = objeto;
+        } else {
+            ElementoLDE<Tipo> anterior = getElemento(posicion - 1);
+            if (anterior == null) {
+                log.error("No existen tantos elementos en la lista para insertar en la posición {}", posicion);
+            } else {
+                objeto.insertarmeEn(anterior);
             }
         }
     }
-
-    public void insert(String s, int posicion) {
-        ElementoLDE sLDE = new ElementoLDE(s);
-        insert(sLDE, posicion);
-    }
-
-    public void insert(Object o, int posicion) {
-        ElementoLDE oLDE = new ElementoLDE(o);
-        insert(oLDE, posicion);
-    }
-
-    public int del(int pos) {
-        if (0 <= pos && pos < getNumeroElementos()) {
-            if (pos == 0) {
-                primero = primero.siguiente;
-                primero.anterior = null;
-            } else if (pos == (getNumeroElementos() - 1)) {
-                ElementoLDE borrado = ultimo;
-                ultimo = borrado.anterior;
-                ultimo.anterior = borrado.anterior.anterior;
-                ultimo.siguiente = null;
-            } else {
-                int contador = pos;
-                ElementoLDE inicial = primero;
-                while (contador > 0) {
-                    inicial = inicial.siguiente;
-                    contador--;
+    public int del(int posicion) {
+        if (posicion == 0) {
+            this.primero = this.primero.getSiguiente();
+            if (!isVacia()){
+                this.primero.setAnterior(null);
+            }
+        } else {
+            ElementoLDE<Tipo> actual = this.primero;
+            for (int i = 0; i != posicion ; i++) {
+                actual = actual.getSiguiente();
+                if (actual == this.ultimo) {
+                    this.ultimo = actual.getAnterior();
+                    return this.getNumeroElementos();
                 }
-                inicial.anterior.siguiente = inicial.siguiente;
-                inicial.siguiente.anterior = inicial.anterior;
+            }
+            actual.getSiguiente().setAnterior(actual.getAnterior());
+            actual.getAnterior().setSiguiente(actual.getSiguiente());
+        }
+        return this.getNumeroElementos();
+    }
+    public void del (Tipo elemento) {
+        Integer indiceAEliminar = null;
+        for (int i=0; i != getNumeroElementos(); i++) {
+            if (getElemento(i).getData() == elemento) {
+                indiceAEliminar = i;
             }
         }
-        return getNumeroElementos();
+        if (indiceAEliminar == null) {
+            log.warn("El elemento que se quería eliminar no pertenecía a la lista");
+        } else {
+            del(indiceAEliminar);
+        }
     }
 
     public int getNumeroElementos() {
-        int contador = 0;
-        ElementoLDE actual = primero;
-        while (actual != null) {
-            contador++;
-            actual = actual.siguiente;
-        }
-        return contador;
-    }
-
-    public ElementoLDE getElemento(int pos) {  // Si la posición no es válida devuelve null
-        if (pos >= 0 && pos < getNumeroElementos()) {
-            ElementoLDE ElementoADevolver = primero;
-            while (pos > 0) {
-                ElementoADevolver = ElementoADevolver.siguiente;
-                pos--;
-            }
-            return ElementoADevolver;
+        if (isVacia()) {
+            return 0;
         } else {
-            return null;
+            int elms = 1;
+            ElementoLDE<Tipo> actual = this.primero;
+            while (actual != this.ultimo) {
+                elms += 1;
+                actual = actual.getSiguiente();
+            }
+            return elms;
         }
     }
 
-    public ElementoLDE getPrimero() {
-        return primero;
+    public int getPosicion(ElementoLDE<Tipo> e) {
+        int pos = 0;
+        ElementoLDE<Tipo> actual = this.primero;
+        while (actual != e) {
+            if (actual == null) {
+                log.error("El elemento no pertenece a la lista");
+                return -1;
+            }
+            actual = actual.getSiguiente();
+            pos += 1;
+        }
+        return pos;
     }
 
-    public ElementoLDE getUltimo() {
-        return ultimo;
+    public ElementoLDE<Tipo> getPrimero() {
+        if (isVacia()){
+            return null;
+        } else {
+            return this.primero;
+        }
+    }
+
+    public ElementoLDE<Tipo> getUltimo () {
+        if (isVacia()){
+            return null;
+        } else {
+            return this.ultimo;
+        }
+    }
+
+    public ElementoLDE<Tipo> getSiguiente (ElementoLDE<Tipo> el){
+        return el.getSiguiente();
+    }
+
+    public ElementoLDE<Tipo> getElemento(int posicion) {
+        if (isVacia()) {
+            log.error("La lista está vacía, no contiene elementos");
+            return null;
+        } else {
+            ElementoLDE<Tipo> actual = this.primero;
+            for (int i = 0; i != posicion; i++) {
+                actual = actual.getSiguiente();
+            }
+            return actual;
+        }
+    }
+    public void setElemento (int posicion, Tipo elemento) {
+        ElementoLDE<Tipo> elementoActual = this.primero;
+        for (int i = 0; i != posicion; i++) {
+            elementoActual = elementoActual.getSiguiente();
+        }
+        elementoActual.setData(elemento);
+    }
+    public String toString(){
+        String salida = "";
+        return "["+ toStringAux(this.primero,salida)+"]";
+    }
+    public String toStringAux(ElementoLDE<Tipo> n, String salida){
+        if((n != null)&&(n != this.ultimo)){
+            salida= salida + n.getData() + ", "+toStringAux(n.getSiguiente(),salida);
+        } else if (n== this.ultimo){
+            salida = salida + n.getData();
+        }
+        return salida;
     }
 }

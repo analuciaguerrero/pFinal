@@ -1,15 +1,13 @@
 package com.example.demoJavafx.estudiante;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class EstudianteProperties {
 
     protected Estudiante origen;
     private IntegerProperty tiempoDeVida = new SimpleIntegerProperty();
-    private IntegerProperty probReproduccion = new SimpleIntegerProperty();
-    private IntegerProperty probClonacion = new SimpleIntegerProperty();
-    private IntegerProperty probMuerte = new SimpleIntegerProperty();
+    private DoubleProperty probReproduccion = new SimpleDoubleProperty();
+    private DoubleProperty probClonacion = new SimpleDoubleProperty();
+    private DoubleProperty probMuerte = new SimpleDoubleProperty();
 
     public EstudianteProperties(Estudiante origen) {
         setOrigen(origen);
@@ -26,31 +24,26 @@ public class EstudianteProperties {
 
     public void rollback() {
         tiempoDeVida.set(origen.getTiempoDeVida());
-        probReproduccion.set((int)origen.getProbReproduccion());
-        probClonacion.set((int)origen.getProbClonacion());
-        probMuerte.set((int)origen.getProbMuerte());
+        probReproduccion.set(origen.getProbReproduccion());
+        probClonacion.set(origen.getProbClonacion());
+        probMuerte.set(origen.getProbMuerte());
     }
 
     public void commit() {
         origen.setTiempoDeVida(tiempoDeVida.get());
         origen.setProbReproduccion(probReproduccion.get());
         origen.setProbClonacion(probClonacion.get());
-        origen.setProbMuerte(probMuerte.get());
     }
-
-    public Property<Number> tiempoDeVidaProperty() {
+    public IntegerProperty tiempoDeVidaProperty() {
         return tiempoDeVida;
     }
-
-    public Property<Number> probReproduccionProperty() {
+    public DoubleProperty probReproduccionProperty() {
         return probReproduccion;
     }
-
-    public Property<Number> probClonacionProperty() {
+    public DoubleProperty probClonacionProperty() {
         return probClonacion;
     }
-
-    public Property<Number> probMuerteProperty() {
+    public DoubleProperty probMuerteProperty() {
         return probMuerte;
     }
 

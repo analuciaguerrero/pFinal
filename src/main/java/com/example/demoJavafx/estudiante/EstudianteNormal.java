@@ -2,16 +2,19 @@ package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.google.gson.annotations.Expose;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
 public class EstudianteNormal extends Estudiante<EstudianteNormal> {
-    public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
-        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte);
+    @Expose
+    private final String nombreClase = "EstudianteNormal";
+    private static final Logger log = LogManager.getLogger(EstudianteNormal.class);
+    public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
+        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }
     public EstudianteNormal(Estudiante estudiante){
         super(estudiante);
@@ -31,8 +34,7 @@ public class EstudianteNormal extends Estudiante<EstudianteNormal> {
             Recursos recursoObjetivo = dato.getRecursos().getElemento(numAleatorio).getData();
 
             if (Math.abs(recursoObjetivo.getPosicionN() - getPosicionN()) >
-                    Math.abs(recursoObjetivo.getPosicionM() - getPosicionM()))
-            {
+                    Math.abs(recursoObjetivo.getPosicionM() - getPosicionM())) {
                 if (recursoObjetivo.getPosicionN() - getPosicionN() < 0) {
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM(), tablero);
                 } else {
@@ -46,6 +48,7 @@ public class EstudianteNormal extends Estudiante<EstudianteNormal> {
                 }
             }
         }
+        log.info("Movimiento realizado por el estudiante normal.");
     }
 }
 

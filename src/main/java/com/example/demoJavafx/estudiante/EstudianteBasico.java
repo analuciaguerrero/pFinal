@@ -5,12 +5,15 @@ import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.google.gson.annotations.Expose;
 
 import java.util.Random;
 
 public class EstudianteBasico extends Estudiante<EstudianteBasico> {
-    public EstudianteBasico(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte) {
-        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, probMuerte);
+    @Expose
+    private final String nombreClase = "EstudianteBasico";
+    public EstudianteBasico(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
+        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }
     public EstudianteBasico(Estudiante estudiante){
         super(estudiante);

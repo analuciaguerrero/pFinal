@@ -1,5 +1,8 @@
 package com.example.demoJavafx.bucleDeControl;
 
+import com.example.demoJavafx.DatosJuego;
+import com.example.demoJavafx.XMenuPrincipalController;
+import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
@@ -7,45 +10,72 @@ import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
 import com.example.demoJavafx.zombieStudentsLife.Celda;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import javafx.application.Platform;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class BucleDeControl {
+public class BucleDeControl implements Runnable {
+    private static final Logger log = LogManager.getLogger(XMenuPrincipalController.class);
+    private ListaEnlazada<Estudiante> estudiantes;
+    private ListaEnlazada<Recursos> recursos;
+    private DatosJuego dato;
     private Tablero tablero;
-    public BucleDeControl(Tablero tablero) {
+    private boolean unTurno;
+    public BucleDeControl(Tablero tablero, DatosJuego dato) {
         this.tablero = tablero;
+        this.estudiantes = dato.getEstudiantes();
+        this.recursos = dato.getRecursos();
+        this.dato = dato;
     }
-    public Tablero getTablero(){
-        return tablero;
+    private void evaluarMejoras() {
+        if (!estudiantes.isVacia() && !recursos.isVacia()) {
+            for (int i = 0; i != estudiantes.getNumeroElementos(); i++) {
+                Estudiante estudiante = estudiantes.getElemento(i).getData();
+                Celda celda = tablero.getCelda(estudiante.getPosicion());
+                if (!celda.getListaRecursos().isVacia()) {
+                    int numeroRecursos = celda.getListaRecursos().getNumeroElementos();
+                    for (int j = 0; j != numeroRecursos; j++) {
+                        Recursos recurso = celda.getListaRecursos().getPrimero().getData();
+                        if (estudiante.isVivo()) {
+                            recurso.aplicarEfecto(estudiante, celda);
+                            if (!estudiante.isVivo()) i -= 1;
+                        }
+                        celda.eliminarRecurso(recurso);
+                    }
+                }
+            }
+        }
     }
-    public void setTablero(Tablero tablero){
-        this.tablero = tablero;
+
+    private void ejecutarBucle() {
+        Platform.runLater(() -> {
+            turnoProperty.set(turnoProperty.get() + 1);
+            model.setTurno(model.getTurno() + 1);
+            actualizarTVIndividuos();
+            actualizarTARecursos();
+            moverIndividuos();
+            evaluarMejoras();
+            evaluarReproduccion();
+            evaluarClonacion();
+            evaluarDesaparicionIndividuos();
+            evaluarAparicionDeRecursos();
+            log.debug("Ha pasado el turno " + turnoProperty.get());
+        });
     }
-    public void ejecutar() throws MasDe3Estudiantes {
-        // Paso 1: Actualizar tiempo de vida de cada individuo y eliminar si ha muerto
-        tablero.actualizarTiempoDeVida();
-
-        // Paso 2: Evaluar si los recursos deben eliminarse por su tiempo de aparición
-        tablero.evaluarEliminacionRecursos();
-
-        // Paso 3: Ejecutar el movimiento de cada individuo
-        tablero.moverEstudiantes();
-
-        // Paso 4: Evaluar mejoras obtenidas por los recursos en la nueva posición de cada individuo
-        tablero.evaluarMejoras();
-
-        // Paso 5: Evaluar reproducción
-        tablero.evaluarReproduccion();
-
-        // Paso 6: Evaluar clonación
-        tablero.evaluarClonacion();
-
-        // Paso 7: Evaluar desaparición de estudiantes si hay más de 3 en una celda
-        tablero.evaluarDesaparicionEstudiantes();
-
-        // Paso 8: Evaluar si deben aparecer nuevos recursos
+    @Override
+    public void run() {
         try {
-            tablero.evaluarAparicionRecursos();
-        } catch (MasDe3Recursos e) {
-            System.out.println("No se pudo agregar un nuevo recurso: " + e.getMessage());
+            if (unTurno) {
+                ejecutarBucle();
+            } else {
+                while (!dato.isPausado()) {
+                    ejecutarBucle();
+                    sleep(1500);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("El bucle ha sido interrumpido mientras esperaba");
         }
     }
     public boolean condicionFinalizacion(){
