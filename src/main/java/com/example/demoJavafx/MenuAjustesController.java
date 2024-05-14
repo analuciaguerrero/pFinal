@@ -1,5 +1,6 @@
 package com.example.demoJavafx;
 
+import com.example.demoJavafx.bucleDeControl.Tablero ;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
@@ -101,18 +102,6 @@ public class MenuAjustesController {
 
     private static final Logger log = LogManager.getLogger(PersonalizacionController.class);
 
-    private void initializeSliderAndLabel(Slider slider, Text label, IntegerProperty valorEstablecido) {
-        // Enlazar slider y label
-        slider.valueProperty().bindBidirectional(valorEstablecido);
-        label.textProperty().bind(valorEstablecido.asString());
-
-        // Configurar event handler para el slider
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            label.setText(String.valueOf(newValue.intValue()));
-            valorEstablecido.set(newValue.intValue());
-        });
-    }
-
     @FXML
     void initialize() {
         // Enlazar sliders y labels para estudiantes
@@ -148,6 +137,19 @@ public class MenuAjustesController {
         initializeSliderAndLabel(columnasSlider, labelValorSliderColumnas, columnas);
 
     }
+
+    private void initializeSliderAndLabel(Slider slider, Text label, IntegerProperty valorEstablecido) {
+        // Enlazar slider y label
+        slider.valueProperty().bindBidirectional(valorEstablecido);
+        label.textProperty().bind(valorEstablecido.asString());
+
+        // Configurar event handler para el slider
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            label.setText(String.valueOf(newValue.intValue()));
+            valorEstablecido.set(newValue.intValue());
+        });
+    }
+
 
     @FXML
     void next(MouseEvent event) throws IOException {
@@ -215,7 +217,6 @@ public class MenuAjustesController {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        ControllerMainStage.initializeAudio();
 
         DatosCompartidos.getGame().crearTableroAleatorio();
         DatosCompartidos.getGame().actualizarTablero();
@@ -236,7 +237,7 @@ public class MenuAjustesController {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-        ControllerMainStage.initializeAudio();
+
         log.info("Parametrización de la probabilidad de aparición de los recursos correcta");
     }
 

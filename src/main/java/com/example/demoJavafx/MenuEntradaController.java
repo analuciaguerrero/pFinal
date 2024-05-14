@@ -150,7 +150,7 @@ public class MenuEntradaController {
 
     private void abrirJuegoCargando() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ruta/del/archivo/fxml/Menu3Personalizacion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
             Parent root = loader.load();
             MenuAjustesController controller = loader.getController();
             // Here you can pass any necessary information to the customization window controller

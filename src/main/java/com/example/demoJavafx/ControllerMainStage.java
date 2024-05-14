@@ -1,5 +1,5 @@
 package com.example.demoJavafx;
-import com.example.demoJavafx.estructurasDeDatos.ListaSimple.*;
+import com.example.EstructurasDeDatos.ListaSimple;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

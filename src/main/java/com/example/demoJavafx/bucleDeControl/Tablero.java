@@ -13,7 +13,9 @@ import com.example.demoJavafx.zombieStudentsLife.Celda;
 
 import java.util.Random;
 
-public class Prueba {
+import static com.example.demoJavafx.game.Game.tablero;
+
+public class Tablero {
     protected int fila; //Número de filas
     protected int columna; //Número de columnas
     protected ListaEnlazada<Celda> celdas; //Matriz de celdas

@@ -4,6 +4,8 @@ import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.example.demoJavafx.game.Game.tablero;
+
 public class Tablero {
     protected int fila; //Número de filas
     protected int columna; //Número de columnas
@@ -23,34 +25,41 @@ public class Tablero {
         // Crear las celdas y agregarlas al tablero
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
-                celdas.add(new Celda(i,j));
+                celdas.add(new Celda(i, j));
             }
         }
     }
+
     // Obtener una celda específica del tablero
     public Celda getCelda(int fila, int columna) {
         return celdas.getElemento(fila).getData().getElemento(columna).getData();
     }
-    public void setCelda(int fila, int columna, Celda celda){
+
+    public void setCelda(int fila, int columna, Celda celda) {
         celdas.getElemento(fila).getData().setElemento(columna, celda);
     }
-    public int getFilas(){
+
+    public int getFilas() {
         return fila;
     }
-    public void setFilas(int fila){
+
+    public void setFilas(int fila) {
         this.fila = fila;
     }
-    public int getColumnas(){
+
+    public int getColumnas() {
         return columna;
     }
-    public void setColumnas(int columna){
+
+    public void setColumnas(int columna) {
         this.columna = columna;
     }
-    public void crearTableroAleatorio(){
+
+    public void crearTableroAleatorio() {
         Integer numeroCuadrados = tablero.getSquares().getNumeroElementos();
         if (numeroCuadrados == 1) {
             addEstudiante(tablero.getSquare(0));
-            int tipoRecurso = generarEnteroAleatorio((int)2.0, (int)7.0);
+            int tipoRecurso = generarEnteroAleatorio((int) 2.0, (int) 7.0);
             addRecursos(tablero.getSquare(0), (double) tipoRecurso);
         } else if (numeroCuadrados == 2) {
             int numerocuadrado = generarEnteroAleatorio(0, 1);
@@ -101,4 +110,9 @@ public class Tablero {
             }
         }
     }
+
+    private int generarEnteroAleatorio(int min, int max) {
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
+    }
+}
 

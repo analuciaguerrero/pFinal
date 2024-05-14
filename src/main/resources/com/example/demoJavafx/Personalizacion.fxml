@@ -41,7 +41,7 @@
                                  <Font size="10.0" />
                               </font>
                            </Label>
-                           <Spinner fx:id="estudiantesTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                           <Spinner fx:id="estudiantesTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                            <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                               <font>
                                  <Font size="10.0" />
@@ -142,7 +142,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="aguaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="aguaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -218,7 +218,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="comidaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="comidaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -294,7 +294,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="montanaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="montanaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -371,7 +371,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="bibliotecaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="bibliotecaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -448,7 +448,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="tesoroTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="tesoroTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -526,7 +526,7 @@
                                                    <Font size="10.0" />
                                                 </font>
                                              </Label>
-                                             <Spinner fx:id="pozoTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" prefHeight="26.0" prefWidth="94.0" min="0" max="10" />
+                                             <Spinner fx:id="pozoTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
                                              <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
                                                 <font>
                                                    <Font size="10.0" />
@@ -625,8 +625,8 @@
     <!-- Botones de acción -->
     <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="800.0" spacing="3.0" style="-fx-border-width: 3px;">
         <children>
-            <Button fx:id="buttonReestablecer" mnemonicParsing="false" onAction="#reiniciarConfiguracion" text="Reestablecer por defecto" />
-            <Button fx:id="buttonGuardar" onAction="#guardarConfiguracion" text="Guardar">
+            <Button fx:id="buttonReestablecer" mnemonicParsing="false" onAction="#reiniciarConfiguracion" onMouseClicked="#reiniciarConfiguracion" text="Reestablecer por defecto" />
+            <Button fx:id="buttonGuardar" onAction="#guardarConfiguracion" onMouseClicked="#guardarConfiguracion" text="Guardar">
                 <opaqueInsets>
                     <Insets />
                 </opaqueInsets></Button>
