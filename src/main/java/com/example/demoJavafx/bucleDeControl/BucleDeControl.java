@@ -14,6 +14,8 @@ import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static java.lang.Thread.sleep;
+
 public class BucleDeControl implements Runnable {
     private static final Logger log = LogManager.getLogger(XMenuPrincipalController.class);
     private ListaEnlazada<Estudiante> estudiantes;

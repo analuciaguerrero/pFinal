@@ -198,9 +198,9 @@
                                              </Text>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="562.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/agua.png" />
+                                             <Image url="@imagenes/agua.jpeg" />
                                           </image>
                                        </ImageView>
                                     </children>
@@ -250,9 +250,9 @@
                                              </Text>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="149.0" fitWidth="243.0" layoutX="495.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/comida.png" />
+                                             <Image url="@imagenes/comida.jpeg" />
                                           </image>
                                        </ImageView>
                                        <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
@@ -326,9 +326,9 @@
                                              </Text>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="138.0" fitWidth="246.0" layoutX="492.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/montaña.png" />
+                                             <Image url="@imagenes/montana.jpeg" />
                                           </image>
                                        </ImageView>
                                        <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
@@ -403,9 +403,9 @@
                                              </AnchorPane>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="183.0" layoutX="549.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/biblioteca.png" />
+                                             <Image url="@imagenes/biblioteca.jpeg" />
                                           </image>
                                        </ImageView>
                                        <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
@@ -480,9 +480,9 @@
                                              </AnchorPane>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="546.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/tesoro.png" />
+                                             <Image url="@imagenes/tesoro.jpeg" />
                                           </image>
                                        </ImageView>
                                        <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
@@ -534,9 +534,9 @@
                                              </Label>
                                           </children>
                                        </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="581.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
+                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@imagenes/pozo.png" />
+                                             <Image url="@imagenes/pozo.jpeg" />
                                           </image>
                                        </ImageView>
                                        <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
