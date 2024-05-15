@@ -123,6 +123,18 @@ public class ListaSimple<TipoDeldato> {
             return contador;
         }
     }
+    public TipoDeldato getDato(int pos) {
+        if (pos < maximo && pos >= 0) {
+            if (datos[pos] == null) {
+                return null;
+            } else {
+                return datos[pos].getData();
+            }
+        } else {
+            return null;
+        }
+    }
+
 
     public ListaSimple<TipoDeldato> voltear() {
         ListaSimple<TipoDeldato> nuevaLista = new ListaSimple<>();

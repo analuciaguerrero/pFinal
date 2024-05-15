@@ -3,6 +3,7 @@ package com.example.demoJavafx.estudiante;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.ProbabilidadNoValida;
 import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
@@ -280,6 +281,17 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
         } catch (IndexOutOfBoundsException e) {
             moverseAleatorio(tablero);
         }
+    }
+    private boolean estudianteYaMovido(Estudiante estudiante, ListaSimple<Integer> lista) {
+        int contador = 0;
+        boolean estudianteMovido = false;
+        while (contador < lista.getNumeroElementos() && !estudianteMovido) {
+            if (estudiante.getId() == lista.getDato(contador)) {
+                estudianteMovido = true;
+            }
+            contador++;
+        }
+        return estudianteMovido;
     }
     public <Tipo extends Estudiante<Tipo>> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
         int num = getNumTipo();

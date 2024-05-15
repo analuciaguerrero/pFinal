@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 import static java.lang.Thread.sleep;
 
 public class BucleDeControl implements Runnable {
-    private static final Logger log = LogManager.getLogger(XMenuPrincipalController.class);
+    private static final Logger log = LogManager.getLogger(BucleDeControl.class);
     private ListaEnlazada<Estudiante> estudiantes;
     private ListaEnlazada<Recursos> recursos;
     private DatosJuego dato;
@@ -67,6 +67,29 @@ public class BucleDeControl implements Runnable {
             }
         }
     }
+    public void actualizarTiempoDeVidaEstudiante() {
+        ElementoLE<Celda> nodoCelda = tablero.getCelda().getPrimero();
+        while (nodoCelda != null) {
+            Celda celda = nodoCelda.getData();
+            ListaEnlazada<Estudiante> listaEstudiantes = celda.getListaEstudiantes();
+            ElementoLE<Estudiante> nodoEstudiante = listaEstudiantes.getPrimero();
+            int posicion = 1; // Posición del estudiante en la lista
+            while (nodoEstudiante != null) {
+                Estudiante estudiante = nodoEstudiante.getData();
+                estudiante.actualizarTiempoDeVida(dato, celda); // Pasar los datos de juego y la celda
+                if (estudiante.getTiempoDeVida() <= 0) {
+                    // Eliminar estudiante si su tiempo de vida llega a cero o menos
+                    listaEstudiantes.delete(posicion);
+                    log.info("Estudiante " + estudiante.getId() + " ha muerto y ha sido eliminado de la celda " + celda.getPosicion()[0] + ", " + celda.getPosicion()[1]);
+                } else {
+                    log.info("Tiempo de vida del estudiante " + estudiante.getId() + " actualizado en la celda " + celda.getPosicion()[0] + ", " + celda.getPosicion()[1] + ". Tiempo restante: " + estudiante.getTiempoDeVida());
+                    posicion++; // Incrementar la posición si no se elimina el estudiante
+                }
+                nodoEstudiante = nodoEstudiante.getSiguiente();
+            }
+            nodoCelda = nodoCelda.getSiguiente();
+        }
+    }
 
     private void ejecutarBucle() {
         Platform.runLater(() -> {
@@ -86,7 +109,7 @@ public class BucleDeControl implements Runnable {
     @Override
     public void run() {
         try {
-            if (unTurno) {
+            if (turno) {
                 ejecutarBucle();
             } else {
                 while (!dato.isPausado()) {

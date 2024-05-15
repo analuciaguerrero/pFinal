@@ -263,7 +263,7 @@ public class Tablero {
             int posicion = 1; // Posición del estudiante en la lista
             while (nodoEstudiante != null) {
                 Estudiante estudiante = nodoEstudiante.getData();
-                estudiante.actualizar();
+                estudiante.actualizarTiempoDeVida();
                 if (estudiante.getTiempoDeVida() <= 0) {
                     // Eliminar estudiante si su tiempo de vida llega a cero o menos
                     listaEstudiantes.delete(posicion);

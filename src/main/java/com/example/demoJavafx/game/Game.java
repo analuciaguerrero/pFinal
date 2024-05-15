@@ -1,5 +1,4 @@
 package com.example.demoJavafx.game;
-import com.example.demoJavafx.DatosCompartidos;
 import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada ;

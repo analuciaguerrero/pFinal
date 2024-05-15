@@ -1,5 +1,4 @@
 package com.example.demoJavafx;
-import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
@@ -22,11 +21,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.function.Consumer;
 
 import static com.example.demoJavafx.game.Game.tablero;
 
-public class ControllerTableroPropiedades {
+public class TableroController {
 
     @FXML
     private Slider altoSlider;
@@ -50,7 +48,7 @@ public class ControllerTableroPropiedades {
         this.primaryStage = primaryStage;
     }
 
-    private static final Logger log = LogManager.getLogger(ControllerTableroPropiedades.class);
+    private static final Logger log = LogManager.getLogger(TableroController.class);
 
 
     @FXML
