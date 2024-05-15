@@ -59,6 +59,23 @@ public class Tablero {
     public void setColumnas(int columna) {
         this.columna = columna;
     }
+
+    public ListaEnlazada<ListaEnlazada<Celda>> getCeldas() {
+        return celdas;
+    }
+
+    public void setCeldas(ListaEnlazada<ListaEnlazada<Celda>> celdas) {
+        this.celdas = celdas;
+    }
+
+    public DatosJuego getDato() {
+        return dato;
+    }
+
+    public void setDato(DatosJuego dato) {
+        this.dato = dato;
+    }
+
     public void crearTableroAleatorio() {
         int numeroCuadrados = fila * columna;
         Random rand = new Random();

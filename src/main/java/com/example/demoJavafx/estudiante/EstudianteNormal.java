@@ -4,6 +4,7 @@ import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.zombieStudentsLife.Tablero;
 import com.google.gson.annotations.Expose;
+import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,28 +26,29 @@ public class EstudianteNormal extends Estudiante<EstudianteNormal> {
         return EstudianteNormal.class;
     }
     @Override
-    public void mover(DatosJuego dato, Tablero tablero) {
+    public void mover(DatosJuego dato, Tablero tablero) throws RecursosNoUtilizados {
         if (dato.getRecursos().isVacia()) {
             moverseAleatorio(tablero);
         } else {
             Random a = new Random();
-            int numAleatorio = a.nextInt(dato.getRecursos().getNumeroElementos());
-            Recursos recursoObjetivo = dato.getRecursos().getElemento(numAleatorio).getData();
-
-            if (Math.abs(recursoObjetivo.getPosicionN() - getPosicionN()) >
-                    Math.abs(recursoObjetivo.getPosicionM() - getPosicionM())) {
-                if (recursoObjetivo.getPosicionN() - getPosicionN() < 0) {
-                    cambiarDePosicion(getPosicionN() - 1, getPosicionM(), tablero);
-                } else {
-                    cambiarDePosicion(getPosicionN() + 1, getPosicionM(), tablero);
-                }
-            } else {
-                if (recursoObjetivo.getPosicionM() - getPosicionM() < 0) {
-                    cambiarDePosicion(getPosicionN(), getPosicionM() - 1, tablero);
-                } else {
-                    cambiarDePosicion(getPosicionN(), getPosicionM() + 1, tablero);
-                }
+            int aleatorio = a.nextInt(dato.getRecursos().getNumeroElementos());
+            Recursos recurso = dato.getRecursos().getElemento(aleatorio).getData();
+            int distanciaN = recurso.getPosicionN() - getPosicionN();
+            int distanciaM = recurso.getPosicionM() - getPosicionM();
+            int destinoN = getPosicionN();
+            int destinoM = getPosicionM();
+            if (distanciaN == 0 && distanciaM == 0) throw new RecursosNoUtilizados(this);
+            if (distanciaN < 0) {
+                destinoN -= 1;
+            } else if (distanciaN > 0) {
+                destinoN += 1;
             }
+            if (distanciaM < 0) {
+                destinoM -= 1;
+            } else if (distanciaM > 0) {
+                destinoM += 1;
+            }
+            cambiarDePosicion(destinoN, destinoM, tablero);
         }
         log.info("Movimiento realizado por el estudiante normal.");
     }
