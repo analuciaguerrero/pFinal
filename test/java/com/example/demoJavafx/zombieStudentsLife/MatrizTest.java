@@ -1,5 +1,6 @@
 package com.example.demoJavafx.zombieStudentsLife;
 
+import com.example.demoJavafx.tablero.Celda;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

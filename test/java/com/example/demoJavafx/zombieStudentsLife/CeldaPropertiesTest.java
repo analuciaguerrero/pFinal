@@ -1,6 +1,8 @@
 package com.example.demoJavafx.zombieStudentsLife;
 
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.tablero.Celda;
+import com.example.demoJavafx.tablero.CeldaProperties;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

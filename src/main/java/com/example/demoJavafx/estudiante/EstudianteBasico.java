@@ -1,13 +1,8 @@
 package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
-import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
-
-import java.util.Random;
 
 public class EstudianteBasico extends Estudiante<EstudianteBasico> {
     @Expose

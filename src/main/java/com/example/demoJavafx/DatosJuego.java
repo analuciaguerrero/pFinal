@@ -4,7 +4,7 @@ import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 

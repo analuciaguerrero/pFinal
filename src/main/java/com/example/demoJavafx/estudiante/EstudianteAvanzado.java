@@ -1,12 +1,11 @@
 package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
-import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Random;
 public class EstudianteAvanzado extends Estudiante<EstudianteAvanzado> {
     @Expose
     private final String nombreClase = "EstudianteAvanzado";

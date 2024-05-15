@@ -64,7 +64,17 @@ public class ListaSimple<TipoDeldato> {
         }
         return num_elem - 1;
     }
-
+    public void insert(TipoDeldato o, int posicion) {
+        ElementoLS<TipoDeldato> e = new ElementoLS<>();
+        e.setData(o);
+        ElementoLS<TipoDeldato> actual = this.datos[posicion];
+        for (int i = posicion; this.datos[i] != null; i++) {
+            ElementoLS<TipoDeldato> siguiente = this.datos[i + 1];
+            this.datos[i + 1] = actual;
+            actual = siguiente;
+        }
+        this.datos[posicion] = e;
+    }
     public Integer getPosicion(TipoDeldato el) {
         int cont = 0;
         Integer posicion = null;
@@ -108,6 +118,10 @@ public class ListaSimple<TipoDeldato> {
         } else {
             return null;
         }
+    }
+    public void setElemento(int posicion, TipoDeldato elemento) {
+        ElementoLS<TipoDeldato> e = new ElementoLS<>(elemento);
+        datos[posicion] = e;
     }
 
     public Integer getNumeroElementos() {

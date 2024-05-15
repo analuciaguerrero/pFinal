@@ -6,6 +6,7 @@ public class ElementoLS<TipoDelDato> {
     public ElementoLS(TipoDelDato dato) {
         this.setData(dato);
     }
+    public ElementoLS(){}
 
     public TipoDelDato getData() {
         return data;

@@ -3,7 +3,7 @@ package com.example.demoJavafx.entorno;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.IncrementoNoValido;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,7 +1,6 @@
 package com.example.demoJavafx.bucleDeControl;
 
 import com.example.demoJavafx.DatosJuego;
-import com.example.demoJavafx.XMenuPrincipalController;
 import com.example.demoJavafx.entorno.*;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
@@ -9,9 +8,8 @@ import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
 import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
-import com.example.demoJavafx.zombieStudentsLife.Tablero;
-import javafx.application.Platform;
+import com.example.demoJavafx.tablero.Celda;
+import com.example.demoJavafx.tablero.Tablero;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

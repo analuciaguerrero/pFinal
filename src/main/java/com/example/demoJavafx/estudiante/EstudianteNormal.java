@@ -2,7 +2,7 @@ package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
-import com.example.demoJavafx.zombieStudentsLife.Tablero;
+import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
 import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
 import org.apache.logging.log4j.LogManager;

@@ -8,9 +8,8 @@ import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
+import com.example.demoJavafx.tablero.Celda;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.border.EmptyBorder;
 
 import static org.junit.jupiter.api.Assertions.*;
 

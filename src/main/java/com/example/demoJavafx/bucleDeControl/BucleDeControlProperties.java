@@ -1,6 +1,6 @@
 package com.example.demoJavafx.bucleDeControl;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;

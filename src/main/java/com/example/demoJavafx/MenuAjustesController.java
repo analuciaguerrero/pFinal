@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.example.demoJavafx.game.Game.tablero;
+import static com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife.tablero;
 
 public class MenuAjustesController {
 

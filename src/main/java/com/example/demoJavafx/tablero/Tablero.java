@@ -1,8 +1,8 @@
-package com.example.demoJavafx.zombieStudentsLife;
+package com.example.demoJavafx.tablero;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estudiante.Estudiante;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,7 @@ import java.util.Random;
 public class Tablero {
     protected int fila; //Número de filas
     protected int columna; //Número de columnas
-    protected ListaEnlazada<ListaEnlazada<Celda>> celdas; //Matriz de celdas
+    protected ListaSimple<ListaSimple<Celda>> celdas; //Matriz de celdas
     private DatosJuego dato;
     private static final Logger log = LogManager.getLogger(Tablero.class);
 
@@ -20,14 +20,27 @@ public class Tablero {
         this.dato = datosJuego;
         this.fila = datosJuego.getFilasDelTablero();
         this.columna = datosJuego.getColumnasDelTablero();
-        celdas = new ListaEnlazada<>();
+        celdas = new ListaSimple<>();
         inicializarTablero();
+    }
+    public Tablero(int fila, int columna, DatosJuego dato) {
+        this.fila = fila;
+        this.columna = columna;
+        this.dato = dato;
+        celdas = new ListaSimple<>();
+        for (int i = 0; i < fila; i++) {
+            ListaSimple<Celda> filaCeldas = new ListaSimple<>();
+            for (int j = 0; j < columna; j++) {
+                filaCeldas.add(new Celda(i, j, dato, this));
+            }
+            celdas.add(filaCeldas);
+        }
     }
 
     private void inicializarTablero() {
         // Crear las celdas y agregarlas al tablero
         for (int i = 0; i < fila; i++) {
-            ListaEnlazada<Celda> filaCeldas = new ListaEnlazada<>();
+            ListaSimple<Celda> filaCeldas = new ListaSimple<>();
             for (int j = 0; j < columna; j++) {
                 filaCeldas.add(new Celda(i, j));
             }
@@ -60,11 +73,11 @@ public class Tablero {
         this.columna = columna;
     }
 
-    public ListaEnlazada<ListaEnlazada<Celda>> getCeldas() {
+    public ListaSimple<ListaSimple<Celda>> getCeldas() {
         return celdas;
     }
 
-    public void setCeldas(ListaEnlazada<ListaEnlazada<Celda>> celdas) {
+    public void setCeldas(ListaSimple<ListaSimple<Celda>> celdas) {
         this.celdas = celdas;
     }
 

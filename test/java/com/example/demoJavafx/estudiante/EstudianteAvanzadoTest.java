@@ -1,10 +1,7 @@
 package com.example.demoJavafx.estudiante;
 
-import com.example.demoJavafx.entorno.Comida;
-import com.example.demoJavafx.entorno.Recursos;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

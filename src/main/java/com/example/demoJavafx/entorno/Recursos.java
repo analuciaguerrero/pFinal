@@ -3,7 +3,7 @@ import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.logging.log4j.LogManager;

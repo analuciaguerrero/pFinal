@@ -7,12 +7,10 @@ import com.example.demoJavafx.estudiante.EstudianteAvanzado;
 import com.example.demoJavafx.estudiante.EstudianteBasico;
 import com.example.demoJavafx.estudiante.EstudianteNormal;
 import com.example.demoJavafx.excepciones.ProbabilidadNoValida;
-import com.example.demoJavafx.zombieStudentsLife.Celda;
+import com.example.demoJavafx.tablero.Celda;
 import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Random;
 
 public class Biblioteca extends Recursos<Biblioteca> {
     @Expose
