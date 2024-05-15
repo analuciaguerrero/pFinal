@@ -4,6 +4,8 @@ import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.*;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ElementoLS;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;

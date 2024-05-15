@@ -1,4 +1,4 @@
-package com.example.demoJavafx.zombieStudentsLife;
+package com.example.demoJavafx.tablero;
 
 import com.example.demoJavafx.entorno.AguaTest;
 import com.example.demoJavafx.entorno.Recursos;

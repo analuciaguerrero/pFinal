@@ -1,4 +1,4 @@
-package com.example.demoJavafx.zombieStudentsLife;
+package com.example.demoJavafx.tablero;
 
 import static org.junit.jupiter.api.Assertions.*;
 
