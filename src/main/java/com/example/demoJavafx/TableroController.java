@@ -1,30 +1,25 @@
 package com.example.demoJavafx;
+import com.example.demoJavafx.tablero.Celda;
+import com.example.demoJavafx.tablero.Tablero;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.Window;
+import javafx.event.ActionEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URL;
-
-import static com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife.tablero;
 
 public class TableroController {
     private DatosJuego dato;
@@ -39,105 +34,111 @@ public class TableroController {
         this.zombieStudentsLife = zombieStudentsLife;
         this.dato = dato;
     }
-    @FXML
-    protected void onBotonPausaClick (ActionEvent event) {
-        casillaTablero casilla00 = ((casillaTablero) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-        model = casilla00.getModel();
-        model.setPausado(true);
+    public DatosJuego getDato() {
+        return dato;
     }
 
-    @FXML
-    protected void onBotonReanudarClick (ActionEvent event) {
-        casillaTablero casilla00 = ((casillaTablero) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-        model = casilla00.getModel();
-        if (getModel().isPausado()) {
-            model.setPausado(false);
-            avanzarJuego(false, casilla00);
-        }
+    public void setDato(DatosJuego dato) {
+        this.dato = dato;
     }
 
-    @FXML
-    protected void onBotonPasarTurnoClick (ActionEvent event) {
-        casillaTablero casilla00 = ((casillaTablero) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-        model = casilla00.getModel();
-        if (model.isPausado()) {
-            avanzarJuego(true, casilla00);
-        }
+    public ZombieStudentsLife getZombieStudentsLife() {
+        return zombieStudentsLife;
     }
 
-    private void avanzarJuego (boolean unTurno, casillaTablero casilla00) {
+    public void setZombieStudentsLife(ZombieStudentsLife zombieStudentsLife) {
+        this.zombieStudentsLife = zombieStudentsLife;
+    }
+    private void avanzarZombieStudentsLife (boolean unTurno, Celda celda) {
         if (Window.getWindows().size() < 3) {
             if (Window.getWindows().size() > 1) {
                 Stage ventanaCasilla = (Stage) Window.getWindows().get(1);
                 ventanaCasilla.close();
             }
-            tablero tableroActual = casilla00.getTablero();
-            simuladorDeVida juegoActual = new simuladorDeVida(model, tableroActual);
-            turnoLabel.textProperty().bind(juegoActual.getBucle().getTurnoProperty().asString("Turno: %d"));
-            juegoActual.getBucle().updateTurnoProperty();
-            juegoActual.comenzar(unTurno);
+            Tablero tab = celda.getTablero();
+            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato, tab);
+            turnoLabel.textProperty().bind(zombieStudentsLife.getBucle().getTurnoProperty().asString("Turno: %d"));
+            zombieStudentsLife.getBucle().updateTurnoProperty();
+            zombieStudentsLife.start(unTurno);
+        }
+    }
+    @FXML
+    protected void onBottonPausarClick (ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        dato = celda.getDatos();
+        dato.setPausado(true);
+    }
+    @FXML
+    protected void onBottonPasarDeTurnoClick (ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        dato = celda.getDatos();
+        if (dato.isPausado()) {
+            avanzarZombieStudentsLife(true, celda);
         }
     }
 
     @FXML
-    protected void onBotonConfiguracionClick (ActionEvent event) throws IOException{
-        casillaTablero casilla00 = ((casillaTablero) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-        model = casilla00.getModel();
-        model.setPausado(true);
+    protected void onBottonReanudarClick (ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        dato = celda.getDatos();
+        if (getDato().isPausado()) {
+            dato.setPausado(false);
+            avanzarZombieStudentsLife(false, celda);
+        }
+    }
 
+    @FXML
+    protected void onBottonConfiguracionToClick (ActionEvent event) throws IOException{
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        dato = celda.getDatos();
+        dato.setPausado(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menuConfiguracionPausa-vista.fxml"));
         Parent root = loader.load();
         menuConfiguracionController controller = loader.getController();
         controller.setControllerValues(model);
-
         Stage stage = new Stage();
-
         Stage ventanaTablero = ((Stage) Window.getWindows().getFirst());
         stage.initOwner(ventanaTablero);
         stage.setResizable(false);
-
         if (Window.getWindows().size() > 1) {
             Stage ventanaCasila = (Stage) Window.getWindows().get(1);
             ventanaCasila.close();
         }
-
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    protected void onBotonCerrarClick () {
+    protected void onBottonCerrarClick () {
         ((Stage) Window.getWindows().getFirst()).close();
     }
 
     @FXML
-    protected void onBotonPantallaCompletaClick () {
+    protected void onBottonPantallaCompletaToClick () {
         Stage pantalla = ((Stage) Window.getWindows().getFirst());
         pantalla.setFullScreen(!pantalla.isFullScreen());
     }
 
     @FXML
-    protected void onBotonMinimizarClick () {
+    protected void onBottonMinimizarClick () {
         ((Stage) Window.getWindows().getFirst()).setIconified(true);
     }
 
     @FXML
-    protected void onBotonMenuPrincipalClick (ActionEvent event) {
-        casillaTablero casilla00 = ((casillaTablero) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-        model = casilla00.getModel();
-        if (!getModel().isGuardado()) {
+    protected void onBottonMenuPrincipalClick (ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        dato = celda.getDatos();
+        if (!getDato().isSave()) {
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
             confirmacion.initOwner(Stage.getWindows().getFirst());
             confirmacion.setTitle("Volver al menú principal");
             confirmacion.setHeaderText("Estás a punto de volver al menú principal, perderás el progreso");
             confirmacion.setContentText("¿Quieres guardar la partida antes de salir?");
-
             ButtonType botonGuardar = new ButtonType("Guardar");
             ButtonType botonNoGuardar = new ButtonType("No guardar");
             ButtonType botonCancelar = new ButtonType("Cancelar");
             confirmacion.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
-
             confirmacion.showAndWait().ifPresent(respuesta -> {
                 if (respuesta == botonGuardar) {
                     guardarPartida(event);
@@ -318,21 +319,5 @@ public class TableroController {
         }
 
         return gridTablero;
-    }
-
-    public DataModel getModel() {
-        return model;
-    }
-
-    public void setModel(DataModel model) {
-        this.model = model;
-    }
-
-    public simuladorDeVida getJuegoActual() {
-        return juegoActual;
-    }
-
-    public void setJuegoActual(simuladorDeVida juegoActual) {
-        this.juegoActual = juegoActual;
     }
 }

@@ -420,7 +420,7 @@ public class DatosJuego {
     public void setHistorialRecursos(ListaEnlazada<Recursos> historialRecursos) {
         HistorialRecursos = historialRecursos;
     }
-    public void guardarArchivo(String rutaArchivo){
+    public void guardarArchivo(String rutaArchivo) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
                 .registerTypeAdapter(Recursos.class, new GsonRecursos())
@@ -428,13 +428,14 @@ public class DatosJuego {
                 .excludeFieldsWithModifiers(Modifier.STATIC)
                 .setPrettyPrinting()
                 .create();
-        try (FileWriter writer = new FileWriter(STR."archivos/\{rutaArchivo}.json")) {
+        try (FileWriter writer = new FileWriter(String.format("archivos/%s.json", rutaArchivo))) {
             gson.toJson(this, writer);
             this.setSave(true);
         } catch (IOException e) {
-            log.error("La ruta no existe");
+            log.error("Error al guardar el archivo: " + e.getMessage());
         }
     }
+
     public static DatosJuego cargarArchivo(String rutaArchivo) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
@@ -443,12 +444,12 @@ public class DatosJuego {
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
-
-        try (FileReader reader = new FileReader(STR."archivos/\{rutaArchivo}")) {
+        try (FileReader reader = new FileReader(String.format("archivos/%s.json", rutaArchivo))) {
             return gson.fromJson(reader, DatosJuego.class);
         } catch (IOException e) {
-            log.error("La ruta no existe");
+            log.error("Error al cargar el archivo: " + e.getMessage());
             return null;
         }
     }
+
 }

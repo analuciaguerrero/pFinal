@@ -15,6 +15,7 @@ public class ElementoLDE<Tipo> {
     public ElementoLDE(Tipo data) {
         this.data = data;
     }
+    public ElementoLDE(){}
 
     public void insertarmeEn(ElementoLDE<Tipo> el) {
         this.siguiente = el.siguiente;

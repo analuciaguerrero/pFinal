@@ -41,7 +41,7 @@ public class ZombieStudentsLife {
         this.bucle = bucle;
     }
 
-    public void Start(boolean turno) {
+    public void start(boolean turno) {
         if (turno) {
             bucle.setTurno(true);
         } else {

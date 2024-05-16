@@ -1,6 +1,4 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaEnlazada;
-
-import com.example.demoJavafx.estructurasDeDatos.Gson.MyGson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -211,14 +209,5 @@ public class ListaEnlazada<TipoDelDato> {
             actual = actual.getSiguiente();
         }
         actual.setSiguiente(nuevoElemento);
-    }
-
-    public void guardarLE() {
-        String rutaArchivo = "listaLE.json";
-        MyGson.guardarObjetoEnArchivo(rutaArchivo,this);
-        ListaEnlazada listaEnlazada = MyGson.cargarObjetoDesdeArchivo(rutaArchivo,ListaEnlazada.class);
-        if(listaEnlazada != null){
-            System.out.println("Arbol Cargado");
-        }
     }
 }
