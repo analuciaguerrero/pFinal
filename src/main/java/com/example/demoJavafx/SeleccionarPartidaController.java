@@ -34,30 +34,11 @@ public class SeleccionarPartidaController implements Initializable {
     }
 
     @FXML
-    protected void onBotonNuevoClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("menuConfiguracionInicio-vista.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    protected void onBotonCargarPartidaClick(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("cargarJuego-vista.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
     protected void onBotonCargarFicheroClick (ActionEvent event) {
         try {
             String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
             DatosJuego model = DatosJuego.cargarArchivo(archivo);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menuConfiguracionInicio-vista.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
             Parent root = loader.load();
             MenuAjustesController controller = loader.getController();
             controller.setControllerValues(model);
