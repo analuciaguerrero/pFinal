@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Random;
 
 public class EstudianteNormal extends Estudiante {
-    private static final Logger log = LogManager.getLogger(EstudianteNormal.class);
+    private static final Logger log = LogManager.getLogger();
     public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }

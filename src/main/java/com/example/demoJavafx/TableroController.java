@@ -31,7 +31,7 @@ public class TableroController {
 
     @FXML
     private Label turnoLabel = new Label();
-    private static final Logger log = LogManager.getLogger(TableroController.class);
+    private static final Logger log = LogManager.getLogger();
 
     public TableroController() {}
     public TableroController(DatosJuego dato, ZombieStudentsLife zombieStudentsLife) {

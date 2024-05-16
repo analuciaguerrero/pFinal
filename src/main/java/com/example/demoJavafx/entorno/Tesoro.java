@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class Tesoro extends Recursos{
     private double aumentoProbReproduccion;
     private static double probTesoro;
-    private static final Logger logger = LogManager.getLogger(Tesoro.class);
+    private static final Logger logger = LogManager.getLogger();
 
     public Tesoro(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double aumentoProbReproduccion, double probTesoro) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);

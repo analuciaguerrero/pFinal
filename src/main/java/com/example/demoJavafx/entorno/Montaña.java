@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class Montaña extends Recursos{
     private int reduccionVida;
     private static double probMontaña;
-    private static final Logger logger = LogManager.getLogger(Montaña.class);
+    private static final Logger logger = LogManager.getLogger();
 
     public Montaña(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, int reduccionVida, double probMontaña) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);

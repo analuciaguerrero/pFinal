@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 public class CeldaController implements Initializable {
-    private static final Logger log = LogManager.getLogger(CeldaController.class);
+    private static final Logger log = LogManager.getLogger();
     private static Parent nodo;
     private boolean isListenerActive = true;
     private DatosJuego dato;

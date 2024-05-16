@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 public class DatosJuego {
 
-    private static final Logger log = LogManager.getLogger(DatosJuego.class);
+    private static final Logger log = LogManager.getLogger();
     //Listas con los estudiantes y recursos
     @Expose
     private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
@@ -120,6 +120,7 @@ public class DatosJuego {
         this.ColumnasDelTablero = columnasDelTablero;
         this.turnoActual = turno;
     }
+    public DatosJuego(){}
 
 
     public int getTurnosVidaIniciales() {

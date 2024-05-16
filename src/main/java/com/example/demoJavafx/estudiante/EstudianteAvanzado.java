@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class EstudianteAvanzado extends Estudiante {
-    private static final Logger log = LogManager.getLogger(EstudianteAvanzado.class);
+    private static final Logger log = LogManager.getLogger();
     public EstudianteAvanzado(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }
@@ -27,7 +27,7 @@ public class EstudianteAvanzado extends Estudiante {
     public Class<EstudianteAvanzado> getTipo () {
         return EstudianteAvanzado.class;
     }
-    private Grafo<Celda> getGrafoTab(DatosJuego dato, Tablero tablero) {
+    protected Grafo<Celda> getGrafoTab(DatosJuego dato, Tablero tablero) {
         Grafo<Celda> grafoTab = new Grafo<>(false);
         int reduccionMontaña = dato.getReduccionVidaMontaña();
         for (int i = 0; i < tablero.getFilas(); i++) {
@@ -59,7 +59,7 @@ public class EstudianteAvanzado extends Estudiante {
         return grafoTab;
     }
 
-    private int calcularPesoArista(Celda vertice1, Celda vertice2, int reduccionMontaña) {
+    protected int calcularPesoArista(Celda vertice1, Celda vertice2, int reduccionMontaña) {
         int peso = 1;
         peso = addPesoObs(peso, vertice1, reduccionMontaña);
         peso = addPesoObs(peso, vertice2, reduccionMontaña);

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Type;
 
 public class GsonRecursos implements JsonSerializer<Recursos>, JsonDeserializer<Recursos> {
-    private static final Logger log = LogManager.getLogger(GsonRecursos.class);
+    private static final Logger log = LogManager.getLogger();
 
     @Override
     public JsonElement serialize(Recursos src, Type typeOfSrc, JsonSerializationContext context) {

@@ -50,7 +50,7 @@ public abstract class Estudiante {
     int contRepro = 0;
     @Expose
     int contClon = 0;
-    private static final Logger log = LogManager.getLogger(Estudiante.class);
+    private static final Logger log = LogManager.getLogger();
 
     public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
         this.id = id;

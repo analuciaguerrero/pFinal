@@ -12,6 +12,7 @@ public class EstudianteProperties {
     public EstudianteProperties(Estudiante origen) {
         setOrigen(origen);
     }
+    public EstudianteProperties(){}
 
     public Estudiante getOrigen() {
         return origen;

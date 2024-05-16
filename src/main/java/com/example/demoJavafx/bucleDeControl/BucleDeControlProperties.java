@@ -1,5 +1,6 @@
 package com.example.demoJavafx.bucleDeControl;
 import com.example.demoJavafx.DatosJuego;
+import com.example.demoJavafx.SeleccionarPartidaController;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.tablero.Celda;
 import javafx.beans.property.IntegerProperty;
@@ -7,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 public class BucleDeControlProperties {
-    private static final Logger log = LogManager.getLogger(BucleDeControlProperties.class);
+    private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
 
     protected BucleDeControl original;
     private DatosJuego dato;
@@ -18,6 +19,7 @@ public class BucleDeControlProperties {
     public BucleDeControlProperties(BucleDeControl original) {
         setOriginal(original);
     }
+    public BucleDeControlProperties(){}
     public void commit() {
         original.getTablero().setColumnas(tableroColumnas.get());
         original.getTablero().setFilas(tableroFilas.get());

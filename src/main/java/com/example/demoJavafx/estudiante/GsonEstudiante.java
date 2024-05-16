@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import com.example.demoJavafx.excepciones.ClaseErroneaException;
 
 public class GsonEstudiante implements JsonSerializer<Estudiante>, JsonDeserializer<Estudiante> {
-    private static final Logger log = LogManager.getLogger(GsonEstudiante.class);
+    private static final Logger log = LogManager.getLogger();
 
     @Override
     public JsonElement serialize(Estudiante src, Type typeOfSrc, JsonSerializationContext context) {

@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class Comida extends Recursos{
     private int aumentoVida;
     private static double probComida;
-    private static final Logger logger = LogManager.getLogger(Comida.class);
+    private static final Logger logger = LogManager.getLogger();
 
     public Comida(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, int aumentoVida, double probComida) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);

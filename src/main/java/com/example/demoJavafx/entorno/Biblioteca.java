@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 public class Biblioteca extends Recursos {
     private double aumentoProbClonacion;
     private static double probBiblioteca;
-    private static final Logger logger = LogManager.getLogger(Biblioteca.class);
+    private static final Logger logger = LogManager.getLogger();
     public Biblioteca(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double aumentoProbClonacion, double probBiblioteca) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);
         this.aumentoProbClonacion = aumentoProbClonacion;

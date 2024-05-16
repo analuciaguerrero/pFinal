@@ -4,14 +4,13 @@ import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.excepciones.IncrementoNoValido;
 import com.example.demoJavafx.tablero.Celda;
-import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Agua extends Recursos {
     private int aumentoVida;
     private static double probAgua;
-    private static final Logger logger = LogManager.getLogger(Agua.class);
+    private static final Logger logger = LogManager.getLogger();
 
     public Agua(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, int aumentoVida, double probAgua) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);

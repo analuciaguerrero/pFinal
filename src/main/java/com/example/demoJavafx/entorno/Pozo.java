@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Pozo extends Recursos{
     private static double probPozo;
-    private static final Logger logger = LogManager.getLogger(Pozo.class);
+    private static final Logger logger = LogManager.getLogger();
     public Pozo(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double probPozo) {
         super(id, posicionN, posicionM, turnosRestantes, probRecurso);
         Pozo.probPozo = probPozo;

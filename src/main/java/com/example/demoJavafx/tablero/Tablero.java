@@ -14,7 +14,7 @@ public class Tablero {
     protected int columna; //Número de columnas
     protected ListaEnlazada<ListaEnlazada<Celda>> celdas; //Matriz de celdas mediante lista enlazada
     private DatosJuego dato;
-    private static final Logger log = LogManager.getLogger(Tablero.class);
+    private static final Logger log = LogManager.getLogger("es.uah");
 
     public Tablero(DatosJuego datosJuego) {
         this.dato = datosJuego;

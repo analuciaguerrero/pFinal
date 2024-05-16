@@ -15,7 +15,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class Recursos {
-    private static final Logger log = LogManager.getLogger(Recursos.class);
+    private static final Logger log = LogManager.getLogger();
     @Expose
     private int id;
     @Expose
