@@ -27,7 +27,7 @@ public class MenuInicialController {
         try {
             // Cargar el archivo FXML de la nueva ventana
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
-            AnchorPane root = fxmlLoader.load();
+            Parent root = fxmlLoader.load();
 
             // Obtener el Stage de la escena actual
             Stage currentStage = (Stage) buttonPlay.getScene().getWindow();
@@ -36,6 +36,7 @@ public class MenuInicialController {
             Scene newScene1 = new Scene(root, 1835, 1032);
 
             // Establecer la nueva escena en el Stage actual
+            currentStage.setTitle("Práctica Final Ivan Y Ana");
             currentStage.setScene(newScene1);
             currentStage.show(); // Mostrar la nueva ventana
 
