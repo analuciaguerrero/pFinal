@@ -27,32 +27,103 @@
             <Font name="System Bold" size="40.0" />
         </font>
     </Label>
-   <Accordion prefHeight="597.0" prefWidth="800.0">
-     <panes>
-       <TitledPane animated="false" prefHeight="494.0" prefWidth="800.0" text="Ajustes Estudiantes">
-            <content>
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                     <VBox layoutX="190.0" layoutY="239.0" prefHeight="19.0" prefWidth="419.0" />
-                     <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+    <Accordion prefHeight="597.0" prefWidth="800.0">
+        <panes>
+            <TitledPane animated="false" prefHeight="494.0" prefWidth="800.0" text="Ajustes Estudiantes">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                              <font>
-                                 <Font size="10.0" />
-                              </font>
-                           </Label>
-                           <Spinner fx:id="estudiantesTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                           <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                              <font>
-                                 <Font size="10.0" />
-                              </font>
-                           </Label>
-                        </children>
-                     </AnchorPane>
-                     <AnchorPane layoutX="79.0" layoutY="172.0" prefHeight="60.0" prefWidth="642.0">
+                            <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                <children>
+                                    <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos de vida">
+                                        <font>
+                                            <Font size="10.0" />
+                                        </font>
+                                    </Label>
+                                    <Spinner fx:id="estudiantesTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                    <Label layoutX="285.0" layoutY="52.0" prefHeight="25.0" prefWidth="46.0" text="iniciales">
+                                        <font>
+                                            <Font size="10.0" />
+                                        </font>
+                                    </Label>
+                                </children>
+                            </AnchorPane>
+                            <AnchorPane layoutX="79.0" layoutY="152.0" prefHeight="60.0" prefWidth="642.0">
+                                <children>
+                                    <Slider fx:id="estudiantesProbClonado" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                    <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Clonado">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                        <children>
+                                            <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                            <Text fx:id="labelValorSliderestudiantesProbClonado" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                        </children>
+                                    </AnchorPane>
+                                </children>
+                            </AnchorPane>
+                            <AnchorPane layoutX="78.0" layoutY="216.0" prefHeight="60.0" prefWidth="642.0">
+                                <children>
+                                    <Slider fx:id="estudiantesProbReproduccion" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                    <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Reproducción">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                        <children>
+                                            <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                            <Text fx:id="labelValorSliderestudiantesProbReproduccion" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                        </children>
+                                    </AnchorPane>
+                                </children>
+                            </AnchorPane>
+                            <AnchorPane layoutX="78.0" layoutY="280.0" prefHeight="60.0" prefWidth="642.0">
+                                <children>
+                                    <Slider fx:id="estudiantesProbMuerte" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                    <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Muerte">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                        <children>
+                                            <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                            <Text fx:id="labelValorSliderestudiantesProbMuerte" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                        </children>
+                                    </AnchorPane>
+                                </children>
+                            </AnchorPane>
+                     <AnchorPane layoutX="79.0" layoutY="344.0" prefHeight="60.0" prefWidth="642.0">
                         <children>
-                           <Slider fx:id="estudiantesProbClonado" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                           <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Clonado">
+                           <Slider fx:id="estudiantesProbNormal" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                           <Label layoutX="14.0" layoutY="22.0" text="Prob de cambio a Normal">
                               <font>
                                  <Font size="18.0" />
                               </font>
@@ -64,7 +135,7 @@
                                        <Font size="20.0" />
                                     </font>
                                  </Text>
-                                 <Text fx:id="labelValorSliderestudiantesProbClonado" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                 <Text fx:id="labelValorSliderestudiantesProbNormal" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
                                     <font>
                                        <Font size="20.0" />
                                     </font>
@@ -73,10 +144,10 @@
                            </AnchorPane>
                         </children>
                      </AnchorPane>
-                     <AnchorPane layoutX="79.0" layoutY="239.0" prefHeight="60.0" prefWidth="642.0">
+                     <AnchorPane layoutX="79.0" layoutY="408.0" prefHeight="60.0" prefWidth="642.0">
                         <children>
-                           <Slider fx:id="estudiantesProbReproduccion" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                           <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Reproducción">
+                           <Slider fx:id="estudiantesProbAvanzado" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                           <Label layoutX="14.0" layoutY="22.0" text="Prob de cambio a Avanzado">
                               <font>
                                  <Font size="18.0" />
                               </font>
@@ -88,7 +159,7 @@
                                        <Font size="20.0" />
                                     </font>
                                  </Text>
-                                 <Text fx:id="labelValorSliderestudiantesProbReproduccion" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                 <Text fx:id="labelValorSliderestudiantesProbAvanzado" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
                                     <font>
                                        <Font size="20.0" />
                                     </font>
@@ -97,531 +168,507 @@
                            </AnchorPane>
                         </children>
                      </AnchorPane>
-                     <AnchorPane layoutX="79.0" layoutY="299.0" prefHeight="60.0" prefWidth="642.0">
+                        </children>
+                    </AnchorPane>
+                </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Ajustes Recursos">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <Slider fx:id="estudiantesProbMuerte" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                           <Label layoutX="14.0" layoutY="22.0" text="Probabilidad de Muerte">
-                              <font>
-                                 <Font size="18.0" />
-                              </font>
-                           </Label>
-                           <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                              <children>
-                                 <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                    <font>
-                                       <Font size="20.0" />
-                                    </font>
-                                 </Text>
-                                 <Text fx:id="labelValorSliderestudiantesProbMuerte" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                    <font>
-                                       <Font size="20.0" />
-                                    </font>
-                                 </Text>
-                              </children>
-                           </AnchorPane>
+                            <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                    <Tab text="Agua">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="aguaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="49.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="aguaProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Agua">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSlideraguaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
+                                                        <children>
+                                                            <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
+                                                                <font>
+                                                                    <Font name="System Bold" size="9.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <AnchorPane layoutX="74.0" layoutY="45.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                            <Slider fx:id="aguaAumentoVidaSlider" layoutX="7.0" layoutY="5.0" majorTickUnit="10.0" max="10.0" minorTickCount="5" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Text fx:id="labelValorSlideraguaAumentoVida" layoutX="93.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
+                                                                <font>
+                                                                    <Font size="20.0" />
+                                                                </font>
+                                                            </Text>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/agua.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Comida">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="comidaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="48.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
+                                                        <children>
+                                                            <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
+                                                                <font>
+                                                                    <Font name="System Bold" size="9.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <AnchorPane layoutX="74.0" layoutY="45.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                            <Slider fx:id="comidaAumentoVidaSlider" layoutX="7.0" layoutY="5.0" majorTickUnit="10.0" max="10.0" minorTickCount="5" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Text fx:id="labelValorSlidercomidaAumentoVida" layoutX="93.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
+                                                                <font>
+                                                                    <Font size="20.0" />
+                                                                </font>
+                                                            </Text>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/comida.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="comidaProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Comida">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSlidercomidaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Montaña">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="montanaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="48.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
+                                                        <children>
+                                                            <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
+                                                                <font>
+                                                                    <Font name="System Bold" size="9.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <AnchorPane layoutX="74.0" layoutY="45.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" -" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                            <Slider fx:id="montanaDisminucionVidaSlider" layoutX="7.0" layoutY="5.0" majorTickUnit="10.0" max="10.0" minorTickCount="5" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Text fx:id="labelValorSlidermontanaDisminucionVida" layoutX="93.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
+                                                                <font>
+                                                                    <Font size="20.0" />
+                                                                </font>
+                                                            </Text>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/montana.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="montanaProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Montaña">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSlidermontanaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Biblioteca">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <VBox layoutX="190.0" layoutY="239.0" prefHeight="19.0" prefWidth="419.0" />
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="bibliotecaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="48.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
+                                                        <children>
+                                                            <Slider fx:id="bibliotecaAumentoClonSlider" layoutX="3.0" minorTickCount="2" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
+                                                            <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prob. clonado" textAlignment="CENTER" wrappingWidth="76.41326904296875">
+                                                                <font>
+                                                                    <Font name="System Bold" size="9.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <AnchorPane layoutX="74.0" layoutY="42.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSliderbibliotecaAumentoClon" layoutX="-1.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/biblioteca.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="bibliotecaProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Biblioteca">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSliderbibliotecaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Tesoro">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <children>
+                                                    <VBox layoutX="190.0" layoutY="239.0" prefHeight="19.0" prefWidth="419.0" />
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="tesoroTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="48.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
+                                                        <children>
+                                                            <Slider fx:id="tesoroAumentoRepSlider" layoutX="3.0" minorTickCount="2" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
+                                                            <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prob. reproducción" textAlignment="CENTER" wrappingWidth="76.41326904296875">
+                                                                <font>
+                                                                    <Font name="System Bold" size="9.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <AnchorPane layoutX="74.0" layoutY="42.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSlidertesoroAumentoRep" layoutX="-1.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/tesoro.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="tesoroProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Tesoro">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSlidertesoroProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Pozo">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="800.0">
+                                                <children>
+                                                    <Accordion layoutX="41.0" layoutY="59.0" />
+                                                    <StackPane layoutX="32.0" layoutY="191.0" prefHeight="150.0" prefWidth="200.0" />
+                                                    <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
+                                                        <children>
+                                                            <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="78.0" text="turnos iniciales">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <Spinner fx:id="pozoTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
+                                                            <Label layoutX="284.0" layoutY="52.0" prefHeight="25.0" prefWidth="48.0" text="restantes">
+                                                                <font>
+                                                                    <Font size="10.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </children>
+                                                    </AnchorPane>
+                                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@imagenes/pozo.jpeg" />
+                                                        </image>
+                                                    </ImageView>
+                                                    <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
+                                                        <children>
+                                                            <Slider fx:id="pozoProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Pozo">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
+                                                                <children>
+                                                                    <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                    <Text fx:id="labelValorSliderpozoProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                                        <font>
+                                                                            <Font size="20.0" />
+                                                                        </font>
+                                                                    </Text>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </children>
+                                                    </AnchorPane>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                </tabs>
+                            </TabPane>
                         </children>
-                     </AnchorPane>
-                  </children>
-               </AnchorPane>
-            </content>
-         </TitledPane>
-       <TitledPane animated="false" text="Ajustes Recursos">
-            <content>
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                     <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-                        <tabs>
-                           <Tab text="Agua">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="aguaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="aguaProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Agua">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSlideraguaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
-                                          <children>
-                                             <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
-                                                <font>
-                                                   <Font name="System Bold" size="9.0" />
-                                                </font>
-                                             </Text>
-                                             <AnchorPane layoutX="74.0" layoutY="45.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                             <Slider fx:id="aguaAumentoVidaSlider" layoutX="7.0" layoutY="5.0" max="10.0" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" />
-                                             <Text fx:id="labelValorSlideraguaAumentoVida" layoutX="93.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
-                                                <font>
-                                                   <Font size="20.0" />
-                                                </font>
-                                             </Text>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/agua.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                           <Tab text="Comida">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="comidaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
-                                          <children>
-                                             <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
-                                                <font>
-                                                   <Font name="System Bold" size="9.0" />
-                                                </font>
-                                             </Text>
-                                             <AnchorPane layoutX="74.0" layoutY="45.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                             <Slider fx:id="comidaAumentoVidaSlider" layoutX="7.0" layoutY="5.0" max="10.0" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" />
-                                             <Text fx:id="labelValorSlidercomidaAumentoVida" layoutX="93.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
-                                                <font>
-                                                   <Font size="20.0" />
-                                                </font>
-                                             </Text>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/comida.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="comidaProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Comida">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSlidercomidaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                           <Tab text="Montaña">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="montanaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
-                                          <children>
-                                             <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vida" textAlignment="CENTER" wrappingWidth="76.41326904296875">
-                                                <font>
-                                                   <Font name="System Bold" size="9.0" />
-                                                </font>
-                                             </Text>
-                                             <AnchorPane layoutX="74.0" layoutY="45.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" -" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                             <Slider fx:id="montanaDisminucionVidaSlider" layoutX="7.0" layoutY="5.0" max="10.0" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" />
-                                             <Text fx:id="labelValorSlidermontanaDisminucionVida" layoutX="93.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
-                                                <font>
-                                                   <Font size="20.0" />
-                                                </font>
-                                             </Text>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/montana.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="montanaProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Montaña">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSlidermontanaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                           <Tab text="Biblioteca">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                       <VBox layoutX="190.0" layoutY="239.0" prefHeight="19.0" prefWidth="419.0" />
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="bibliotecaTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
-                                          <children>
-                                             <Slider fx:id="bibliotecaAumentoClonSlider" layoutX="3.0" orientation="VERTICAL" showTickLabels="true" />
-                                             <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prob. clonado" textAlignment="CENTER" wrappingWidth="76.41326904296875">
-                                                <font>
-                                                   <Font name="System Bold" size="9.0" />
-                                                </font>
-                                             </Text>
-                                             <AnchorPane layoutX="74.0" layoutY="42.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSliderbibliotecaAumentoClon" layoutX="-1.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/biblioteca.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="bibliotecaProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Biblioteca">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSliderbibliotecaProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                           <Tab text="Tesoro">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                       <VBox layoutX="190.0" layoutY="239.0" prefHeight="19.0" prefWidth="419.0" />
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="tesoroTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <AnchorPane layoutX="113.0" layoutY="284.0" prefHeight="148.0" prefWidth="155.0">
-                                          <children>
-                                             <Slider fx:id="tesoroAumentoRepSlider" layoutX="3.0" orientation="VERTICAL" showTickLabels="true" />
-                                             <Text fill="#666565" layoutX="59.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prob. reproducción" textAlignment="CENTER" wrappingWidth="76.41326904296875">
-                                                <font>
-                                                   <Font name="System Bold" size="9.0" />
-                                                </font>
-                                             </Text>
-                                             <AnchorPane layoutX="74.0" layoutY="42.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSlidertesoroAumentoRep" layoutX="-1.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/tesoro.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="tesoroProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Tesoro">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSlidertesoroProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                           <Tab text="Pozo">
-                              <content>
-                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="800.0">
-                                    <children>
-                                       <Accordion layoutX="41.0" layoutY="59.0" />
-                                       <StackPane layoutX="32.0" layoutY="191.0" prefHeight="150.0" prefWidth="200.0" />
-                                       <AnchorPane layoutX="369.0" layoutY="20.0" prefHeight="102.0" prefWidth="423.0">
-                                          <children>
-                                             <Label layoutX="269.0" layoutY="39.0" prefHeight="25.0" prefWidth="60.0" text="turnos">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                             <Spinner fx:id="pozoTurnosRestantesSpinner" layoutX="161.0" layoutY="44.0" max="10" min="0" prefHeight="26.0" prefWidth="94.0" />
-                                             <Label layoutX="262.0" layoutY="51.0" prefHeight="25.0" prefWidth="60.0" text="restantes">
-                                                <font>
-                                                   <Font size="10.0" />
-                                                </font>
-                                             </Label>
-                                          </children>
-                                       </AnchorPane>
-                                       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="549.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@imagenes/pozo.jpeg" />
-                                          </image>
-                                       </ImageView>
-                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
-                                          <children>
-                                             <Slider fx:id="pozoProbabilidadSlider" layoutX="295.0" layoutY="26.0" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" />
-                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Pozo">
-                                                <font>
-                                                   <Font size="18.0" />
-                                                </font>
-                                             </Label>
-                                             <AnchorPane layoutX="556.0" layoutY="20.0" prefHeight="26.0" prefWidth="72.0">
-                                                <children>
-                                                   <Text fill="#666565" layoutX="53.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="18.000020742416382">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                   <Text fx:id="labelValorSliderpozoProbabilidad" layoutX="11.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                                      <font>
-                                                         <Font size="20.0" />
-                                                      </font>
-                                                   </Text>
-                                                </children>
-                                             </AnchorPane>
-                                          </children>
-                                       </AnchorPane>
-                                    </children>
-                                 </AnchorPane>
-                              </content>
-                           </Tab>
-                        </tabs>
-                     </TabPane>
-                  </children>
-               </AnchorPane>
-            </content>
-         </TitledPane>
-         <TitledPane animated="false" text="Tablero">
-           <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="800.0">
+                    </AnchorPane>
+                </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Tablero">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <children>
-                           <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAMAÑO DEL TABLERO" textAlignment="CENTER" wrappingWidth="577.4732055664062">
-                              <font>
-                                 <Font size="29.0" />
-                              </font>
-                           </Text>
-                           <AnchorPane layoutX="103.0" layoutY="231.0" prefHeight="57.0" prefWidth="594.0">
-                              <children>
-                                 <Text layoutX="76.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FILAS">
-                                    <font>
-                                       <Font name="System Bold" size="20.0" />
-                                    </font>
-                                 </Text>
-                                 <Slider fx:id="filasSlider" layoutX="158.0" layoutY="25.0" max="16.0" min="1.0" prefHeight="27.0" prefWidth="278.0" showTickLabels="true" />
-                                 <Text fx:id="labelValorSliderFilas" layoutX="449.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                    <font>
-                                       <Font size="20.0" />
-                                    </font>
-                                 </Text>
-                              </children>
-                           </AnchorPane>
-                           <AnchorPane layoutX="103.0" layoutY="289.0" prefHeight="57.0" prefWidth="594.0">
-                              <children>
-                                 <Text layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLUMNAS" wrappingWidth="130.634765625">
-                                    <font>
-                                       <Font name="System Bold" size="20.0" />
-                                    </font>
-                                 </Text>
-                                 <Slider fx:id="columnasSlider" layoutX="158.0" layoutY="25.0" max="16.0" min="1.0" prefHeight="27.0" prefWidth="278.0" showTickLabels="true" />
-                                 <Text fx:id="labelValorSliderColumnas" layoutX="449.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
-                                    <font>
-                                       <Font size="20.0" />
-                                    </font>
-                                 </Text>
-                              </children>
-                           </AnchorPane>
+                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="800.0">
+                                <children>
+                                    <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAMAÑO DEL TABLERO" textAlignment="CENTER" wrappingWidth="577.4732055664062">
+                                        <font>
+                                            <Font size="29.0" />
+                                        </font>
+                                    </Text>
+                                    <AnchorPane layoutX="103.0" layoutY="231.0" prefHeight="57.0" prefWidth="594.0">
+                                        <children>
+                                            <Text layoutX="76.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FILAS">
+                                                <font>
+                                                    <Font name="System Bold" size="20.0" />
+                                                </font>
+                                            </Text>
+                                            <Slider fx:id="filasSlider" layoutX="158.0" layoutY="25.0" max="16.0" min="1.0" minorTickCount="14" prefHeight="27.0" prefWidth="278.0" showTickLabels="true" showTickMarks="true" />
+                                            <Text fx:id="labelValorSliderFilas" layoutX="449.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                        </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="103.0" layoutY="289.0" prefHeight="57.0" prefWidth="594.0">
+                                        <children>
+                                            <Text layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLUMNAS" wrappingWidth="130.634765625">
+                                                <font>
+                                                    <Font name="System Bold" size="20.0" />
+                                                </font>
+                                            </Text>
+                                            <Slider fx:id="columnasSlider" layoutX="158.0" layoutY="25.0" max="16.0" min="1.0" minorTickCount="14" prefHeight="27.0" prefWidth="278.0" showTickLabels="true" showTickMarks="true" />
+                                            <Text fx:id="labelValorSliderColumnas" layoutX="449.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="49.039059817790985">
+                                                <font>
+                                                    <Font size="20.0" />
+                                                </font>
+                                            </Text>
+                                        </children>
+                                    </AnchorPane>
+                                </children>
+                            </AnchorPane>
                         </children>
-                     </AnchorPane>
-                  </children>
-               </AnchorPane>
-           </content>
-         </TitledPane>
-     </panes>
-   </Accordion>
+                    </AnchorPane>
+                </content>
+            </TitledPane>
+        </panes>
+    </Accordion>
     <!-- Botones de acción -->
     <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="800.0" spacing="3.0" style="-fx-border-width: 3px;">
         <children>
