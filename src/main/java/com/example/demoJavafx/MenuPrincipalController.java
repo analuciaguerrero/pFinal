@@ -1,6 +1,6 @@
 package com.example.demoJavafx;
 
-import com.example.demoJavafx.excepciones.sinFicherosDePartidaException;
+import com.example.demoJavafx.excepciones.NoHayFicherosIniciales;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class MenuPrincipalController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             listaDeFicheros.getItems().addAll(getNombreFicheros());
-        } catch (sinFicherosDePartidaException e) {
+        } catch (NoHayFicherosIniciales e) {
             log.info("No se han encontrado ficheros de partida para cargar.");
         }
     }
@@ -65,7 +65,7 @@ public class MenuPrincipalController implements Initializable {
 
     }
 
-    private String[] getNombreFicheros () throws sinFicherosDePartidaException{
+    private String[] getNombreFicheros () throws NoHayFicherosIniciales{
         File carpetaDeArchivos = new File("archivosDePartida");
         File[] archivos = carpetaDeArchivos.listFiles();
         if (archivos != null) {
@@ -75,7 +75,7 @@ public class MenuPrincipalController implements Initializable {
             }
             return nombresDeArchivos;
         }
-        throw new sinFicherosDePartidaException();
+        throw new NoHayFicherosIniciales();
     }
 
 }

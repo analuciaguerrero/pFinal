@@ -37,7 +37,7 @@ public class TableroController {
     public TableroController() {}
     public TableroController(DatosJuego dato, ZombieStudentsLife zombieStudentsLife) {
         this.zombieStudentsLife = zombieStudentsLife;
-        this.model = model;
+        this.dato = dato;
     }
     @FXML
     protected void onBotonPausaClick (ActionEvent event) {
