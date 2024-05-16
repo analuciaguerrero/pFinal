@@ -9,67 +9,73 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="337.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.MenuEntradaController">
-    <children>
-        <!-- La imagen de fondo -->
-        <ImageView fitWidth="1835" preserveRatio="true" smooth="true">
-            <image>
-                <!-- Corregir la ruta de la imagen -->
-                <Image url="@imagenes/entrada.png" />
-            </image>
-        </ImageView>
-      <AnchorPane layoutX="605.0" layoutY="331.0" prefHeight="66.0" prefWidth="610.0">
-         <children>
-              <TextField fx:id="textFieldNombre" layoutX="295.0" prefHeight="66.0" prefWidth="331.0">
-                  <font>
-                      <Font size="20.0" />
-                  </font>
-              </TextField>
-              <Label fx:id="labelNombre" prefHeight="66.0" prefWidth="212.0" text="NOMBRE:" textFill="WHITE">
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.MenuEntradaController">
+   <children>
+      <AnchorPane fx:id="anchorPane" prefHeight="337.0" prefWidth="600.0">
+          <children>
+              <!-- La imagen de fondo -->
+              <ImageView fitWidth="1835" preserveRatio="true" smooth="true">
+                  <image>
+                      <!-- Corregir la ruta de la imagen -->
+                      <Image url="@imagenes/entrada.png" />
+                  </image>
+              </ImageView>
+            <AnchorPane layoutX="605.0" layoutY="331.0" prefHeight="66.0" prefWidth="610.0">
+               <children>
+                    <TextField fx:id="textFieldNombre" layoutX="295.0" prefHeight="66.0" prefWidth="331.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </TextField>
+                    <Label fx:id="labelNombre" prefHeight="66.0" prefWidth="212.0" text="NOMBRE:" textFill="WHITE">
+                        <font>
+                            <Font size="40.0" />
+                        </font>
+                    </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="605.0" layoutY="483.0" prefHeight="66.0" prefWidth="626.0">
+               <children>
+                    <Label fx:id="labelDNI" prefHeight="66.0" prefWidth="181.0" text="DNI:" textFill="WHITE">
+                        <font>
+                            <Font size="40.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="textFieldDNI" layoutX="291.0" prefHeight="66.0" prefWidth="331.0">
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </TextField>
+               </children>
+            </AnchorPane>
+              <Button fx:id="buttonContinuar" layoutX="803.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleContinuar" prefHeight="87.0" prefWidth="230.0" text="¡A jugar!">
                   <font>
                       <Font size="40.0" />
                   </font>
-              </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="605.0" layoutY="483.0" prefHeight="66.0" prefWidth="626.0">
-         <children>
-              <Label fx:id="labelDNI" prefHeight="66.0" prefWidth="181.0" text="DNI:" textFill="WHITE">
+              </Button>
+              <Button fx:id="buttonSalir" layoutX="1392.0" layoutY="834.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="87.0" prefWidth="230.0" text="Salir">
                   <font>
                       <Font size="40.0" />
                   </font>
-              </Label>
-              <TextField fx:id="textFieldDNI" layoutX="291.0" prefHeight="66.0" prefWidth="331.0">
+              </Button>
+              <Button fx:id="buttonVolver" layoutX="215.0" layoutY="834.0" mnemonicParsing="false" onAction="#handleVolver" prefHeight="87.0" prefWidth="230.0" text="Volver">
                   <font>
-                      <Font size="20.0" />
+                      <Font size="40.0" />
                   </font>
-              </TextField>
-         </children>
+              </Button>
+              <ComboBox fx:id="comboBoxAcceso" layoutX="827.0" layoutY="154.0" onAction="#ComboBox1ActionPerformed" prefHeight="30.0" prefWidth="181.0">
+                  <items>
+                      <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Registrarse" />
+                          <String fx:value="Acceder" />
+                      </FXCollections>
+                  </items>
+              </ComboBox>
+          </children>
       </AnchorPane>
-        <Button fx:id="buttonContinuar" layoutX="803.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleContinuar" prefHeight="87.0" prefWidth="230.0" text="¡A jugar!">
-            <font>
-                <Font size="40.0" />
-            </font>
-        </Button>
-        <Button fx:id="buttonSalir" layoutX="1392.0" layoutY="834.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="87.0" prefWidth="230.0" text="Salir">
-            <font>
-                <Font size="40.0" />
-            </font>
-        </Button>
-        <Button fx:id="buttonVolver" layoutX="215.0" layoutY="834.0" mnemonicParsing="false" onAction="#handleVolver" prefHeight="87.0" prefWidth="230.0" text="Volver">
-            <font>
-                <Font size="40.0" />
-            </font>
-        </Button>
-        <ComboBox fx:id="comboBoxAcceso" layoutX="827.0" layoutY="154.0" onAction="#ComboBox1ActionPerformed" prefHeight="30.0" prefWidth="181.0">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Registrarse" />
-                    <String fx:value="Acceder" />
-                </FXCollections>
-            </items>
-        </ComboBox>
-    </children>
-</AnchorPane>
+   </children>
+</StackPane>

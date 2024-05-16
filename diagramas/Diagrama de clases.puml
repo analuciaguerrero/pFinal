@@ -1,18 +1,84 @@
 @startuml
 'https://plantuml.com/object-diagram
 
-package TableroGame {
+package tablero {
+
     class Tablero {
-        fila: int
-        columna: int
-        crearMatriz(fila, columna)
-        asignarPosicionObjeto(fila, columna)
-        max3elementos()
-        eliminarElemento(celda)
-        botonStart()
-        botonStop()
-        introducirParam()
-    }
+            - fila: int
+            - columna: int
+            - celdas: ListaEnlazada<ListaEnlazada<Celda>>
+            - dato: DatosJuego
+            + Tablero(datosJuego: DatosJuego)
+            + Tablero(fila: int, columna: int, dato: DatosJuego)
+            + inicializarTablero(): void
+            + getCelda(fila: int, columna: int): Celda
+            + setCelda(fila: int, columna: int, celda: Celda): void
+            + getFilas(): int
+            + setFilas(fila: int): void
+            + getColumnas(): int
+            + setColumnas(columna: int): void
+            + getCeldas(): ListaEnlazada<ListaEnlazada<Celda>>
+            + setCeldas(celdas: ListaEnlazada<ListaEnlazada<Celda>>): void
+            + getDato(): DatosJuego
+            + setDato(dato: DatosJuego): void
+            + crearTableroAleatorio(): void
+        }
+
+    class CeldaProperties {
+            - original: ListaEnlazada<Celda>
+            - properties: ListaEnlazada<Celda>
+            + CeldaProperties(original: ListaEnlazada<Celda>)
+            + getOriginal(): ListaEnlazada<Celda>
+            + setOriginal(original: ListaEnlazada<Celda>): void
+            + getProperties(): ListaEnlazada<Celda>
+            + setProperties(properties: ListaEnlazada<Celda>): void
+            + commit(): void
+            + rollback(): void
+        }
+
+    class Celda {
+            - posicionN: int
+            - posicionM: int
+            - listaEstudiantes: ListaEnlazada<Estudiante>
+            - listaRecursos: ListaEnlazada<Recursos>
+            - dato: DatosJuego
+            - tablero: Tablero
+            - botonCasilla: Button
+            - gridElementos: GridPane
+            - log: Logger
+            + Celda()
+            + Celda(posicionN: int, posicionM: int)
+            + Celda(posicionN: int, posicionM: int, listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
+            + Celda(listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
+            + Celda(posicionN: int, posicionM: int, dato: DatosJuego, tablero: Tablero)
+            + getPosicionN(): int
+            + setPosicionN(posicionN: int): void
+            + getPosicionM(): int
+            + setPosicionM(posicionM: int): void
+            + getPosicion(): int[]
+            + getListaRecursos(): ListaEnlazada<Recursos>
+            + setListaRecursos(listaRecursos: ListaEnlazada<Recursos>): void
+            + getListaEstudiantes(): ListaEnlazada<Estudiante>
+            + setListaEstudiantes(listaEstudiantes: ListaEnlazada<Estudiante>): void
+            + getDatos(): DatosJuego
+            + setDatos(dato: DatosJuego): void
+            + getTablero(): Tablero
+            + setTablero(tablero: Tablero): void
+            + getBotonCasilla(): Button
+            + getGridElementos(): GridPane
+            + agregarEstudiante(estudiante: Estudiante, nuevoEstudiante: boolean): void
+            + agregarRecurso(recurso: Recursos, nuevoRecurso: boolean): void
+            + eliminarEstudiante(estudiante: Estudiante): void
+            + eliminarRecurso(recurso: Recursos): void
+            + crearCeldaAleatoria(dato: DatosJuego): void
+            + eliminarEstudianteAleatorio(): void
+            + eliminarRecursoAleatorio(): void
+            + evaluarMejoras(): void
+            + restablecerInterfazVisual(): void
+        }
+
+}
+package bucleDeControl {
 
     class BucleDeControl {
             - static final Logger log
@@ -69,7 +135,7 @@ package TableroGame {
             }
 }
 
-package EstructurasDatos {
+package estructurasDatos {
     class ArbolBinario {
         -raiz:NodoArbol
         +isVacia():boolean
@@ -150,9 +216,12 @@ package EstructurasDatos {
 }
 
 package entorno {
-    class Entorno {
-        maximo3
-    }
+
+    class GsonRecursos {
+            - log: Logger
+            + serialize(src: Recursos, typeOfSrc: Type, context: JsonSerializationContext): JsonElement
+            + deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Recursos
+        }
 
     class RecursosProperties {
             - original: Recursos
@@ -383,7 +452,7 @@ package entorno {
         }
 }
 
-package individuos {
+package estudiante {
     class Individuos {
         Individuos():void
         -identiticador:int
