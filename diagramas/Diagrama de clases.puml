@@ -15,15 +15,58 @@ package TableroGame {
     }
 
     class BucleDeControl {
-        ind: Individuos
-        actualizarIndividuos()
-        ActualizarRecursos()
-        movimiento()
-        actualizarindividuosRecursos()
-        reproduccion()
-        nuevosRecursos()
-        haFinalizado(): boolean
-    }
+            - static final Logger log
+            - estudiantes: ListaEnlazada<Estudiante>
+            - recursos: ListaEnlazada<Recursos>
+            - dato: DatosJuego
+            - tablero: Tablero
+            - celda: Celda
+            - turno: boolean
+            - propiedades: BucleDeControlProperties
+            + BucleDeControl(tablero: Tablero, dato: DatosJuego)
+            + getTablero(): Tablero
+            + setTablero(tablero: Tablero): void
+            + getDatos(): DatosJuego
+            + setDatos(dato: DatosJuego): void
+            + isTurno(): boolean
+            + setTurno(turno: boolean): void
+            + getCelda(): Celda
+            + setCelda(celda: Celda): void
+            + getCelda(posicionN: int, posicionM: int): Celda
+            + evaluarMejoras(): void
+            + actualizarTiempoDeVidaEstudiante(): void
+            + actualizarTiempoDeAparicionDeRecursos(): void
+            + moverEstudiantes(): void
+            + evaluarReproduccion(): void
+            + evaluarClonacion(): void
+            + evaluarDesaparicionEstudiantes(): void
+            + generarNuevoRecurso(id: int, posicionN: int, posicionM: int, dato: DatosJuego): Recursos
+            + evaluarAparicionRecursos(): void
+            + condicionFinalizacion(): boolean
+            + ejecutarBucle(): void
+            + run(): void
+        }
+        class BucleDeControlProperties {
+                - static final Logger log
+                - original: BucleDeControl
+                - dato: DatosJuego
+                - tableroColumnas: IntegerProperty
+                - tableroFilas: IntegerProperty
+                - turnoProperty: IntegerProperty
+                + BucleDeControlProperties(original: BucleDeControl)
+                + commit(): void
+                + rollback(): void
+                + getOriginal(): BucleDeControl
+                + setOriginal(original: BucleDeControl): void
+                + tableroColumnasProperty(): IntegerProperty
+                + tableroFilasProperty(): IntegerProperty
+                + actualizarTurnoProperty(): void
+                + getTurnoProperty(): IntegerProperty
+                + setTurnoProperty(turnoProperty: Integer): void
+                + getFilas(): int
+                + getColumnas(): int
+                + getCelda(): Celda
+            }
 }
 
 package EstructurasDatos {
@@ -111,46 +154,233 @@ package entorno {
         maximo3
     }
 
+    class RecursosProperties {
+            - original: Recursos
+            - turnosRestantes: IntegerProperty
+            - posicionN: IntegerProperty
+            - posicionM: IntegerProperty
+            - probRecurso: DoubleProperty
+            + RecursosProperties(original: Recursos)
+            + getOriginal(): Recursos
+            + setOriginal(original: Recursos): void
+            + rollback(): void
+            + commit(): void
+            + turnosRestantesProperty(): Property<Number>
+            + posicionNProperty(): Property<Number>
+            + posicionMProperty(): Property<Number>
+            + probRecursoProperty(): Property<Number>
+        }
+
     abstract class Recursos {
-        tiempoVida: int
-        interactuar()
-    }
+            - static log: Logger
+            - id: int
+            - posicionN: int
+            - posicionM: int
+            - turnosRestantes: int
+            - probRecurso: double
+            + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double)
+            + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int)
+            + Recursos(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Recursos()
+            + getId(): int
+            + setId(id: int): void
+            + getPosicionN(): int
+            + setPosicionN(posicionN: int): void
+            + getPosicionM(): int
+            + setPosicionM(posicionM: int): void
+            + getPosicion(): int[]
+            + setPosicion(posicion: int[]): void
+            + getTurnosRestantes(): int
+            + setTurnosRestantes(turnosRestantes: int): void
+            + getProbRecurso(): double
+            + setProbRecurso(probRecurso: double): void
+            + add(dato: DatosJuego, celda: Celda): void
+            + del(dato: DatosJuego, celda: Celda): void
+            + actualizarTurnos(dato: DatosJuego, celda: Celda): boolean
+            + abstract getTipo(): Class<?>
+            + abstract aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
+
+    class ParameterAguaProperties {
+            - originalAgua: Agua
+            - turnosRestantes: IntegerProperty
+            - aumentoVida: IntegerProperty
+            - probAgua: DoubleProperty
+            + ParameterAguaProperties(original: Agua)
+            + commit(): void
+            + rollback(): void
+            + getOriginalAgua(): Agua
+            + setOriginalAgua(originalAgua: Agua): void
+            + turnosRestantesProperty(): IntegerProperty
+            + aumentoVidaProperty(): IntegerProperty
+            + probAguaProperty(): DoubleProperty
+        }
 
     class Agua {
-        -AumentoVida
-        +Agua(turnosRestantes:int,aumentoVida:int)
-        +getAumentoVida():int
-        +setAumentoVida(aumentoVida:int):void
-    }
+            - aumentoVida: int
+            - static probAgua: double
+            - static logger: Logger
+            + Agua(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probAgua: double)
+            + Agua(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Agua()
+            + Agua(probAgua: double)
+            + getAumentoVida(): int
+            + setAumentoVida(aumentoVida: int): void
+            + getProbAgua(): double
+            + setProbAgua(probAgua: double): void
+            + getTipo(): Class<Agua>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
+
+    class ParameterComidaProperties {
+            - original: Comida
+            - turnosRestantes: IntegerProperty
+            - aumentoVida: IntegerProperty
+            - probComida: DoubleProperty
+            + ParameterComidaProperties(original: Comida)
+            + commit(): void
+            + rollback(): void
+            + getOriginal(): Comida
+            + setOriginal(original: Comida): void
+            + turnosRestantesProperty(): IntegerProperty
+            + aumentoVidaProperty(): IntegerProperty
+            + probComidaProperty(): DoubleProperty
+        }
 
     class Comida {
-        +Comida(turnosRestantes:int,aumentoVida:int)
-        +getAumentoVida():int
-        +setAumentoVida(aumentoVida:int):void
-    }
+            - aumentoVida: int
+            - static probComida: double
+            - static logger: Logger
+            + Comida(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probComida: double)
+            + Comida()
+            + Comida(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Comida(probComida: double)
+            + getAumentoVida(): int
+            + setAumentoVida(aumentoVida: int): void
+            + getProbComida(): double
+            + setProbComida(probComida: double): void
+            + getTipo(): Class<Comida>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
+
+    class ParameterMontanaProperties {
+            - original: Montaña
+            - turnosRestantes: IntegerProperty
+            - disminucionVida: IntegerProperty
+            - probMontaña: DoubleProperty
+            + ParameterMontanaProperties(original: Montaña)
+            + commit(): void
+            + rollback(): void
+            + getOriginal(): Montaña
+            + setOriginal(original: Montaña): void
+            + turnosRestantesProperty(): IntegerProperty
+            + disminucionVidaProperty(): IntegerProperty
+            + probMontañaProperty(): DoubleProperty
+        }
 
     class Montaña {
-        -DisminucionVida
-        +Montaña(turnosRestantes:int,disminucionVida:int)
-        +getDisminucionVida():int
-        +setDisminucionVida(DisminucionVida:int):void
-    }
+            - reduccionVida: int
+            - static probMontaña: double
+            - static logger: Logger
+            + Montaña(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, reduccionVida: int, probMontaña: double)
+            + Montaña(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Montaña()
+            + Montaña(probMontaña: double)
+            + getReduccionVida(): int
+            + setReduccionVida(reduccionVida: int): void
+            + getProbMontaña(): double
+            + setProbMontaña(probMontaña: double): void
+            + getTipo(): Class<Montaña>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
+
+    class ParameterTesoroProperties {
+            - original: Tesoro
+            - turnosRestantes: IntegerProperty
+            - aumentoPorcentajeRep: DoubleProperty
+            - probTesoro: DoubleProperty
+            + ParameterTesoroProperties(original: Tesoro)
+            + commit(): void
+            + rollback(): void
+            + getOriginal(): Tesoro
+            + setOriginal(original: Tesoro): void
+            + turnosRestantesProperty(): IntegerProperty
+            + aumentoPorcetajeRepProperty(): DoubleProperty
+            + probTesoroProperty(): DoubleProperty
+        }
 
     class Tesoro {
-        -AumentoPorcentajeRep
-        +Tesoro(turnosRestantes:int,AumentoPorcentajeRep:int)
-        +getAumentoPorcentajeRep():int
-        +setAumentoPorcentajeRep(AumentoPorcentajeRep:int):void
-    }
+            - aumentoProbReproduccion: double
+            - static probTesoro: double
+            - static logger: Logger
+            + Tesoro(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbReproduccion: double, probTesoro: double)
+            + Tesoro()
+            + Tesoro(probTesoro: double)
+            + Tesoro(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + getAumentoProbReproduccion(): double
+            + setAumentoProbReproduccion(aumentoProbReproduccion: double): void
+            + getProbTesoro(): double
+            + setProbTesoro(probTesoro: double): void
+            + getTipo(): Class<Tesoro>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
+
+    class ParameterBibliotecaProperties {
+            - original: Biblioteca
+            - turnosRestantes: IntegerProperty
+            - aumentoPorentajeClon: DoubleProperty
+            - probBilio: DoubleProperty
+            + ParameterBibliotecaProperties(original: Biblioteca)
+            + commit(): void
+            + rollback(): void
+            + getOriginal(): Biblioteca
+            + setOriginal(original: Biblioteca): void
+            + turnosRestantesProperty(): IntegerProperty
+            + aumentoPorentajeClonProperty(): DoubleProperty
+            + probBibliotecaProperty(): DoubleProperty
+        }
 
     class Biblioteca {
-        -AumentoPorcentajeClon
-        +Biblioteca(turnosRestantes:int,AumentoPorcentajeClon:int)
-        +getAumentoPorcentajeClon():int
-        +setAumentoPorcentajeClon(AumentoPorcentajeClon:int):void
-    }
+            - aumentoProbClonacion: double
+            - static probBiblioteca: double
+            - static logger: Logger
+            + Biblioteca(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbClonacion: double, probBiblioteca: double)
+            + Biblioteca()
+            + Biblioteca(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Biblioteca(probBiblioteca: double)
+            + getAumentoProbClonacion(): double
+            + setAumentoProbClonacion(aumentoProbClonacion: double): void
+            + getProbBiblioteca(): double
+            + setProbBiblioteca(probBiblioteca: double): void
+            + getTipo(): Class<Biblioteca>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
 
-    class Pozo {}
+    class ParameterPozoProperties {
+            - original: Pozo
+            - turnosRestantes: IntegerProperty
+            - probPozo: DoubleProperty
+            + ParameterPozoProperties(original: Pozo)
+            + commit(): void
+            + rollback(): void
+            + getOriginal(): Pozo
+            + setOriginal(original: Pozo): void
+            + turnosRestantesProperty(): IntegerProperty
+            + probPozoProperty(): DoubleProperty
+        }
+
+    class Pozo {
+            - static probPozo: double
+            - static logger: Logger
+            + Pozo(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, probPozo: double)
+            + Pozo()
+            + Pozo(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+            + Pozo(probPozo: double)
+            + getProbPozo(): double
+            + setProbPozo(probPozo: double): void
+            + getTipo(): Class<Pozo>
+            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+        }
 }
 
 package individuos {
