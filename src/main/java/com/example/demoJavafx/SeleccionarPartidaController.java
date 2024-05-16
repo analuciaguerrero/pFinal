@@ -56,10 +56,10 @@ public class SeleccionarPartidaController implements Initializable {
     protected void onBotonCargarFicheroClick (ActionEvent event) {
         try {
             String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
-            DatosJuego model = DatosJuego.cargar(archivo);
+            DatosJuego model = DatosJuego.cargarArchivo(archivo);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("menuConfiguracionInicio-vista.fxml"));
             Parent root = loader.load();
-            menuConfiguracionController controller = loader.getController();
+            MenuAjustesController controller = loader.getController();
             controller.setControllerValues(model);
 
             Stage stage = new Stage();
@@ -80,7 +80,7 @@ public class SeleccionarPartidaController implements Initializable {
     }
 
     private String[] getNombreFicheros () throws NoHayFicherosIniciales{
-        File carpetaDeArchivos = new File("archivosDePartida");
+        File carpetaDeArchivos = new File("archivos");
         File[] archivos = carpetaDeArchivos.listFiles();
         if (archivos != null) {
             String[] nombresDeArchivos = new String[archivos.length];
