@@ -1,3 +1,4 @@
+package com.example.demoJavafx;
 import com.example.demoJavafx.bucleDeControl.BucleDeControlProperties;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
 import com.example.demoJavafx.estudiante.Estudiante;
@@ -52,8 +53,19 @@ public class PantallaFinalController implements Initializable {
     public void cancelarButton() {
         modelo.rollback();
     }
+    public void mostrarArboles(DefaultMutableTreeNode d, BST<Estudiante> est) {
+        if (est.raiz.getDerecha() != null) {
+            DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(est.raiz.getDerecha().getDato());
+            d.add(child1);
+            mostrarArboles(child1, est.getSubArbolDcha());
+        }
+        if (est.raiz.getIzquierda() != null) {
+            DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(est.raiz.getIzquierda().getDato());
+            d.add(child2);
+            mostrarArboles(child2, est.getSubArbolIzq());
+        }
 
-
+    }
     public void abrirPantallaFinal() {
         Stage stage = new Stage();
         this.stage = stage;
@@ -99,20 +111,6 @@ public class PantallaFinalController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void mostrarArboles(DefaultMutableTreeNode d, BST<Estudiante> est) {
-        if (est.raiz.getDerecha() != null) {
-            DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(est.raiz.getDerecha().getDato());
-            d.add(child1);
-            mostrarArboles(child1, est.getSubArbolDcha());
-        }
-        if (est.raiz.getIzquierda() != null) {
-            DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(est.raiz.getIzquierda().getDato());
-            d.add(child2);
-            mostrarArboles(child2, est.getSubArbolIzq());
-        }
-
     }
 
 }

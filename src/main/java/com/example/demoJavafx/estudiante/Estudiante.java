@@ -247,7 +247,7 @@ public abstract class Estudiante {
 
         if (celdaNueva != null) {
             // Agregar el estudiante a la nueva celda
-            celdaNueva.agregarEstudiante(this);
+            celdaNueva.agregarEstudiante(this, true);
         }
     }
     protected void moverseAleatorio(Tablero tablero) {

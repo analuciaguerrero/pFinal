@@ -59,10 +59,10 @@ public class Biblioteca extends Recursos {
             estudiante.setProbClonacion(estudiante.getProbClonacion() + aumentoProbClonacion);
         }
         if (estudiante.getTipo() == EstudianteBasico.class) {
-            celda.agregarEstudiante(new EstudianteNormal(estudiante));
+            celda.agregarEstudiante(new EstudianteNormal(estudiante), true);
             celda.eliminarEstudiante(estudiante);
         } else if (estudiante.getTipo() == EstudianteNormal.class) {
-            celda.agregarEstudiante(new EstudianteAvanzado(estudiante));
+            celda.agregarEstudiante(new EstudianteAvanzado(estudiante), true);
             celda.eliminarEstudiante(estudiante);
         }
         logger.info("Efecto aplicado");

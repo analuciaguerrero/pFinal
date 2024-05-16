@@ -90,6 +90,10 @@ public class Tablero {
     }
 
     public void crearTableroAleatorio() {
+        if (fila <= 0 || columna <= 0) {
+            log.error("Número de filas o columnas no válido.");
+            return;
+        }
         int numeroCuadrados = fila * columna;
         Random rand = new Random();
 
@@ -100,7 +104,7 @@ public class Tablero {
                 // Agregar estudiante aleatorio
                 Estudiante estudianteAleatorio = dato.obtenerEstudianteAleatorio();
                 if (estudianteAleatorio != null) {
-                    celda.agregarEstudiante(estudianteAleatorio);
+                    celda.agregarEstudiante(estudianteAleatorio, true);
                     log.info("Se ha agregado un estudiante aleatorio en la celda (" + i + ", " + j + ")");
                 } else {
                     log.warn("No se pudo agregar un estudiante aleatorio en la celda (" + i + ", " + j + ")");

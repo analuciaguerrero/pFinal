@@ -1,4 +1,5 @@
 package com.example.demoJavafx;
+import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
@@ -278,9 +279,9 @@ public class TableroController {
         dato.setPausado(true);
         int numeroIndividuos = dato.getEstudiantes().getNumeroElementos();
         for (int k=0; k != numeroIndividuos; k++) {
-            Exception estudiante = dato.getEstudiantes().getElemento(k).getData();
-            Celda celda = tablero.getCelda(estudiante.getPosicion());
-            celda.agregarEstudiante(estudiante);
+            Estudiante estudiante = dato.getEstudiantes().getElemento(k).getData();
+            Celda celda = tablero.getCelda(estudiante.getPosicionN(), estudiante.getPosicionM());
+            celda.agregarEstudiante(estudiante, false);
             celda.getListaEstudiantes().add(estudiante);
         }
     }

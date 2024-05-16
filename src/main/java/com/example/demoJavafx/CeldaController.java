@@ -66,6 +66,30 @@ public class CeldaController implements Initializable {
             }
         }
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            alertaCeldaLabel.setText(STR."Celda \{celda.getPosicionN()}, \{celda.getPosicionM()}");
+            estudiantesAddBox.getItems().setAll(tiposEstudiantes);
+            recursosAddBox.getItems().setAll(tiposRecursos);
+            estudiantesAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
+            recursosAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
+            estudiantesAddBox.setValue("Estudiante");
+            recursosAddBox.setValue("Recurso");
+            estudiantesAddBox.valueProperty().addListener((_, _, newValue) -> {
+                if (isListenerActive) {
+                    this.addEstudiante(newValue);
+                }
+            });
+            recursosAddBox.valueProperty().addListener((_, _, newValue) -> {
+                if (isListenerActive) {
+                    this.addRecurso(newValue);
+                }
+            });
+        } catch (Exception e) {
+            log.trace("Excepcion cazada sin accion");
+        }
+    }
 
     public void addEstudiante (String tipoEstudiante) {
         switch (tipoEstudiante) {
@@ -87,9 +111,9 @@ public class CeldaController implements Initializable {
         try {
             isListenerActive = false;
             if (celda.getListaEstudiantes().getNumeroElementos() >= 3) {
-                alertaCasillaLabel.setText("¡Ya hay 3 individuos!");
+                alertaCeldaLabel.setText("¡Ya hay 3 individuos!");
                 PauseTransition pausa = new PauseTransition(Duration.millis(2500));
-                pausa.setOnFinished(_ -> alertaCasillaLabel.setText("Casilla " + celda.getPosicionN() + ", " + celda.getPosicionM()));
+                pausa.setOnFinished(_ -> alertaCeldaLabel.setText("Casilla " + celda.getPosicionN() + ", " + celda.getPosicionM()));
                 pausa.play();
                 log.debug("Se ha intentado crear un individuo cuando ya había 3 en la casilla");
             } else {
@@ -119,7 +143,7 @@ public class CeldaController implements Initializable {
                     id = dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1;
                 }
                 estudiante = (T) constructor.newInstance(id, dato.getTurnoActual(), dato.getTurnosVidaIniciales(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
-                celda.agregarEstudiante(estudiante);
+                celda.agregarEstudiante(estudiante, true);
             } else {
                 estudiante = (T) estudianteAñadir;
             }
@@ -162,9 +186,9 @@ public class CeldaController implements Initializable {
         try {
             isListenerActive = false;
             if (celda.getListaRecursos().getNumeroElementos() >= 3) {
-                alertaCasillaLabel.setText("¡Ya hay 3 recursos!");
+                alertaCeldaLabel.setText("¡Ya hay 3 recursos!");
                 PauseTransition pausa = new PauseTransition(Duration.millis(2500));
-                pausa.setOnFinished(_ -> alertaCasillaLabel.setText("Celda " + celda.getPosicionN() + ", " + celda.getPosicionM()));
+                pausa.setOnFinished(_ -> alertaCeldaLabel.setText("Celda " + celda.getPosicionN() + ", " + celda.getPosicionM()));
                 pausa.play();
                 log.debug("Se ha intentado crear un recurso cuando ya había 3 en la casilla");
             } else {
@@ -212,7 +236,7 @@ public class CeldaController implements Initializable {
                 }
                 recurso = (T) constructor.newInstance(id, dato);
 
-                celda.agregarRecurso(recurso);
+                celda.agregarRecurso(recurso, true);
             } else {
                 recurso = recursoAñadir;
             }
@@ -249,30 +273,5 @@ public class CeldaController implements Initializable {
 
     public Parent getNodo () {
         return nodo;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            alertaCasillaLabel.setText(STR."Celda \{celda.getPosicionN()}, \{celda.getPosicionM()}");
-            estudiantesAddBox.getItems().setAll(tiposEstudiantes);
-            recursosAddBox.getItems().setAll(tiposRecursos);
-            estudiantesAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
-            recursosAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
-            estudiantesAddBox.setValue("Estudiante");
-            recursosAddBox.setValue("Recurso");
-            estudiantesAddBox.valueProperty().addListener((_, _, newValue) -> {
-                if (isListenerActive) {
-                    this.addEstudiante(newValue);
-                }
-            });
-            recursosAddBox.valueProperty().addListener((_, _, newValue) -> {
-                if (isListenerActive) {
-                    this.addRecurso(newValue);
-                }
-            });
-        } catch (Exception e) {
-            log.trace("Excepcion cazada sin accion");
-        }
     }
 }

@@ -155,16 +155,45 @@ public class Celda extends AnchorPane {
             log.error("Se ha intentado añadir un estudiante no existente");
         }
     }
-
-    public void agregarRecurso(Recursos recurso) throws RecursoNoExistente {
+    private void addIcRecurso (ImageView vistaIc) {
+        vistaIc.setPreserveRatio(true);
+        vistaIc.setFitWidth(((GridPane) this.getParent()).getWidth()/(((GridPane) this.getParent()).getColumnCount() * 2));
+        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 3));
+        int numeroIcRecurso = 0;
+        for (Node node : gridElementos.getChildren() ) {
+            if (GridPane.getRowIndex(node) == 1) numeroIcRecurso++;
+        }
+        gridElementos.add(vistaIc, numeroIcRecurso, 1);
+    }
+    public void agregarRecurso(Recursos recurso, boolean nuevoRecurso) throws RecursoNoExistente {
         try {
-            if (listaRecursos.getNumeroElementos() < dato.getMaximoRecursosPorCelda()) {
-                listaRecursos.add(recurso);
-            } else {
-                throw new RecursoNoExistente(listaRecursos.toString());
+            if (nuevoRecurso) recurso.add(dato, this);
+            ImageView vistaIc;
+            switch (recurso.getClass().getSimpleName()) {
+                case "Agua":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/agua.jpeg").toExternalForm()));
+                    break;
+                case "Comida":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/comida.jpeg").toExternalForm()));
+                    break;
+                case "Montaña":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/montana.jpeg").toExternalForm()));
+                    break;
+                case "Tesoro":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/tesoro.jpeg").toExternalForm()));
+                    break;
+                case "Biblioteca":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/biblioteca.jpeg").toExternalForm()));
+                    break;
+                case "Pozo":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/pozo.jpeg").toExternalForm()));
+                    break;
+                default:
+                    throw new RecursoNoExistente();
             }
+            addIcRecurso(vistaIc);
         } catch (RecursoNoExistente e) {
-            log.error("Se ha intentado añadir más recursos de los permitidos");
+            log.error("Se ha intentado añadir un recurso que no existe");
         }
     }
 
@@ -195,7 +224,7 @@ public class Celda extends AnchorPane {
                 for (int i = 0; i < numEstudiantes; i++) {
                     Estudiante estudianteAleatorio = dato.obtenerEstudianteAleatorio();
                     if (estudianteAleatorio != null) {
-                        celdaAleatoria.agregarEstudiante(estudianteAleatorio);
+                        celdaAleatoria.agregarEstudiante(estudianteAleatorio, true);
                     }
                 }
                 int numRecursos = dato.generarEnteroAleatorio(1, dato.getMaximoRecursosPorCelda()); // Generar un número aleatorio de recursos entre 1 y el máximo permitido por celda
@@ -279,7 +308,7 @@ public class Celda extends AnchorPane {
         gridElementos.getColumnConstraints().clear();
         gridElementos.getRowConstraints().clear();
         for (int i=0; i != listaEstudiantes.getNumeroElementos(); i++) {
-            agregarEstudiante(listaEstudiantes.getElemento(i).getData());
+            agregarEstudiante(listaEstudiantes.getElemento(i).getData(), false);
         }
         for (int i=0; i != listaRecursos.getNumeroElementos(); i++) {
             agregarRecurso(listaRecursos.getElemento(i).getData());

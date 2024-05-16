@@ -174,14 +174,14 @@ public class MenuAjustesController implements Initializable {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         if (!dato.isPausado()) {
             confirmacion.initOwner(Stage.getWindows().getFirst());
-            confirmacion.setTitle("Crear nueva partida");
-            confirmacion.setHeaderText("Estás a punto de guardar los ajustes y crear una nueva partida");
-            confirmacion.setContentText("¿Estás seguro de que quieres continuar?");
+            confirmacion.setTitle("Iniciar un juego nuevo");
+            confirmacion.setHeaderText("Estás a punto de guardar los ajustes y empezar una nueva partida");
+            confirmacion.setContentText("¿Seguro que quieres continuar?");
         } else {
             confirmacion.initOwner(Stage.getWindows().get(1));
-            confirmacion.setTitle("Continuar con el juego");
+            confirmacion.setTitle("Continuar");
             confirmacion.setHeaderText("Estás a punto de guardar los ajustes para continuar la partida");
-            confirmacion.setContentText("¿Estás seguro de que quieres continuar?");
+            confirmacion.setContentText("¿Seguro que quieres continuar?");
         }
         if(confirmacion.showAndWait().get() == ButtonType.OK) {
             continuarZombieStudentsLife(event);
@@ -194,14 +194,14 @@ public class MenuAjustesController implements Initializable {
             Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stageActual.close();
             comenzarNuevoJuego();
-            log.debug("Se ha creado un nuevo juego");
+            log.debug("Ha sido iniciada una partida nueva");
         } else {
             propiedades.commit();
 
             Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stageActual.close();
 
-            log.debug("Se ha guardado la configuración");
+            log.debug("Se han guardado los ajustes");
         }
     }
     private void comenzarNuevoJuego () throws IOException {
