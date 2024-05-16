@@ -259,7 +259,7 @@ public class TableroController {
     }
 
     protected void crearTablero (Tablero tablero) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("XTablero.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Tablero.fxml"));
         GridPane gridTablero = this.crearGridTablero(tablero, root);
         ((AnchorPane) root.getChildrenUnmodifiable().get(1)).getChildren().add(gridTablero);
         AnchorPane.setTopAnchor(gridTablero, 0.0);

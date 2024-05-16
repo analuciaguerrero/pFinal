@@ -27,7 +27,7 @@ import java.lang.reflect.Constructor;
 
 public class CeldaController implements Initializable {
     private static final Logger log = LogManager.getLogger(CeldaController.class);
-    private Parent nodo;
+    private static Parent nodo;
     private boolean isListenerActive = true;
     private DatosJuego dato;
     Celda celda;
@@ -271,7 +271,7 @@ public class CeldaController implements Initializable {
         }
     }
 
-    public Parent getNodo () {
+    public static Parent getNodo() {
         return nodo;
     }
 }
