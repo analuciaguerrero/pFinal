@@ -2,6 +2,7 @@ package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
 import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
 import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
@@ -10,9 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-public class EstudianteNormal extends Estudiante<EstudianteNormal> {
-    @Expose
-    private final String nombreClase = "EstudianteNormal";
+public class EstudianteNormal extends Estudiante {
     private static final Logger log = LogManager.getLogger(EstudianteNormal.class);
     public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
@@ -49,6 +48,7 @@ public class EstudianteNormal extends Estudiante<EstudianteNormal> {
                 destinoM += 1;
             }
             cambiarDePosicion(destinoN, destinoM, tablero);
+            colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
         }
         log.info("Movimiento realizado por el estudiante normal.");
     }

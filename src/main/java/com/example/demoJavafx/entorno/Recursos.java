@@ -12,10 +12,8 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class Recursos<Tipo extends Recursos<Tipo>> {
+public abstract class Recursos {
     private static final Logger log = LogManager.getLogger(Recursos.class);
-    @SerializedName("Tipo:")
-    private String nombreTipo;
     @Expose
     private int id;
     @Expose
@@ -85,7 +83,7 @@ public abstract class Recursos<Tipo extends Recursos<Tipo>> {
     public int getTurnosRestantes() {
         return turnosRestantes;
     }
-    public abstract Class<Tipo> getTipo ();
+    public abstract Class<?> getTipo ();
 
     public void setTurnosRestantes(int turnosRestantes) {
         this.turnosRestantes = turnosRestantes;

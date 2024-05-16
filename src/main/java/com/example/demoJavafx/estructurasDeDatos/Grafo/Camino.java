@@ -1,17 +1,16 @@
 package com.example.demoJavafx.estructurasDeDatos.Grafo;
 
-import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
-
-public class Camino {
-    ListaSimple<Vertice> camino;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
+public class Camino<TipoDelDato> {
+    ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> camino;
     double peso;
 
-    public Camino(ListaSimple<Vertice> camino, double peso) {
+    public Camino(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> camino, double peso) {
         this.camino = camino;
         this.peso = peso;
     }
 
-    public ListaSimple<Vertice> getCamino() {
+    public ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> getCamino() {
         return camino;
     }
 
@@ -22,8 +21,7 @@ public class Camino {
     @Override
     public String toString() {
         StringBuilder salida = new StringBuilder();
-        salida.append("======= Volcado del camino desde [" + getCamino().getPrimero().getData().getDato() + "] hasta [" + getCamino().getUltimo().getData().getDato() + "] =======\n");
-        salida.append("Referencias a los vértices: " + this.getCamino() + "\n");
+        salida.append("Volcado del camino desde [" + getCamino().getPrimero().getData().getDato() + "] hasta [" + getCamino().getUltimo().getData().getDato() + "] =======\n");
         salida.append("Lista de datos en vértices: [");
         int contador = 0;
         while (contador < this.getCamino().getNumeroElementos()) {

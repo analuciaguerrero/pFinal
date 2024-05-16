@@ -7,9 +7,7 @@ import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Pozo extends Recursos<Pozo>{
-    @Expose
-    private final String nombreTipo = "Pozo";
+public class Pozo extends Recursos{
     private static double probPozo;
     private static final Logger logger = LogManager.getLogger(Pozo.class);
     public Pozo(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double probPozo) {

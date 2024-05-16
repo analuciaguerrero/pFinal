@@ -8,9 +8,7 @@ import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Comida extends Recursos<Comida>{
-    @Expose
-    private final String nombreTipo = "Comida";
+public class Comida extends Recursos{
     private int aumentoVida;
     private static double probComida;
     private static final Logger logger = LogManager.getLogger(Comida.class);

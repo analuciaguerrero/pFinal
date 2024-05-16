@@ -5,5 +5,8 @@ public class NonexistentElement extends Exception{
         super(message);
         System.out.println("\nERROR. Elemento inexistente");
     }
+    public NonexistentElement(){
+        super();
+    }
 }
 

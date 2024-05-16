@@ -3,7 +3,9 @@ package com.example.demoJavafx.estudiante;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
 import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
 import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
+import com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras.Cola;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.ProbabilidadNoValida;
 import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
@@ -17,7 +19,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
+public abstract class Estudiante {
     @Expose
     private int posicionN;
     @Expose
@@ -37,7 +39,13 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     @Expose
     private boolean isVivo = true;
     @Expose
-    BST<Estudiante<Tipo>> arbolGenealogico;
+    BST<Estudiante> arbolGenealogico;
+    @Expose
+    Cola colaDeOperaciones = new Cola<>();
+    @Expose
+    int contRepro = 0;
+    @Expose
+    int contClon = 0;
     private static final Logger log = LogManager.getLogger(Estudiante.class);
 
     public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
@@ -175,7 +183,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
     public boolean isVivo(){
         return isVivo;
     }
-    public abstract Class<Tipo> getTipo();
+    public abstract Class<?> getTipo();
     public int getNumTipo() {
         int num = -1;
         switch (this.getClass().getSimpleName()) {
@@ -212,11 +220,8 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             dato.getEstudiantes().add(this);
             celda.getListaEstudiantes().add(this);
             this.setPosicion(celda.getPosicion());
-
-            Class<? extends Estudiante> claseEstudiante = this.getTipo();
             Constructor<? extends Estudiante> constructor = getClass().getConstructor(Estudiante.class);
             dato.getHistorialEstudiantes().add(constructor.newInstance(this));
-
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             log.error("No se ha podido crear una nueva instancia del estudiante para el historial de estudiantes");
         }
@@ -253,27 +258,35 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             switch (movimiento) {
                 case 1:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM(), tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 2:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM() - 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 3:
                     cambiarDePosicion(getPosicionN(), getPosicionM() - 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 4:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM() - 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 5:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM(), tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 6:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM() + 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 7:
                     cambiarDePosicion(getPosicionN(), getPosicionM() + 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 8:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM() + 1, tablero);
+                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 default:
                     log.error("Se ha intentado hacer un movimiento aleatorio inválido");
@@ -293,7 +306,7 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
         }
         return estudianteMovido;
     }
-    public <Tipo extends Estudiante<Tipo>> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
+    public <Tipo extends Estudiante> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
         int num = getNumTipo();
         int numPareja = pareja.getNumTipo();
         Random a = new Random();
@@ -316,16 +329,16 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
             Random b = new Random();
             int m = b.nextInt(1, 100);
 
-            Class<Tipo> hijoTipo = estudiante1.getTipo();
+            Class<?> hijoTipo;
             if (m <= probMejora) {
                 hijoTipo = estudiante1.getTipo();
             } else {
                 hijoTipo = estudiante2.getTipo();
             }
             try {
-                Constructor<Tipo> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, double.class, double.class);
+                Constructor<?> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, double.class, double.class);
                 int id = dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1;
-                Tipo hijo = constructor.newInstance(id, getPosicionN(), getPosicionM(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
+                Tipo hijo = (Tipo) constructor.newInstance(id, getPosicionN(), getPosicionM(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
                 hijo.add(dato, celda);
                 return false; //No mueren
             } catch (Exception e) {
@@ -355,12 +368,35 @@ public abstract class Estudiante<Tipo extends Estudiante<Tipo>> {
         }
         return false;
     }
-    public BST<Estudiante<Tipo>> getArbolGenealogico() {
+    public BST<Estudiante> getArbolGenealogico() {
         return arbolGenealogico;
     }
 
-    public void setArbolGenealogico(BST<Estudiante<Tipo>> arbolGenealogico) {
+    public void setArbolGenealogico(BST<Estudiante> arbolGenealogico) {
         this.arbolGenealogico = arbolGenealogico;
+    }
+    public Cola getColaDeOperaciones() {
+        return colaDeOperaciones;
+    }
+
+    public void setColaOperaciones(Cola colaDeOperaciones) {
+        this.colaDeOperaciones = colaDeOperaciones;
+    }
+
+    public int getContRepro() {
+        return contRepro;
+    }
+
+    public void setContRepro(int contRepro) {
+        this.contRepro = contRepro;
+    }
+
+    public int getContClon() {
+        return contClon;
+    }
+
+    public void setContClon(int contClon) {
+        this.contClon = contClon;
     }
 
 }

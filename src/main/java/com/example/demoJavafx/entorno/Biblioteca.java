@@ -12,9 +12,7 @@ import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Biblioteca extends Recursos<Biblioteca> {
-    @Expose
-    private final String nombreTipo = "Biblioteca";
+public class Biblioteca extends Recursos {
     private double aumentoProbClonacion;
     private static double probBiblioteca;
     private static final Logger logger = LogManager.getLogger(Biblioteca.class);

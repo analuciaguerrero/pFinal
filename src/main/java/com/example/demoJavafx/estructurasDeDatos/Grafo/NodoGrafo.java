@@ -1,16 +1,18 @@
 package com.example.demoJavafx.estructurasDeDatos.Grafo;
-import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
-public class NodoGrafo <TipoDelDato>{
-    public TipoDelDato dato;
-    public ListaSimple<NodoGrafo> listaEntrada;
-    public ListaSimple<NodoGrafo> listaSalida;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
+public class NodoGrafo <TipoDelDato> {
+
+    private TipoDelDato dato;
+    private ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada = new ListaDoblementeEnlazada<>();
+    private ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida = new ListaDoblementeEnlazada<>();
+    private String anotacion;
+    private double peso;
 
     public NodoGrafo(TipoDelDato dato) {
         this.dato = dato;
-        this.listaEntrada = new ListaSimple();
     }
 
-    public NodoGrafo(TipoDelDato dato, ListaSimple listaEntrada, ListaSimple listaSalida) {
+    public NodoGrafo(TipoDelDato dato, ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada, ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida) {
         this.dato = dato;
         this.listaEntrada = listaEntrada;
         this.listaSalida = listaSalida;
@@ -24,19 +26,36 @@ public class NodoGrafo <TipoDelDato>{
         this.dato = dato;
     }
 
-    public ListaSimple getListaEntrada() {
+    public ListaDoblementeEnlazada<Arista<TipoDelDato>> getListaEntrada() {
         return listaEntrada;
     }
 
-    public void setListaEntrada(ListaSimple listaEntrada) {
+    public void setListaEntrada(ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada) {
         this.listaEntrada = listaEntrada;
     }
 
-    public ListaSimple getListaSalida() {
+    public ListaDoblementeEnlazada<Arista<TipoDelDato>> getListaSalida() {
         return listaSalida;
     }
 
-    public void setListaSalida(ListaSimple listaSalida) {
+    public void setListaSalida(ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida) {
         this.listaSalida = listaSalida;
     }
+
+    public String getAnotacion() {
+        return anotacion;
+    }
+
+    public void setAnotacion(String anotacion) {
+        this.anotacion = anotacion;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
 }
+

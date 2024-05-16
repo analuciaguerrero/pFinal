@@ -8,9 +8,7 @@ import com.google.gson.annotations.Expose;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Agua extends Recursos<Agua> {
-    @Expose
-    private final String nombreTipo = "Agua";
+public class Agua extends Recursos {
     private int aumentoVida;
     private static double probAgua;
     private static final Logger logger = LogManager.getLogger(Agua.class);

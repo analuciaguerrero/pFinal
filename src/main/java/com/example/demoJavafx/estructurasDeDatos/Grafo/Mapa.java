@@ -1,37 +1,21 @@
 package com.example.demoJavafx.estructurasDeDatos.Grafo;
 
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
 import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras.Dupla;
 
 public class Mapa<T, E> {
-    ListaSimple<Dupla<T, E>> datos;
-
+    ListaDoblementeEnlazada<ElementoMap<T, E>> datos;
+    public Mapa(ListaDoblementeEnlazada<ElementoMap<T,E>> el){
+        datos = el;
+    }
     public Mapa() {
-        datos = new ListaSimple<>();
+        datos = new ListaDoblementeEnlazada<>();
     }
 
     public boolean isVacio() {
         return this.datos.getPrimero()==null;
-    }
-
-    public void add(T clave, E dato) {
-        if (this.isVacio()){
-            datos.add(new Dupla<>(clave,dato));
-        }
-        int contador = 0;
-        boolean existentIndex = false;
-        while ((contador < datos.getNumeroElementos()) && (!existentIndex)) {
-            if (datos.getElemento(contador).getData().getClave() == clave) {
-                existentIndex = true;
-            } else {
-                contador++;
-            }
-        }
-        if (!existentIndex) {
-            datos.add(new Dupla<>(clave, dato));
-        } else {
-            datos.getElemento(contador).getData().setDato(dato);
-        }
     }
 
     public E get(T indice){
@@ -44,6 +28,33 @@ public class Mapa<T, E> {
         }
         return null;
     }
+    public void put (T clave, E elemento) {
+        for (int i=0; i != datos.getNumeroElementos(); i++){
+            if (datos.getElemento(i).getData().getClave() == clave) {
+                datos.getElemento(i).getData().setDato(elemento);
+                return;
+            }
+        }
+        this.datos.add(new ElementoMap<>(clave, elemento));
+    }
+    public void eliminar(T clave) {
+        for (int i = 0; i != datos.getNumeroElementos(); i++) {
+            ElementoMap<T, E> ele = datos.getElemento(i).getData();
+            if (ele.getClave() == clave){
+                datos.del(i);
+            }
+        }
+    }
+    public ListaDoblementeEnlazada<T> SetClave(){
+        ListaDoblementeEnlazada<T> listaClaves = new ListaDoblementeEnlazada<>();
+        ElementoLDE<ElementoMap<T,E>> elementoActual = datos.getPrimero();
+        while (elementoActual != null) {
+            listaClaves.add(elementoActual.getData().getClave());
+            elementoActual = elementoActual.getSiguiente();
+        }
+        return listaClaves;
+    }
+
 
     public ListaSimple<T> getIndices(){
         ListaSimple<T> listaIndices=new ListaSimple<>();

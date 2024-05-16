@@ -4,8 +4,19 @@ public class ElementoLDE<Tipo> {
     private Tipo data;
     private ElementoLDE<Tipo> siguiente;
     private ElementoLDE<Tipo> anterior;
+    public ElementoLDE(ElementoLDE anterior) {
+        this.anterior = anterior;
+    }
+    public ElementoLDE(ElementoLDE anterior, ElementoLDE siguiente,Tipo data) {
+        this.data = data;
+        this.anterior = anterior;
+        this.siguiente = siguiente;
+    }
+    public ElementoLDE(Tipo data) {
+        this.data = data;
+    }
 
-    protected void insertarmeEn(ElementoLDE<Tipo> el) {
+    public void insertarmeEn(ElementoLDE<Tipo> el) {
         this.siguiente = el.siguiente;
         this.anterior = el;
         el.siguiente = this;
@@ -13,19 +24,19 @@ public class ElementoLDE<Tipo> {
             this.siguiente.anterior = this;
     }
 
-    protected ElementoLDE<Tipo> getSiguiente() {
+    public ElementoLDE<Tipo> getSiguiente() {
         return siguiente;
     }
 
-    protected ElementoLDE<Tipo> getAnterior() {
+    public ElementoLDE<Tipo> getAnterior() {
         return anterior;
     }
 
-    protected void setSiguiente(ElementoLDE<Tipo> el) {
+    public void setSiguiente(ElementoLDE<Tipo> el) {
         this.siguiente = el;
     }
 
-    protected void setAnterior(ElementoLDE<Tipo> el) {
+    public void setAnterior(ElementoLDE<Tipo> el) {
         this.anterior = el;
     }
 

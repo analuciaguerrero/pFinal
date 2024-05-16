@@ -4,9 +4,7 @@ import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
 
-public class EstudianteBasico extends Estudiante<EstudianteBasico> {
-    @Expose
-    private final String nombreClase = "EstudianteBasico";
+public class EstudianteBasico extends Estudiante {
     public EstudianteBasico(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }

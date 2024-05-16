@@ -1,45 +1,61 @@
 package com.example.demoJavafx.estructurasDeDatos.Grafo;
 
-public class Arista {
-    private Vertice verticeIni;
-    private Vertice verticeFin;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class Arista<TipoDelDato> {
+    private NodoGrafo<TipoDelDato> nodoIni;
+    private NodoGrafo<TipoDelDato> nodoFin;
     private String anotacion;
-    private Integer peso;
+    private boolean isDirigido;
+    private double peso;
+    private static final Logger log = LogManager.getLogger(Grafo.class);
 
     public Arista(){}
-    public Arista(Vertice verticeIni, Vertice verticeFin, String anotacion, Integer peso){
-        this.verticeIni = verticeIni;
-        this.verticeFin = verticeFin;
+    public Arista(double peso, NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin, boolean isDirigido) {
+        this.peso = peso;
+        this.isDirigido = isDirigido;
+        this.nodoIni = nodoIni;
+        this.nodoFin = nodoFin;
+    }
+    public Arista(double peso, NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin, String anotacion, boolean isDirigido) {
+        this.peso = peso;
+        this.isDirigido = isDirigido;
+        this.nodoIni = nodoIni;
+        this.nodoFin = nodoFin;
         this.anotacion = anotacion;
-        this.peso = peso;
     }
 
-    public Arista(Vertice verticeIni, Vertice verticeFin, Integer peso) {
-        this.verticeIni = verticeIni;
-        this.verticeFin = verticeFin;
-        this.peso = peso;
+    public boolean isDirigido() {
+        return isDirigido;
     }
 
-    public Arista(Vertice verticeIni, Vertice verticeFin) {
-        this.verticeIni = verticeIni;
-        this.verticeFin = verticeFin;
-        this.peso=1;
+    public void setDirigido(boolean dirigido) {
+        isDirigido = dirigido;
     }
 
-    public Vertice getVerticeIni() {
-        return verticeIni;
+    public NodoGrafo<TipoDelDato> getNodoIni() {
+        return nodoIni;
     }
 
-    public void setVerticeIni(Vertice verticeIni) {
-        this.verticeIni = verticeIni;
+    public void setNodoIni(NodoGrafo<TipoDelDato> nodoIni) {
+        if (nodoIni!=null) {
+            this.nodoIni = nodoIni;
+        } else{
+            log.warn("Se intentó asignar un nodo nulo como el punto de inicio del arco: " + this);
+        }
     }
 
-    public Vertice getVerticeFin() {
-        return verticeFin;
+    public NodoGrafo<TipoDelDato> getNodoFin() {
+        return nodoFin;
     }
 
-    public void setVerticeFin(Vertice verticeFin) {
-        this.verticeFin = verticeFin;
+    public void setNodoFin(NodoGrafo<TipoDelDato> nodoFin) {
+        if (nodoFin!=null) {
+            this.nodoFin = nodoFin;
+        } else{
+            log.warn("Se intentó asignar un nodo nulo como el punto de fin del arco: " + this);
+        }
     }
 
     public String getAnotacion() {
@@ -50,11 +66,20 @@ public class Arista {
         this.anotacion = anotacion;
     }
 
-    public Integer getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
+    }
+    public NodoGrafo<TipoDelDato> getVertice (NodoGrafo<TipoDelDato> vertice) {
+        if (vertice == nodoIni) {
+            return nodoFin;
+        } else if (vertice == nodoFin){
+            return nodoIni;
+        } else {
+            return null;
+        }
     }
 }

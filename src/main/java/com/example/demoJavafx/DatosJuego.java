@@ -1,13 +1,22 @@
 package com.example.demoJavafx;
 
+import com.example.demoJavafx.entorno.GsonRecursos;
 import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
+import com.example.demoJavafx.estudiante.GsonEstudiante;
 import com.example.demoJavafx.tablero.Celda;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,70 +25,100 @@ public class DatosJuego {
 
     private static final Logger log = LogManager.getLogger(DatosJuego.class);
     //Listas con los estudiantes y recursos
+    @Expose
     private ListaEnlazada<Estudiante> estudiantes = new ListaEnlazada<>();
+    @Expose
     private ListaEnlazada<Recursos> recursos = new ListaEnlazada<>();
+    @Expose
     private ListaEnlazada<Estudiante> HistorialEstudiantes = new ListaEnlazada<>();
+    @Expose
     private ListaEnlazada<Recursos> HistorialRecursos = new ListaEnlazada<>();
+    @Expose
     private int numRecursos; // Almacenar la cantidad de recursos
+    @Expose
     private int numEstudiantes; //Almacenar la cantidad de estudiantes
 
     //Datos del tablero
+    @Expose
     private int MaximoEstudiantesPorCelda = 3;
+    @Expose
     private int MaximoRecursosPorCelda = 3;
+    @Expose
     private int FilasDelTablero;
+    @Expose
     private int ColumnasDelTablero;
 
     //Datos de los recursos
+    @Expose
     private double ProbRecurso;
+    @Expose
     private int TurnosIniciales;
+    @Expose
     private double ProbAgua;
+    @Expose
     private double ProbComida;
+    @Expose
     private double ProbMontaña;
+    @Expose
     private double ProbTesoro;
+    @Expose
     private double ProbBiblioteca;
+    @Expose
     private double ProbPozo;
+    @Expose
     private int AumentoVidaAgua;
+    @Expose
     private int AumentoVidaComida;
+    @Expose
     private int ReduccionVidaMontaña;
+    @Expose
     private double AumentoProbReproduccion;
+    @Expose
     private double AumentoProbClonacion;
 
     //Datos del estudiante
+    @Expose
     private int TurnosVidaIniciales;
+    @Expose
     private double ProbReproduccionEstudiante;
+    @Expose
     private double ProbClonacionEstudiante;
+    @Expose
     private double ProbMejorarANormal;
+    @Expose
     private double ProbMejorarAAvanzado;
-
-
+    @Expose
     private Boolean isPausado = false;
-    private IntegerProperty turnoProperty = new SimpleIntegerProperty();
+    @Expose
+    private boolean isSave = true;
+    @Expose
+    private String rutaArchivo;
+    @Expose
+    private int turnoActual;
 
 
-
-    public DatosJuego(int turnosVidaIniciales, double probReproduccionEstudiante, double probClonacionEstudiante, double probMejorarANormal, double probMejorarAAvanzado, double probRecurso, int turnosIniciales, double probAgua, double probComida, double probMontaña, double probTesoro, double probBiblioteca, double probPozo, int aumentoVidaAgua, int aumentoVidaComida, int reduccionVidaMontaña, double aumentoProbReproduccion, double aumentoProbClonacion, int filasDelTablero, int columnasDelTablero, int Turno) {
-        TurnosVidaIniciales = turnosVidaIniciales;
-        ProbReproduccionEstudiante = probReproduccionEstudiante;
-        ProbClonacionEstudiante = probClonacionEstudiante;
-        ProbMejorarANormal = probMejorarANormal;
-        ProbMejorarAAvanzado = probMejorarAAvanzado;
-        ProbRecurso = probRecurso;
-        ProbAgua = probAgua;
-        ProbComida = probComida;
-        ProbMontaña = probMontaña;
-        ProbTesoro = probTesoro;
-        ProbBiblioteca = probBiblioteca;
-        ProbPozo = probPozo;
-        TurnosIniciales = turnosIniciales;
-        AumentoVidaAgua = aumentoVidaAgua;
-        AumentoVidaComida = aumentoVidaComida;
-        ReduccionVidaMontaña = reduccionVidaMontaña;
-        AumentoProbReproduccion = aumentoProbReproduccion;
-        AumentoProbClonacion = aumentoProbClonacion;
-        FilasDelTablero = filasDelTablero;
-        ColumnasDelTablero = columnasDelTablero;
-        turnoProperty.set(Turno);
-        turnoProperty.set(0);
+    public DatosJuego(int turnosVidaIniciales, double probReproduccionEstudiante, double probClonacionEstudiante, double probMejorarANormal, double probMejorarAAvanzado, double probRecurso, int turnosIniciales, double probAgua, double probComida, double probMontaña, double probTesoro, double probBiblioteca, double probPozo, int aumentoVidaAgua, int aumentoVidaComida, int reduccionVidaMontaña, double aumentoProbReproduccion, double aumentoProbClonacion, int filasDelTablero, int columnasDelTablero, int turno) {
+        this.TurnosVidaIniciales = turnosVidaIniciales;
+        this.ProbReproduccionEstudiante = probReproduccionEstudiante;
+        this.ProbClonacionEstudiante = probClonacionEstudiante;
+        this.ProbMejorarANormal = probMejorarANormal;
+        this.ProbMejorarAAvanzado = probMejorarAAvanzado;
+        this.ProbRecurso = probRecurso;
+        this.ProbAgua = probAgua;
+        this.ProbComida = probComida;
+        this.ProbMontaña = probMontaña;
+        this.ProbTesoro = probTesoro;
+        this.ProbBiblioteca = probBiblioteca;
+        this.ProbPozo = probPozo;
+        this.TurnosIniciales = turnosIniciales;
+        this.AumentoVidaAgua = aumentoVidaAgua;
+        this.AumentoVidaComida = aumentoVidaComida;
+        this.ReduccionVidaMontaña = reduccionVidaMontaña;
+        this.AumentoProbReproduccion = aumentoProbReproduccion;
+        this.AumentoProbClonacion = aumentoProbClonacion;
+        this.FilasDelTablero = filasDelTablero;
+        this.ColumnasDelTablero = columnasDelTablero;
+        this.turnoActual = turno;
     }
 
 
@@ -284,16 +323,12 @@ public class DatosJuego {
         this.recursos = recursos;
     }
 
-    public IntegerProperty getTurnoProperty() {
-        return turnoProperty;
+    public int getTurnoActual() {
+        return turnoActual;
     }
 
-    public int getTurno() {
-        return turnoProperty.get();
-    }
-
-    public void setTurno(int turno) {
-        turnoProperty.set(turno);
+    public void setTurnoActual(int turnoActual) {
+        this.turnoActual = turnoActual;
     }
 
     public int getTurnosIniciales() {
@@ -354,6 +389,21 @@ public class DatosJuego {
         }
         return null;
     }
+    public boolean isSave() {
+        return isSave;
+    }
+
+    public void setSave(boolean save) {
+        isSave = save;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
 
     public ListaEnlazada<Estudiante> getHistorialEstudiantes() {
         return HistorialEstudiantes;
@@ -369,5 +419,36 @@ public class DatosJuego {
 
     public void setHistorialRecursos(ListaEnlazada<Recursos> historialRecursos) {
         HistorialRecursos = historialRecursos;
+    }
+    public void guardarArchivo(String rutaArchivo){
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
+                .registerTypeAdapter(Recursos.class, new GsonRecursos())
+                .excludeFieldsWithoutExposeAnnotation()
+                .excludeFieldsWithModifiers(Modifier.STATIC)
+                .setPrettyPrinting()
+                .create();
+        try (FileWriter writer = new FileWriter(STR."archivos/\{rutaArchivo}.json")) {
+            gson.toJson(this, writer);
+            this.setSave(true);
+        } catch (IOException e) {
+            log.error("La ruta no existe");
+        }
+    }
+    public static DatosJuego cargarArchivo(String rutaArchivo) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
+                .registerTypeAdapter(Recursos.class, new GsonRecursos())
+                .excludeFieldsWithModifiers(Modifier.STATIC)
+                .excludeFieldsWithoutExposeAnnotation()
+                .setPrettyPrinting()
+                .create();
+
+        try (FileReader reader = new FileReader(STR."archivos/\{rutaArchivo}")) {
+            return gson.fromJson(reader, DatosJuego.class);
+        } catch (IOException e) {
+            log.error("La ruta no existe");
+            return null;
+        }
     }
 }
