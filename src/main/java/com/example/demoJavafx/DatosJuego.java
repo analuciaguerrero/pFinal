@@ -128,6 +128,7 @@ public class DatosJuego {
 
     public void setTurnosVidaIniciales(int turnosVidaIniciales) {
         TurnosVidaIniciales = turnosVidaIniciales;
+        setSave(false);
     }
 
     public double getProbReproduccionEstudiante() {
@@ -136,6 +137,7 @@ public class DatosJuego {
 
     public void setProbReproduccionEstudiante(double probReproduccionEstudiante){
         ProbReproduccionEstudiante = probReproduccionEstudiante;
+        setSave(false);
     }
 
     public double getProbClonacionEstudiante() {
@@ -144,6 +146,7 @@ public class DatosJuego {
 
     public void setProbClonacionEstudiante(double probClonacionEstudiante) {
         ProbClonacionEstudiante = probClonacionEstudiante;
+        setSave(false);
     }
     public double getProbRecurso() {
         return ProbRecurso;
@@ -151,18 +154,21 @@ public class DatosJuego {
 
     public void setProbRecurso(double probRecurso) {
         ProbRecurso = probRecurso;
+        setSave(false);
     }
     public int getNumEstudiantes(){
         return numEstudiantes;
     }
     public void setNumEstudiantes(int numEstudiantes){
         this.numEstudiantes = numEstudiantes;
+        setSave(false);
     }
     public int getNumRecursos(){
         return numRecursos;
     }
     public void setNumRecursos(int numRecursos){
         this.numRecursos = numRecursos;
+        setSave(false);
     }
     public double getProbAgua() {
         return ProbAgua;
@@ -170,6 +176,7 @@ public class DatosJuego {
 
     public void setProbAgua(double probAgua) {
         ProbAgua = probAgua;
+        setSave(false);
     }
 
     public double getProbComida() {
@@ -178,6 +185,7 @@ public class DatosJuego {
 
     public void setProbComida(double probComida) {
         ProbComida = probComida;
+        setSave(false);
     }
 
     public double getProbMontaña() {
@@ -186,6 +194,7 @@ public class DatosJuego {
 
     public void setProbMontaña(double probMontaña) {
         ProbMontaña = probMontaña;
+        setSave(false);
     }
 
     public double getProbTesoro() {
@@ -194,6 +203,7 @@ public class DatosJuego {
 
     public void setProbTesoro(double probTesoro) {
         ProbTesoro = probTesoro;
+        setSave(false);
     }
 
     public double getProbBiblioteca() {
@@ -202,6 +212,7 @@ public class DatosJuego {
 
     public void setProbBiblioteca(double probBiblioteca) {
         ProbBiblioteca = probBiblioteca;
+        setSave(false);
     }
 
     public double getProbPozo() {
@@ -210,6 +221,7 @@ public class DatosJuego {
 
     public void setProbPozo(double probPozo) {
         ProbPozo = probPozo;
+        setSave(false);
     }
 
     public int getAumentoVidaAgua() {
@@ -218,6 +230,7 @@ public class DatosJuego {
 
     public void setAumentoVidaAgua(int aumentoVidaAgua) {
         AumentoVidaAgua = aumentoVidaAgua;
+        setSave(false);
     }
 
     public int getAumentoVidaComida() {
@@ -226,6 +239,7 @@ public class DatosJuego {
 
     public void setAumentoVidaComida(int aumentoVidaComida) {
         AumentoVidaComida = aumentoVidaComida;
+        setSave(false);
     }
 
     public int getReduccionVidaMontaña() {
@@ -234,6 +248,7 @@ public class DatosJuego {
 
     public void setReduccionVidaMontaña(int reduccionVidaMontaña) {
         ReduccionVidaMontaña = reduccionVidaMontaña;
+        setSave(false);
     }
 
     public double getAumentoProbReproduccion() {
@@ -242,6 +257,7 @@ public class DatosJuego {
 
     public void setAumentoProbReproduccion(double aumentoProbReproduccion) {
         AumentoProbReproduccion = aumentoProbReproduccion;
+        setSave(false);
     }
 
     public double getAumentoProbClonacion() {
@@ -250,6 +266,7 @@ public class DatosJuego {
 
     public void setAumentoProbClonacion(double aumentoProbClonacion) {
         AumentoProbClonacion = aumentoProbClonacion;
+        setSave(false);
     }
 
     public int getFilasDelTablero() {
@@ -258,6 +275,7 @@ public class DatosJuego {
 
     public void setFilasDelTablero(int filasDelTablero) {
         FilasDelTablero = filasDelTablero;
+        setSave(false);
     }
 
     public int getColumnasDelTablero() {
@@ -266,6 +284,7 @@ public class DatosJuego {
 
     public void setColumnasDelTablero(int columnasDelTablero) {
         ColumnasDelTablero = columnasDelTablero;
+        setSave(false);
     }
 
     public int getMaximoEstudiantesPorCelda() {
@@ -274,6 +293,7 @@ public class DatosJuego {
 
     public void setMaximoEstudiantesPorCelda(int maximoEstudiantesPorCelda) {
         MaximoEstudiantesPorCelda = maximoEstudiantesPorCelda;
+        setSave(false);
     }
 
     public int getMaximoRecursosPorCelda() {
@@ -282,6 +302,7 @@ public class DatosJuego {
 
     public void setMaximoRecursosPorCelda(int maximoRecursosPorCelda) {
         MaximoRecursosPorCelda = maximoRecursosPorCelda;
+        setSave(false);
     }
 
     public double getProbMejorarANormal() {
@@ -290,6 +311,7 @@ public class DatosJuego {
 
     public void setProbMejorarANormal(double ProbMejorarANormal) {
         this.ProbMejorarANormal = ProbMejorarANormal;
+        setSave(false);
     }
 
     public double getProbMejorarAAvanzado() {
@@ -298,6 +320,7 @@ public class DatosJuego {
 
     public void setProbMejorarAAvanzado(double ProbMejorarAAvanzado) {
         this.ProbMejorarAAvanzado = ProbMejorarAAvanzado;
+        setSave(false);
     }
 
     public Boolean isPausado() {
@@ -306,6 +329,7 @@ public class DatosJuego {
 
     public void setPausado(Boolean pausado) {
         isPausado = pausado;
+        setSave(false);
     }
     public ListaEnlazada<Estudiante> getEstudiantes() {
         return estudiantes;
@@ -313,6 +337,7 @@ public class DatosJuego {
 
     public void setEstudiantes(ListaEnlazada<Estudiante> estudiantes) {
         this.estudiantes = estudiantes;
+        setSave(false);
     }
 
     public ListaEnlazada<Recursos> getRecursos() {
@@ -321,6 +346,7 @@ public class DatosJuego {
 
     public void setRecursos(ListaEnlazada<Recursos> recursos) {
         this.recursos = recursos;
+        setSave(false);
     }
 
     public int getTurnoActual() {
@@ -329,6 +355,7 @@ public class DatosJuego {
 
     public void setTurnoActual(int turnoActual) {
         this.turnoActual = turnoActual;
+        setSave(false);
     }
 
     public int getTurnosIniciales() {
@@ -337,6 +364,7 @@ public class DatosJuego {
 
     public void setTurnosIniciales(int turnosIniciales) {
         TurnosIniciales = turnosIniciales;
+        setSave(false);
     }
     public int generarEnteroAleatorio(int min, int max) {
         Random rand = new Random();
@@ -403,6 +431,7 @@ public class DatosJuego {
 
     public void setRutaArchivo(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
+        setSave(false);
     }
 
     public ListaEnlazada<Estudiante> getHistorialEstudiantes() {
@@ -411,6 +440,7 @@ public class DatosJuego {
 
     public void setHistorialEstudiantes(ListaEnlazada<Estudiante> historialEstudiantes) {
         HistorialEstudiantes = historialEstudiantes;
+        setSave(false);
     }
 
     public ListaEnlazada<Recursos> getHistorialRecursos() {
@@ -419,6 +449,7 @@ public class DatosJuego {
 
     public void setHistorialRecursos(ListaEnlazada<Recursos> historialRecursos) {
         HistorialRecursos = historialRecursos;
+        setSave(false);
     }
     public void guardarArchivo(String rutaArchivo) {
         Gson gson = new GsonBuilder()
@@ -428,9 +459,9 @@ public class DatosJuego {
                 .excludeFieldsWithModifiers(Modifier.STATIC)
                 .setPrettyPrinting()
                 .create();
-        try (FileWriter writer = new FileWriter(String.format("archivos/%s.json", rutaArchivo))) {
-            gson.toJson(this, writer);
+        try (FileWriter writer = new FileWriter(STR."archivos/\{rutaArchivo}.json")) {
             this.setSave(true);
+            gson.toJson(this, writer);
         } catch (IOException e) {
             log.error("Error al guardar el archivo: " + e.getMessage());
         }
@@ -444,7 +475,7 @@ public class DatosJuego {
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
-        try (FileReader reader = new FileReader(String.format("archivos/%s.json", rutaArchivo))) {
+        try (FileReader reader = new FileReader(String.format(STR."archivosDePartida/\{rutaArchivo}"))) {
             return gson.fromJson(reader, DatosJuego.class);
         } catch (IOException e) {
             log.error("Error al cargar el archivo: " + e.getMessage());
