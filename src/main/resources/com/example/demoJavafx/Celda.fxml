@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+            <Label alignment="CENTER" layoutX="32.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="20.0" text="Estudiantes:">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+      <Label alignment="CENTER" layoutX="32.0" layoutY="200.0" maxWidth="1.7976931348623157E308" prefHeight="20.0" text="Recursos:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <MenuButton layoutX="307.0" layoutY="200.0" mnemonicParsing="false" text="Añadir">
+         <contextMenu>
+            <ContextMenu>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Agua" />
+                  <MenuItem mnemonicParsing="false" text="Comida" />
+                  <MenuItem mnemonicParsing="false" text="Biblioteca" />
+                  <MenuItem mnemonicParsing="false" text="Montaña" />
+                  <MenuItem mnemonicParsing="false" text="Tesoro" />
+                  <MenuItem mnemonicParsing="false" text="Pozo" />
+               </items>
+            </ContextMenu>
+         </contextMenu>
+      </MenuButton>
+      <MenuButton layoutX="307.0" layoutY="14.0" mnemonicParsing="false" text="Añadir">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="EstudianteNormal" />
+                  <MenuItem mnemonicParsing="false" text="EstudianteBasico" />
+                  <MenuItem mnemonicParsing="false" text="EstudianteAvanzado" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </MenuButton>
+   </children>
+</AnchorPane>
