@@ -136,9 +136,9 @@ public class TableroController {
         if (!getDato().isSave()) {
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
             confirmacion.initOwner(Stage.getWindows().getFirst());
-            confirmacion.setTitle("Volver al menú principal");
-            confirmacion.setHeaderText("Estás a punto de volver al menú principal, perderás el progreso");
-            confirmacion.setContentText("¿Quieres guardar la partida antes de salir?");
+            confirmacion.setTitle("Volver al menú inicial");
+            confirmacion.setHeaderText("Estás a punto de volver al menú inicial y perderás todo tu progreso guardado");
+            confirmacion.setContentText("¿Deseas guardar la partida antes de salir?");
             ButtonType botonGuardar = new ButtonType("Guardar");
             ButtonType botonNoGuardar = new ButtonType("No guardar");
             ButtonType botonCancelar = new ButtonType("Cancelar");
@@ -168,7 +168,7 @@ public class TableroController {
             stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
-            log.error("No se ha encontrado la vista del menú principal");
+            log.error("No se ha encontrado la vista del menú inicial");
         }
     }
 
@@ -198,7 +198,7 @@ public class TableroController {
         TextInputDialog getArchivoNombre = new TextInputDialog();
         getArchivoNombre.initOwner(Stage.getWindows().getFirst());
         getArchivoNombre.setTitle("Guardar partida");
-        getArchivoNombre.setHeaderText("¿Cómo quieres llamar a tu partida?");
+        getArchivoNombre.setHeaderText("Nombre de la partida:");
         getArchivoNombre.setContentText("Guardar como:");
         ButtonType botonGuardar = new ButtonType("Guardar", ButtonBar.ButtonData.OK_DONE);
         ButtonType botonCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -233,7 +233,7 @@ public class TableroController {
                 if (numeroVentanasAbiertas > 1) {
                     Stage ventanaPreviaCelda = ((Stage) Window.getWindows().get(1));
                     String textoLabelVentana = ((Label) ((GridPane) ((VBox) ventanaPreviaCelda.getScene().getRoot()).getChildren().getFirst()).getChildren().getFirst()).getText();
-                    log.debug("Se ha cerrado la ventana de la casilla " + textoLabelVentana.charAt(8) + ", " + textoLabelVentana.charAt(11));
+                    log.debug("Se ha cerrado la ventana de la celda " + textoLabelVentana.charAt(8) + ", " + textoLabelVentana.charAt(11));
                     ventanaPreviaCelda.close();
                 }
                 Bounds limitesCasilla = celda.getBoundsInLocal();

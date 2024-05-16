@@ -12,6 +12,8 @@ import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
 import com.google.gson.annotations.Expose;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +28,8 @@ public abstract class Estudiante {
     private int posicionM;
     @Expose
     private int id;
+    @Expose (serialize = false)
+    private IntegerProperty tiempoDeVidaProperty = new SimpleIntegerProperty();
     @Expose
     private int generacion;
     @Expose
@@ -180,6 +184,18 @@ public abstract class Estudiante {
     public double getProbMuerte() {
         return probMuerte;
     }
+
+    public IntegerProperty getTiempoDeVidaProperty() {
+        return tiempoDeVidaProperty;
+    }
+
+    public void setTiempoDeVidaProperty(IntegerProperty tiempoDeVidaProperty) {
+        this.tiempoDeVidaProperty = tiempoDeVidaProperty;
+    }
+    public void actualizarTiempoDeVidaProperty () {
+        tiempoDeVidaProperty.set(tiempoDeVida);
+    }
+
     public boolean isVivo(){
         return isVivo;
     }
@@ -361,6 +377,7 @@ public abstract class Estudiante {
     }
     public boolean actualizarTiempoDeVida(DatosJuego dato, Celda celda){
         tiempoDeVida--;
+        actualizarTiempoDeVidaProperty();
         log.info("El tiempo de vida ha sido actualizado");
         if (tiempoDeVida<=0){
             celda.eliminarEstudiante(this);

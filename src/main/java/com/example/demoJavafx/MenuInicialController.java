@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Menu1InicialController {
+public class MenuInicialController {
 
     @FXML
     private Button buttonPlay;

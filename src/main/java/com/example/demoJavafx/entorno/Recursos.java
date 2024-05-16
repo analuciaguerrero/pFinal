@@ -6,6 +6,8 @@ import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
 import com.example.demoJavafx.tablero.Celda;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +26,8 @@ public abstract class Recursos {
     private int turnosRestantes;
     @Expose
     private double probRecurso;
+    @Expose (serialize = false)
+    private IntegerProperty TurnosRestantesProperty = new SimpleIntegerProperty();
 
     public Recursos(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso) {
         this.id = id;
@@ -69,6 +73,18 @@ public abstract class Recursos {
         posicion[1] = posicionM;
         return posicion;
     }
+    public IntegerProperty getTurnosRestantesProperty () {
+        return TurnosRestantesProperty;
+    }
+
+    public void setTurnosRestantesProperty(IntegerProperty turnosRestantesProperty) {
+        this.TurnosRestantesProperty = turnosRestantesProperty;
+    }
+
+    public void actualizarTurnosRestantesProperty () {
+        TurnosRestantesProperty.set(turnosRestantes);
+    }
+
 
     public void setPosicion (int[] posicion) throws TamañoArrayInvalido {
         try {

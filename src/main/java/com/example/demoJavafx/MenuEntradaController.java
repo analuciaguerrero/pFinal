@@ -112,7 +112,7 @@ public class MenuEntradaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuInicial.fxml"));
             Parent root = loader.load();
-            Menu1InicialController controller = loader.getController();
+            MenuInicialController controller = loader.getController();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

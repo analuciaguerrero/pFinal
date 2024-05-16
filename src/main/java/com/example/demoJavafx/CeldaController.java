@@ -87,7 +87,7 @@ public class CeldaController implements Initializable {
                 }
             });
         } catch (Exception e) {
-            log.trace("Excepcion cazada sin accion");
+            log.trace("Se identificó una excepción pero no se llevó a cabo ninguna acción");
         }
     }
 
@@ -103,7 +103,7 @@ public class CeldaController implements Initializable {
                 addEstudiante(EstudianteAvanzado.class);
                 break;
             default:
-                log.error("Se ha intentado añadir un tipo de individuo no esperado");
+                log.error("Se ha intentado incluir un tipo de estudiante que no estaba previsto");
         }
     }
 
@@ -111,23 +111,23 @@ public class CeldaController implements Initializable {
         try {
             isListenerActive = false;
             if (celda.getListaEstudiantes().getNumeroElementos() >= 3) {
-                alertaCeldaLabel.setText("¡Ya hay 3 individuos!");
+                alertaCeldaLabel.setText("¡Ya hay 3 estudiantes en la celda!");
                 PauseTransition pausa = new PauseTransition(Duration.millis(2500));
-                pausa.setOnFinished(_ -> alertaCeldaLabel.setText("Casilla " + celda.getPosicionN() + ", " + celda.getPosicionM()));
+                pausa.setOnFinished(_ -> alertaCeldaLabel.setText("Celda " + celda.getPosicionN() + ", " + celda.getPosicionM()));
                 pausa.play();
-                log.debug("Se ha intentado crear un individuo cuando ya había 3 en la casilla");
+                log.debug("Se ha intentado establecer un estudiante cuando ya habían 3 en la celda");
             } else {
                 try {
                     addEstudiantePrinc(tipoEstudiante, true, null);
                 } catch (Exception e) {
-                    log.error("El tipo de individuo es invalido");
+                    log.error("El tipo de estudiante no es válido");
                 }
             }
             estudiantesAddBox.setValue("Estudiante");
             estudiantesAddBox.getSelectionModel().clearSelection();
             isListenerActive = true;
         } catch (Exception e) {
-            log.warn("Se ha detectado una excepcion inesperada al añadir un individuo");
+            log.warn("Excepción no esperada al añadir el estudiante");
         }
     }
 
@@ -147,21 +147,21 @@ public class CeldaController implements Initializable {
             } else {
                 estudiante = (T) estudianteAñadir;
             }
-            HBox estudianteCelda = FXMLLoader.load(getClass().getResource("elementoCasillaBox-vista.fxml"));
+            HBox estudianteCelda = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
             Label estudianteLabel = (Label) estudianteCelda.getChildren().getFirst();
             Font font = new Font("Bookman Old Style",12);
             estudianteLabel.setFont(font);
-            String tipoIndividuo = claseEstudiante.getSimpleName().replace("Estudiante","");
+            String tipoEstudiante = claseEstudiante.getSimpleName().replace("Estudiante","");
             estudianteLabel.textProperty().bind(estudiante.getTiempoDeVidaProperty().asString(
-                    tipoIndividuo + ": Vida: %d Id: " + estudiante.getId() + " Gen: " + estudiante.getGeneracion()));
+                    tipoEstudiante + ": Vida: %d Id: " + estudiante.getId() + " Gen: " + estudiante.getGeneracion()));
 
             Button botonQuitar = (Button) ((AnchorPane) estudianteCelda.getChildren().get(1)).getChildren().getFirst();
 
-            botonQuitar.setOnAction(this::eliminarIndividuo);
+            botonQuitar.setOnAction(this::delEstudiante);
 
             estudiantesVBox.getChildren().add(estudianteCelda);
         } catch (Exception e) {
-            log.error("No se ha podido crear una instancia del tipo de individuo pedido");
+            log.error("No se ha creado una instancia del tipo solicitado de estudiante");
         }
     }
 
@@ -190,7 +190,7 @@ public class CeldaController implements Initializable {
                 PauseTransition pausa = new PauseTransition(Duration.millis(2500));
                 pausa.setOnFinished(_ -> alertaCeldaLabel.setText("Celda " + celda.getPosicionN() + ", " + celda.getPosicionM()));
                 pausa.play();
-                log.debug("Se ha intentado crear un recurso cuando ya había 3 en la casilla");
+                log.debug("Se ha intentado crear un recurso cuando ya habían 3 en la celda");
             } else {
                 switch (tipoRecurso) {
                     case "+ Agua":
@@ -212,14 +212,14 @@ public class CeldaController implements Initializable {
                         addRecursoPrinc(Pozo.class, true, null);
                         break;
                     default:
-                        log.error("Se ha detectado una excepcion inesperada al añadir un individuo");
+                        log.error("Excepcion no esperada al añadir el estudiante");
                 }
             }
             recursosAddBox.setValue("Recurso");
             recursosAddBox.getSelectionModel().clearSelection();
             isListenerActive = true;
         } catch (Exception e) {
-            log.warn("Se ha detectado una excepcion inesperada al añadir un recurso");
+            log.warn("Excepcion no esperada al añadir el recurso");
         }
     }
 
@@ -240,17 +240,17 @@ public class CeldaController implements Initializable {
             } else {
                 recurso = recursoAñadir;
             }
-            HBox cajaRecurso = FXMLLoader.load(getClass().getResource("elementoCasillaBox-vista.fxml"));
+            HBox cajaRecurso = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
             Label labelRecurso = (Label) cajaRecurso.getChildren().getFirst();
             Font font = new Font("Bookman Old Style",12);
             labelRecurso.setFont(font);
             String tipoRecurso = Character.toUpperCase(claseRecurso.getSimpleName().charAt(0)) + claseRecurso.getSimpleName().substring(1);
-            labelRecurso.textProperty().bind(recurso.getTiempoDeAparicionProperty().asString(STR."\{tipoRecurso}: Vida: %d Id: \{recurso.getId()}"));
+            labelRecurso.textProperty().bind(recurso.getTurnosRestantesProperty().asString(STR."\{tipoRecurso}: Vida: %d Id: \{recurso.getId()}"));
             Button botonQuitar = (Button) ((AnchorPane) cajaRecurso.getChildren().get(1)).getChildren().getFirst();
             botonQuitar.setOnAction(this::delRecurso);
             recursosVBox.getChildren().add(cajaRecurso);
         } catch (Exception e) {
-            log.error("No se ha podido crear una instancia del tipo de recurso pedido");
+            log.error("No se ha creado una instancia del tipo solicitado de recurso");
         }
     }
 

@@ -231,7 +231,7 @@ public class Celda extends AnchorPane {
                 for (int i = 0; i < numRecursos; i++) {
                     Recursos recursoAleatorio = dato.obtenerRecursoAleatorio();
                     if (recursoAleatorio != null) {
-                        celdaAleatoria.agregarRecurso(recursoAleatorio);
+                        celdaAleatoria.agregarRecurso(recursoAleatorio, true);
                     }
                 }
                 log.info("Se ha creado una celda aleatoria en la posición: (" + celdaAleatoria.getPosicionN() + ", " + celdaAleatoria.getPosicionM() + ")");
@@ -311,7 +311,7 @@ public class Celda extends AnchorPane {
             agregarEstudiante(listaEstudiantes.getElemento(i).getData(), false);
         }
         for (int i=0; i != listaRecursos.getNumeroElementos(); i++) {
-            agregarRecurso(listaRecursos.getElemento(i).getData());
+            agregarRecurso(listaRecursos.getElemento(i).getData(), false);
         }
     }
 }

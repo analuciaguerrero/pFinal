@@ -113,7 +113,7 @@ public class Tablero {
                 // Agregar recurso aleatorio
                 Recursos tipoRecursoAleatorio = dato.obtenerRecursoAleatorio();
                 if (tipoRecursoAleatorio != null) {
-                    celda.agregarRecurso(tipoRecursoAleatorio);
+                    celda.agregarRecurso(tipoRecursoAleatorio, true);
                     log.info("Se ha agregado un recurso aleatorio en la celda (" + i + ", " + j + ")");
                 } else {
                     log.warn("No se pudo agregar un recurso aleatorio en la celda (" + i + ", " + j + ")");
