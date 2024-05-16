@@ -54,7 +54,22 @@ public class SeleccionarPartidaController implements Initializable {
 
     @FXML
     protected void onBotonCargarFicheroClick (ActionEvent event) {
+        try {
+            String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
+            DatosJuego model = DatosJuego.cargar(archivo);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menuConfiguracionInicio-vista.fxml"));
+            Parent root = loader.load();
+            menuConfiguracionController controller = loader.getController();
+            controller.setControllerValues(model);
 
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (IOException e){
+            log.error("No se ha podido cargar el archivo, no se encuentra la ruta especificada");
+        }
     }
 
     @FXML

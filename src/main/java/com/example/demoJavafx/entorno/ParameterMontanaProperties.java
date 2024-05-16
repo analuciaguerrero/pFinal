@@ -2,7 +2,7 @@ package com.example.demoJavafx.entorno;
 
 import javafx.beans.property.*;
 
-public class ParameterMontañaProperties {
+public class ParameterMontanaProperties {
     protected Montaña original;
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
@@ -11,7 +11,7 @@ public class ParameterMontañaProperties {
 
 
 
-    public ParameterMontañaProperties(Montaña original) {
+    public ParameterMontanaProperties(Montaña original) {
         setOriginal(original);
     }
 
