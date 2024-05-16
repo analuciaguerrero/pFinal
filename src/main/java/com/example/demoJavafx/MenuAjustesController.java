@@ -22,8 +22,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife.tablero;
-
 public class MenuAjustesController {
 
     @FXML private Stage primaryStage; // Referencia al Stage principal
@@ -32,6 +30,8 @@ public class MenuAjustesController {
     @FXML private Spinner<Integer> estudiantesTurnosRestantesSpinner;
     @FXML private Slider estudiantesProbReproduccion;
     @FXML private Slider estudiantesProbMuerte;
+    @FXML private Slider estudiantesProbNormal;
+    @FXML private Slider estudiantesProbAvanzado;
 
     @FXML private Slider aguaProbabilidadSlider;
     @FXML private Spinner<Integer> aguaTurnosRestantesSpinner;
@@ -62,6 +62,8 @@ public class MenuAjustesController {
     @FXML private Text labelValorSliderestudiantesProbClonado;
     @FXML private Text labelValorSliderestudiantesProbReproduccion;
     @FXML private Text labelValorSliderestudiantesProbMuerte;
+    @FXML private Text labelValorSliderestudiantesProbNormal;
+    @FXML private Text labelValorSliderestudiantesProbAvanzado;
     @FXML private Text labelValorSlideraguaProbabilidad;
     @FXML private Text labelValorSlideraguaAumentoVida;
     @FXML private Text labelValorSliderbibliotecaProbabilidad;
@@ -79,6 +81,8 @@ public class MenuAjustesController {
     protected IntegerProperty ProbClonado = new SimpleIntegerProperty(0);
     protected IntegerProperty ProbReproduccion = new SimpleIntegerProperty(0);
     protected IntegerProperty ProbMuerte = new SimpleIntegerProperty(0);
+    protected IntegerProperty ProbNormal = new SimpleIntegerProperty(0);
+    protected IntegerProperty ProbAvanzado = new SimpleIntegerProperty(0);
     protected IntegerProperty aguaAumentoVida = new SimpleIntegerProperty(0);
     protected IntegerProperty aguaProbabilidad = new SimpleIntegerProperty(0);
     protected IntegerProperty bibliotecaProbabilidad = new SimpleIntegerProperty(0);
@@ -100,7 +104,7 @@ public class MenuAjustesController {
         this.primaryStage = primaryStage;
     }
 
-    private static final Logger log = LogManager.getLogger(PersonalizacionController.class);
+    private static final Logger log = LogManager.getLogger(XPersonalizacionController.class);
 
     @FXML
     void initialize() {
@@ -108,6 +112,8 @@ public class MenuAjustesController {
         initializeSliderAndLabel(estudiantesProbClonado, labelValorSliderestudiantesProbClonado, ProbClonado);
         initializeSliderAndLabel(estudiantesProbReproduccion, labelValorSliderestudiantesProbReproduccion, ProbReproduccion);
         initializeSliderAndLabel(estudiantesProbMuerte, labelValorSliderestudiantesProbMuerte, ProbMuerte);
+        initializeSliderAndLabel(estudiantesProbNormal, labelValorSliderestudiantesProbNormal, ProbNormal);
+        initializeSliderAndLabel(estudiantesProbAvanzado, labelValorSliderestudiantesProbAvanzado, ProbAvanzado);
 
         // Enlazar sliders y labels para agua
         initializeSliderAndLabel(aguaProbabilidadSlider, labelValorSlideraguaProbabilidad, aguaProbabilidad);
@@ -156,6 +162,9 @@ public class MenuAjustesController {
         DatosCompartidos.setVidaInicial(String.valueOf((int)estudiantesTurnosRestantesSpinner.getValue()));
         DatosCompartidos.setProbReproduccion(String.valueOf((int)estudiantesProbReproduccion.getValue()));
         DatosCompartidos.setProbClonacion(String.valueOf((int)estudiantesProbClonado.getValue()));
+        DatosCompartidos.setProbClonacion(String.valueOf((int)estudiantesProbNormal.getValue()));
+        DatosCompartidos.setProbClonacion(String.valueOf((int)estudiantesProbAvanzado.getValue()));
+
 
         DatosCompartidos.setAguaEfecto(String.valueOf((int)aguaAumentoVidaSlider.getValue()));
         DatosCompartidos.setComidaEfecto(String.valueOf((int)comidaAumentoVidaSlider.getValue()));
@@ -247,6 +256,8 @@ public class MenuAjustesController {
         int estudiantesTurnosRestantes = estudiantesTurnosRestantesSpinner.getValue();
         int estudiantesReproduccion = (int) estudiantesProbReproduccion.getValue();
         int estudiantesMuerte = (int) estudiantesProbMuerte.getValue();
+        int estudiantesNormal = (int) estudiantesProbNormal.getValue();
+        int estudiantesAvanzado = (int) estudiantesProbAvanzado.getValue();
 
         int aguaTurnosRestantes = aguaTurnosRestantesSpinner.getValue();
         int aguaAumentoVida = (int) aguaAumentoVidaSlider.getValue();
@@ -276,7 +287,7 @@ public class MenuAjustesController {
 
         // Aquí podrías guardar la configuración en un archivo XML, en una base de datos, etc.
         System.out.println("Configuración guardada:");
-        System.out.println("Estudiantes - Turnos Restantes: " + estudiantesTurnosRestantes + ", ProbClonado: " + estudiantesClonado + ", ProbReproduccion: " + estudiantesReproduccion + ", PropMuerte: " + estudiantesMuerte);
+        System.out.println("Estudiantes - Turnos Restantes: " + estudiantesTurnosRestantes + ", ProbClonado: " + estudiantesClonado + ", ProbReproduccion: " + estudiantesReproduccion + ", PropMuerte: " + estudiantesMuerte + ", PropNormal: " + estudiantesNormal + ", PropAvanzado: " + estudiantesAvanzado );
         System.out.println("Agua - Turnos Restantes: " + aguaTurnosRestantes + ", Aumento de Vida: " + aguaAumentoVida + ", Probabilidad: " + aguaProbabilidad);
         System.out.println("Biblioteca - Turnos Restantes: " + bibliotecaTurnosRestantes + ", Aumento de Vida: " + bibliotecaAumentoVida + ", Probabilidad: " + bibliotecaProbabilidad);
         System.out.println("Comida - Turnos Restantes: " + comidaTurnosRestantes + ", Aumento de Vida: " + comidaAumentoVida + ", Probabilidad: " + comidaProbabilidad);

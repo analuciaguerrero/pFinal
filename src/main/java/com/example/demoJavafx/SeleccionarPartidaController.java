@@ -18,9 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-public class MenuPrincipalController implements Initializable {
-    private static final Logger log = LogManager.getLogger(MenuPrincipalController.class);
+public class SeleccionarPartidaController implements Initializable {
+    private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
 
     @FXML
     private ListView<String> listaDeFicheros = new ListView<>();

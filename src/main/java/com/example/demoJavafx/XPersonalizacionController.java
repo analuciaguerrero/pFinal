@@ -3,25 +3,14 @@ package com.example.demoJavafx;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.net.URL;
-
-public class PersonalizacionController {
+public class XPersonalizacionController {
 
     @FXML private Slider estudiantesProbClonado;
     @FXML private Spinner<Integer> estudiantesTurnosRestantesSpinner;
@@ -91,7 +80,7 @@ public class PersonalizacionController {
     @FXML private Button buttonReestablecer;
     @FXML private Button buttonGuardar;
 
-    private static final Logger log = LogManager.getLogger(PersonalizacionController.class);
+    private static final Logger log = LogManager.getLogger(XPersonalizacionController.class);
 
     @FXML
     void initialize() {
