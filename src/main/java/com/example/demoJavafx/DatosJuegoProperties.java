@@ -135,7 +135,7 @@ public class DatosJuegoProperties {
 
     public Property<Number> ProbMejorarAAvanzadoProperty() { return ProbMejoraToAvanzado; }
 
-    public ObjectProperty<Integer> ProbRecursoProperty() {
+    public ObjectProperty<Double> ProbRecursoProperty() {
         return ProbRecurso;
     }
 
