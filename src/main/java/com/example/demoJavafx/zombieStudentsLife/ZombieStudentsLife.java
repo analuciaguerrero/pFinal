@@ -2,12 +2,14 @@ package com.example.demoJavafx.zombieStudentsLife;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.bucleDeControl.BucleDeControl;
+import com.example.demoJavafx.bucleDeControl.BucleDeControlProperties;
 import com.example.demoJavafx.tablero.Tablero;
 
 public class ZombieStudentsLife {
     private DatosJuego dato;
     private Tablero tablero;
     private BucleDeControl bucle;
+    private BucleDeControlProperties propiedad;
 
     public ZombieStudentsLife(DatosJuego dato) {
         this.dato = dato;
@@ -39,6 +41,14 @@ public class ZombieStudentsLife {
 
     public void setBucle(BucleDeControl bucle) {
         this.bucle = bucle;
+    }
+
+    public BucleDeControlProperties getPropiedad() {
+        return propiedad;
+    }
+
+    public void setPropiedad(BucleDeControlProperties propiedad) {
+        this.propiedad = propiedad;
     }
 
     public void start(boolean turno) {

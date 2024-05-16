@@ -2,6 +2,9 @@ package com.example.demoJavafx.tablero;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estudiante.Estudiante;
@@ -12,10 +15,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.example.demoJavafx.CeldaController;
 
 import java.util.Random;
 
-public class Celda {
+public class Celda extends AnchorPane {
     private int posicionN;
     private int posicionM;
     private ListaEnlazada<Estudiante> listaEstudiantes = new ListaEnlazada<>();
@@ -120,15 +124,35 @@ public class Celda {
     public GridPane getGridElementos() {
         return gridElementos;
     }
-    public void agregarEstudiante(Estudiante estudiante) throws EstudianteNoExistente {
+    private void addIcEstudiante (ImageView vistaIc) {
+        vistaIc.setPreserveRatio(true);
+        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 2));
+        int numIcEstudiante = 0;
+        for (Node node : gridElementos.getChildren() ) {
+            if (GridPane.getRowIndex(node) == 0) numIcEstudiante++;
+        }
+        gridElementos.add(vistaIc, numIcEstudiante , 0);
+    }
+    public void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente {
         try {
-            if (listaEstudiantes.getNumeroElementos() < dato.getMaximoEstudiantesPorCelda()) {
-                listaEstudiantes.add(estudiante);
-            } else {
-                throw new EstudianteNoExistente(listaEstudiantes.toString());
+            if (nuevoEstudiante) estudiante.add(dato, this);
+            ImageView vistaIc;
+            switch (estudiante.getClass().getSimpleName()) {
+                case "EstudianteBasico":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/estudianteBasico.jpeg").toExternalForm()));
+                    break;
+                case "EstudianteNormal":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/estudianteNormal.jpeg").toExternalForm()));
+                    break;
+                case "EstudianteAvanzado":
+                    vistaIc = new ImageView(new Image(CeldaController.class.getResource("imagenes/estudianteAvanzado.jpeg").toExternalForm()));
+                    break;
+                default:
+                    throw new EstudianteNoExistente();
             }
+            addIcEstudiante(vistaIc);
         } catch (EstudianteNoExistente e) {
-            log.error("Se ha intentado añadir más estudiantes de los permitidos");
+            log.error("Se ha intentado añadir un estudiante no existente");
         }
     }
 

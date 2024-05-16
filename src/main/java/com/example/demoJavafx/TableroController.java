@@ -60,8 +60,8 @@ public class TableroController {
             }
             Tablero tab = celda.getTablero();
             ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato, tab);
-            turnoLabel.textProperty().bind(zombieStudentsLife.getBucle().getTurnoProperty().asString("Turno: %d"));
-            zombieStudentsLife.getBucle().updateTurnoProperty();
+            turnoLabel.textProperty().bind(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d"));
+            zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
             zombieStudentsLife.start(unTurno);
         }
     }
@@ -266,8 +266,8 @@ public class TableroController {
         AnchorPane.setBottomAnchor(gridTablero, 0.0);
         AnchorPane.setLeftAnchor(gridTablero, 0.0);
         turnoLabel = (Label) ((HBox) root.getChildrenUnmodifiable().get(2)).getChildren().getFirst();
-        zombieStudentsLife.getBucle().updateTurnoProperty();
-        turnoLabel.textProperty().bind(zombieStudentsLife.getBucle().getTurnoProperty().asString("Turno: %d"));
+        zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
+        turnoLabel.textProperty().bind(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);

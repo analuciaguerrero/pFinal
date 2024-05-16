@@ -1,12 +1,15 @@
 package com.example.demoJavafx.bucleDeControl;
 
 import com.example.demoJavafx.DatosJuego;
+import com.example.demoJavafx.SeleccionarPartidaController;
 import com.example.demoJavafx.entorno.*;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ElementoLS;
 import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estudiante.Estudiante;
+import com.example.demoJavafx.estudiante.EstudianteAvanzado;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.MasDe3Recursos;
 import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
@@ -20,12 +23,14 @@ import java.util.Random;
 import static java.lang.Thread.sleep;
 
 public class BucleDeControl implements Runnable {
-    private static final Logger log = LogManager.getLogger(BucleDeControl.class);
+    private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
     private ListaEnlazada<Estudiante> estudiantes;
     private ListaEnlazada<Recursos> recursos;
     private DatosJuego dato;
     private Tablero tablero;
+    private Celda celda;
     private boolean turno;
+    private BucleDeControlProperties propiedades;
     public BucleDeControl(Tablero tablero, DatosJuego dato) {
         this.tablero = tablero;
         this.estudiantes = dato.getEstudiantes();
@@ -51,6 +56,31 @@ public class BucleDeControl implements Runnable {
     public void setTurno(boolean turno) {
         this.turno = turno;
     }
+
+    public Celda getCelda() {
+        return celda;
+    }
+
+    public void setCelda(Celda celda) {
+        this.celda = celda;
+    }
+    public Celda getCelda(int posicionN, int posicionM) {
+        ElementoLE<ListaEnlazada<Celda>> nodoFila = tablero.getCeldas().getPrimero();
+        while (nodoFila != null) {
+            ListaEnlazada<Celda> filaCeldas = nodoFila.getData();
+            ElementoLE<Celda> nodoCelda = filaCeldas.getPrimero();
+            while (nodoCelda != null) {
+                Celda celda = nodoCelda.getData();
+                if (celda.getPosicionN() == posicionN && celda.getPosicionM() == posicionM) {
+                    return celda;
+                }
+                nodoCelda = nodoCelda.getSiguiente();
+            }
+            nodoFila = nodoFila.getSiguiente();
+        }
+        return null; // Si no se encuentra la celda, devolver null
+    }
+
     public void evaluarMejoras() {
         if (!estudiantes.isVacia() && !recursos.isVacia()) {
             for (int i = 0; i != estudiantes.getNumeroElementos(); i++) {
@@ -67,7 +97,11 @@ public class BucleDeControl implements Runnable {
                             // Aplicar efecto del recurso al estudiante si está vivo
                             if (estudiante.isVivo()) {
                                 recurso.aplicarEfecto(estudiante, celda);
-                                if (!estudiante.isVivo()) i -= 1;
+                                if (!estudiante.isVivo()){
+                                    i -= 1;
+                                } else{
+                                    estudiante.getColaDeOperaciones().push(new ElementoLDE<>("mejora"));
+                                }
                             }
                         }
                         nodoRecurso = nodoRecurso.getSiguiente();
@@ -147,13 +181,15 @@ public class BucleDeControl implements Runnable {
                             } else {
                                 log.info("Reproducción exitosa entre el estudiante " + estudiante.getId() + " y su pareja en la celda [" + i + "][" + j + "].");
                             }
+                            estudiante.getColaDeOperaciones().push(new ElementoLDE<>("reproducción"));
+                            pareja.getColaDeOperaciones().push(new ElementoLDE<>("reproducción"));
+
                         }
                     }
                 }
             }
         }
     }
-
     public void evaluarClonacion() throws MasDe3Estudiantes {
         if (!estudiantes.isVacia()) {
             int numEstudiantes = estudiantes.getNumeroElementos();
@@ -166,6 +202,7 @@ public class BucleDeControl implements Runnable {
                     Celda celdaEstudiante = tablero.getCelda(estudiante.getPosicionN(), estudiante.getPosicionM());
                     if (celdaEstudiante != null) {
                         estudiante.clonar(dato, celdaEstudiante);
+                        estudiante.getColaDeOperaciones().push(new ElementoLDE<>("clonación"));
                     } else {
                         log.error("No se puede clonar el estudiante, la celda está fuera del tablero.");
                     }
@@ -279,6 +316,8 @@ public class BucleDeControl implements Runnable {
             evaluarReproduccion();
             evaluarClonacion();
             evaluarAparicionRecursos();
+            dato.setTurnoActual(dato.getTurnoActual() + 1);
+            propiedades.getTurnoProperty().set(propiedades.getTurnoProperty().get() + 1);
         }
     }
     @Override

@@ -37,7 +37,7 @@ public class MenuAjustesController implements Initializable {
     private Slider ProbMejoraAvanzadoSlider = new Slider();
 
     @FXML
-    private Spinner<Integer> ProbAparRecursoSpinner = new Spinner<>();
+    private Spinner<Double> ProbAparRecursoSpinner = new Spinner<>();
     @FXML
     private Slider ProbAparAguaSlider = new Slider();
     @FXML
@@ -96,7 +96,7 @@ public class MenuAjustesController implements Initializable {
 
     protected void initializeSpinners() {
         SpinnerValueFactory<Integer> TurnosVidaInicialesVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
-        SpinnerValueFactory<Integer> ProbAparRecursoVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Double> ProbAparRecursoVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100);
         SpinnerValueFactory<Integer> TurnosInicialesRecursoVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
         SpinnerValueFactory<Integer> IncrementoAguaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
         SpinnerValueFactory<Integer> IncrementoComidaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
@@ -112,7 +112,7 @@ public class MenuAjustesController implements Initializable {
         FilasDelTableroSpinner.setValueFactory(FilasTableroVF);
         ColumnasDelTableroSpinner.setValueFactory(ColumnasTableroVF);
         addFiltroSpinner(TurnosVidaInicialesSpinner);
-        addFiltroSpinner(ProbAparRecursoSpinner);
+        addFiltroSpinner2(ProbAparRecursoSpinner);
         addFiltroSpinner(TurnosInicialesRecursoSpinner);
         addFiltroSpinner(AumentoTurnosAguaSpinner);
         addFiltroSpinner(AumentoTurnosComidaSpinner);
@@ -147,6 +147,13 @@ public class MenuAjustesController implements Initializable {
     private void addFiltroSpinner (Spinner<Integer> spinner) {
         spinner.getEditor().addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (!event.getCharacter().matches("[0-9]")) {
+                event.consume();
+            }
+        });
+    }
+    private void addFiltroSpinner2 (Spinner<Double> spinner) {
+        spinner.getEditor().addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("[0-9.]")) {
                 event.consume();
             }
         });
