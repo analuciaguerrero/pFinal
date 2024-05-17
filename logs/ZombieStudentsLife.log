@@ -1,2 +1,37 @@
-2024-05-16 21:55:50.150 - ERROR - es.uah - Número de filas o columnas no válido.
-2024-05-16 22:01:14.230 - ERROR - es.uah - Número de filas o columnas no válido.
+2024-05-17 03:15:34.340 - WARN  - com.example.demoJavafx.DatosJuego - No hay recursos disponibles en la lista.
+2024-05-17 03:15:34.408 - WARN  - com.example.demoJavafx.DatosJuego - No hay estudiantes disponibles en la lista.
+2024-05-17 03:15:34.428 - DEBUG - com.example.demoJavafx.entorno.GsonRecursos - Empezando serialización de recurso Agua a Json
+2024-05-17 03:15:34.450 - DEBUG - com.example.demoJavafx.entorno.GsonRecursos - Empezando deserialización de Recursos Agua a Json
+2024-05-17 03:15:34.485 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:34.492 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:34.498 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:34.507 - INFO  - com.example.demoJavafx.entorno.Tesoro - Se ha aumentado la probabilidad de reproducción
+2024-05-17 03:15:34.527 - INFO  - com.example.demoJavafx.estudiante.Estudiante - La probabilidad de reproducción ha sido modificada
+2024-05-17 03:15:34.559 - INFO  - com.example.demoJavafx.entorno.Montaña - Se ha reducido la vida
+2024-05-17 03:15:34.570 - INFO  - com.example.demoJavafx.entorno.Montaña - Se ha reducido la vida
+2024-05-17 03:15:34.578 - INFO  - com.example.demoJavafx.entorno.Montaña - Se ha reducido la vida
+2024-05-17 03:15:34.924 - DEBUG - com.example.demoJavafx.estudiante.GsonEstudiante - Empezando deserialización de Estudiante EstudianteAvanzado a Json
+2024-05-17 03:15:34.934 - DEBUG - com.example.demoJavafx.estudiante.GsonEstudiante - Empezando deserialización de Estudiante EstudianteBasico a Json
+2024-05-17 03:15:34.944 - DEBUG - com.example.demoJavafx.estudiante.GsonEstudiante - Empezando deserialización de Estudiante EstudianteNormal a Json
+2024-05-17 03:15:34.966 - ERROR - com.example.demoJavafx.entorno.Recursos - El array no contiene 2 elementos y por tanto, no se ha podido establecer la posición del recurso
+2024-05-17 03:15:35.029 - INFO  - com.example.demoJavafx.entorno.Montaña - Se ha reducido la vida
+2024-05-17 03:15:35.183 - INFO  - com.example.demoJavafx.entorno.Tesoro - Se ha aumentado la probabilidad de reproducción
+2024-05-17 03:15:35.210 - INFO  - com.example.demoJavafx.SeleccionarPartidaController - Evaluando condición de finalización del juego...
+2024-05-17 03:15:35.215 - INFO  - com.example.demoJavafx.SeleccionarPartidaController - Número total de estudiantes en el tablero: 0
+2024-05-17 03:15:35.215 - INFO  - com.example.demoJavafx.SeleccionarPartidaController - Condición de finalización: falsa
+2024-05-17 03:15:35.216 - INFO  - com.example.demoJavafx.SeleccionarPartidaController - No hay estudiantes en el tablero para evaluar su desaparición.
+2024-05-17 03:15:35.216 - ERROR - com.example.demoJavafx.SeleccionarPartidaController - El bucle ha sido interrumpido mientras esperaba
+2024-05-17 03:15:35.392 - INFO  - com.example.demoJavafx.estudiante.Estudiante - El tiempo de vida se ha modificado
+2024-05-17 03:15:35.392 - INFO  - com.example.demoJavafx.estudiante.Estudiante - La probabilidad de reproducción ha sido modificada
+2024-05-17 03:15:35.393 - INFO  - com.example.demoJavafx.estudiante.Estudiante - La probabilidad de clonación ha sido modificada
+2024-05-17 03:15:35.470 - INFO  - com.example.demoJavafx.entorno.Agua - Se ha aumentado la vida
+2024-05-17 03:15:35.476 - INFO  - com.example.demoJavafx.entorno.Agua - Se ha aumentado la vida
+2024-05-17 03:15:35.478 - INFO  - com.example.demoJavafx.entorno.Agua - Se ha aumentado la vida
+2024-05-17 03:15:35.484 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:35.499 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:35.505 - INFO  - com.example.demoJavafx.entorno.Biblioteca - Se ha aumentado la probabilidad de clonación
+2024-05-17 03:15:35.535 - INFO  - com.example.demoJavafx.entorno.Agua - Se ha aumentado la vida
+2024-05-17 03:15:35.570 - INFO  - com.example.demoJavafx.entorno.Comida - Se ha aumentado la vida
+2024-05-17 03:15:35.574 - INFO  - com.example.demoJavafx.entorno.Comida - Se ha aumentado la vida
+2024-05-17 03:15:35.576 - INFO  - com.example.demoJavafx.entorno.Comida - Se ha aumentado la vida
+2024-05-17 03:15:35.592 - ERROR - com.example - Número de filas o columnas no válido.

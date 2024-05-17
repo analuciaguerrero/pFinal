@@ -17,12 +17,13 @@
 
     </Appenders>
     <Loggers>
-        <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="es.uah" level="debug" additivity="false">
+        <Logger name="com.example.demoJavafx" level="debug" additivity="false">
             <AppenderRef ref="LogToRollingFile"/>
             <AppenderRef ref="LogToConsole"/>
         </Logger>
+        <!-- Root logger -->
         <Root level="debug">
+            <AppenderRef ref="LogToRollingFile"/>
             <AppenderRef ref="LogToConsole"/>
         </Root>
     </Loggers>
