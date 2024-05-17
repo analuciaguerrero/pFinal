@@ -21,36 +21,20 @@ public class MenuInicialController {
 
     @FXML
     private Button buttonCargar;
-    @FXML
-    private Button startButton;
 
     @FXML
     private void goNewPlay(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
+            // Cargar el archivo FXML del MenuEntrada
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuEntrada.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador del Tablero
-            TableroController controller = loader.getController();
-
-            // Crear los datos de juego y pasar al controlador del Tablero
-            DatosJuego datosJuego = new DatosJuego(); // Asegúrate de inicializar esto correctamente
-            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(datosJuego); // Asegúrate de inicializar esto correctamente
-            controller.setDato(datosJuego);
-            controller.setZombieStudentsLife(zombieStudentsLife);
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) buttonPlay.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void loadGameScene() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demoJavafx/Tablero.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) startButton.getScene().getWindow();
-        stage.setScene(new Scene(root));
     }
 
     @FXML
@@ -74,5 +58,11 @@ public class MenuInicialController {
     private void exitGame() {
         // Salir del juego
         System.exit(0);
+    }
+    @FXML
+    void initialize() {
+        // Si necesitas inicializar algo, agrégalo aquí
+        // Por ejemplo, deshabilitar el botón de cargar si no hay partidas guardadas
+        buttonCargar.setDisable(false); // Modificar esta lógica según sea necesario
     }
 }

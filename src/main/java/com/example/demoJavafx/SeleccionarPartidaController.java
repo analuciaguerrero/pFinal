@@ -1,6 +1,7 @@
 package com.example.demoJavafx;
 
 import com.example.demoJavafx.excepciones.NoHayFicherosIniciales;
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,28 +36,28 @@ public class SeleccionarPartidaController implements Initializable {
 
     @FXML
     protected void onBotonCargarFicheroClick (ActionEvent event) {
-        try {
-            String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
-            DatosJuego model = DatosJuego.cargarArchivo(archivo);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
-            Parent root = loader.load();
-            MenuAjustesController controller = loader.getController();
-            controller.setControllerValues(model);
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            stage.show();
-        } catch (IOException e){
-            log.error("No se ha podido cargar el archivo, no se encuentra la ruta especificada");
-        }
+            try {
+                if (!listaDeFicheros.getSelectionModel().isEmpty()) {
+                    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stageActual.close();
+                    String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
+                    DatosJuego datosJuego = DatosJuego.cargarArchivo(archivo);
+                    ZombieStudentsLife juego = new ZombieStudentsLife(datosJuego);
+                    TableroController controlador = new TableroController(datosJuego, juego);
+                    controlador.crearTablero(juego.getTablero());
+                }
+            } catch (IOException e){
+                log.error("No se ha encontrado la ruta especificada para cargar el archivo");
+            }
     }
 
     @FXML
     protected void onBotonVolverMenuClick (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("SeleccionarPartida.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close(); // Cierra la ventana actual
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -71,6 +72,24 @@ public class SeleccionarPartidaController implements Initializable {
             return nombresDeArchivos;
         }
         throw new NoHayFicherosIniciales();
+    }
+    @FXML
+    protected void onBotonNuevoClick(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("Ajustes.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    protected void onBotonCargarPartidaClick(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("Loading.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

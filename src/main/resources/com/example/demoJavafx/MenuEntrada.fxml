@@ -50,7 +50,6 @@
                             <Font size="20.0" />
                         </font>
                     </TextField>
-                    <Button fx:id="buttonIniciar" layoutX="100" layoutY="200" text="Iniciar" onAction="#handleIniciar" />
                </children>
             </AnchorPane>
               <Button fx:id="buttonContinuar" layoutX="803.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleContinuar" prefHeight="87.0" prefWidth="230.0" text="¡A jugar!">

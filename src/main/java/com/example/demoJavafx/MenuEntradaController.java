@@ -2,6 +2,7 @@ package com.example.demoJavafx;
 
 import com.example.demoJavafx.usuario.Jugador;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,14 +60,9 @@ public class MenuEntradaController {
      * Method responsible for loading the ranking from the .dat file
      */
     public void loadRanking() {
-        FileInputStream fileRanking;
-        ObjectInputStream streamRanking;
-        try {
-            fileRanking = new FileInputStream("ranking.dat");
-            streamRanking = new ObjectInputStream(fileRanking);
+        try (FileInputStream fileRanking = new FileInputStream("ranking.dat");
+             ObjectInputStream streamRanking = new ObjectInputStream(fileRanking)) {
             jugadores = (HashMap) streamRanking.readObject();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MenuEntradaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(MenuEntradaController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,8 +88,11 @@ public class MenuEntradaController {
 
     @FXML
     void initialize() {
+        // Configurar elementos iniciales del ComboBox
+        comboBoxAcceso.setItems(FXCollections.observableArrayList("Registrarse", "Acceder"));
         comboBoxAcceso.setValue("Registrarse");
-        comboBoxAcceso.getValue().equals("Registrarse");
+        ComboBox1ActionPerformed(null); // Set initial visibility based on default selection
+        comboBoxAcceso.setOnAction(this::ComboBox1ActionPerformed);
     }
 
     @FXML
@@ -113,7 +112,7 @@ public class MenuEntradaController {
     @FXML
     void handleVolver(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuInicial.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuInicial.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -154,7 +153,6 @@ public class MenuEntradaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TipoDePartida.fxml"));
             Parent root = loader.load();
-            TipoDePartidaController controller = loader.getController();
 
             // Crear un StackPane y agregar el AnchorPane al centro
             StackPane stackPane = new StackPane(root);
