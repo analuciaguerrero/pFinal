@@ -199,6 +199,16 @@ public class ListaEnlazada<TipoDelDato> {
         ElementoLE<Integer> el = (ElementoLE<Integer>) this.primero;
         return suma(el);
     }
+    public boolean contains(TipoDelDato data) {
+        ElementoLE<TipoDelDato> temp = primero;
+        while (temp != null) {
+            if (temp.getData().equals(data)) {
+                return true;
+            }
+            temp = temp.getSiguiente();
+        }
+        return false;
+    }
     public void insertarFinal(ElementoLE<TipoDelDato> nuevoElemento) {
         if (isVacia()) {
             primero = nuevoElemento;

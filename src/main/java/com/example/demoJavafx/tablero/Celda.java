@@ -3,6 +3,7 @@ package com.example.demoJavafx.tablero;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
@@ -12,7 +13,9 @@ import com.example.demoJavafx.excepciones.EstudianteNoExistente;
 import com.example.demoJavafx.excepciones.RecursoNoExistente;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.example.demoJavafx.CeldaController;
@@ -68,6 +71,7 @@ public class Celda extends AnchorPane {
         gridElementos.setVgap(3);
         gridElementos.setHgap(8);
         gridElementos.setMouseTransparent(true);
+        getChildren().setAll(botonCasilla, gridElementos);
     }
     public int getPosicionN() {
         return posicionN;
@@ -124,14 +128,25 @@ public class Celda extends AnchorPane {
     public GridPane getGridElementos() {
         return gridElementos;
     }
-    private void addIcEstudiante (ImageView vistaIc) {
+    private ColumnConstraints columnaConPorcentajes (double porcentaje) {
+        ColumnConstraints constraints = new ColumnConstraints();
+        constraints.setPercentWidth(porcentaje);
+        return constraints;
+    }
+
+    private RowConstraints filaConPorcentajes (double porcentaje) {
+        RowConstraints constraints = new RowConstraints();
+        constraints.setPercentHeight(porcentaje);
+        return constraints;
+    }
+    private void addIcEstudiante(ImageView vistaIc) {
         vistaIc.setPreserveRatio(true);
         vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 2));
-        int numIcEstudiante = 0;
+        int numeroIcEstudiante = 0;
         for (Node node : gridElementos.getChildren() ) {
-            if (GridPane.getRowIndex(node) == 0) numIcEstudiante++;
+            if (GridPane.getRowIndex(node) == 0) numeroIcEstudiante++;
         }
-        gridElementos.add(vistaIc, numIcEstudiante , 0);
+        gridElementos.add(vistaIc, numeroIcEstudiante , 0);
     }
     public void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente {
         try {

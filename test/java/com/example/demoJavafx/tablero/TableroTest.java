@@ -1,69 +1,96 @@
 package com.example.demoJavafx.tablero;
 
 import com.example.demoJavafx.DatosJuego;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableroTest {
-    @Test
-    public void testConstructorDatosJuego() {
-        DatosJuego datosJuego = new DatosJuego(/* Aquí pasas los parámetros necesarios */);
-        Tablero tablero = new Tablero(datosJuego);
+    private DatosJuego datosJuego;
+    private Tablero tablero;
 
-        assertNotNull(tablero);
-        assertNotNull(tablero.getCeldas());
-        assertEquals(datosJuego.getFilasDelTablero(), tablero.getFilas());
-        assertEquals(datosJuego.getColumnasDelTablero(), tablero.getColumnas());
+    @BeforeEach
+    public void setUp() {
+        datosJuego = new DatosJuego(10, 0.5, 0.3, 0.2, 0.1,
+                0.6, 5, 0.4, 0.7, 0.8,
+                0.9, 0.1, 0.2, 15, 20,
+                25, 0.5, 0.3, 10, 10, 1);
+        tablero = new Tablero(datosJuego);
     }
 
     @Test
-    public void testConstructorFilasColumnasDatosJuego() {
-        int filas = 5;
-        int columnas = 5;
-        DatosJuego datosJuego = new DatosJuego(/* Aquí pasas los parámetros necesarios */);
-        Tablero tablero = new Tablero(filas, columnas, datosJuego);
-
-        assertNotNull(tablero);
+    public void testConstructorDatosJuego() {
+        assertEquals(10, tablero.getFilas());
+        assertEquals(10, tablero.getColumnas());
         assertNotNull(tablero.getCeldas());
-        assertEquals(filas, tablero.getFilas());
-        assertEquals(columnas, tablero.getColumnas());
+    }
+
+    @Test
+    public void testConstructorFilaColumna() {
+        Tablero tablero = new Tablero(5, 5, datosJuego);
+        assertEquals(5, tablero.getFilas());
+        assertEquals(5, tablero.getColumnas());
+        assertNotNull(tablero.getCeldas());
+    }
+
+    @Test
+    public void testInicializarTablero() {
+        Tablero tablero = new Tablero(datosJuego);
+        for (int i = 0; i < tablero.getFilas(); i++) {
+            for (int j = 0; j< tablero.getColumnas(); j++) {
+                assertNotNull(tablero.getCelda(i, j));
+            }
+        }
     }
 
     @Test
     public void testGetCelda() {
-        int filas = 5;
-        int columnas = 5;
-        DatosJuego datosJuego = new DatosJuego(/* Aquí pasas los parámetros necesarios */);
-        Tablero tablero = new Tablero(filas, columnas, datosJuego);
-
         Celda celda = tablero.getCelda(0, 0);
-
         assertNotNull(celda);
-        // Asegúrate de realizar más aserciones según sea necesario
+        assertEquals(0, celda.getPosicionN());
+        assertEquals(0, celda.getPosicionM());
     }
 
     @Test
     public void testSetCelda() {
-        int filas = 5;
-        int columnas = 5;
-        DatosJuego datosJuego = new DatosJuego(/* Aquí pasas los parámetros necesarios */);
-        Tablero tablero = new Tablero(filas, columnas, datosJuego);
-
-        Celda nuevaCelda = new Celda(/* Aquí pasas los parámetros necesarios */);
+        Celda nuevaCelda = new Celda(0, 0, datosJuego, tablero);
         tablero.setCelda(0, 0, nuevaCelda);
+        assertEquals(nuevaCelda, tablero.getCelda(0, 0));
+    }
 
-        Celda celda = tablero.getCelda(0, 0);
-        assertEquals(nuevaCelda, celda);
+    @Test
+    public void testGetSetFilas() {
+        tablero.setFilas(20);
+        assertEquals(20, tablero.getFilas());
+    }
+
+    @Test
+    public void testGetSetColumnas() {
+        tablero.setColumnas(15);
+        assertEquals(15, tablero.getColumnas());
+    }
+
+    @Test
+    public void testGetSetDato() {
+        DatosJuego nuevoDato = new DatosJuego();
+        tablero.setDato(nuevoDato);
+        assertEquals(nuevoDato, tablero.getDato());
     }
 
     @Test
     public void testCrearTableroAleatorio() {
-        DatosJuego datosJuego = new DatosJuego(/* Aquí pasas los parámetros necesarios */);
-        Tablero tablero = new Tablero(datosJuego);
-
         tablero.crearTableroAleatorio();
-
-        // Asegúrate de realizar aserciones según sea necesario
+        for (int i = 0; i < tablero.getFilas(); i++) {
+            for (int j = 0; j < tablero.getColumnas(); j++) {
+                Celda celda = tablero.getCelda(i, j);
+                if (!celda.getListaEstudiantes().isVacia()) {
+                    assertNotNull(celda.getListaEstudiantes().getPrimero().getData());
+                }
+                if (!celda.getListaRecursos().isVacia()) {
+                    assertNotNull(celda.getListaRecursos().getPrimero().getData());
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,9 @@ public class EstudianteBasico extends Estudiante {
     public EstudianteBasico(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
         super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
     }
+    public EstudianteBasico(int id, int tiempoDeVida) {
+        super(id, tiempoDeVida);
+    }
     public EstudianteBasico(Estudiante estudiante){
         super(estudiante);
     }

@@ -7,64 +7,106 @@ import com.example.demoJavafx.excepciones.IncrementoNoValido;
 import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
+import javafx.application.Platform;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AguaTest {
-    @Test
-    public void testConstructor1() {
-        Agua agua = new Agua(1, 0, 0, 3, 0.5, 10, 0.7);
-        assertEquals(10, agua.getAumentoVida());
-        assertEquals(0.7, Agua.getProbAgua(), 0.001);
+    private Agua agua;
+    @BeforeAll
+    public static void initJFX() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        Platform.startup(latch::countDown);
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            throw new RuntimeException("Timeout waiting for JavaFX to start");
+        }
+    }
+    @BeforeEach
+    public void setUp() {
+        agua = new Agua(1, 2, 3, 4, 0.5, 10, 0.8);
     }
 
     @Test
-    public void testConstructor2() {
-        Agua agua2 = new Agua(2, 1, 1, new DatosJuego());
-        assertEquals(0, agua2.getAumentoVida());
-        assertEquals(0.0, Agua.getProbAgua(), 0.001);
+    public void testConstructorWithAllParams() {
+        Agua agua = new Agua(1, 2, 3, 4, 0.5, 10, 0.8);
+        assertEquals(10, agua.getAumentoVida());
+        assertEquals(0.8, Agua.getProbAgua());
+    }
+
+    @Test
+    public void testConstructorWithDatosJuego() {
+        DatosJuego datosJuego = new DatosJuego(10, 0.5, 0.3, 0.2, 0.1, 0.6, 5, 0.4, 0.7, 0.8, 0.9, 0.1, 0.2, 15, 20, 25, 0.5, 0.3, 10, 10, 1);
+        Agua agua = new Agua(1, 2, 3, datosJuego);
+        assertEquals(datosJuego.getAumentoVidaAgua(), agua.getAumentoVida());
+    }
+
+    @Test
+    public void testDefaultConstructor() {
+        Agua agua = new Agua();
+        assertNotNull(agua);
+    }
+
+    @Test
+    public void testConstructorWithProbAgua() {
+        Agua agua = new Agua(0.8);
+        assertEquals(0.8, Agua.getProbAgua());
+    }
+
+    @Test
+    public void testGetAumentoVida() {
+        assertEquals(10, agua.getAumentoVida());
     }
 
     @Test
     public void testSetAumentoVida() {
-        Agua agua = new Agua();
-        try {
-            agua.setAumentoVida(20);
-            assertEquals(20, agua.getAumentoVida());
-        } catch (IncrementoNoValido e) {
-            fail("No debería lanzar una excepción aquí");
-        }
+        agua.setAumentoVida(20);
+        assertEquals(20, agua.getAumentoVida());
     }
-    @Test
-    public void testConstructor() {
-        double probAgua = 0.5; // Definir el valor esperado para probAgua
-        Agua agua = new Agua(probAgua); // Crear una instancia de Agua con el constructor
 
-        // Verificar si el valor de probAgua se asignó correctamente
-        assertEquals(probAgua, Agua.getProbAgua(), 0.001); // Utilizar un delta pequeño para la comparación de valores dobles
-    }
     @Test
-    public void testSetAumentoVidaNegativo() {
-        Agua agua = new Agua();
-        try {
-            agua.setAumentoVida(-5);
-            fail("Debería lanzar una excepción IncrementoNoValido");
-        } catch (IncrementoNoValido e) {
-            // Excepción esperada, no hacer nada
-        }
+    public void testSetAumentoVidaThrowsException() {
+        assertThrows(IncrementoNoValido.class, () -> {
+            agua.setAumentoVida(-1);
+        });
+    }
+
+    @Test
+    public void testGetProbAgua() {
+        assertEquals(0.8, Agua.getProbAgua());
     }
 
     @Test
     public void testSetProbAgua() {
-        Agua agua = new Agua();
-        agua.setProbAgua(0.8);
-        assertEquals(0.8, Agua.getProbAgua(), 0.001);
+        agua.setProbAgua(0.9);
+        assertEquals(0.9, Agua.getProbAgua());
     }
 
     @Test
     public void testGetTipo() {
-        Agua agua = new Agua();
         assertEquals(Agua.class, agua.getTipo());
+    }
+
+    @Test
+    public void testAplicarEfecto() {
+        // Crear instancias necesarias
+        DatosJuego datosJuego = new DatosJuego();
+        Tablero tablero = new Tablero(datosJuego);
+        Celda celda = new Celda(1, 1, datosJuego, tablero);
+        EstudianteBasico estudiante = new EstudianteBasico(1, 1, 10, 0.5, 0.3);
+
+        // Verificar el tiempo de vida inicial del estudiante
+        int tiempoDeVidaInicial = estudiante.getTiempoDeVida();
+
+        // Aplicar el efecto de agua
+        agua.aplicarEfecto(estudiante, celda);
+
+        // Verificar que el efecto se haya aplicado correctamente
+        assertEquals(tiempoDeVidaInicial + agua.getAumentoVida(), estudiante.getTiempoDeVida());
     }
 }

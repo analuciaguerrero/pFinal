@@ -158,6 +158,7 @@ public abstract class Estudiante {
 
     public void setTiempoDeVida(int tiempoDeVida) {
         this.tiempoDeVida = tiempoDeVida;
+        actualizarTiempoDeVidaProperty();
         log.info("El tiempo de vida se ha modificado");
     }
 
