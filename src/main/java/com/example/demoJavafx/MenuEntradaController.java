@@ -4,11 +4,13 @@ import com.example.demoJavafx.usuario.Jugador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -132,7 +134,7 @@ public class MenuEntradaController {
             mostrarAlerta("Este jugador no está registrado");
         } else {
             jugador = jugadores.get(dni);
-            abrirJuegoCargando();
+            abrirTipoDePartida();
         }
     }
 
@@ -144,26 +146,24 @@ public class MenuEntradaController {
             jugador = new Jugador(dni);
             jugador.setNombre(textFieldNombre.getText());
             jugadores.put(dni, jugador);
-            abrirJuegoCargando();
+            abrirTipoDePartida();
         }
     }
 
-    private void abrirJuegoCargando() {
+    private void abrirTipoDePartida() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TipoDePartida.fxml"));
             Parent root = loader.load();
-            MenuAjustesController controller = loader.getController();
-            // Here you can pass any necessary information to the customization window controller
-            // For example:
-            //controller.initData(jugador);
+            TipoDePartidaController controller = loader.getController();
+
+            // Crear un StackPane y agregar el AnchorPane al centro
+            StackPane stackPane = new StackPane(root);
+            stackPane.setAlignment(Pos.CENTER);
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(stackPane, 650.0, 450.0);
+            stage.setScene(scene);
             stage.show();
-
-            // Close the current window if necessary
-            Stage currentStage = (Stage) buttonContinuar.getScene().getWindow();
-            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
