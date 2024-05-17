@@ -1,6 +1,7 @@
 package com.example.demoJavafx;
 
 import com.example.demoJavafx.usuario.Jugador;
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -114,7 +115,6 @@ public class MenuEntradaController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuInicial.fxml"));
             Parent root = loader.load();
-            MenuInicialController controller = loader.getController();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -180,6 +180,28 @@ public class MenuEntradaController {
             // Mostramos la etiqueta y el campo de nombre
             labelNombre.setVisible(true);
             textFieldNombre.setVisible(true);
+        }
+    }
+    @FXML
+    private void handleIniciar(ActionEvent event) {
+        try {
+            // Cargar la nueva pantalla
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Tablero.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador de la nueva pantalla y pasarle los datos necesarios
+            TableroController controller = loader.getController();
+            DatosJuego dato = new DatosJuego();
+            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato);
+            controller.setDato(dato);
+            controller.setZombieStudentsLife(zombieStudentsLife);
+
+            // Establecer la nueva escena en la ventana actual
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

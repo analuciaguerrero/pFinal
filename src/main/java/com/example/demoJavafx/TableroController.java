@@ -68,13 +68,13 @@ public class TableroController {
     }
     @FXML
     protected void onBottonPausarClick (ActionEvent event) {
-        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((javafx.scene.Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
         dato = celda.getDatos();
         dato.setPausado(true);
     }
     @FXML
     protected void onBottonPasarDeTurnoClick (ActionEvent event) {
-        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((javafx.scene.Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
         dato = celda.getDatos();
         if (dato.isPausado()) {
             avanzarZombieStudentsLife(true, celda);
@@ -83,7 +83,7 @@ public class TableroController {
 
     @FXML
     protected void onBottonReanudarClick (ActionEvent event) {
-        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((javafx.scene.Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
         dato = celda.getDatos();
         if (getDato().isPausado()) {
             dato.setPausado(false);
@@ -277,8 +277,8 @@ public class TableroController {
         stage.setAlwaysOnTop(true);
         stage.show();
         dato.setPausado(true);
-        int numeroIndividuos = dato.getEstudiantes().getNumeroElementos();
-        for (int k=0; k != numeroIndividuos; k++) {
+        int numeroEstudiantes = dato.getEstudiantes().getNumeroElementos();
+        for (int k=0; k != numeroEstudiantes; k++) {
             Estudiante estudiante = dato.getEstudiantes().getElemento(k).getData();
             Celda celda = tablero.getCelda(estudiante.getPosicionN(), estudiante.getPosicionM());
             celda.agregarEstudiante(estudiante, false);

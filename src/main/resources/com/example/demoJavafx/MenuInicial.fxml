@@ -47,7 +47,7 @@
                         <RowConstraints maxHeight="353.0" minHeight="10.0" prefHeight="325.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="buttonPlay" onAction="#goNewPlay" onMouseClicked="#goNewPlay" prefHeight="173.0" prefWidth="392.0" text="INICIAR" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                        <Button fx:id="buttonPlay" onAction="#goNewPlay" prefHeight="173.0" prefWidth="392.0" text="INICIAR" GridPane.columnIndex="5" GridPane.rowIndex="4">
                             <font>
                                 <Font size="40.0" />
                             </font>
@@ -60,7 +60,7 @@
                                 <Font size="40.0" />
                             </font>
                         </Button>
-                        <Button fx:id="buttonAjustes" onAction="#goToSettings" onMouseClicked="#goToSettings" prefHeight="126.0" prefWidth="275.0" text="AJUSTES" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                        <Button fx:id="buttonAjustes" onAction="#goToSettings" prefHeight="126.0" prefWidth="275.0" text="AJUSTES" GridPane.columnIndex="5" GridPane.rowIndex="6">
                             <font>
                                 <Font size="40.0" />
                             </font>

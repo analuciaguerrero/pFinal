@@ -1,5 +1,5 @@
 package com.example.demoJavafx;
-
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,28 +21,36 @@ public class MenuInicialController {
 
     @FXML
     private Button buttonCargar;
+    @FXML
+    private Button startButton;
 
     @FXML
-    private void goNewPlay() {
+    private void goNewPlay(ActionEvent event) {
         try {
-            // Cargar el archivo FXML de la nueva ventana
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
-            Parent root = fxmlLoader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
+            Parent root = loader.load();
 
-            // Obtener el Stage de la escena actual
-            Stage currentStage = (Stage) buttonPlay.getScene().getWindow();
+            // Obtener el controlador del Tablero
+            TableroController controller = loader.getController();
 
-            // Crear una nueva escena con el contenedor como raíz
-            Scene newScene1 = new Scene(root, 1835, 1032);
+            // Crear los datos de juego y pasar al controlador del Tablero
+            DatosJuego datosJuego = new DatosJuego(); // Asegúrate de inicializar esto correctamente
+            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(datosJuego); // Asegúrate de inicializar esto correctamente
+            controller.setDato(datosJuego);
+            controller.setZombieStudentsLife(zombieStudentsLife);
 
-            // Establecer la nueva escena en el Stage actual
-            currentStage.setTitle("Práctica Final Ivan Y Ana");
-            currentStage.setScene(newScene1);
-            currentStage.show(); // Mostrar la nueva ventana
-
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void loadGameScene() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demoJavafx/Tablero.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
