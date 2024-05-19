@@ -1,5 +1,7 @@
 package com.example.demoJavafx;
 
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -7,87 +9,96 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TipoDePartidaController implements Initializable {
+public class TipoDePartidaController {
+    private DatosJuego dato;
+    @FXML
+    private Button buttonNuevaPartida;
 
-    private Stage seleccionarPartidaStage; // Referencia al escenario de SeleccionarPartida.fxml
-    private Stage tableroStage;
+    @FXML
+    private Button buttonCargarPartida;
 
-    private DatosJuego datosJuego;
-
-    public void setDatosJuego(DatosJuego datosJuego) {
-        this.datosJuego = datosJuego;
+    @FXML
+    private void initialize() {
+        // Inicializa componentes si es necesario
     }
 
     @FXML
-    private Button btnSeguirPartida;
-
-    @FXML
-    private Button btnNuevaPartida;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Aquí puedes inicializar elementos adicionales si es necesario
+    private void handleNuevaPartida(ActionEvent event) {
+        cargarTablero(event, new DatosJuego());
     }
 
-    // Define los métodos para manejar eventos de los botones u otra lógica de la interfaz de usuario
     @FXML
-    private void onSeguirPartidaButtonClick() {
-        if (seleccionarPartidaStage == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(ApplicationMenuInicial.class.getResource("SeleccionarPartida.fxml"));
-                Parent root = loader.load();
-                SeleccionarPartidaController controller = loader.getController();
+    private void handleCargarPartida(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Cargar Partida");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("archivos", "Partida1.json"));
 
-                // Crear un StackPane y agregar el AnchorPane al centro
-                StackPane stackPane = new StackPane(root);
-                stackPane.setAlignment(Pos.CENTER);
+        // Set the initial directory to the 'archivos' folder in the project's root directory
+        File initialDirectory = new File(System.getProperty("user.dir") + "/archivos");
+        if (initialDirectory.exists()) {
+            fileChooser.setInitialDirectory(initialDirectory);
+        }
 
-                seleccionarPartidaStage = new Stage();
-                Scene scene = new Scene(stackPane, 650.0, 450.0);
-                seleccionarPartidaStage.setScene(scene);
-                seleccionarPartidaStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+        File file = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+
+        if (file != null) {
+            DatosJuego datosJuego = DatosJuego.cargarDesdeArchivo(file.getAbsolutePath());
+            if (datosJuego != null) {
+                cargarTablero(event, datosJuego);
+            } else {
+                mostrarAlerta("Error al cargar la partida");
             }
-        } else {
-            seleccionarPartidaStage.show();
         }
     }
 
-    @FXML
-    private void onNuevaPartidaButtonClick() { // Lógica para el botón "Jugar nueva partida"
+    private void cargarTablero(ActionEvent event, DatosJuego datosJuego) {
         try {
-            FXMLLoader loader = new FXMLLoader(ApplicationMenuInicial.class.getResource("Tablero.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Tablero.fxml"));
             Parent root = loader.load();
 
-            TableroController controller = new TableroController();
-            loader.setController(controller);
+            TableroController controller = loader.getController();
+            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(datosJuego);
             controller.setDatosJuego(datosJuego);
+            controller.setZombieStudentsLife(zombieStudentsLife);
 
-
-            // Crear un StackPane y agregar el AnchorPane al centro
-            StackPane stackPane = new StackPane(root);
-            stackPane.setAlignment(Pos.CENTER);
-
-            if (tableroStage != null) {
-                tableroStage.close();
-            }
-
-            tableroStage = new Stage();
-            Scene scene = new Scene(stackPane, 840.0, 803.0);
-            tableroStage.setScene(scene);
-            tableroStage.show();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public DatosJuego getDatosJuego() {
+        return dato;
+    }
+
+    public void setDatosJuego(DatosJuego dato) {
+        this.dato = dato;
+    }
+
+    private DatosJuego cargarDatosPartida() {
+        // Lógica para cargar los datos de la partida seleccionada
+        // Esto es solo un ejemplo y debería ajustarse a tu implementación
+        return new DatosJuego();
+    }
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ALERTA");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

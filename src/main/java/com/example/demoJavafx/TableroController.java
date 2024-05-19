@@ -3,6 +3,7 @@ import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -31,16 +32,29 @@ public class TableroController {
     private Tablero tablero = new Tablero(datos);
 
     @FXML
-    private javafx.scene.text.Text turnoLabel;
+    private Label turnoLabel;
     @FXML
     private GridPane gridPane;
 
     private static final Logger log = LogManager.getLogger();
 
+    public DatosJuego getDatos() {
+        return datos;
+    }
+
     public void setDatosJuego(DatosJuego datos){
         this.datos = datos;
-        this.tablero = new Tablero (datos);
+        this.tablero = new Tablero(datos);
         this.zombieStudentsLife = new ZombieStudentsLife(datos, tablero);
+        bindTurnoLabel();
+    }
+    public ZombieStudentsLife getZombieStudentsLife() {
+        return zombieStudentsLife;
+    }
+
+    public void setZombieStudentsLife(ZombieStudentsLife zombieStudentsLife) {
+        this.zombieStudentsLife = zombieStudentsLife;
+        bindTurnoLabel();
     }
 
     public TableroController() {}
@@ -52,32 +66,20 @@ public class TableroController {
     }
 
     @FXML
-    protected void initialize() {
-        actualizarGridPane();
+    private void initialize() {
+        if (zombieStudentsLife != null) {
+            bindTurnoLabel();
+        }
     }
-
-    private void actualizarGridPane() {
-        gridPane.getChildren().clear();
-        for (int i = 0; i < tablero.getFilas(); i++) {
-            for (int j = 0; j < tablero.getColumnas(); j++) {
-                Celda celda = tablero.getCelda(i, j);
-                Button btnCelda = new Button();
-                btnCelda.setPrefSize(100, 100);
-                btnCelda.setOnAction(event -> mostrarElementosCelda(celda));
-                gridPane.add(btnCelda, j, i);
-            }
+    private void bindTurnoLabel() {
+        if (turnoLabel != null && zombieStudentsLife != null) {
+            turnoLabel.textProperty().bind(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d"));
+            zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
         }
     }
 
-    private void avanzarZombieStudentsLife(boolean unTurno, Celda celda) {
-        if (Window.getWindows().size() < 3) {
-            if (Window.getWindows().size() > 1) {
-                Stage ventanaCasilla = (Stage) Window.getWindows().get(1);
-                ventanaCasilla.close();
-            }
-            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(datos, tablero);
-            turnoLabel.setText(String.valueOf(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d")));
-            zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
+    private void avanzarZombieStudentsLife(boolean unTurno) {
+        if (zombieStudentsLife != null) {
             zombieStudentsLife.start(unTurno);
         }
     }
@@ -89,16 +91,14 @@ public class TableroController {
 
     @FXML
     protected void onBottonPasarDeTurnoClick(ActionEvent event) {
-        if (datos.isPausado()) {
-            avanzarZombieStudentsLife(true, tablero.getCelda(0, 0)); // Assuming the top-left cell to start
-        }
+        avanzarZombieStudentsLife(true);
     }
 
     @FXML
     protected void onBottonReanudarClick(ActionEvent event) {
         if (datos.isPausado()) {
             datos.setPausado(false);
-            avanzarZombieStudentsLife(false, tablero.getCelda(0, 0)); // Assuming the top-left cell to start
+            avanzarZombieStudentsLife(false);
         }
     }
 
@@ -167,7 +167,7 @@ public class TableroController {
 
     private void volverAlMenuPrincipal(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("TipoDePartida.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("MenuInicial.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("ZombieStudentsLife");
@@ -184,10 +184,6 @@ public class TableroController {
         guardarPartida(event);
     }
 
-    @FXML
-    protected void speedGame(ActionEvent event) {
-        // Implement the functionality for speeding up the game
-    }
 
     @FXML
     protected void onBottonGuardarComoClick(ActionEvent event) {
@@ -292,10 +288,9 @@ public class TableroController {
         AnchorPane.setRightAnchor(gridTablero, 0.0);
         AnchorPane.setBottomAnchor(gridTablero, 0.0);
         AnchorPane.setLeftAnchor(gridTablero, 0.0);
-        turnoLabel = (javafx.scene.text.Text) ((HBox) root.getChildrenUnmodifiable().get(2)).getChildren().getFirst();
+        turnoLabel = (Label) ((HBox) root.getChildrenUnmodifiable().get(2)).getChildren().getFirst();
         zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
-        turnoLabel.setText(String.valueOf(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d")));
-        Stage stage = new Stage();
+        turnoLabel.textProperty().bind(Bindings.format("Turno: %d", zombieStudentsLife.getPropiedad().getTurnoProperty()));        Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

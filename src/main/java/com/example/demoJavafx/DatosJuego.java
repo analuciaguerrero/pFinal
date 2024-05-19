@@ -13,6 +13,7 @@ import com.google.gson.annotations.Expose;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -480,6 +481,15 @@ public class DatosJuego {
             return gson.fromJson(reader, DatosJuego.class);
         } catch (IOException e) {
             log.error("Error al cargar el archivo: " + e.getMessage());
+            return null;
+        }
+    }
+    public static DatosJuego cargarDesdeArchivo(String rutaArchivo) {
+        try (FileReader reader = new FileReader(new File(rutaArchivo))) {
+            Gson gson = new Gson();
+            return gson.fromJson(reader, DatosJuego.class);
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }
