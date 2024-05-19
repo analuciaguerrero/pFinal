@@ -476,7 +476,7 @@ public class DatosJuego {
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
-        try (FileReader reader = new FileReader(String.format(STR."archivosDePartida/\{rutaArchivo}"))) {
+        try (FileReader reader = new FileReader(String.format(STR."archivos/\{rutaArchivo}.json"))) {
             return gson.fromJson(reader, DatosJuego.class);
         } catch (IOException e) {
             log.error("Error al cargar el archivo: " + e.getMessage());

@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import java.awt.event.ActionEvent;
 public class XPersonalizacionController {
 
     @FXML
