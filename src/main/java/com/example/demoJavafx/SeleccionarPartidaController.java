@@ -36,19 +36,13 @@ public class SeleccionarPartidaController implements Initializable {
 
     @FXML
     protected void onBotonCargarFicheroClick (ActionEvent event) {
-            try {
-                if (!listaDeFicheros.getSelectionModel().isEmpty()) {
-                    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stageActual.close();
-                    String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
-                    DatosJuego datosJuego = DatosJuego.cargarArchivo(archivo);
-                    ZombieStudentsLife juego = new ZombieStudentsLife(datosJuego);
-                    TableroController controlador = new TableroController(datosJuego, juego);
-                    controlador.crearTablero(juego.getTablero());
-                }
-            } catch (IOException e){
-                log.error("No se ha encontrado la ruta especificada para cargar el archivo");
-            }
+        if (!listaDeFicheros.getSelectionModel().isEmpty()) {
+            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stageActual.close();
+            String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
+            DatosJuego datosJuego = DatosJuego.cargarArchivo(archivo);
+            TableroController controlador = new TableroController(datosJuego);
+        }
     }
 
     @FXML

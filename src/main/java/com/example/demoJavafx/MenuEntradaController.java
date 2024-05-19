@@ -47,6 +47,13 @@ public class MenuEntradaController {
 
     private Jugador jugador;
 
+    private DatosJuego datosJuego;
+
+    public void setDatosJuego(DatosJuego datosJuego) {
+        this.datosJuego = datosJuego;
+    }
+
+
     FileOutputStream ranking;
 
     /**
@@ -96,15 +103,6 @@ public class MenuEntradaController {
     }
 
     @FXML
-    void handleContinuar(ActionEvent event) {
-        if (comboBoxAcceso.getValue().equals("Acceder")) {
-            comprobarAcceso();
-        } else {
-            comprobarRegistro();
-        }
-    }
-
-    @FXML
     void handleSalir(ActionEvent event) {
         System.exit(0);
     }
@@ -112,7 +110,7 @@ public class MenuEntradaController {
     @FXML
     void handleVolver(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuInicial.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuInicial.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -133,7 +131,6 @@ public class MenuEntradaController {
             mostrarAlerta("Este jugador no está registrado");
         } else {
             jugador = jugadores.get(dni);
-            abrirTipoDePartida();
         }
     }
 
@@ -145,14 +142,18 @@ public class MenuEntradaController {
             jugador = new Jugador(dni);
             jugador.setNombre(textFieldNombre.getText());
             jugadores.put(dni, jugador);
-            abrirTipoDePartida();
         }
     }
+
 
     private void abrirTipoDePartida() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TipoDePartida.fxml"));
             Parent root = loader.load();
+
+            TipoDePartidaController controller = new TipoDePartidaController();
+            loader.setController(controller);
+            controller.setDatosJuego(datosJuego);
 
             // Crear un StackPane y agregar el AnchorPane al centro
             StackPane stackPane = new StackPane(root);
@@ -180,25 +181,53 @@ public class MenuEntradaController {
             textFieldNombre.setVisible(true);
         }
     }
+
+    @FXML
+    void handleContinuar(ActionEvent event) {
+        if (comboBoxAcceso.getValue().equals("Acceder")) {
+            comprobarAcceso();
+        } else {
+            comprobarRegistro();
+        }
+        abrirTipoDePartida();
+    }
+
     @FXML
     private void handleIniciar(ActionEvent event) {
         try {
             // Cargar la nueva pantalla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Tablero.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador de la nueva pantalla y pasarle los datos necesarios
             TableroController controller = loader.getController();
             DatosJuego dato = new DatosJuego();
-            ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato);
-            controller.setDato(dato);
-            controller.setZombieStudentsLife(zombieStudentsLife);
 
             // Establecer la nueva escena en la ventana actual
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToSettings(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Personalizacion.fxml"));
+            Parent root = fxmlLoader.load();
+
+            XPersonalizacionController controller = new XPersonalizacionController();
+            fxmlLoader.setController(controller);
+            controller.setDatosJuego(datosJuego);
+
+            Scene scene = new Scene(root, 840.0, 803.0);
+            Stage stage = new Stage();
+            stage.setTitle("Ajustes");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

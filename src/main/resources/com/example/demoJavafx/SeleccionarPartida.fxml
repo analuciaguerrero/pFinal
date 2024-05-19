@@ -9,29 +9,29 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.SeleccionarPartidaController">
-   <AnchorPane prefHeight="400.0" prefWidth="600.0">
-      <children>
-         <ImageView fitHeight="459.0" fitWidth="690.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@imagenes/seleccionarpartidas.jpeg" />
-            </image>
-         </ImageView>
-          <Label alignment="CENTER" layoutX="155.0" layoutY="31.0" prefHeight="50.0" prefWidth="348.0" text="Seleccione una partida" textFill="WHITE">
-              <font>
-                  <Font size="30.0" />
-              </font>
-          </Label>
-          <Button layoutX="556.0" layoutY="405.0" mnemonicParsing="false" onAction="#onBotonVolverMenuClick" prefHeight="32.0" prefWidth="75.0" text="Volver">
-              <font>
-                  <Font name="Baskerville Old Face" size="14.0" />
-              </font>
-          </Button>
-          <Button layoutX="358.0" layoutY="405.0" mnemonicParsing="false" onAction="#onBotonCargarFicheroClick" prefHeight="32.0" prefWidth="190.0" text="Continuar con la partida">
-              <font>
-                  <Font name="Baskerville Old Face" size="14.0" />
-              </font>
-          </Button>
-          <ListView fx:id="listaDeFicheros" layoutX="49.0" layoutY="90.0" opacity="0.5" prefHeight="280.0" prefWidth="559.0" />
-      </children>
-   </AnchorPane>
+    <AnchorPane prefHeight="400.0" prefWidth="600.0">
+        <children>
+            <ImageView fitHeight="459.0" fitWidth="690.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@imagenes/seleccionarpartidas.jpeg" />
+                </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="155.0" layoutY="31.0" prefHeight="50.0" prefWidth="348.0" text="Seleccione una partida" textFill="WHITE">
+                <font>
+                    <Font size="30.0" />
+                </font>
+            </Label>
+            <Button layoutX="556.0" layoutY="405.0" mnemonicParsing="false" onAction="#onBotonVolverMenuClick" prefHeight="32.0" prefWidth="75.0" text="Volver">
+                <font>
+                    <Font name="Baskerville Old Face" size="14.0" />
+                </font>
+            </Button>
+            <Button layoutX="358.0" layoutY="405.0" mnemonicParsing="false" onAction="#onBotonCargarFicheroClick" prefHeight="32.0" prefWidth="190.0" text="Continuar con la partida">
+                <font>
+                    <Font name="Baskerville Old Face" size="14.0" />
+                </font>
+            </Button>
+            <ListView fx:id="listaDeFicheros" layoutX="49.0" layoutY="90.0" opacity="0.5" prefHeight="280.0" prefWidth="559.0" />
+        </children>
+    </AnchorPane>
 </AnchorPane>

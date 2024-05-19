@@ -19,6 +19,13 @@ import java.util.ResourceBundle;
 public class TipoDePartidaController implements Initializable {
 
     private Stage seleccionarPartidaStage; // Referencia al escenario de SeleccionarPartida.fxml
+    private Stage tableroStage;
+
+    private DatosJuego datosJuego;
+
+    public void setDatosJuego(DatosJuego datosJuego) {
+        this.datosJuego = datosJuego;
+    }
 
     @FXML
     private Button btnSeguirPartida;
@@ -59,24 +66,26 @@ public class TipoDePartidaController implements Initializable {
     @FXML
     private void onNuevaPartidaButtonClick() { // Lógica para el botón "Jugar nueva partida"
         try {
-            // Cargar el archivo FXML de Personalizacion.fxml
-            FXMLLoader personalizacionLoader = new FXMLLoader(getClass().getResource("Personalizacion.fxml"));
-            Parent personalizacionRoot = personalizacionLoader.load();
+            FXMLLoader loader = new FXMLLoader(ApplicationMenuInicial.class.getResource("Tablero.fxml"));
+            Parent root = loader.load();
 
-            // Crear una nueva escena con el contenedor como raíz
-            Scene personalizacionScene = new Scene(personalizacionRoot);
+            TableroController controller = new TableroController();
+            loader.setController(controller);
+            controller.setDatosJuego(datosJuego);
 
-            // Crear un nuevo Stage para la ventana de personalización
-            Stage personalizacionStage = new Stage();
-            personalizacionStage.setTitle("Ajustes");
-            personalizacionStage.setScene(personalizacionScene);
 
-            // Mostrar el nuevo Stage
-            personalizacionStage.show();
+            // Crear un StackPane y agregar el AnchorPane al centro
+            StackPane stackPane = new StackPane(root);
+            stackPane.setAlignment(Pos.CENTER);
 
-            // Cerrar la ventana actual (la ventana de TipoDePartida)
-            ((Stage) btnNuevaPartida.getScene().getWindow()).close();
+            if (tableroStage != null) {
+                tableroStage.close();
+            }
 
+            tableroStage = new Stage();
+            Scene scene = new Scene(stackPane, 840.0, 803.0);
+            tableroStage.setScene(scene);
+            tableroStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -7,58 +7,98 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class XPersonalizacionController {
 
-    @FXML private Slider estudiantesProbClonado;
-    @FXML private Spinner<Integer> estudiantesTurnosRestantesSpinner;
-    @FXML private Slider estudiantesProbReproduccion;
-    @FXML private Slider estudiantesProbMuerte;
+    @FXML
+    private Slider estudiantesProbClonado;
+    @FXML
+    private Spinner<Integer> estudiantesTurnosRestantesSpinner;
+    @FXML
+    private Slider estudiantesProbReproduccion;
+    @FXML
+    private Slider estudiantesProbMuerte;
 
-    @FXML private Slider aguaProbabilidadSlider;
-    @FXML private Spinner<Integer> aguaTurnosRestantesSpinner;
-    @FXML private Slider aguaAumentoVidaSlider;
+    @FXML
+    private Slider aguaProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> aguaTurnosRestantesSpinner;
+    @FXML
+    private Slider aguaAumentoVidaSlider;
 
-    @FXML private Slider bibliotecaProbabilidadSlider;
-    @FXML private Spinner<Integer> bibliotecaTurnosRestantesSpinner;
-    @FXML private Slider bibliotecaAumentoClonSlider;
+    @FXML
+    private Slider bibliotecaProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> bibliotecaTurnosRestantesSpinner;
+    @FXML
+    private Slider bibliotecaAumentoClonSlider;
 
-    @FXML private Slider comidaProbabilidadSlider;
-    @FXML private Spinner<Integer> comidaTurnosRestantesSpinner;
-    @FXML private Slider comidaAumentoVidaSlider;
+    @FXML
+    private Slider comidaProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> comidaTurnosRestantesSpinner;
+    @FXML
+    private Slider comidaAumentoVidaSlider;
 
-    @FXML private Slider montanaProbabilidadSlider;
-    @FXML private Spinner<Integer> montanaTurnosRestantesSpinner;
-    @FXML private Slider montanaDisminucionVidaSlider;
+    @FXML
+    private Slider montanaProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> montanaTurnosRestantesSpinner;
+    @FXML
+    private Slider montanaDisminucionVidaSlider;
 
-    @FXML private Slider pozoProbabilidadSlider;
-    @FXML private Spinner<Integer> pozoTurnosRestantesSpinner;
+    @FXML
+    private Slider pozoProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> pozoTurnosRestantesSpinner;
 
-    @FXML private Slider tesoroProbabilidadSlider;
-    @FXML private Spinner<Integer> tesoroTurnosRestantesSpinner;
-    @FXML private Slider tesoroAumentoRepSlider;
+    @FXML
+    private Slider tesoroProbabilidadSlider;
+    @FXML
+    private Spinner<Integer> tesoroTurnosRestantesSpinner;
+    @FXML
+    private Slider tesoroAumentoRepSlider;
 
-    @FXML private Slider filasSlider;
-    @FXML private Slider columnasSlider;
+    @FXML
+    private Slider filasSlider;
+    @FXML
+    private Slider columnasSlider;
 
-    @FXML private Text labelValorSliderestudiantesProbClonado;
-    @FXML private Text labelValorSliderestudiantesProbReproduccion;
-    @FXML private Text labelValorSliderestudiantesProbMuerte;
-    @FXML private Text labelValorSlideraguaProbabilidad;
-    @FXML private Text labelValorSlideraguaAumentoVida;
-    @FXML private Text labelValorSliderbibliotecaProbabilidad;
-    @FXML private Text labelValorSliderbibliotecaAumentoClon;
-    @FXML private Text labelValorSlidercomidaProbabilidad;
-    @FXML private Text labelValorSlidercomidaAumentoVida;
-    @FXML private Text labelValorSlidermontanaProbabilidad;
-    @FXML private Text labelValorSlidermontanaDisminucionVida;
-    @FXML private Text labelValorSliderpozoProbabilidad;
-    @FXML private Text labelValorSlidertesoroProbabilidad;
-    @FXML private Text labelValorSlidertesoroAumentoRep;
-    @FXML private Text labelValorSliderFilas;
-    @FXML private Text labelValorSliderColumnas;
+    @FXML
+    private Text labelValorSliderestudiantesProbClonado;
+    @FXML
+    private Text labelValorSliderestudiantesProbReproduccion;
+    @FXML
+    private Text labelValorSliderestudiantesProbMuerte;
+    @FXML
+    private Text labelValorSlideraguaProbabilidad;
+    @FXML
+    private Text labelValorSlideraguaAumentoVida;
+    @FXML
+    private Text labelValorSliderbibliotecaProbabilidad;
+    @FXML
+    private Text labelValorSliderbibliotecaAumentoClon;
+    @FXML
+    private Text labelValorSlidercomidaProbabilidad;
+    @FXML
+    private Text labelValorSlidercomidaAumentoVida;
+    @FXML
+    private Text labelValorSlidermontanaProbabilidad;
+    @FXML
+    private Text labelValorSlidermontanaDisminucionVida;
+    @FXML
+    private Text labelValorSliderpozoProbabilidad;
+    @FXML
+    private Text labelValorSlidertesoroProbabilidad;
+    @FXML
+    private Text labelValorSlidertesoroAumentoRep;
+    @FXML
+    private Text labelValorSliderFilas;
+    @FXML
+    private Text labelValorSliderColumnas;
 
     protected IntegerProperty ProbClonado = new SimpleIntegerProperty(0);
     protected IntegerProperty ProbReproduccion = new SimpleIntegerProperty(0);
@@ -77,10 +117,23 @@ public class XPersonalizacionController {
     protected IntegerProperty filas = new SimpleIntegerProperty(1);
     protected IntegerProperty columnas = new SimpleIntegerProperty(1);
 
-    @FXML private Button buttonReestablecer;
-    @FXML private Button buttonGuardar;
+    @FXML
+    private Button buttonReestablecer;
+    @FXML
+    private Button buttonGuardar;
 
     private static final Logger log = LogManager.getLogger(XPersonalizacionController.class);
+
+    private DatosJuego datosJuego;
+
+    public DatosJuego getDatosJuego(){
+        return datosJuego;
+    }
+
+    public void setDatosJuego(DatosJuego datos){
+        this.datosJuego = datos;
+    }
+
 
     @FXML
     void initialize() {
@@ -173,6 +226,34 @@ public class XPersonalizacionController {
         System.out.println("Pozo - Turnos Restantes: " + pozoTurnosRestantes + ", Probabilidad: " + pozoProbabilidad);
         System.out.println("Tesoro - Turnos Restantes: " + tesoroTurnosRestantes + ", Aumento de Vida: " + tesoroAumentoVida + ", Probabilidad: " + tesoroProbabilidad);
         System.out.println("Tamaño del Tablero: " + alto + "x" + ancho);
+
+        // Instanciar un objeto DatosJuego
+        this.datosJuego = new DatosJuego(
+                estudiantesTurnosRestantes,               // turnosVidaIniciales
+                estudiantesReproduccion,                  // probReproduccionEstudiante
+                estudiantesClonado,                       // probClonacionEstudiante
+                estudiantesMuerte,                        // probMejorarANormal
+                0,                                        // probMejorarAAvanzado (asumiendo valor 0 ya que no hay dato)
+                0,                                        // probRecurso (asumiendo valor 0 ya que no hay dato)
+                0,                                        // turnosIniciales (asumiendo valor 0 ya que no hay dato)
+                aguaProbabilidad,                         // probAgua
+                comidaProbabilidad,                       // probComida
+                montañaProbabilidad,                      // probMontaña
+                tesoroProbabilidad,                       // probTesoro
+                bibliotecaProbabilidad,                   // probBiblioteca
+                pozoProbabilidad,                         // probPozo
+                aguaAumentoVida,                          // aumentoVidaAgua
+                comidaAumentoVida,                        // aumentoVidaComida
+                montañaAumentoVida,                       // reduccionVidaMontaña
+                tesoroAumentoVida,                        // aumentoProbReproduccion
+                bibliotecaAumentoVida,                    // aumentoProbClonacion
+                alto,                                     // filasDelTablero
+                ancho,                                    // columnasDelTablero
+                0                                         // turno (asumiendo valor 0 ya que no hay dato)
+        );
+        // Cerrar la ventana
+        Stage stage = (Stage) buttonGuardar.getScene().getWindow();
+        stage.close();
     }
 
 

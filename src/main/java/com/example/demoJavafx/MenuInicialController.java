@@ -26,7 +26,7 @@ public class MenuInicialController {
     private void goNewPlay(ActionEvent event) {
         try {
             // Cargar el archivo FXML del MenuEntrada
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuEntrada.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) buttonPlay.getScene().getWindow();

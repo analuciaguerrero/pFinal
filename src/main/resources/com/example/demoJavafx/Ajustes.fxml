@@ -633,21 +633,21 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-       <Label layoutX="336.0" layoutY="7.0" prefHeight="68.0" prefWidth="169.0" text="Ajustes" textAlignment="CENTER">
-           <font>
-               <Font name="System Bold" size="40.0" />
-           </font>
-       </Label>
-       <!-- Botones de acción -->
-       <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="731.0" prefHeight="58.0" prefWidth="800.0" spacing="3.0" style="-fx-border-width: 3px;">
-           <children>
-               <Button fx:id="buttonReestablecer" mnemonicParsing="false" onAction="#reiniciarConfiguracion" onMouseClicked="#reiniciarConfiguracion" text="Reestablecer por defecto" />
-               <Button fx:id="buttonGuardar" onAction="#guardarConfiguracion" onMouseClicked="#guardarConfiguracion" text="Guardar">
-                   <opaqueInsets>
-                       <Insets />
-                   </opaqueInsets>
+      <Label layoutX="336.0" layoutY="7.0" prefHeight="68.0" prefWidth="169.0" text="Ajustes" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <!-- Botones de acción -->
+      <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="731.0" prefHeight="58.0" prefWidth="800.0" spacing="3.0" style="-fx-border-width: 3px;">
+         <children>
+            <Button fx:id="buttonReestablecer" mnemonicParsing="false" onAction="#reiniciarConfiguracion" onMouseClicked="#reiniciarConfiguracion" text="Reestablecer por defecto" />
+            <Button fx:id="buttonGuardar" onAction="#guardarConfiguracion" onMouseClicked="#guardarConfiguracion" text="Guardar">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </Button>
-           </children>
-       </HBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

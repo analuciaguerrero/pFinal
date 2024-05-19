@@ -207,7 +207,7 @@ public class MenuAjustesController implements Initializable {
     private void comenzarNuevoJuego () throws IOException {
         dato.setTurnoActual(0);
         ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato);
-        TableroController controlador = new TableroController(dato, zombieStudentsLife);
+        TableroController controlador = new TableroController(dato);
         controlador.crearTablero(zombieStudentsLife.getTablero());
         dato.setPausado(true);
     }
