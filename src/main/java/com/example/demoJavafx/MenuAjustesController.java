@@ -197,17 +197,15 @@ public class MenuAjustesController implements Initializable {
             log.debug("Ha sido iniciada una partida nueva");
         } else {
             propiedades.commit();
-
             Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stageActual.close();
-
             log.debug("Se han guardado los ajustes");
         }
     }
     private void comenzarNuevoJuego () throws IOException {
         dato.setTurnoActual(0);
-        ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato);
-        TableroController controlador = new TableroController(dato);
+        ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato, false);
+        TableroController controlador = new TableroController(dato, zombieStudentsLife);
         controlador.crearTablero(zombieStudentsLife.getTablero());
         dato.setPausado(true);
     }
@@ -218,7 +216,7 @@ public class MenuAjustesController implements Initializable {
     }
     @FXML
     protected void onBottonVolverClick (ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TipoDePartida.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MenuInicial.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

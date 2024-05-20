@@ -273,7 +273,7 @@ public class BucleDeControl implements Runnable {
                 while (!dato.isPausado()) {
                     if (dato.getEstudiantes().getNumeroElementos() <= 1) {
                         dato.setPausado(true);
-                        Platform.runLater(() -> TableroController.finalizarPartida(dato));
+                        Platform.runLater(() -> TableroController.terminarPartida(dato));
                     } else {
                         ejecuteBucle();
                         sleep(1500);

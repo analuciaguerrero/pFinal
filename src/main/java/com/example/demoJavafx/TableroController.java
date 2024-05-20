@@ -7,7 +7,7 @@ import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
-import javafx.beans.binding.Bindings;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -228,7 +228,7 @@ public class TableroController {
         try {
             if (datos.isPausado()) {
                 CeldaController celdaController = new CeldaController(datos, celda);
-                Scene scene = new Scene(CeldaController.getRoot());
+                Scene scene = new Scene(celdaController.getRoot());
                 Stage stage = new Stage();
                 stage.setResizable(false);
                 Stage ventana = ((Stage) Window.getWindows().get(0));
@@ -364,8 +364,8 @@ public class TableroController {
                 vistaGan.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 vistaGan.setCellFactory(_ -> new TreeCell<>() {
                     @Override
-                    protected void actualizarIt(Estudiante estudiante, boolean vacio) {
-                        super.actualizarIt(estudiante, vacio);
+                    protected void updateItem(Estudiante estudiante, boolean vacio) {
+                        super.updateItem(estudiante, vacio);
                         if (vacio) {
                             setGraphic(null);
                             setText(null);

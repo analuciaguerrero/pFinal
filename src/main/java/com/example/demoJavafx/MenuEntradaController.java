@@ -69,7 +69,7 @@ public class MenuEntradaController {
     public void loadRanking() {
         try (FileInputStream fileRanking = new FileInputStream("ranking.dat");
              ObjectInputStream streamRanking = new ObjectInputStream(fileRanking)) {
-            jugadores = (HashMap) streamRanking.readObject();
+            jugadores = (HashMap<String, Jugador>) streamRanking.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(MenuEntradaController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,6 +91,13 @@ public class MenuEntradaController {
      */
     public HashMap<String, Jugador> getJugadores() {
         return jugadores;
+    }
+
+    public DatosJuego getDatosJuego() {
+        return datosJuego;
+    }
+    public void setDatosJuego(){
+        this.datosJuego = datosJuego;
     }
 
     @FXML
@@ -148,11 +155,10 @@ public class MenuEntradaController {
 
     private void abrirTipoDePartida() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TipoDePartida.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SeleccionarPartida.fxml"));
             Parent root = loader.load();
 
-            TipoDePartidaController controller = new TipoDePartidaController();
-            loader.setController(controller);
+            SeleccionarPartidaController controller = loader.getController();
             controller.setDatosJuego(datosJuego);
 
             // Crear un StackPane y agregar el AnchorPane al centro

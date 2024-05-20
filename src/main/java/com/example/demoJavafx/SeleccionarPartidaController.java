@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class SeleccionarPartidaController implements Initializable {
     private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
+    private DatosJuego datosJuego;
 
     @FXML
     private ListView<String> listaDeFicheros = new ListView<>();
@@ -32,6 +33,14 @@ public class SeleccionarPartidaController implements Initializable {
         } catch (NoHayFicherosIniciales e) {
             log.info("No se han encontrado ficheros de partida para cargar.");
         }
+    }
+
+    public DatosJuego getDatosJuego() {
+        return datosJuego;
+    }
+
+    public void setDatosJuego(DatosJuego datosJuego) {
+        this.datosJuego = datosJuego;
     }
 
     @FXML
