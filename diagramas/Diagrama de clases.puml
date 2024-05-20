@@ -1,6 +1,7 @@
 @startuml
 'https://plantuml.com/object-diagram
 
+
 package tablero {
     class Tablero {
         - fila: int
