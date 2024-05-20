@@ -2,518 +2,800 @@
 'https://plantuml.com/object-diagram
 
 package tablero {
-
     class Tablero {
-            - fila: int
-            - columna: int
-            - celdas: ListaEnlazada<ListaEnlazada<Celda>>
-            - dato: DatosJuego
-            + Tablero(datosJuego: DatosJuego)
-            + Tablero(fila: int, columna: int, dato: DatosJuego)
-            + inicializarTablero(): void
-            + getCelda(fila: int, columna: int): Celda
-            + setCelda(fila: int, columna: int, celda: Celda): void
-            + getFilas(): int
-            + setFilas(fila: int): void
-            + getColumnas(): int
-            + setColumnas(columna: int): void
-            + getCeldas(): ListaEnlazada<ListaEnlazada<Celda>>
-            + setCeldas(celdas: ListaEnlazada<ListaEnlazada<Celda>>): void
-            + getDato(): DatosJuego
-            + setDato(dato: DatosJuego): void
-            + crearTableroAleatorio(): void
-        }
+        - fila: int
+        - columna: int
+        - celdas: ListaEnlazada<ListaEnlazada<Celda>>
+        - dato: DatosJuego
+        + Tablero(datosJuego: DatosJuego)
+        + Tablero(fila: int, columna: int, dato: DatosJuego)
+        + inicializarTablero(): void
+        + getCelda(fila: int, columna: int): Celda
+        + setCelda(fila: int, columna: int, celda: Celda): void
+        + getFilas(): int
+        + setFilas(fila: int): void
+        + getColumnas(): int
+        + setColumnas(columna: int): void
+        + getCeldas(): ListaEnlazada<ListaEnlazada<Celda>>
+        + setCeldas(celdas: ListaEnlazada<ListaEnlazada<Celda>>): void
+        + getDato(): DatosJuego
+        + setDato(dato: DatosJuego): void
+        + crearTableroAleatorio(): void
+    }
 
     class CeldaProperties {
-            - original: ListaEnlazada<Celda>
-            - properties: ListaEnlazada<Celda>
-            + CeldaProperties(original: ListaEnlazada<Celda>)
-            + getOriginal(): ListaEnlazada<Celda>
-            + setOriginal(original: ListaEnlazada<Celda>): void
-            + getProperties(): ListaEnlazada<Celda>
-            + setProperties(properties: ListaEnlazada<Celda>): void
-            + commit(): void
-            + rollback(): void
-        }
+        - original: ListaEnlazada<Celda>
+        - properties: ListaEnlazada<Celda>
+        + CeldaProperties(original: ListaEnlazada<Celda>)
+        + getOriginal(): ListaEnlazada<Celda>
+        + setOriginal(original: ListaEnlazada<Celda>): void
+        + getProperties(): ListaEnlazada<Celda>
+        + setProperties(properties: ListaEnlazada<Celda>): void
+        + commit(): void
+        + rollback(): void
+    }
 
     class Celda {
-            - posicionN: int
-            - posicionM: int
-            - listaEstudiantes: ListaEnlazada<Estudiante>
-            - listaRecursos: ListaEnlazada<Recursos>
-            - dato: DatosJuego
-            - tablero: Tablero
-            - botonCasilla: Button
-            - gridElementos: GridPane
-            - log: Logger
-            + Celda()
-            + Celda(posicionN: int, posicionM: int)
-            + Celda(posicionN: int, posicionM: int, listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
-            + Celda(listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
-            + Celda(posicionN: int, posicionM: int, dato: DatosJuego, tablero: Tablero)
-            + getPosicionN(): int
-            + setPosicionN(posicionN: int): void
-            + getPosicionM(): int
-            + setPosicionM(posicionM: int): void
-            + getPosicion(): int[]
-            + getListaRecursos(): ListaEnlazada<Recursos>
-            + setListaRecursos(listaRecursos: ListaEnlazada<Recursos>): void
-            + getListaEstudiantes(): ListaEnlazada<Estudiante>
-            + setListaEstudiantes(listaEstudiantes: ListaEnlazada<Estudiante>): void
-            + getDatos(): DatosJuego
-            + setDatos(dato: DatosJuego): void
-            + getTablero(): Tablero
-            + setTablero(tablero: Tablero): void
-            + getBotonCasilla(): Button
-            + getGridElementos(): GridPane
-            + agregarEstudiante(estudiante: Estudiante, nuevoEstudiante: boolean): void
-            + agregarRecurso(recurso: Recursos, nuevoRecurso: boolean): void
-            + eliminarEstudiante(estudiante: Estudiante): void
-            + eliminarRecurso(recurso: Recursos): void
-            + crearCeldaAleatoria(dato: DatosJuego): void
-            + eliminarEstudianteAleatorio(): void
-            + eliminarRecursoAleatorio(): void
-            + evaluarMejoras(): void
-            + restablecerInterfazVisual(): void
-        }
-
+        - posicionN: int
+        - posicionM: int
+        - listaEstudiantes: ListaEnlazada<Estudiante>
+        - listaRecursos: ListaEnlazada<Recursos>
+        - dato: DatosJuego
+        - tablero: Tablero
+        - botonCasilla: Button
+        - gridElementos: GridPane
+        - log: Logger
+        + Celda()
+        + Celda(posicionN: int, posicionM: int)
+        + Celda(posicionN: int, posicionM: int, listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
+        + Celda(listaEstudiantes: ListaEnlazada<Estudiante>, listaRecursos: ListaEnlazada<Recursos>)
+        + Celda(posicionN: int, posicionM: int, dato: DatosJuego, tablero: Tablero)
+        + getPosicionN(): int
+        + setPosicionN(posicionN: int): void
+        + getPosicionM(): int
+        + setPosicionM(posicionM: int): void
+        + getPosicion(): int[]
+        + getListaRecursos(): ListaEnlazada<Recursos>
+        + setListaRecursos(listaRecursos: ListaEnlazada<Recursos>): void
+        + getListaEstudiantes(): ListaEnlazada<Estudiante>
+        + setListaEstudiantes(listaEstudiantes: ListaEnlazada<Estudiante>): void
+        + getDatos(): DatosJuego
+        + setDatos(dato: DatosJuego): void
+        + getTablero(): Tablero
+        + setTablero(tablero: Tablero): void
+        + getBotonCasilla(): Button
+        + getGridElementos(): GridPane
+        + agregarEstudiante(estudiante: Estudiante, nuevoEstudiante: boolean): void
+        + agregarRecurso(recurso: Recursos, nuevoRecurso: boolean): void
+        + eliminarEstudiante(estudiante: Estudiante): void
+        + eliminarRecurso(recurso: Recursos): void
+        + crearCeldaAleatoria(dato: DatosJuego): void
+        + eliminarEstudianteAleatorio(): void
+        + eliminarRecursoAleatorio(): void
+        + evaluarMejoras(): void
+        + restablecerInterfazVisual(): void
+    }
 }
+
 package bucleDeControl {
 
     class BucleDeControl {
-            - static final Logger log
-            - estudiantes: ListaEnlazada<Estudiante>
-            - recursos: ListaEnlazada<Recursos>
-            - dato: DatosJuego
-            - tablero: Tablero
-            - celda: Celda
-            - turno: boolean
-            - propiedades: BucleDeControlProperties
-            + BucleDeControl(tablero: Tablero, dato: DatosJuego)
-            + getTablero(): Tablero
-            + setTablero(tablero: Tablero): void
-            + getDatos(): DatosJuego
-            + setDatos(dato: DatosJuego): void
-            + isTurno(): boolean
-            + setTurno(turno: boolean): void
-            + getCelda(): Celda
-            + setCelda(celda: Celda): void
-            + getCelda(posicionN: int, posicionM: int): Celda
-            + evaluarMejoras(): void
-            + actualizarTiempoDeVidaEstudiante(): void
-            + actualizarTiempoDeAparicionDeRecursos(): void
-            + moverEstudiantes(): void
-            + evaluarReproduccion(): void
-            + evaluarClonacion(): void
-            + evaluarDesaparicionEstudiantes(): void
-            + generarNuevoRecurso(id: int, posicionN: int, posicionM: int, dato: DatosJuego): Recursos
-            + evaluarAparicionRecursos(): void
-            + condicionFinalizacion(): boolean
-            + ejecutarBucle(): void
-            + run(): void
-        }
-        class BucleDeControlProperties {
-                - static final Logger log
-                - original: BucleDeControl
-                - dato: DatosJuego
-                - tableroColumnas: IntegerProperty
-                - tableroFilas: IntegerProperty
-                - turnoProperty: IntegerProperty
-                + BucleDeControlProperties(original: BucleDeControl)
-                + commit(): void
-                + rollback(): void
-                + getOriginal(): BucleDeControl
-                + setOriginal(original: BucleDeControl): void
-                + tableroColumnasProperty(): IntegerProperty
-                + tableroFilasProperty(): IntegerProperty
-                + actualizarTurnoProperty(): void
-                + getTurnoProperty(): IntegerProperty
-                + setTurnoProperty(turnoProperty: Integer): void
-                + getFilas(): int
-                + getColumnas(): int
-                + getCelda(): Celda
-            }
+        - static final Logger log
+        - estudiantes: ListaEnlazada<Estudiante>
+        - recursos: ListaEnlazada<Recursos>
+        - dato: DatosJuego
+        - tablero: Tablero
+        - celda: Celda
+        - turno: boolean
+        - propiedades: BucleDeControlProperties
+        + BucleDeControl(tablero: Tablero, dato: DatosJuego)
+        + getTablero(): Tablero
+        + setTablero(tablero: Tablero): void
+        + getDatos(): DatosJuego
+        + setDatos(dato: DatosJuego): void
+        + isTurno(): boolean
+        + setTurno(turno: boolean): void
+        + getCelda(): Celda
+        + setCelda(celda: Celda): void
+        + getCelda(posicionN: int, posicionM: int): Celda
+        + evaluarMejoras(): void
+        + actualizarTiempoDeVidaEstudiante(): void
+        + actualizarTiempoDeAparicionDeRecursos(): void
+        + moverEstudiantes(): void
+        + evaluarReproduccion(): void
+        + evaluarClonacion(): void
+        + evaluarDesaparicionEstudiantes(): void
+        + generarNuevoRecurso(id: int, posicionN: int, posicionM: int, dato: DatosJuego): Recursos
+        + evaluarAparicionRecursos(): void
+        + condicionFinalizacion(): boolean
+        + ejecutarBucle(): void
+        + run(): void
+    }
+
+    class BucleDeControlProperties {
+        - static final Logger log
+        - original: BucleDeControl
+        - dato: DatosJuego
+        - tableroColumnas: IntegerProperty
+        - tableroFilas: IntegerProperty
+        - turnoProperty: IntegerProperty
+        + BucleDeControlProperties(original: BucleDeControl)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): BucleDeControl
+        + setOriginal(original: BucleDeControl): void
+        + tableroColumnasProperty(): IntegerProperty
+        + tableroFilasProperty(): IntegerProperty
+        + actualizarTurnoProperty(): void
+        + getTurnoProperty(): IntegerProperty
+        + setTurnoProperty(turnoProperty: Integer): void
+        + getFilas(): int
+        + getColumnas(): int
+        + getCelda(): Celda
+    }
 }
 
-package estructurasDatos {
-    class ArbolBinario {
-        -raiz:NodoArbol
-        +isVacia():boolean
-        -add(dato:TipoDelDato, raiz NodoArbol)
-        +add(dato:TipoDelDato)
-        +getGrado(nodo:NodoArbol, int:result):int
-        -getCamino(nodo:NodoArbol, raiz:NodoArbol, lista:ListaEnlazada):ListaEnlazada
-        +getCamino(nodo:NodoArbol)
-        +getLongitud(nodo:NodoArbol)
-        +getSubArbolIzquierda():ArbolBinarioDeBusqueda
-        +getSubArbolDerecha():ArbolBinarioDeBusqueda
-        -getListaPreOrden(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
-        +getListaPreOrden():ListaEnlazada
-        -getListaPostOrden(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
-        +getListaPostOrden():ListaEnlazada
-        -getListaOrdenCentral(nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
-        +getListaOrdenCentral():ListaEnlazada
-        -getAltura(nodo:NodoArbol, p:int):int
-        +getAltura():int
-        +getListaDatosNivel(nivel:int, nodo:NodoArbol, lista:ListaEnlazada):ListaEnlazada
-        +getListaDatosNivel(nivel:int):ListaEnlazada
-        -isArbolCompleto(nodo:NodoArbol):boolean
-        +isArbolHomogeneo():Boolean
-        -isArbolCompleto(nodo:NodoArbol, numero:int):Boolean
-        +isArbolCompleto():Boolean
-        -isArbolCasiCompleto(nodo:NodoArbol, numero:int):Boolean
-        +isArbolCasiCompleto():Boolean
-    }
+package estructurasDeDatos {
+        class ArbolAVL<TipoDelDato> {
+            - raiz: NodoAVL<TipoDelDato>
+            + ArbolAVL()
+            + ArbolAVL(TipoDelDato)
+            + ArbolAVL(NodoAVL<TipoDelDato>)
+            + getRaiz(): NodoAVL<TipoDelDato>
+            + getSubArbolIzquierda(): ArbolAVL<TipoDelDato>
+            + getSubArbolDerecha(): ArbolAVL<TipoDelDato>
+            + add(TipoDelDato): void
+            + del(TipoDelDato): void
+            + getGradoMaximo(): Integer
+            + getAltura(): Integer
+            + getListaDatosNivel(int): ListaEnlazada<TipoDelDato>
+            + getCamino(TipoDelDato): ListaEnlazada<TipoDelDato>
+            + isArbolCasiCompleto(): boolean
+            + isArbolHomogeneo(): boolean
+            + isArbolCompleto(): boolean
+            + getListaOrdenCentral(): ListaEnlazada<TipoDelDato>
+            + getListaPreOrden(): ListaEnlazada<TipoDelDato>
+            + getListaPostOrden(): ListaEnlazada<TipoDelDato>
+        }
 
-    class NodoArbol {
-        -derecha:NodoArbol
-        -izquierda:NodoArbol
-        -dato:TipoDelDato
-        +getDerecha():NodoArbol
-        +setDerecha(nodo:NodoArbol)
-        +getIzquierda():NodoArbol
-        +setIzquierda(nodo:NodoArbol)
-        +getDato():TipoDelDato
-        +setDato(dato:TipoDelDato)
-        +gradoNodo():int
-        +esHoja():boolean
-    }
+        class NodoAVL<TipoDelDato> {
+            - dato: TipoDelDato
+            - nodoIzq: NodoAVL<TipoDelDato>
+            - nodoDch: NodoAVL<TipoDelDato>
+            + NodoAVL()
+            + NodoAVL(TipoDelDato)
+            + getDato(): TipoDelDato
+            + setDato(TipoDelDato): void
+            + getNodoIzq(): NodoAVL<TipoDelDato>
+            + setNodoIzq(NodoAVL<TipoDelDato>): void
+            + getNodoDch(): NodoAVL<TipoDelDato>
+            + setNodoDch(NodoAVL<TipoDelDato>): void
+            + alturaNodo(NodoAVL<TipoDelDato>): int
+            + getGrado(): int
+            + del(NodoAVL<TipoDelDato>, NodoAVL<TipoDelDato>, TipoDelDato): void
+            + add(NodoAVL<TipoDelDato>, TipoDelDato): void
+            + reconocerDesequilibrio(): Integer
+            + equilibrar(NodoAVL<TipoDelDato>): void
+            + rotacionDD(NodoAVL<TipoDelDato>): void
+            + rotacionII(NodoAVL<TipoDelDato>): void
+            + rotacionID(NodoAVL<TipoDelDato>): void
+            + rotacionDI(NodoAVL<TipoDelDato>): void
+        }
 
-    class ListaEnlazada {
-        -primero:ElementoLE
-        +isVacia():boolean
-        +vaciar()
-        -add(el:ElementoLE):int
-        +add(s:String)
-        +add(o:Object)
-        +insert(s:String,posicion:int)
-        +insert(o:Object,posicion:int)
-        +del(posicion:int):int
-        +getNumeroElementos():int
-        +getPosicion(el:ElementoLE):int
-        +getPrimero():ElementoLE
-        +getUltimo():ElementoLE
-        +getSiguiente(el:ElementoLE):ElementoLE
-        +getElemento(posicion:int):ElementoLE
-    }
+        class BST<TipoDeDatos> {
+            - raiz: Nodo<TipoDeDatos>
+            + BST()
+            + BST(Nodo<TipoDeDatos>)
+            + BST(Nodo<TipoDeDatos>, Nodo<TipoDeDatos>, Nodo<TipoDelDato>)
+            + BST(TipoDeDatos)
+            + isVacia(): boolean
+            + add(TipoDeDatos): void
+            + add(TipoDeDatos, Nodo<TipoDeDatos>): void
+            + getGrado(Nodo<TipoDeDatos>, int): int
+            + getCamino(Nodo<TipoDeDatos>, Nodo<TipoDeDatos>, ListaEnlazada<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + getCamino(Nodo<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + getLongitud(Nodo<TipoDeDatos>): int
+            + getSubArbolDcha(): BST<TipoDeDatos>
+            + getSubArbolIzq(): BST<TipoDeDatos>
+            + preorden(): ListaEnlazada<TipoDeDatos>
+            + preorden(Nodo<TipoDeDatos>, ListaEnlazada<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + ordenCentral(): ListaEnlazada<TipoDeDatos>
+            + ordenCentral(Nodo<TipoDeDatos>, ListaEnlazada<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + postOrder(): ListaEnlazada<TipoDeDatos>
+            + postOrder(Nodo<TipoDeDatos>, ListaEnlazada<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + getAltura(): int
+            + getAltura(Nodo<TipoDeDatos>, int): int
+            + isArbolCompleto(): boolean
+            + isArbolCompleto(Nodo<TipoDeDatos>, int): boolean
+            + isArbolHomogeneo(): boolean
+            + isArbolHomogeneo(Nodo<TipoDeDatos>): boolean
+            + getListaDatosNivel(int): ListaEnlazada<TipoDeDatos>
+            + getListaDatosNivel(int, Nodo<TipoDeDatos>, ListaEnlazada<TipoDeDatos>): ListaEnlazada<TipoDeDatos>
+            + isArbolCasiCompleto(): boolean
+            + isArbolCasiCompleto(Nodo<TipoDeDatos>, int): boolean
+        }
 
-    class ElementoLE {
-        -siguiente:ElementoLE
-        -data:Object
-        -insertarmeEn(el:ElementoLE)
-        -getSiguiente():ElementoLE
-        +getData():Object
-        +setData():Object
-    }
+        class Nodo<TipoDelDato> {
+            - derecha: Nodo<TipoDelDato>
+            - izquierda: Nodo<TipoDelDato>
+            - dato: TipoDelDato
+            + Nodo(TipoDelDato)
+            + Nodo(Nodo<TipoDelDato>, Nodo<TipoDelDato>, TipoDelDato)
+            + Nodo()
+            + getDerecha(): Nodo<TipoDelDato>
+            + setDerecha(Nodo<TipoDelDato>): void
+            + getIzquierda(): Nodo<TipoDelDato>
+            + setIzquierda(Nodo<TipoDelDato>): void
+            + getDato(): TipoDelDato
+            + setDato(TipoDelDato): void
+            + gradoNodo(): int
+            + esHoja(): boolean
+        }
 
-    class Cola {
-        -cabeza:ElementoLE
-        -cola:ElementoLE
-        +esVacia():boolean
-        +push(el:ElementoLE)
-        +pop():ElementoLE
-    }
+        class Arista<TipoDelDato> {
+            - nodoIni: NodoGrafo<TipoDelDato>
+            - nodoFin: NodoGrafo<TipoDelDato>
+            - anotacion: String
+            - isDirigido: boolean
+            - peso: double
+            - log: Logger
+            + Arista()
+            + Arista(double, NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>, boolean)
+            + Arista(double, NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>, String, boolean)
+            + isDirigido(): boolean
+            + setDirigido(boolean): void
+            + getNodoIni(): NodoGrafo<TipoDelDato>
+            + setNodoIni(NodoGrafo<TipoDelDato>): void
+            + getNodoFin(): NodoGrafo<TipoDelDato>
+            + setNodoFin(NodoGrafo<TipoDelDato>): void
+            + getAnotacion(): String
+            + setAnotacion(String): void
+            + getPeso(): double
+            + setPeso(double): void
+            + getVertice(NodoGrafo<TipoDelDato>): NodoGrafo<TipoDelDato>
+        }
+
+        class Camino<TipoDelDato> {
+            - camino: ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>
+            - peso: double
+            + Camino(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>, double)
+            + getCamino(): ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>
+            + getPeso(): double
+            + toString(): String
+        }
+
+        class ElementoMap<T, E> {
+            - clave: T
+            - dato: E
+            + ElementoMap(T, E)
+            + getClave(): T
+            + setClave(T): void
+            + getDato(): E
+            + setDato(E): void
+        }
+
+        class Grafo<TipoDelDato> {
+            - nodos: ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>
+            - aristas: ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            - isDirigido: boolean
+            - log: Logger
+            + Grafo()
+            + Grafo(boolean)
+            + Grafo(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>, ListaDoblementeEnlazada<Arista<TipoDelDato>>)
+            + getNodos(): ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>
+            + setNodos(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>): void
+            + getAristas(): ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            + setAristas(ListaDoblementeEnlazada<Arista<TipoDelDato>>): void
+            + isDirigido(): boolean
+            + setDirigido(boolean): void
+            + addNodo(NodoGrafo<TipoDelDato>): void
+            + addNodo(TipoDelDato): void
+            + addArista(double, TipoDelDato, TipoDelDato, String): void
+            + addArista(double, NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>): void
+            + addArista(double, TipoDelDato, TipoDelDato): void
+            + delNodo(TipoDelDato): void
+            + delArista(String): void
+            + getNodoGrafo(TipoDelDato): NodoGrafo<TipoDelDato>
+            + getArista(String): Arista<TipoDelDato>
+            + getCaminoMinimo(NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>): Camino<TipoDelDato>
+            + dijkstra(NodoGrafo<TipoDelDato>): Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>>
+            - dijkstra_inicial(NodoGrafo<TipoDelDato>, Mapa<NodoGrafo<TipoDelDato>, Double>, Cola<NodoGrafo<TipoDelDato>>): void
+            - dijkstra_calcular(Mapa<NodoGrafo<TipoDelDato>, Double>, Cola<NodoGrafo<TipoDelDato>>, Mapa<NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>>): void
+            - dijkstra_procesarResultados(Mapa<NodoGrafo<TipoDelDato>, Double>, Mapa<NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>>): Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>>
+            + listaToString(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>>): String
+        }
+
+        class Mapa<T, E> {
+            - datos: ListaDoblementeEnlazada<ElementoMap<T, E>>
+            + Mapa(ListaDoblementeEnlazada<ElementoMap<T, E>>)
+            + Mapa()
+            + isVacio(): boolean
+            + get(T): E
+            + put(T, E): void
+            + eliminar(T): void
+            + SetClave(): ListaDoblementeEnlazada<T>
+            + getIndices(): ListaSimple<T>
+        }
+
+        class NodoGrafo<TipoDelDato> {
+            - dato: TipoDelDato
+            - listaEntrada: ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            - listaSalida: ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            - anotacion: String
+            - peso: double
+            + NodoGrafo(TipoDelDato)
+            + NodoGrafo(TipoDelDato, ListaDoblementeEnlazada<Arista<TipoDelDato>>, ListaDoblementeEnlazada<Arista<TipoDelDato>>)
+            + getDato(): TipoDelDato
+            + setDato(TipoDelDato): void
+            + getListaEntrada(): ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            + setListaEntrada(ListaDoblementeEnlazada<Arista<TipoDelDato>>): void
+            + getListaSalida(): ListaDoblementeEnlazada<Arista<TipoDelDato>>
+            + setListaSalida(ListaDoblementeEnlazada<Arista<TipoDelDato>>): void
+            + getAnotacion(): String
+            + setAnotacion(String): void
+            + getPeso(): double
+            + setPeso(double): void
+        }
+
+        class ElementoLDE<Tipo> {
+            - data: Tipo
+            - siguiente: ElementoLDE<Tipo>
+            - anterior: ElementoLDE<Tipo>
+            + ElementoLDE(ElementoLDE anterior)
+            + ElementoLDE(ElementoLDE anterior, ElementoLDE siguiente, Tipo data)
+            + ElementoLDE(Tipo data)
+            + ElementoLDE()
+            + insertarmeEn(ElementoLDE<Tipo> el): void
+            + getSiguiente(): ElementoLDE<Tipo>
+            + getAnterior(): ElementoLDE<Tipo>
+            + setSiguiente(ElementoLDE<Tipo> el): void
+            + setAnterior(ElementoLDE<Tipo> el): void
+            + getData(): Tipo
+            + setData(Tipo dato): void
+        }
+
+        class ListaDoblementeEnlazada<Tipo> {
+            - log: Logger
+            - primero: ElementoLDE<Tipo>
+            - ultimo: ElementoLDE<Tipo>
+            + ListaDoblementeEnlazada()
+            + isVacia(): Boolean
+            + vaciar(): void
+            + add(ElementoLDE<Tipo> el): int
+            + add(o: Tipo): void
+            + insert(o: Tipo, posicion: int): void
+            + del(posicion: int): int
+            + del(elemento: Tipo): void
+            + getNumeroElementos(): int
+            + getPosicion(e: ElementoLDE<Tipo>): int
+            + getPrimero(): ElementoLDE<Tipo>
+            + getUltimo(): ElementoLDE<Tipo>
+            + getSiguiente(el: ElementoLDE<Tipo>): ElementoLDE<Tipo>
+            + getElemento(posicion: int): ElementoLDE<Tipo>
+            + setElemento(posicion: int, elemento: Tipo): void
+            + toString(): String
+            + toStringAux(n: ElementoLDE<Tipo>, salida: String): String
+        }
+
+        class ElementoLE<TipoDelDato> {
+            - data: TipoDelDato
+            - siguiente: ElementoLE<TipoDelDato>
+            + ElementoLE(dato: TipoDelDato)
+            + ElementoLE(dato: TipoDelDato, siguiente: ElementoLE<TipoDelDato>)
+            + setSiguiente(siguiente: ElementoLE<TipoDelDato>): void
+            + insertarmeEn(el: ElementoLE<TipoDelDato>): void
+            + getSiguiente(): ElementoLE<TipoDelDato>
+            + getData(): TipoDelDato
+            + setData(data: TipoDelDato): void
+        }
+
+        class ListaEnlazada<TipoDelDato> {
+            - log: Logger
+            - primero: ElementoLE<TipoDelDato>
+            - datos: ElementoLE<TipoDelDato>[]
+            + getEl(): ElementoLE<TipoDelDato>
+            + ListaEnlazada(primero: ElementoLE<TipoDelDato>)
+            + ListaEnlazada()
+            + isVacia(): boolean
+            + vaciar(): void
+            + add(el: ElementoLE<TipoDelDato>): void
+            + add(s: String): void
+            + add(o: Object): void
+            + insert(el: ElementoLE<TipoDelDato>, posicion: int): void
+            + insert(s: String, posicion: int): void
+            + insert(o: Object, posicion: int): void
+            + delete(posicion: int): void
+            + del(el: TipoDelDato): void
+            + getNumeroElementos(): int
+            + getPosicion(el: ElementoLE<TipoDelDato>): int
+            + getPrimero(): ElementoLE<TipoDelDato>
+            + getUltimo(): ElementoLE<TipoDelDato>
+            + getSiguiente(el: ElementoLE<TipoDelDato>): ElementoLE<TipoDelDato>
+            + getElemento(pos: int): ElementoLE<TipoDelDato>
+            + setElemento(posicion: int, elemento: TipoDelDato): void
+            + invertir(aux: ElementoLE<TipoDelDato>, lista: ListaEnlazada<TipoDelDato>): ListaEnlazada<TipoDelDato>
+            + invertir(): ListaEnlazada<TipoDelDato>
+            + suma(el: ElementoLE<Integer>): int
+            + suma(): int
+            + contains(data: TipoDelDato): boolean
+            + insertarFinal(nuevoElemento: ElementoLE<TipoDelDato>): void
+        }
+
+        class ElementoLS<TipoDelDato> {
+            - data: TipoDelDato
+            + ElementoLS(dato: TipoDelDato)
+            + ElementoLS()
+            + getData(): TipoDelDato
+            + setData(a: TipoDelDato): void
+        }
+
+        class ListaSimple<TipoDeldato> {
+            - datos: ElementoLS<TipoDeldato>[]
+            - maximo: Integer
+            + ListaSimple()
+            + ListaSimple(a: TipoDeldato)
+            + copiaLista(): ListaSimple<TipoDeldato>
+            + getMaximo(): Integer
+            + setMaximo(maximo: Integer): void
+            + isVacia(): boolean
+            + vaciar(): void
+            + add(el: TipoDeldato): void
+            + del(pos: int): int
+            + insert(o: TipoDeldato, posicion: int): void
+            + getPosicion(el: TipoDeldato): Integer
+            + getPrimero(): ElementoLS<TipoDeldato>
+            + getUltimo(): ElementoLS<TipoDeldato>
+            + getSiguiente(el: ElementoLS<TipoDeldato>): ElementoLS<TipoDeldato>
+            + getElemento(pos: int): ElementoLS<TipoDeldato>
+            + setElemento(posicion: int, elemento: TipoDeldato): void
+            + getNumeroElementos(): Integer
+            + getDato(pos: int): TipoDeldato
+            + voltear(): ListaSimple<TipoDeldato>
+            + toString(): String
+        }
+
+        class Cola<Dato> {
+            - datos: ListaDoblementeEnlazada<Dato>
+            - cabeza: ElementoLDE<Dato>
+            - cola: ElementoLDE<Dato>
+            + Cola(cabeza: ElementoLDE<Dato>, cola: ElementoLDE<Dato>)
+            + Cola()
+            + getDatos(): ListaDoblementeEnlazada<Dato>
+            + setDatos(datos: ListaDoblementeEnlazada<Dato>): void
+            + getCola(): ElementoLDE<Dato>
+            + setCola(cola: ElementoLDE<Dato>): void
+            + getCabeza(): ElementoLDE<Dato>
+            + setCabeza(cabeza: ElementoLDE<Dato>): void
+            + pull(): Dato
+            + push(elemento: ElementoLDE<Dato>): void
+            + pop(): ElementoLDE<Dato>
+            + getElemento(posicion: int): ElementoLDE<Dato>
+            + getNumeroElementos(): int
+            + getPosicion(el: ElementoLDE<Dato>): int
+            + add(e: Dato): void
+            + isVacia(): boolean
+            + esVacia(): boolean
+        }
+
+        class Dupla<T, E> {
+            - clave: T
+            - dato: E
+            + Dupla(clave: T, dato: E)
+            + getClave(): T
+            + setClave(clave: T): void
+            + getDato(): E
+            + setDato(dato: E): void
+        }
 }
 
 package entorno {
-
     class GsonRecursos {
-            - log: Logger
-            + serialize(src: Recursos, typeOfSrc: Type, context: JsonSerializationContext): JsonElement
-            + deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Recursos
-        }
+        - log: Logger
+        + serialize(src: Recursos, typeOfSrc: Type, context: JsonSerializationContext): JsonElement
+        + deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Recursos
+    }
 
     class RecursosProperties {
-            - original: Recursos
-            - turnosRestantes: IntegerProperty
-            - posicionN: IntegerProperty
-            - posicionM: IntegerProperty
-            - probRecurso: DoubleProperty
-            + RecursosProperties(original: Recursos)
-            + getOriginal(): Recursos
-            + setOriginal(original: Recursos): void
-            + rollback(): void
-            + commit(): void
-            + turnosRestantesProperty(): Property<Number>
-            + posicionNProperty(): Property<Number>
-            + posicionMProperty(): Property<Number>
-            + probRecursoProperty(): Property<Number>
-        }
+        - original: Recursos
+        - turnosRestantes: IntegerProperty
+        - posicionN: IntegerProperty
+        - posicionM: IntegerProperty
+        - probRecurso: DoubleProperty
+        + RecursosProperties(original: Recursos)
+        + getOriginal(): Recursos
+        + setOriginal(original: Recursos): void
+        + rollback(): void
+        + commit(): void
+        + turnosRestantesProperty(): Property<Number>
+        + posicionNProperty(): Property<Number>
+        + posicionMProperty(): Property<Number>
+        + probRecursoProperty(): Property<Number>
+    }
 
     abstract class Recursos {
-            - static log: Logger
-            - id: int
-            - posicionN: int
-            - posicionM: int
-            - turnosRestantes: int
-            - probRecurso: double
-            + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double)
-            + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int)
-            + Recursos(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Recursos()
-            + getId(): int
-            + setId(id: int): void
-            + getPosicionN(): int
-            + setPosicionN(posicionN: int): void
-            + getPosicionM(): int
-            + setPosicionM(posicionM: int): void
-            + getPosicion(): int[]
-            + setPosicion(posicion: int[]): void
-            + getTurnosRestantes(): int
-            + setTurnosRestantes(turnosRestantes: int): void
-            + getProbRecurso(): double
-            + setProbRecurso(probRecurso: double): void
-            + add(dato: DatosJuego, celda: Celda): void
-            + del(dato: DatosJuego, celda: Celda): void
-            + actualizarTurnos(dato: DatosJuego, celda: Celda): boolean
-            + abstract getTipo(): Class<?>
-            + abstract aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+        - static log: Logger
+        - id: int
+        - posicionN: int
+        - posicionM: int
+        - turnosRestantes: int
+        - probRecurso: double
+        + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double)
+        + Recursos(id: int, posicionN: int, posicionM: int, turnosRestantes: int)
+        + Recursos(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Recursos()
+        + getId(): int
+        + setId(id: int): void
+        + getPosicionN(): int
+        + setPosicionN(posicionN: int): void
+        + getPosicionM(): int
+        + setPosicionM(posicionM: int): void
+        + getPosicion(): int[]
+        + setPosicion(posicion: int[]): void
+        + getTurnosRestantes(): int
+        + setTurnosRestantes(turnosRestantes: int): void
+        + getProbRecurso(): double
+        + setProbRecurso(probRecurso: double): void
+        + add(dato: DatosJuego, celda: Celda): void
+        + del(dato: DatosJuego, celda: Celda): void
+        + actualizarTurnos(dato: DatosJuego, celda: Celda): boolean
+        + abstract getTipo(): Class<?>
+        + abstract aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterAguaProperties {
-            - originalAgua: Agua
-            - turnosRestantes: IntegerProperty
-            - aumentoVida: IntegerProperty
-            - probAgua: DoubleProperty
-            + ParameterAguaProperties(original: Agua)
-            + commit(): void
-            + rollback(): void
-            + getOriginalAgua(): Agua
-            + setOriginalAgua(originalAgua: Agua): void
-            + turnosRestantesProperty(): IntegerProperty
-            + aumentoVidaProperty(): IntegerProperty
-            + probAguaProperty(): DoubleProperty
-        }
+        - originalAgua: Agua
+        - turnosRestantes: IntegerProperty
+        - aumentoVida: IntegerProperty
+        - probAgua: DoubleProperty
+        + ParameterAguaProperties(original: Agua)
+        + commit(): void
+        + rollback(): void
+        + getOriginalAgua(): Agua
+        + setOriginalAgua(originalAgua: Agua): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoVidaProperty(): IntegerProperty
+        + probAguaProperty(): DoubleProperty
+    }
 
-    class Agua {
-            - aumentoVida: int
-            - static probAgua: double
-            - static logger: Logger
-            + Agua(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probAgua: double)
-            + Agua(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Agua()
-            + Agua(probAgua: double)
-            + getAumentoVida(): int
-            + setAumentoVida(aumentoVida: int): void
-            + getProbAgua(): double
-            + setProbAgua(probAgua: double): void
-            + getTipo(): Class<Agua>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+    class Agua extends Recursos {
+        - aumentoVida: int
+        - static probAgua: double
+        - static logger: Logger
+        + Agua(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probAgua: double)
+        + Agua(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Agua()
+        + Agua(probAgua: double)
+        + getAumentoVida(): int
+        + setAumentoVida(aumentoVida: int): void
+        + getProbAgua(): double
+        + setProbAgua(probAgua: double): void
+        + getTipo(): Class<Agua>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterComidaProperties {
-            - original: Comida
-            - turnosRestantes: IntegerProperty
-            - aumentoVida: IntegerProperty
-            - probComida: DoubleProperty
-            + ParameterComidaProperties(original: Comida)
-            + commit(): void
-            + rollback(): void
-            + getOriginal(): Comida
-            + setOriginal(original: Comida): void
-            + turnosRestantesProperty(): IntegerProperty
-            + aumentoVidaProperty(): IntegerProperty
-            + probComidaProperty(): DoubleProperty
-        }
+        - original: Comida
+        - turnosRestantes: IntegerProperty
+        - aumentoVida: IntegerProperty
+        - probComida: DoubleProperty
+        + ParameterComidaProperties(original: Comida)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Comida
+        + setOriginal(original: Comida): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoVidaProperty(): IntegerProperty
+        + probComidaProperty(): DoubleProperty
+    }
 
-    class Comida {
-            - aumentoVida: int
-            - static probComida: double
-            - static logger: Logger
-            + Comida(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probComida: double)
-            + Comida()
-            + Comida(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Comida(probComida: double)
-            + getAumentoVida(): int
-            + setAumentoVida(aumentoVida: int): void
-            + getProbComida(): double
-            + setProbComida(probComida: double): void
-            + getTipo(): Class<Comida>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+    class Comida extends Recursos {
+        - aumentoVida: int
+        - static probComida: double
+        - static logger: Logger
+        + Comida(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoVida: int, probComida: double)
+        + Comida()
+        + Comida(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Comida(probComida: double)
+        + getAumentoVida(): int
+        + setAumentoVida(aumentoVida: int): void
+        + getProbComida(): double
+        + setProbComida(probComida: double): void
+        + getTipo(): Class<Comida>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterMontanaProperties {
-            - original: Montaña
-            - turnosRestantes: IntegerProperty
-            - disminucionVida: IntegerProperty
-            - probMontaña: DoubleProperty
-            + ParameterMontanaProperties(original: Montaña)
-            + commit(): void
-            + rollback(): void
-            + getOriginal(): Montaña
-            + setOriginal(original: Montaña): void
-            + turnosRestantesProperty(): IntegerProperty
-            + disminucionVidaProperty(): IntegerProperty
-            + probMontañaProperty(): DoubleProperty
-        }
+        - original: Montaña
+        - turnosRestantes: IntegerProperty
+        - disminucionVida: IntegerProperty
+        - probMontaña: DoubleProperty
+        + ParameterMontanaProperties(original: Montaña)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Montaña
+        + setOriginal(original: Montaña): void
+        + turnosRestantesProperty(): IntegerProperty
+        + disminucionVidaProperty(): IntegerProperty
+        + probMontañaProperty(): DoubleProperty
+    }
 
-    class Montaña {
-            - reduccionVida: int
-            - static probMontaña: double
-            - static logger: Logger
-            + Montaña(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, reduccionVida: int, probMontaña: double)
-            + Montaña(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Montaña()
-            + Montaña(probMontaña: double)
-            + getReduccionVida(): int
-            + setReduccionVida(reduccionVida: int): void
-            + getProbMontaña(): double
-            + setProbMontaña(probMontaña: double): void
-            + getTipo(): Class<Montaña>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+    class Montaña extends Recursos {
+        - reduccionVida: int
+        - static probMontaña: double
+        - static logger: Logger
+        + Montaña(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, reduccionVida: int, probMontaña: double)
+        + Montaña(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Montaña()
+        + Montaña(probMontaña: double)
+        + getReduccionVida(): int
+        + setReduccionVida(reduccionVida: int): void
+        + getProbMontaña(): double
+        + setProbMontaña(probMontaña: double): void
+        + getTipo(): Class<Montaña>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterTesoroProperties {
-            - original: Tesoro
-            - turnosRestantes: IntegerProperty
-            - aumentoPorcentajeRep: DoubleProperty
-            - probTesoro: DoubleProperty
-            + ParameterTesoroProperties(original: Tesoro)
-            + commit(): void
-            + rollback(): void
-            + getOriginal(): Tesoro
-            + setOriginal(original: Tesoro): void
-            + turnosRestantesProperty(): IntegerProperty
-            + aumentoPorcetajeRepProperty(): DoubleProperty
-            + probTesoroProperty(): DoubleProperty
-        }
+        - original: Tesoro
+        - turnosRestantes: IntegerProperty
+        - aumentoPorcentajeRep: DoubleProperty
+        - probTesoro: DoubleProperty
+        + ParameterTesoroProperties(original: Tesoro)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Tesoro
+        + setOriginal(original: Tesoro): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoPorcentajeRepProperty(): DoubleProperty
+        + probTesoroProperty(): DoubleProperty
+    }
 
-    class Tesoro {
-            - aumentoProbReproduccion: double
-            - static probTesoro: double
-            - static logger: Logger
-            + Tesoro(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbReproduccion: double, probTesoro: double)
-            + Tesoro()
-            + Tesoro(probTesoro: double)
-            + Tesoro(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + getAumentoProbReproduccion(): double
-            + setAumentoProbReproduccion(aumentoProbReproduccion: double): void
-            + getProbTesoro(): double
-            + setProbTesoro(probTesoro: double): void
-            + getTipo(): Class<Tesoro>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+    class Tesoro extends Recursos {
+        - aumentoProbReproduccion: double
+        - static probTesoro: double
+        - static logger: Logger
+        + Tesoro(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbReproduccion: double, probTesoro: double)
+        + Tesoro()
+        + Tesoro(probTesoro: double)
+        + Tesoro(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + getAumentoProbReproduccion(): double
+        + setAumentoProbReproduccion(aumentoProbReproduccion: double): void
+        + getProbTesoro(): double
+        + setProbTesoro(probTesoro: double): void
+        + getTipo(): Class<Tesoro>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterBibliotecaProperties {
-            - original: Biblioteca
-            - turnosRestantes: IntegerProperty
-            - aumentoPorentajeClon: DoubleProperty
-            - probBilio: DoubleProperty
-            + ParameterBibliotecaProperties(original: Biblioteca)
-            + commit(): void
-            + rollback(): void
-            + getOriginal(): Biblioteca
-            + setOriginal(original: Biblioteca): void
-            + turnosRestantesProperty(): IntegerProperty
-            + aumentoPorentajeClonProperty(): DoubleProperty
-            + probBibliotecaProperty(): DoubleProperty
-        }
+        - original: Biblioteca
+        - turnosRestantes: IntegerProperty
+        - aumentoPorcentajeClon: DoubleProperty
+        - probBiblioteca: DoubleProperty
+        + ParameterBibliotecaProperties(original: Biblioteca)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Biblioteca
+        + setOriginal(original: Biblioteca): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoPorcentajeClonProperty(): DoubleProperty
+        + probBibliotecaProperty(): DoubleProperty
+    }
 
-    class Biblioteca {
-            - aumentoProbClonacion: double
-            - static probBiblioteca: double
-            - static logger: Logger
-            + Biblioteca(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbClonacion: double, probBiblioteca: double)
-            + Biblioteca()
-            + Biblioteca(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Biblioteca(probBiblioteca: double)
-            + getAumentoProbClonacion(): double
-            + setAumentoProbClonacion(aumentoProbClonacion: double): void
-            + getProbBiblioteca(): double
-            + setProbBiblioteca(probBiblioteca: double): void
-            + getTipo(): Class<Biblioteca>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
+    class Biblioteca extends Recursos {
+        - aumentoProbClonacion: double
+        - static probBiblioteca: double
+        - static logger: Logger
+        + Biblioteca(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, aumentoProbClonacion: double, probBiblioteca: double)
+        + Biblioteca()
+        + Biblioteca(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Biblioteca(probBiblioteca: double)
+        + getAumentoProbClonacion(): double
+        + setAumentoProbClonacion(aumentoProbClonacion: double): void
+        + getProbBiblioteca(): double
+        + setProbBiblioteca(probBiblioteca: double): void
+        + getTipo(): Class<Biblioteca>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
+    }
 
     class ParameterPozoProperties {
-            - original: Pozo
-            - turnosRestantes: IntegerProperty
-            - probPozo: DoubleProperty
-            + ParameterPozoProperties(original: Pozo)
-            + commit(): void
-            + rollback(): void
-            + getOriginal(): Pozo
-            + setOriginal(original: Pozo): void
-            + turnosRestantesProperty(): IntegerProperty
-            + probPozoProperty(): DoubleProperty
-        }
-
-    class Pozo {
-            - static probPozo: double
-            - static logger: Logger
-            + Pozo(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, probPozo: double)
-            + Pozo()
-            + Pozo(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-            + Pozo(probPozo: double)
-            + getProbPozo(): double
-            + setProbPozo(probPozo: double): void
-            + getTipo(): Class<Pozo>
-            + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
-        }
-}
-
-package estudiante {
-    class Individuos {
-        Individuos():void
-        -identiticador:int
-        -generacion:int
-        -turno_vida:int
-        -probabilidad_reproduccion:int
-        -probabilidad_clonacion:int
-        -probabilidad_muerte:int
-        +abstract moverse()
-        +abstract reproduccion_entre_iguales()
-        +reproduccion_entre_distintos()
-        +restar_turno_vida()
-        +cambiar_prob_reproduccion()
-        +cambiar_prob_clonacion()
+        - original: Pozo
+        - turnosRestantes: IntegerProperty
+        - probPozo: DoubleProperty
+        + ParameterPozoProperties(original: Pozo)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Pozo
+        + setOriginal(original: Pozo): void
+        + turnosRestantesProperty(): IntegerProperty
+        + probPozoProperty(): DoubleProperty
     }
 
-    class IndBasico {
-        +moverse_en_celda()
-    }
-
-    class IndNormal {
-        +moverse_en_celda()
-    }
-
-    class IndAvanzados {
-        +moverse_en_celda()
+    class Pozo extends Recursos {
+        - static probPozo: double
+        - static logger: Logger
+        + Pozo(id: int, posicionN: int, posicionM: int, turnosRestantes: int, probRecurso: double, probPozo: double)
+        + Pozo()
+        + Pozo(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Pozo(probPozo: double)
+        + getProbPozo(): double
+        + setProbPozo(probPozo: double): void
+        + getTipo(): Class<Pozo>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda): void
     }
 }
 
-class JSON {
-    guardarArchivo()
-    cargarArchivo()
+package excepciones {
+    class CaminoNulo {
+        + CaminoNulo(message: String)
+        + CaminoNulo()
+    }
+
+    class ClaseErroneaException {
+        - log: Logger
+        + ClaseErroneaException(subclase: String, superclase: String)
+    }
+
+    class DuplicateElement {
+        + DuplicateElement(String message)
+    }
+
+    class EstudianteNoExistente {
+        + EstudianteNoExistente()
+        + EstudianteNoExistente(String mensaje)
+    }
+
+    class IncrementoNoValido {
+        + IncrementoNoValido()
+        + IncrementoNoValido(String mensaje)
+    }
+
+    class MasDe3Estudiantes {
+        + MasDe3Estudiantes(ListaEnlazada<Estudiante> listaEstudiantes)
+    }
+
+    class MasDe3Recursos {
+        + MasDe3Recursos(ListaEnlazada<Recursos> listaRecursos)
+    }
+
+    class NoHayFicherosIniciales {
+        + NoHayFicherosIniciales(String mensaje)
+        + NoHayFicherosIniciales()
+    }
+
+    class NonexistentElement {
+        + NonexistentElement(String message)
+        + NonexistentElement()
+    }
+
+    class NonValidLink {
+        + NonValidLink(String message)
+    }
+
+    class ProbabilidadNoValida {
+        + ProbabilidadNoValida(String mensaje)
+    }
+
+    class RecursoNoExistente {
+        + RecursoNoExistente(String mensaje)
+    }
+
+    class RecursosNoUtilizados {
+        - estudiante: Estudiante
+        + RecursosNoUtilizados(Estudiante estudiante)
+        + getEstudiante(): Estudiante
+    }
+
+    class TamañoArrayInvalido {
+    }
+
+    class VentanaNoEsperada {
+    }
+
+    class VoidLevel {
+    }
 }
 
-class Grafo {}
 
-Individuos "0,1,2,3" --o BucleDeControl
-Entorno "0,1,2,3" --o BucleDeControl
-Tablero "NxM" --o BucleDeControl
 
-IndAvanzados --|> Individuos
-IndBasico --|> Individuos
-IndNormal --|> Individuos
-
-Recursos --|> Entorno
-Agua ---|> Recursos
-Montaña ---|> Recursos
-Comida --|> Recursos
-Tesoro --|> Recursos
-Biblioteca ---|> Recursos
-Pozo --|> Recursos
-
-ElementoLE --> Cola
-NodoArbol --> ArbolBinario
-ArbolBinario --|> JSON
-ListaEnlazada --|> JSON
-Grafo --|> JSON
-Cola --|> JSON
-Individuos <-- ArbolBinario
-
-ElementoLE --> ElementoLE:siguiente
-ListaEnlazada -left-> ElementoLE:primero
 
 @enduml
