@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ParameterMontanaPropertiesTest {
     private Montaña originalMontaña;
-    private ParameterMontanaProperties parameterMontanaProperties;
+    private ParameterMontañaProperties parameterMontanaProperties;
     @Test
     void testCommit() {
         originalMontaña = new Montaña();
-        parameterMontanaProperties = new ParameterMontanaProperties(originalMontaña);
+        parameterMontanaProperties = new ParameterMontañaProperties(originalMontaña);
 
         parameterMontanaProperties.turnosRestantesProperty().set(5);
         parameterMontanaProperties.disminucionVidaProperty().set(10);
@@ -26,7 +26,7 @@ class ParameterMontanaPropertiesTest {
     @Test
     void testRollback() {
         originalMontaña = new Montaña();
-        parameterMontanaProperties = new ParameterMontanaProperties(originalMontaña);
+        parameterMontanaProperties = new ParameterMontañaProperties(originalMontaña);
 
         originalMontaña.setTurnosRestantes(3);
         originalMontaña.setReduccionVida(8);
@@ -42,7 +42,7 @@ class ParameterMontanaPropertiesTest {
     @Test
     void testSetOriginalMontaña() {
         originalMontaña = new Montaña();
-        parameterMontanaProperties = new ParameterMontanaProperties(originalMontaña);
+        parameterMontanaProperties = new ParameterMontañaProperties(originalMontaña);
 
         Montaña newMontaña = new Montaña();
         newMontaña.setTurnosRestantes(2);
@@ -61,7 +61,7 @@ class ParameterMontanaPropertiesTest {
         Montaña originalMontaña = new Montaña(/* parámetros del constructor */);
 
         // Crear una instancia de ParameterMontañaProperties usando la Montaña original
-        ParameterMontanaProperties montañaProperties = new ParameterMontanaProperties(originalMontaña);
+        ParameterMontañaProperties montañaProperties = new ParameterMontañaProperties(originalMontaña);
 
         // Obtener el original utilizando el método getOriginal()
         Montaña obtenido = montañaProperties.getOriginal();

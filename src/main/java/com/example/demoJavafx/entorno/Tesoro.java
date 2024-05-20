@@ -10,18 +10,13 @@ import org.apache.logging.log4j.Logger;
 
 public class Tesoro extends Recursos{
     private double aumentoProbReproduccion;
-    private static double probTesoro;
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
-    public Tesoro(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double aumentoProbReproduccion, double probTesoro) {
-        super(id, posicionN, posicionM, turnosRestantes, probRecurso);
-        this.aumentoProbReproduccion = aumentoProbReproduccion;
-        Tesoro.probTesoro = probTesoro;
+    public Tesoro(int id, DatosJuego dato) {
+        super (id, dato);
+        aumentoProbReproduccion = dato.getAumentoProbReproduccion();
     }
     public Tesoro(){}
-    public Tesoro(double probTesoro){
-        Tesoro.probTesoro = probTesoro;
-    }
     public Tesoro(int id, int posicionN, int posicionM, DatosJuego dato) {
         super (id, posicionN, posicionM, dato);
         aumentoProbReproduccion = dato.getAumentoProbReproduccion();
@@ -32,13 +27,6 @@ public class Tesoro extends Recursos{
     public void setAumentoProbReproduccion(double aumentoProbReproduccion) throws ProbabilidadNoValida {
         this.aumentoProbReproduccion = aumentoProbReproduccion;
         if (aumentoProbReproduccion < 0 || aumentoProbReproduccion > 100) throw new ProbabilidadNoValida();
-        logger.info("Se ha aumentado la probabilidad de reproducción");
-    }
-    public static double getProbTesoro(){
-        return  probTesoro;
-    }
-    public void setProbTesoro(double probTesoro){
-        Tesoro.probTesoro = probTesoro;
     }
     @Override
     public Class<Tesoro> getTipo () {
@@ -46,12 +34,14 @@ public class Tesoro extends Recursos{
     }
 
     @Override
-    public void aplicarEfecto(Estudiante estudiante, Celda celda) {
+    public void aplicarEfecto(Estudiante estudiante, Celda celda, int turno) {
+        estudiante.getColaDeOperaciones().add(STR."Acción: efecto Tesoro, turno: \{turno}");
+        log.debug(STR."Efecto de tesoro aplicado a \{estudiante.getId()}");
         if (estudiante.getProbReproduccion() + aumentoProbReproduccion > 100) {
-            estudiante.setProbReproduccion(100);
+            estudiante.setProbReproduccion(100, turno);
         } else {
-            estudiante.setProbReproduccion(estudiante.getProbReproduccion() + aumentoProbReproduccion);
+            estudiante.setProbReproduccion(estudiante.getProbReproduccion() + aumentoProbReproduccion, turno);
         }
-        logger.info("Efecto aplicado");
+
     }
 }

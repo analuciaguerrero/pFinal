@@ -1,4 +1,8 @@
 package com.example.demoJavafx;
+import com.example.demoJavafx.entorno.Recursos;
+import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
+import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
+import com.example.demoJavafx.estructurasDeDatos.Grafo.Mapa;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
@@ -12,10 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -29,12 +31,9 @@ import java.io.IOException;
 public class TableroController {
     private DatosJuego datos;
     private ZombieStudentsLife zombieStudentsLife;
-    private Tablero tablero = new Tablero(datos);
 
     @FXML
-    private Label turnoLabel;
-    @FXML
-    private GridPane gridPane;
+    private Label turnoLabel = new Label();
 
     private static final Logger log = LogManager.getLogger();
 
@@ -42,11 +41,8 @@ public class TableroController {
         return datos;
     }
 
-    public void setDatosJuego(DatosJuego datos){
+    public void setDatos(DatosJuego datos){
         this.datos = datos;
-        this.tablero = new Tablero(datos);
-        this.zombieStudentsLife = new ZombieStudentsLife(datos, tablero);
-        bindTurnoLabel();
     }
     public ZombieStudentsLife getZombieStudentsLife() {
         return zombieStudentsLife;
@@ -54,68 +50,68 @@ public class TableroController {
 
     public void setZombieStudentsLife(ZombieStudentsLife zombieStudentsLife) {
         this.zombieStudentsLife = zombieStudentsLife;
-        bindTurnoLabel();
     }
-
-    public TableroController() {}
-
-    public TableroController(DatosJuego datos) {
+    public TableroController(DatosJuego datos, ZombieStudentsLife zombieStudentsLife) {
         this.datos = datos;
-        this.tablero = new Tablero(datos);
-        this.zombieStudentsLife = new ZombieStudentsLife(datos, tablero);
+        this.zombieStudentsLife = zombieStudentsLife;
     }
-
-    @FXML
-    private void initialize() {
-        if (zombieStudentsLife != null) {
-            bindTurnoLabel();
-        }
-    }
-    private void bindTurnoLabel() {
-        if (turnoLabel != null && zombieStudentsLife != null) {
-            turnoLabel.textProperty().bind(zombieStudentsLife.getPropiedad().getTurnoProperty().asString("Turno: %d"));
-            zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
-        }
-    }
-
-    private void avanzarZombieStudentsLife(boolean unTurno) {
-        if (zombieStudentsLife != null) {
-            zombieStudentsLife.start(unTurno);
+    public TableroController() {}
+    private void avanzarZombieStudentsLife (boolean unTurno, Celda celda) {
+        if (Window.getWindows().size() < 3) {
+            if (Window.getWindows().size() > 1) {
+                Stage ventanaCelda = (Stage) Window.getWindows().get(1);
+                ventanaCelda.close();
+            }
+            Tablero tablero = celda.getTablero();
+            ZombieStudentsLife juego = new ZombieStudentsLife(datos, tablero);
+            turnoLabel.textProperty().bind(juego.getBucle().getTurnoProperty().asString("Turno: %d"));
+            juego.getBucle().actualizarTurnoProperty();
+            juego.start(unTurno);
         }
     }
 
     @FXML
     protected void onBottonPausarClick(ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
         datos.setPausado(true);
     }
 
     @FXML
     protected void onBottonPasarDeTurnoClick(ActionEvent event) {
-        avanzarZombieStudentsLife(true);
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
+        if (datos.isPausado()) {
+            avanzarZombieStudentsLife(true, celda);
+        }
     }
 
     @FXML
     protected void onBottonReanudarClick(ActionEvent event) {
-        if (datos.isPausado()) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
+        if (getDatos().isPausado()) {
             datos.setPausado(false);
-            avanzarZombieStudentsLife(false);
+            avanzarZombieStudentsLife(false, celda);
         }
     }
 
     @FXML
     protected void onBottonConfiguracionToClick(ActionEvent event) throws IOException {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
         datos.setPausado(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Ajustes.fxml"));
         Parent root = loader.load();
         MenuAjustesController controller = loader.getController();
         controller.setControllerValues(datos);
         Stage stage = new Stage();
-        Stage ventana = ((Stage) Window.getWindows().get(0));
-        stage.initOwner(ventana);
+        Stage ventanaTablero = ((Stage) Window.getWindows().getFirst());
+        stage.initOwner(ventanaTablero);
         stage.setResizable(false);
         if (Window.getWindows().size() > 1) {
-            Stage ventana2 = (Stage) Window.getWindows().get(1);
-            ventana2.close();
+            Stage ventanaCelda = (Stage) Window.getWindows().get(1);
+            ventanaCelda.close();
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -124,25 +120,28 @@ public class TableroController {
 
     @FXML
     protected void onBottonCerrarClick() {
-        ((Stage) Window.getWindows().get(0)).close();
+        ((Stage) Window.getWindows().getFirst()).close();
     }
 
     @FXML
     protected void onBottonPantallaCompletaToClick() {
-        Stage pantalla = ((Stage) Window.getWindows().get(0));
+        Stage pantalla = ((Stage) Window.getWindows().getFirst());
         pantalla.setFullScreen(!pantalla.isFullScreen());
     }
 
     @FXML
     protected void onBottonMinimizarClick() {
-        ((Stage) Window.getWindows().get(0)).setIconified(true);
+        ((Stage) Window.getWindows().getFirst()).setIconified(true);
     }
 
     @FXML
-    protected void onBottonMenuPrincipalClick(ActionEvent event) {
-        if (!datos.isSave()) {
+    protected void onBottonMenuInicialClick(ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
+        if (!getDatos().isSave() && datos.isPausado()) {
+            if (Window.getWindows().size() > 1) ((Stage) Window.getWindows().get(1)).close();
             Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.initOwner(Stage.getWindows().get(0));
+            confirmacion.initOwner(Stage.getWindows().getFirst());
             confirmacion.setTitle("Volver al menú inicial");
             confirmacion.setHeaderText("Estás a punto de volver al menú inicial y perderás todo tu progreso guardado");
             confirmacion.setContentText("¿Deseas guardar la partida antes de salir?");
@@ -150,22 +149,22 @@ public class TableroController {
             ButtonType botonNoGuardar = new ButtonType("No guardar");
             ButtonType botonCancelar = new ButtonType("Cancelar");
             confirmacion.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
-            confirmacion.showAndWait().ifPresent(respuesta -> {
-                if (respuesta == botonGuardar) {
+            confirmacion.showAndWait().ifPresent(answ -> {
+                if (answ == botonGuardar) {
                     guardarPartida(event);
-                    volverAlMenuPrincipal(event);
-                } else if (respuesta == botonNoGuardar) {
-                    volverAlMenuPrincipal(event);
+                    volverAlMenuInicial(event);
+                } else if (answ == botonNoGuardar) {
+                    volverAlMenuInicial(event);
                 } else {
                     confirmacion.close();
                 }
             });
         } else {
-            volverAlMenuPrincipal(event);
+            volverAlMenuInicial(event);
         }
     }
 
-    private void volverAlMenuPrincipal(ActionEvent event) {
+    private void volverAlMenuInicial(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("MenuInicial.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -181,12 +180,15 @@ public class TableroController {
 
     @FXML
     protected void onBottonGuardarPartidaClick(ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
         guardarPartida(event);
     }
 
-
     @FXML
     protected void onBottonGuardarComoClick(ActionEvent event) {
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
         guardarComo(event);
     }
 
@@ -202,15 +204,17 @@ public class TableroController {
 
     protected void guardarComo(ActionEvent event) {
         TextInputDialog getArchivoNombre = new TextInputDialog();
-        getArchivoNombre.initOwner(Stage.getWindows().get(0));
+        getArchivoNombre.initOwner(Stage.getWindows().getFirst());
         getArchivoNombre.setTitle("Guardar partida");
         getArchivoNombre.setHeaderText("Nombre de la partida:");
         getArchivoNombre.setContentText("Guardar como:");
         ButtonType botonGuardar = new ButtonType("Guardar", ButtonBar.ButtonData.OK_DONE);
         ButtonType botonCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
         getArchivoNombre.getDialogPane().getButtonTypes().setAll(botonGuardar, botonCancelar);
-        String nombreArchivo = getArchivoNombre.showAndWait().orElse("");
-        int turnoActual = Integer.parseInt(turnoLabel.getText().replace("Turno: ", ""));
+        String nombreArchivo = getArchivoNombre.showAndWait().get();
+        Label labelTurno = (Label) ((HBox) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(2)).getChildren().getFirst();
+        String labelString = labelTurno.getText();
+        int turnoActual = Integer.parseInt(labelString.replace("Turno: ", ""));
         datos.setTurnoActual(turnoActual);
         if (datos.getRutaArchivo() != null) {
             File archivoAntiguo = new File("archivos/" + datos.getRutaArchivo() + ".json");
@@ -224,7 +228,7 @@ public class TableroController {
         try {
             if (datos.isPausado()) {
                 CeldaController celdaController = new CeldaController(datos, celda);
-                Scene scene = new Scene(CeldaController.getNodo());
+                Scene scene = new Scene(CeldaController.getRoot());
                 Stage stage = new Stage();
                 stage.setResizable(false);
                 Stage ventana = ((Stage) Window.getWindows().get(0));
@@ -289,8 +293,9 @@ public class TableroController {
         AnchorPane.setBottomAnchor(gridTablero, 0.0);
         AnchorPane.setLeftAnchor(gridTablero, 0.0);
         turnoLabel = (Label) ((HBox) root.getChildrenUnmodifiable().get(2)).getChildren().getFirst();
-        zombieStudentsLife.getPropiedad().actualizarTurnoProperty();
-        turnoLabel.textProperty().bind(Bindings.format("Turno: %d", zombieStudentsLife.getPropiedad().getTurnoProperty()));        Stage stage = new Stage();
+        zombieStudentsLife.getBucle().actualizarTurnoProperty();
+        turnoLabel.textProperty().bind(zombieStudentsLife.getBucle().getTurnoProperty().asString("Turno: %d"));
+        Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -298,12 +303,94 @@ public class TableroController {
         stage.setAlwaysOnTop(true);
         stage.show();
         datos.setPausado(true);
-        int numeroEstudiantes = datos.getEstudiantes().getNumeroElementos();
-        for (int k=0; k != numeroEstudiantes; k++) {
+        int numEstudiantes = datos.getEstudiantes().getNumeroElementos();
+        for (int k=0; k != numEstudiantes; k++) {
             Estudiante estudiante = datos.getEstudiantes().getElemento(k).getData();
             Celda celda = tablero.getCelda(estudiante.getPosicionN(), estudiante.getPosicionM());
             celda.agregarEstudiante(estudiante, false);
             celda.getListaEstudiantes().add(estudiante);
+        }
+        int numRecursos = datos.getRecursos().getNumeroElementos();
+        for (int m=0; m!= numRecursos; m++) {
+            Recursos rec = datos.getRecursos().getElemento(m).getData();
+            Celda celda = tablero.getCelda(rec.getPosicionN(), rec.getPosicionM());
+            celda.agregarRecurso(rec, false);
+            celda.getListaRecursos().add(rec);
+        }
+    }
+    private static TreeItem<Estudiante> crearArbolGenealogico (BST<Estudiante> arbol) {
+        TreeItem<Estudiante> raiz = new TreeItem<>(arbol.getRaiz().getDato());
+        if (arbol.getAltura() > 1) {
+            crearArbolGenealogicoPrinc(arbol.getRaiz().getDerecha(), raiz);
+            crearArbolGenealogicoPrinc(arbol.getRaiz().getIzquierda(), raiz);
+        }
+        return raiz;
+    }
+
+    private static void crearArbolGenealogicoPrinc (Nodo<Estudiante> nodo, TreeItem<Estudiante> raiz) {
+        TreeItem<Estudiante> it = new TreeItem<>(nodo.getDato());
+        raiz.getChildren().add(it);
+        if (nodo.getDerecha() != null & nodo.getIzquierda() != null) {
+            crearArbolGenealogicoPrinc(nodo.getDerecha(), it);
+            crearArbolGenealogicoPrinc(nodo.getIzquierda(), it);
+        }
+    }
+    @FXML
+    protected void onBottonFinalizarPartidaClick (ActionEvent event) {
+        volverAlMenuInicial(event);
+    }
+    public static void terminarPartida (DatosJuego dato) {
+        ZombieStudentsLife juego = new ZombieStudentsLife(dato, true);
+        juego.finalizarPartida();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("PantallaFinal.fxml"));
+            Parent root = fxmlLoader.load();
+            HBox paneGan = (HBox) ((AnchorPane) ((ScrollPane) ((VBox) root).getChildren().get(2)).getContent()).getChildren().getFirst();
+            HBox.setHgrow(paneGan, Priority.ALWAYS);
+            AnchorPane.setTopAnchor(paneGan, 0.0);
+            AnchorPane.setBottomAnchor(paneGan, 0.0);
+            AnchorPane.setLeftAnchor(paneGan, 0.0);
+            AnchorPane.setRightAnchor(paneGan, 0.0);
+            Mapa<Estudiante, BST<Estudiante>> arbolGenealogico = juego.getArbolGenealogico();
+            int numGan = dato.getEstudiantes().getNumeroElementos();
+            for (int i = 0; i != numGan; i ++) {
+                Estudiante est = dato.getEstudiantes().getElemento(i).getData();
+                BST<Estudiante> arbol = arbolGenealogico.get(est);
+                TreeView<Estudiante> vistaGan = new TreeView<>();
+                TreeItem<Estudiante> raiz = new TreeItem<>();
+                raiz.getChildren().add(crearArbolGenealogico(arbol));
+                vistaGan.setRoot(raiz);
+                vistaGan.setShowRoot(false);
+                vistaGan.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                vistaGan.setCellFactory(_ -> new TreeCell<>() {
+                    @Override
+                    protected void actualizarIt(Estudiante estudiante, boolean vacio) {
+                        super.actualizarIt(estudiante, vacio);
+                        if (vacio) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            if (estudiante != null) {
+                                setText(STR."Estudiante \{estudiante.getId()}");
+                                setFont(new Font("Bookman Old Style", 18));
+                            }
+                        }
+                    }
+                });
+                paneGan.getChildren().add(vistaGan);
+                HBox.setHgrow(vistaGan, Priority.ALWAYS);
+            }
+            while (!Window.getWindows().isEmpty()) {
+                ((Stage) Window.getWindows().getFirst()).close();
+            };
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setIconified(false);
+            stage.setFullScreen(true);
+            stage.show();
+        } catch (IOException e) {
+            log.error("No se ha podido encontrar el menú inicial");
         }
     }
 }

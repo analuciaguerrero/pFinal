@@ -13,13 +13,16 @@ import java.util.Random;
 
 public class EstudianteNormal extends Estudiante {
     private static final Logger log = LogManager.getLogger();
-    public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
-        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
-    }
     public EstudianteNormal(Estudiante estudiante){
         super(estudiante);
     }
-
+    public EstudianteNormal(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
+        super(id, posicionN, posicionM, generacion, tiempoDeVida, probReproduccion, probClonacion, turno);
+    }
+    public EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
+        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, turno);
+    }
+    public EstudianteNormal(){super();}
     @Override
     public Class<EstudianteNormal> getTipo () {
         return EstudianteNormal.class;
@@ -27,7 +30,7 @@ public class EstudianteNormal extends Estudiante {
     @Override
     public void mover(DatosJuego dato, Tablero tablero) throws RecursosNoUtilizados {
         if (dato.getRecursos().isVacia()) {
-            moverseAleatorio(tablero);
+            moverseAleatorio(tablero, dato.getTurnoActual());
         } else {
             Random a = new Random();
             int aleatorio = a.nextInt(dato.getRecursos().getNumeroElementos());
@@ -47,10 +50,9 @@ public class EstudianteNormal extends Estudiante {
             } else if (distanciaM > 0) {
                 destinoM += 1;
             }
-            cambiarDePosicion(destinoN, destinoM, tablero);
-            colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
+            this.getColaDeOperaciones().add(STR."Acción: moverse (\{destinoN}, \{destinoM}), turno: \{dato.getTurnoActual()}");
+            log.debug(STR."El estudiante se ha movido a \{destinoN}, \{destinoM}");
         }
-        log.info("Movimiento realizado por el estudiante normal.");
     }
 }
 

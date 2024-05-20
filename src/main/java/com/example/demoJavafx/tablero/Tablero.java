@@ -2,7 +2,7 @@ package com.example.demoJavafx.tablero;
 
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estudiante.Estudiante;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,37 +10,36 @@ import org.apache.logging.log4j.Logger;
 import java.util.Random;
 
 public class Tablero {
-    protected int fila; //Número de filas
-    protected int columna; //Número de columnas
-    protected ListaEnlazada<ListaEnlazada<Celda>> celdas; //Matriz de celdas mediante lista enlazada
+    private int fila;
+    private int columna;
     private DatosJuego dato;
+    private ListaSimple<ListaSimple<Celda>> celdas; //Matriz de celdas mediante lista enlazada
     private static final Logger log = LogManager.getLogger("com.example");
 
-    public Tablero(DatosJuego datosJuego) {
-        this.dato = datosJuego;
-        this.fila = datosJuego.getFilasDelTablero();
-        this.columna = datosJuego.getColumnasDelTablero();
-        celdas = new ListaEnlazada<>();
+    public Tablero(DatosJuego dato) {
+        this.dato = dato;
+        this.fila = dato.getFilasDelTablero();
+        this.columna = dato.getColumnasDelTablero();
+        celdas = new ListaSimple<>();
         inicializarTablero();
     }
     public Tablero(int fila, int columna, DatosJuego dato) {
         this.fila = fila;
         this.columna = columna;
         this.dato = dato;
-        celdas = new ListaEnlazada<>();
-        for (int i = 0; i < fila; i++) {
-            ListaEnlazada<Celda> filaCeldas = new ListaEnlazada<>();
-            for (int j = 0; j < columna; j++) {
-                filaCeldas.add(new Celda(i, j, dato, this));
+        celdas = new ListaSimple<>();
+        for (int i = 0; i != fila; i++) {
+            celdas.insert(new ListaSimple<>(columna), i);
+            for (int j = 0; j != columna; j++) {
+                celdas.getElemento(i).getData().insert(new Celda(i, j, dato, this), j);
             }
-            celdas.add(filaCeldas);
         }
     }
 
     private void inicializarTablero() {
         // Crear las celdas y agregarlas al tablero
         for (int i = 0; i < fila; i++) {
-            ListaEnlazada<Celda> filaCeldas = new ListaEnlazada<>();
+            ListaSimple<Celda> filaCeldas = new ListaSimple<>();
             for (int j = 0; j < columna; j++) {
                 filaCeldas.add(new Celda(i, j));
             }
@@ -53,8 +52,8 @@ public class Tablero {
         return celdas.getElemento(fila).getData().getElemento(columna).getData();
     }
 
-    public void setCelda(int fila, int columna, Celda celda) {
-        celdas.getElemento(fila).getData().setElemento(columna, celda);
+    public void setCelda(int fila, int columna) {
+        celdas.getElemento(fila).getData().getElemento(columna).getData();
     }
 
     public int getFilas() {
@@ -73,14 +72,19 @@ public class Tablero {
         this.columna = columna;
     }
 
-    public ListaEnlazada<ListaEnlazada<Celda>> getCeldas() {
+    public ListaSimple<ListaSimple<Celda>> getCeldas() {
         return celdas;
     }
 
-    public void setCeldas(ListaEnlazada<ListaEnlazada<Celda>> celdas) {
+    public void setCeldas(ListaSimple<ListaSimple<Celda>> celdas) {
         this.celdas = celdas;
     }
-
+    public int getNumFilas(){
+        return celdas.getNumeroElementos();
+    }
+    public int getNumColumnas(){
+        return celdas.getPrimero().getData().getNumeroElementos();
+    }
     public DatosJuego getDato() {
         return dato;
     }

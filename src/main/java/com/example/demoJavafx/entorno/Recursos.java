@@ -24,31 +24,21 @@ public abstract class Recursos {
     private int posicionM;
     @Expose
     private int turnosRestantes;
-    @Expose
-    private double probRecurso;
     @Expose (serialize = false)
     private IntegerProperty TurnosRestantesProperty = new SimpleIntegerProperty();
-
-    public Recursos(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso) {
-        this.id = id;
-        this.posicionN = posicionN;
-        this.posicionM = posicionM;
-        this.turnosRestantes = turnosRestantes;
-        this.probRecurso = probRecurso;
-    }
-    public Recursos(int id, int posicionN, int posicionM, int turnosRestantes){
-        this.id = id;
-        this.posicionN = posicionN;
-        this.posicionM = posicionM;
-        this.turnosRestantes = turnosRestantes;
-    }
     public Recursos(int id, int posicionN, int posicionM, DatosJuego dato) {
         this.id = id;
         this.posicionN = posicionN;
         this.posicionM = posicionM;
         this.turnosRestantes = dato.getTurnosIniciales();
+        actualizarTurnosRestantesProperty();
     }
     public Recursos(){}
+    public Recursos(int id, DatosJuego dato){
+        this.id = id;
+        this.turnosRestantes = dato.getTurnosIniciales();
+        actualizarTurnosRestantesProperty();
+    }
     public int getId(){
         return id;
     }
@@ -77,10 +67,6 @@ public abstract class Recursos {
         return TurnosRestantesProperty;
     }
 
-    public void setTurnosRestantesProperty(IntegerProperty turnosRestantesProperty) {
-        this.TurnosRestantesProperty = turnosRestantesProperty;
-    }
-
     public void actualizarTurnosRestantesProperty () {
         TurnosRestantesProperty.set(turnosRestantes);
     }
@@ -103,20 +89,13 @@ public abstract class Recursos {
 
     public void setTurnosRestantes(int turnosRestantes) {
         this.turnosRestantes = turnosRestantes;
-    }
-    public double getProbRecurso() {
-        return probRecurso;
-    }
-
-    public void setProbRecurso(double probRecurso) {
-        this.probRecurso = probRecurso;
+        actualizarTurnosRestantesProperty();
     }
     public void add(DatosJuego dato, Celda celda) {
         try {
             dato.getRecursos().add(this);
             celda.getListaRecursos().add(this);
             this.setPosicion(celda.getPosicion());
-
             Constructor<? extends Recursos> constructor = getClass().getConstructor(int.class, int.class, int.class, DatosJuego.class);
             dato.getHistorialRecursos().add(constructor.newInstance(id, posicionN, posicionM, dato));
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
@@ -130,6 +109,7 @@ public abstract class Recursos {
     }
     public boolean actualizarTurnos(DatosJuego dato, Celda celda){
         turnosRestantes -= 1;
+        actualizarTurnosRestantesProperty();
         if (turnosRestantes == 0) {
             del(dato, celda);
             return true;
@@ -137,5 +117,5 @@ public abstract class Recursos {
         return false;
     }
 
-    public abstract void aplicarEfecto(Estudiante estudiante, Celda celda);
+    public abstract void aplicarEfecto(Estudiante estudiante, Celda celda, int turno);
 }

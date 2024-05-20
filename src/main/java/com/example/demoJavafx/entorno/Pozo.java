@@ -8,34 +8,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Pozo extends Recursos{
-    private static double probPozo;
-    private static final Logger logger = LogManager.getLogger();
-    public Pozo(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, double probPozo) {
-        super(id, posicionN, posicionM, turnosRestantes, probRecurso);
-        Pozo.probPozo = probPozo;
+    private static final Logger log = LogManager.getLogger();
+    public Pozo(int id, DatosJuego dato) {
+        super(id, dato);
     }
     public Pozo(){
     }
     public Pozo(int id, int posicionN, int posicionM, DatosJuego dato) {
         super (id, posicionN, posicionM, dato);
     }
-    public Pozo(double probPozo){
-        Pozo.probPozo = probPozo;
-    }
-    public static double getProbPozo(){
-        return probPozo;
-    }
-    public void setProbPozo(double probPozo){
-        Pozo.probPozo = probPozo;
-    }
     @Override
     public Class<Pozo> getTipo () {
         return Pozo.class;
     }
     @Override
-    public void aplicarEfecto(Estudiante estudiante, Celda celda) {
+    public void aplicarEfecto(Estudiante estudiante, Celda celda, int turno) {
         celda.eliminarEstudiante(estudiante);// Muerte instantánea
-        logger.info("Efecto aplicado");
+        estudiante.getColaDeOperaciones().add(STR."Acción: efecto Pozo, turno: \{turno}");
+        log.debug(STR."Efecto de pozo aplicado a \{estudiante.getId()}");
     }
 }
 

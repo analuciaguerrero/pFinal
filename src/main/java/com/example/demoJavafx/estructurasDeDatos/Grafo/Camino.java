@@ -1,21 +1,20 @@
 package com.example.demoJavafx.estructurasDeDatos.Grafo;
 
 import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
-public class Camino<TipoDelDato> {
-    ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> camino;
+public class Camino<TipoDeDatos> {
+    ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> camino;
     double peso;
 
-    public Camino(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> camino, double peso) {
+    public Camino(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> camino, double peso) {
         this.camino = camino;
         this.peso = peso;
     }
-
-    public ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> getCamino() {
-        return camino;
-    }
-
     public double getPeso() {
         return peso;
+    }
+
+    public ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> getCamino() {
+        return camino;
     }
 
     @Override

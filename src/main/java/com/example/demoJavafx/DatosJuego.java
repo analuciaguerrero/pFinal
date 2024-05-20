@@ -4,9 +4,14 @@ import com.example.demoJavafx.entorno.GsonRecursos;
 import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ElementoLS;
+import com.example.demoJavafx.estructurasDeDatos.ListaSimple.GsonListaSimple;
+import com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras.Cola;
+import com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras.GsonCola;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.estudiante.GsonEstudiante;
 import com.example.demoJavafx.tablero.Celda;
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -94,6 +99,8 @@ public class DatosJuego {
     private boolean isSave = true;
     @Expose
     private String rutaArchivo;
+    @Expose
+    private ZombieStudentsLife zombieStudentsLife;
     @Expose
     private int turnoActual;
 
@@ -333,6 +340,14 @@ public class DatosJuego {
         isPausado = pausado;
         setSave(false);
     }
+    public ZombieStudentsLife getZombieStudentsLife(){
+        return zombieStudentsLife;
+    }
+
+    public void setZombieStudentsLife(ZombieStudentsLife zombieStudentsLife) {
+        this.zombieStudentsLife = zombieStudentsLife;
+    }
+
     public ListaEnlazada<Estudiante> getEstudiantes() {
         return estudiantes;
     }
@@ -433,7 +448,6 @@ public class DatosJuego {
 
     public void setRutaArchivo(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
-        setSave(false);
     }
 
     public ListaEnlazada<Estudiante> getHistorialEstudiantes() {
@@ -455,10 +469,12 @@ public class DatosJuego {
     }
     public void guardarArchivo(String rutaArchivo) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
                 .registerTypeAdapter(Recursos.class, new GsonRecursos())
-                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
+                .registerTypeAdapter(ElementoLS[].class, new GsonListaSimple())
+                .registerTypeAdapter(Cola.class, new GsonCola())
                 .excludeFieldsWithModifiers(Modifier.STATIC)
+                .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
         try (FileWriter writer = new FileWriter(STR."archivos/\{rutaArchivo}.json")) {
@@ -471,27 +487,20 @@ public class DatosJuego {
 
     public static DatosJuego cargarArchivo(String rutaArchivo) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
                 .registerTypeAdapter(Recursos.class, new GsonRecursos())
+                .registerTypeAdapter(Estudiante.class, new GsonEstudiante())
+                .registerTypeAdapter(ElementoLS[].class, new GsonListaSimple())
+                .registerTypeAdapter(Cola.class, new GsonCola())
                 .excludeFieldsWithModifiers(Modifier.STATIC)
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .create();
         try (FileReader reader = new FileReader(String.format(STR."archivos/\{rutaArchivo}.json"))) {
-            return gson.fromJson(reader, DatosJuego.class);
+            DatosJuego dato = gson.fromJson(reader, DatosJuego.class);
+            return dato;
         } catch (IOException e) {
             log.error("Error al cargar el archivo: " + e.getMessage());
             return null;
         }
     }
-    public static DatosJuego cargarDesdeArchivo(String rutaArchivo) {
-        try (FileReader reader = new FileReader(new File(rutaArchivo))) {
-            Gson gson = new Gson();
-            return gson.fromJson(reader, DatosJuego.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }

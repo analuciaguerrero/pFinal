@@ -16,7 +16,7 @@ public class GsonRecursos implements JsonSerializer<Recursos>, JsonDeserializer<
 
     @Override
     public JsonElement serialize(Recursos src, Type typeOfSrc, JsonSerializationContext context) {
-        log.debug("Empezando serialización de recurso {} a Json", src.getTipo().getSimpleName());
+        log.debug(STR."Empezando serialización de recurso \{src.getTipo().getSimpleName()} a Json");
         JsonObject jsonRecurso = new JsonObject();
         jsonRecurso.addProperty("tipo", src.getTipo().getSimpleName());
         jsonRecurso.add("propiedades", context.serialize(src));
@@ -25,7 +25,7 @@ public class GsonRecursos implements JsonSerializer<Recursos>, JsonDeserializer<
 
     @Override
     public Recursos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        log.debug("Empezando deserialización de Recursos {} a Json", json.getAsJsonObject().get("tipo").getAsString());
+        log.debug(STR."Empezando deserialización de recurso \{json.getAsJsonObject().get("tipo").getAsString()} a Json");
         JsonObject jsonRecurso = json.getAsJsonObject();
         String tipo = jsonRecurso.get("tipo").getAsString();
         return switch (tipo) {

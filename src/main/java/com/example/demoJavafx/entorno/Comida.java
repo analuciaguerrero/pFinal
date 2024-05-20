@@ -10,21 +10,16 @@ import org.apache.logging.log4j.Logger;
 
 public class Comida extends Recursos{
     private int aumentoVida;
-    private static double probComida;
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
-    public Comida(int id, int posicionN, int posicionM, int turnosRestantes, double probRecurso, int aumentoVida, double probComida) {
-        super(id, posicionN, posicionM, turnosRestantes, probRecurso);
-        this.aumentoVida = aumentoVida;
-        Comida.probComida = probComida;
-    }
-    public Comida(){}
     public Comida(int id, int posicionN, int posicionM, DatosJuego dato) {
         super (id, posicionN, posicionM, dato);
         aumentoVida = dato.getAumentoVidaComida();
     }
-    public Comida(double probComida){
-        Comida.probComida = probComida;
+    public Comida(){}
+    public Comida(int id, DatosJuego dato){
+        super(id,dato);
+        aumentoVida = dato.getAumentoVidaComida();
     }
     public int getAumentoVida() {
         return aumentoVida;
@@ -33,15 +28,6 @@ public class Comida extends Recursos{
     public void setAumentoVida(int aumentoVida) throws IncrementoNoValido {
         this.aumentoVida = aumentoVida;
         if (aumentoVida < 0) throw new IncrementoNoValido();
-        logger.info("Se ha aumentado la vida");
-    }
-
-    public static double getProbComida() {
-        return probComida;
-    }
-
-    public void setProbComida(double probComida) {
-        Comida.probComida = probComida;
     }
     @Override
     public Class<Comida> getTipo () {
@@ -49,9 +35,10 @@ public class Comida extends Recursos{
     }
 
     @Override
-    public void aplicarEfecto(Estudiante estudiante, Celda celda) {
-        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() + aumentoVida);
-        logger.info("Efecto aplicado");
+    public void aplicarEfecto(Estudiante estudiante, Celda celda, int turno) {
+        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() + aumentoVida, turno);
+        estudiante.getColaDeOperaciones().add(STR."Acción: efecto Comida, turno: \{turno}");
+        log.debug(STR."Efecto de comida aplicado a \{estudiante.getId()}");
     }
 }
 

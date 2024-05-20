@@ -7,34 +7,33 @@ import com.example.demoJavafx.excepciones.NonexistentElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Grafo<TipoDelDato> {
-    private ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> nodos = new ListaDoblementeEnlazada<>();
+public class Grafo<TipoDeDatos> {
+    private ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos = new ListaDoblementeEnlazada<>();
 
-    private ListaDoblementeEnlazada<Arista<TipoDelDato>> aristas = new ListaDoblementeEnlazada<>();
+    private ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas = new ListaDoblementeEnlazada<>();
     private boolean isDirigido;
     private static final Logger log = LogManager.getLogger(Grafo.class);
     public Grafo() {}
-
-    public Grafo(boolean isDirigido) {
-        this.isDirigido = isDirigido;
-    }
-    public Grafo(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> nodos, ListaDoblementeEnlazada<Arista<TipoDelDato>> aristas){
+    public Grafo(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos, ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas){
         this.nodos= nodos;
         this.aristas= aristas;
     }
-    public ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> getNodos() {
+    public Grafo(boolean isDirigido) {
+        this.isDirigido = isDirigido;
+    }
+    public ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> getNodos() {
         return nodos;
     }
 
-    public void setNodos(ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> nodos) {
+    public void setNodos(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos) {
         this.nodos = nodos;
     }
 
-    public ListaDoblementeEnlazada<Arista<TipoDelDato>> getAristas() {
+    public ListaDoblementeEnlazada<Arista<TipoDeDatos>> getAristas() {
         return aristas;
     }
 
-    public void setAristas(ListaDoblementeEnlazada<Arista<TipoDelDato>> aristas) {
+    public void setAristas(ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas) {
         this.aristas = aristas;
     }
 
@@ -48,34 +47,33 @@ public class Grafo<TipoDelDato> {
             aristas.getElemento(i).getData().setDirigido(dirigido);
         }
     }
-    public void addNodo (NodoGrafo<TipoDelDato> nodo) {
+    public void addNodo (NodoGrafo<TipoDeDatos> nodo) {
         nodos.add(nodo);
     }
-    public void addNodo (TipoDelDato dato) {
-        NodoGrafo<TipoDelDato> nodo = new NodoGrafo<>(dato);
+    public void addNodo (TipoDeDatos dato) {
+        NodoGrafo<TipoDeDatos> nodo = new NodoGrafo<>(dato);
         nodos.add(nodo);
+    }
+    public void addNodo (NodoGrafo<TipoDeDatos> nodo, NodoGrafo<TipoDeDatos> nodo2, double pesoArco) {
+        nodos.add(nodo);
+        addArista(pesoArco, nodo, nodo2);
     }
 
-    public void addArista(double peso, TipoDelDato datoIni, TipoDelDato datoFin, String anotacion) {
-        NodoGrafo<TipoDelDato> nodoIni = getNodoGrafo(datoIni);
-        NodoGrafo<TipoDelDato> nodoFin = getNodoGrafo(datoFin);
-        if (nodoIni != null && nodoFin != null) { // Verifica si los nodos son distintos de nulos
-            Arista<TipoDelDato> arista = new Arista<>(peso, nodoIni, nodoFin, anotacion, this.isDirigido);
-            if (isDirigido) {
-                nodoFin.getListaEntrada().add(arista);
-                nodoIni.getListaSalida().add(arista);
-            } else {
-                nodoFin.getListaSalida().add(arista);
-                nodoIni.getListaSalida().add(arista);
-            }
-            aristas.add(arista);
+    public void addArista(double peso, TipoDeDatos datoIni, TipoDeDatos datoFin, String anotacion) {
+        NodoGrafo<TipoDeDatos> nodoIni = getNodoGrafo(datoIni);
+        NodoGrafo<TipoDeDatos> nodoFin = getNodoGrafo(datoFin);
+        Arista<TipoDeDatos> arista = new Arista<>(peso, nodoIni, nodoFin, anotacion, this.isDirigido);
+        if (isDirigido) {
+            nodoFin.getListaEntrada().add(arista);
+            nodoIni.getListaSalida().add(arista);
         } else {
-            // Manejar el caso en que uno o ambos nodos son nulos
-            log.error("Uno o ambos nodos son nulos. No se puede agregar la arista.");
+            nodoFin.getListaSalida().add(arista);
+            nodoIni.getListaSalida().add(arista);
         }
+        aristas.add(arista);
     }
-    public void addArista (double peso, NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin) {
-        Arista<TipoDelDato> arista = new Arista<>(peso, nodoIni, nodoFin, this.isDirigido);
+    public void addArista (double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin) {
+        Arista<TipoDeDatos> arista = new Arista<>(peso, nodoIni, nodoFin, this.isDirigido);
         if (isDirigido) {
             nodoFin.getListaEntrada().add(arista);
             nodoIni.getListaSalida().add(arista);
@@ -86,15 +84,15 @@ public class Grafo<TipoDelDato> {
         aristas.add(arista);
     }
 
-    public void addArista (double peso, TipoDelDato datoIni, TipoDelDato datoFin) {
-        NodoGrafo<TipoDelDato> nodoIni = getNodoGrafo(datoIni);
-        NodoGrafo<TipoDelDato> nodoFin = getNodoGrafo(datoFin);
+    public void addArista (double peso, TipoDeDatos datoIni, TipoDeDatos datoFin) {
+        NodoGrafo<TipoDeDatos> nodoIni = getNodoGrafo(datoIni);
+        NodoGrafo<TipoDeDatos> nodoFin = getNodoGrafo(datoFin);
 
         addArista(peso, nodoIni, nodoFin);
     }
 
-    public void delNodo (TipoDelDato dato) {
-        NodoGrafo<TipoDelDato> nodo = getNodoGrafo(dato);
+    public void delNodo (TipoDeDatos dato) {
+        NodoGrafo<TipoDeDatos> nodo = getNodoGrafo(dato);
         for (int i=0; i <= nodos.getNumeroElementos(); i++) {
             if (nodos.getElemento(i).getData().getDato() == nodo.getDato()) {
                 nodos.del(i);
@@ -103,14 +101,14 @@ public class Grafo<TipoDelDato> {
     }
 
     public void delArista (String anotacion) {
-        Arista<TipoDelDato> arista = getArista(anotacion);
+        Arista<TipoDeDatos> arista = getArista(anotacion);
         for (int i = 0; i <= aristas.getNumeroElementos(); i++) {
             if (aristas.getElemento(i).getData().getAnotacion().equals(arista.getAnotacion())) {
                 aristas.del(i);
             }
         }
     }
-    public NodoGrafo<TipoDelDato> getNodoGrafo(TipoDelDato dato) {
+    public NodoGrafo<TipoDeDatos> getNodoGrafo(TipoDeDatos dato) {
         try {
             for (int i = 0; i != nodos.getNumeroElementos(); i++) {
                 if (nodos.getElemento(i).getData().getDato() == dato) return nodos.getElemento(i).getData();
@@ -122,7 +120,7 @@ public class Grafo<TipoDelDato> {
         }
     }
 
-    public Arista<TipoDelDato> getArista (String anotacion) {
+    public Arista<TipoDeDatos> getArista (String anotacion) {
         try {
             for (int i = 0; i != aristas.getNumeroElementos(); i++) {
                 if (aristas.getElemento(i).getData().getAnotacion().equals(anotacion)) return aristas.getElemento(i).getData();
@@ -133,9 +131,9 @@ public class Grafo<TipoDelDato> {
             return null;
         }
     }
-    public Camino<TipoDelDato> getCaminoMinimo (NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin) {
+    public Camino<TipoDeDatos> getCaminoMinimo (NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin) {
         try {
-            Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>> grafoMapa = dijkstra(nodoIni);
+            Mapa<NodoGrafo<TipoDeDatos>, Camino<TipoDeDatos>> grafoMapa = dijkstra(nodoIni);
             if (grafoMapa.get(nodoFin) == null) throw new CaminoNulo();
             return grafoMapa.get(nodoFin);
         } catch (CaminoNulo e) {
@@ -144,16 +142,16 @@ public class Grafo<TipoDelDato> {
         }
     }
 
-    public Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>> dijkstra (NodoGrafo<TipoDelDato> nodoIni) {
-        Mapa<NodoGrafo<TipoDelDato>, Double> distancia = new Mapa<>();
-        Cola<NodoGrafo<TipoDelDato>> cola = new Cola<>();
-        Mapa<NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>> vertices = new Mapa<>();
+    public Mapa<NodoGrafo<TipoDeDatos>, Camino<TipoDeDatos>> dijkstra (NodoGrafo<TipoDeDatos> nodoIni) {
+        Mapa<NodoGrafo<TipoDeDatos>, Double> distancia = new Mapa<>();
+        Cola<NodoGrafo<TipoDeDatos>> cola = new Cola<>();
+        Mapa<NodoGrafo<TipoDeDatos>, NodoGrafo<TipoDeDatos>> vertices = new Mapa<>();
         this.dijkstra_inicial(nodoIni,distancia,cola);
         this.dijkstra_calcular(distancia,cola,vertices);
         return this.dijkstra_procesarResultados(distancia,vertices);
     }
 
-    private void dijkstra_inicial (NodoGrafo<TipoDelDato> nodo, Mapa<NodoGrafo<TipoDelDato>, Double> distancia, Cola<NodoGrafo<TipoDelDato>> cola) {
+    private void dijkstra_inicial (NodoGrafo<TipoDeDatos> nodo, Mapa<NodoGrafo<TipoDeDatos>, Double> distancia, Cola<NodoGrafo<TipoDeDatos>> cola) {
         for (int i=0; i != nodos.getNumeroElementos(); i++) {
             distancia.put(nodos.getElemento(i).getData(), Double.MAX_VALUE);
         }
@@ -161,13 +159,12 @@ public class Grafo<TipoDelDato> {
         cola.add(nodo);
     }
 
-    private void dijkstra_calcular (Mapa<NodoGrafo<TipoDelDato>, Double> distancia, Cola<NodoGrafo<TipoDelDato>> cola, Mapa<NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>> vertices) {
+    private void dijkstra_calcular (Mapa<NodoGrafo<TipoDeDatos>, Double> distancia, Cola<NodoGrafo<TipoDeDatos>> cola, Mapa<NodoGrafo<TipoDeDatos>, NodoGrafo<TipoDeDatos>> vertices) {
         while (!cola.isVacia()) {
-            NodoGrafo<TipoDelDato> nodoActual = cola.pull();
+            NodoGrafo<TipoDeDatos> nodoActual = cola.poll();
             for (int i=0; i != nodoActual.getListaSalida().getNumeroElementos(); i++) {
-                NodoGrafo<TipoDelDato> nodo2 = nodoActual.getListaSalida().getElemento(i).getData().getVertice(nodoActual);
+                NodoGrafo<TipoDeDatos> nodo2 = nodoActual.getListaSalida().getElemento(i).getData().getVertice(nodoActual);
                 double calculoDistancia = distancia.get(nodoActual) + nodoActual.getListaSalida().getElemento(i).getData().getPeso();
-
                 if (calculoDistancia < distancia.get(nodo2)) {
                     distancia.put(nodo2, calculoDistancia);
                     vertices.put(nodo2, nodoActual);
@@ -177,13 +174,12 @@ public class Grafo<TipoDelDato> {
         }
     }
 
-    private Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>> dijkstra_procesarResultados (Mapa<NodoGrafo<TipoDelDato>, Double> distancia, Mapa<NodoGrafo<TipoDelDato>, NodoGrafo<TipoDelDato>> vertices) {
-        Mapa<NodoGrafo<TipoDelDato>, Camino<TipoDelDato>> camino = new Mapa<>();
-
+    private Mapa<NodoGrafo<TipoDeDatos>, Camino<TipoDeDatos>> dijkstra_procesarResultados (Mapa<NodoGrafo<TipoDeDatos>, Double> distancia, Mapa<NodoGrafo<TipoDeDatos>, NodoGrafo<TipoDeDatos>> vertices) {
+        Mapa<NodoGrafo<TipoDeDatos>, Camino<TipoDeDatos>> camino = new Mapa<>();
         for (int i=0; i != vertices.SetClave().getNumeroElementos(); i++) {
-            ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> calculoCamino = new ListaDoblementeEnlazada<>();
-            NodoGrafo<TipoDelDato> vertice = vertices.SetClave().getElemento(i).getData();
-            NodoGrafo<TipoDelDato> vert = vertice;
+            ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> calculoCamino = new ListaDoblementeEnlazada<>();
+            NodoGrafo<TipoDeDatos> vertice = vertices.SetClave().getElemento(i).getData();
+            NodoGrafo<TipoDeDatos> vert = vertice;
             while (vert != null) {
                 calculoCamino.insert(vert, 0);
                 vert = vertices.get(vert);
@@ -193,7 +189,7 @@ public class Grafo<TipoDelDato> {
         return camino;
     }
 
-    public String listaToString (ListaDoblementeEnlazada<NodoGrafo<TipoDelDato>> lista) {
+    public String listaToString (ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> lista) {
         StringBuilder cadena = new StringBuilder("[");
         if (lista.getNumeroElementos() != 0) {
             cadena.append(lista.getPrimero().getData().getDato());

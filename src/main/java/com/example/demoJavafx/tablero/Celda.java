@@ -29,8 +29,8 @@ public class Celda extends AnchorPane {
     private ListaEnlazada<Recursos> listaRecursos = new ListaEnlazada<>();
     private DatosJuego dato;
     private Tablero tablero;
-    private Button botonCasilla = new Button();
-    private GridPane gridElementos = new GridPane();
+    private Button botonCelda = new Button();
+    private GridPane gridElms = new GridPane();
     private static final Logger log = LogManager.getLogger(Celda.class);
 
     public Celda() {
@@ -59,19 +59,19 @@ public class Celda extends AnchorPane {
         this.posicionM = posicionM;
         this.dato = dato;
         this.tablero = tablero;
-        botonCasilla.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        AnchorPane.setTopAnchor(botonCasilla, 0.0);
-        AnchorPane.setRightAnchor(botonCasilla, 0.0);
-        AnchorPane.setBottomAnchor(botonCasilla, 0.0);
-        AnchorPane.setLeftAnchor(botonCasilla, 0.0);
-        AnchorPane.setTopAnchor(gridElementos, 0.0);
-        AnchorPane.setRightAnchor(gridElementos, 0.0);
-        AnchorPane.setBottomAnchor(gridElementos, 0.0);
-        AnchorPane.setLeftAnchor(gridElementos, 0.0);
-        gridElementos.setVgap(3);
-        gridElementos.setHgap(8);
-        gridElementos.setMouseTransparent(true);
-        getChildren().setAll(botonCasilla, gridElementos);
+        botonCelda.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        AnchorPane.setLeftAnchor(botonCelda, 0.0);
+        AnchorPane.setTopAnchor(botonCelda, 0.0);
+        AnchorPane.setBottomAnchor(botonCelda, 0.0);
+        AnchorPane.setRightAnchor(botonCelda, 0.0);
+        AnchorPane.setLeftAnchor(gridElms, 0.0);
+        AnchorPane.setRightAnchor(gridElms, 0.0);
+        AnchorPane.setTopAnchor(gridElms, 0.0);
+        AnchorPane.setBottomAnchor(gridElms, 0.0);
+        gridElms.setHgap(8);
+        gridElms.setVgap(3);
+        gridElms.setMouseTransparent(true);
+        getChildren().setAll(botonCelda, gridElms);
     }
     public int getPosicionN() {
         return posicionN;
@@ -121,12 +121,12 @@ public class Celda extends AnchorPane {
     public void setTablero(Tablero tablero) {
         this.tablero = tablero;
     }
-    public Button getBotonCasilla() {
-        return botonCasilla;
+    public Button getBotonCelda() {
+        return botonCelda;
     }
 
-    public GridPane getGridElementos() {
-        return gridElementos;
+    public GridPane getGridElms() {
+        return gridElms;
     }
     private ColumnConstraints columnaConPorcentajes (double porcentaje) {
         ColumnConstraints constraints = new ColumnConstraints();
@@ -142,11 +142,13 @@ public class Celda extends AnchorPane {
     private void addIcEstudiante(ImageView vistaIc) {
         vistaIc.setPreserveRatio(true);
         vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 2));
-        int numeroIcEstudiante = 0;
-        for (Node node : gridElementos.getChildren() ) {
-            if (GridPane.getRowIndex(node) == 0) numeroIcEstudiante++;
+        int numIcEstudiante = 0;
+        for (Node node : gridElms.getChildren() ) {
+            if (GridPane.getRowIndex(node) == 0){
+                numIcEstudiante++;
+            }
         }
-        gridElementos.add(vistaIc, numeroIcEstudiante , 0);
+        gridElms.add(vistaIc, numIcEstudiante , 0);
     }
     public void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente {
         try {
@@ -174,11 +176,11 @@ public class Celda extends AnchorPane {
         vistaIc.setPreserveRatio(true);
         vistaIc.setFitWidth(((GridPane) this.getParent()).getWidth()/(((GridPane) this.getParent()).getColumnCount() * 2));
         vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 3));
-        int numeroIcRecurso = 0;
-        for (Node node : gridElementos.getChildren() ) {
-            if (GridPane.getRowIndex(node) == 1) numeroIcRecurso++;
+        int numIcRecurso = 0;
+        for (Node node : gridElms.getChildren() ) {
+            if (GridPane.getRowIndex(node) == 1) numIcRecurso++;
         }
-        gridElementos.add(vistaIc, numeroIcRecurso, 1);
+        gridElms.add(vistaIc, numIcRecurso, 1);
     }
     public void agregarRecurso(Recursos recurso, boolean nuevoRecurso) throws RecursoNoExistente {
         try {
@@ -213,23 +215,25 @@ public class Celda extends AnchorPane {
     }
 
     public void eliminarEstudiante(Estudiante estudiante) {
-        int pos = listaEstudiantes.getPosicion(new ElementoLE<>(estudiante));
-        if (pos != -1) {
-            listaEstudiantes.delete(pos);
-            dato.setNumEstudiantes(dato.getNumEstudiantes() - 1);
-        } else {
-            log.debug("Se ha querido eliminar un estudiante de una casilla en la que no estaba");
+        for (int i = 0; i != listaEstudiantes.getNumeroElementos(); i++) {
+            if (estudiante == listaEstudiantes.getElemento(i).getData()) {
+                estudiante.morir(dato, this);
+                restablecerInterfazVisual();
+                return;
+            }
         }
+        log.debug("Se ha querido eliminar un estudiante de una casilla en la que no estaba");
     }
 
     public void eliminarRecurso(Recursos recurso) {
-        int pos = listaRecursos.getPosicion(new ElementoLE<>(recurso));
-        if (pos != -1) {
-            listaRecursos.delete(pos);
-            dato.setNumRecursos(dato.getNumRecursos() - 1);
-        } else {
-            log.debug("Se ha querido eliminar un recurso de una casilla en la que no estaba");
+        for (int i = 0; i != listaRecursos.getNumeroElementos(); i++) {
+            if (recurso == listaRecursos.getElemento(i).getData()) {
+                recurso.del(dato, this);
+                restablecerInterfazVisual();
+                return;
+            }
         }
+        log.debug("Se ha querido eliminar un recurso de una casilla en la que no estaba");
     }
     public void crearCeldaAleatoria(DatosJuego dato) {
         try {
@@ -303,25 +307,10 @@ public class Celda extends AnchorPane {
             log.warn("No hay recursos disponibles en la lista para eliminar.");
         }
     }
-    public void evaluarMejoras() {
-        ElementoLE<Recursos> nodoRecurso = listaRecursos.getPrimero();
-        while (nodoRecurso != null) {
-            Recursos recurso = nodoRecurso.getData();
-            ElementoLE<Estudiante> nodoEstudiante = listaEstudiantes.getPrimero();
-            while (nodoEstudiante != null) {
-                Estudiante estudiante = nodoEstudiante.getData();
-                Celda celda = tablero.getCelda(posicionN, posicionM);
-                recurso.aplicarEfecto(estudiante, celda);
-                log.info("Se aplicó el efecto del recurso " + recurso.toString() + " al estudiante " + estudiante.toString());
-                nodoEstudiante = nodoEstudiante.getSiguiente();
-            }
-            nodoRecurso = nodoRecurso.getSiguiente();
-        }
-    }
     public void restablecerInterfazVisual() {
-        gridElementos.getChildren().clear();
-        gridElementos.getColumnConstraints().clear();
-        gridElementos.getRowConstraints().clear();
+        gridElms.getChildren().clear();
+        gridElms.getColumnConstraints().clear();
+        gridElms.getRowConstraints().clear();
         for (int i=0; i != listaEstudiantes.getNumeroElementos(); i++) {
             agregarEstudiante(listaEstudiantes.getElemento(i).getData(), false);
         }

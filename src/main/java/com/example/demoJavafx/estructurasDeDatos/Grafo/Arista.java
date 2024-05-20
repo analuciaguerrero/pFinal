@@ -3,22 +3,29 @@ package com.example.demoJavafx.estructurasDeDatos.Grafo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Arista<TipoDelDato> {
-    private NodoGrafo<TipoDelDato> nodoIni;
-    private NodoGrafo<TipoDelDato> nodoFin;
+public class Arista<TipoDeDatos> {
+    private NodoGrafo<TipoDeDatos> nodoIni;
+    private NodoGrafo<TipoDeDatos> nodoFin;
     private String anotacion;
     private boolean isDirigido;
     private double peso;
     private static final Logger log = LogManager.getLogger(Grafo.class);
 
     public Arista(){}
-    public Arista(double peso, NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin, boolean isDirigido) {
+    public Arista(double peso) {
+        this.peso = peso;
+    }
+
+    public Arista(String anotacion) {
+        this.anotacion = anotacion;
+    }
+    public Arista(double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin, boolean isDirigido) {
         this.peso = peso;
         this.isDirigido = isDirigido;
         this.nodoIni = nodoIni;
         this.nodoFin = nodoFin;
     }
-    public Arista(double peso, NodoGrafo<TipoDelDato> nodoIni, NodoGrafo<TipoDelDato> nodoFin, String anotacion, boolean isDirigido) {
+    public Arista(double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin, String anotacion, boolean isDirigido) {
         this.peso = peso;
         this.isDirigido = isDirigido;
         this.nodoIni = nodoIni;
@@ -34,11 +41,11 @@ public class Arista<TipoDelDato> {
         isDirigido = dirigido;
     }
 
-    public NodoGrafo<TipoDelDato> getNodoIni() {
+    public NodoGrafo<TipoDeDatos> getNodoIni() {
         return nodoIni;
     }
 
-    public void setNodoIni(NodoGrafo<TipoDelDato> nodoIni) {
+    public void setNodoIni(NodoGrafo<TipoDeDatos> nodoIni) {
         if (nodoIni!=null) {
             this.nodoIni = nodoIni;
         } else{
@@ -46,11 +53,11 @@ public class Arista<TipoDelDato> {
         }
     }
 
-    public NodoGrafo<TipoDelDato> getNodoFin() {
+    public NodoGrafo<TipoDeDatos> getNodoFin() {
         return nodoFin;
     }
 
-    public void setNodoFin(NodoGrafo<TipoDelDato> nodoFin) {
+    public void setNodoFin(NodoGrafo<TipoDeDatos> nodoFin) {
         if (nodoFin!=null) {
             this.nodoFin = nodoFin;
         } else{
@@ -73,7 +80,7 @@ public class Arista<TipoDelDato> {
     public void setPeso(double peso) {
         this.peso = peso;
     }
-    public NodoGrafo<TipoDelDato> getVertice (NodoGrafo<TipoDelDato> vertice) {
+    public NodoGrafo<TipoDeDatos> getVertice (NodoGrafo<TipoDeDatos> vertice) {
         if (vertice == nodoIni) {
             return nodoFin;
         } else if (vertice == nodoFin){

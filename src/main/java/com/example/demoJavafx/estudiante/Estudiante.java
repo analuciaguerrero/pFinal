@@ -1,12 +1,8 @@
 package com.example.demoJavafx.estudiante;
 
 import com.example.demoJavafx.DatosJuego;
-import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.Nodo;
-import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
-import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
 import com.example.demoJavafx.estructurasDeDatos.ListaSimple.ListaSimple;
 import com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras.Cola;
-import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.excepciones.ProbabilidadNoValida;
 import com.example.demoJavafx.excepciones.TamañoArrayInvalido;
 import com.example.demoJavafx.tablero.Celda;
@@ -43,50 +39,36 @@ public abstract class Estudiante {
     @Expose
     private boolean isVivo = true;
     @Expose
-    BST<Estudiante> arbolGenealogico;
-    @Expose
-    Cola colaDeOperaciones = new Cola<>();
-    @Expose
-    int contRepro = 0;
-    @Expose
-    int contClon = 0;
+    private Cola<String> colaDeOperaciones = new Cola<>();
+    @Expose (serialize = false)
+    private ListaSimple<Estudiante> padres = new ListaSimple<>(2);
     private static final Logger log = LogManager.getLogger();
-
-    public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, double probMuerte, int posicionN, int posicionM) {
+    public Estudiante(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
         this.id = id;
         this.generacion = generacion;
         this.tiempoDeVida = tiempoDeVida;
         this.probReproduccion = probReproduccion;
         this.probClonacion = probClonacion;
-        this.probMuerte = 1-probReproduccion;
+        this.probMuerte = 100-probReproduccion;
         this.posicionM = posicionM;
         this.posicionN = posicionN;
         if (probReproduccion < 0 || probReproduccion > 100 || probClonacion < 0 || probClonacion > 100) throw new ProbabilidadNoValida();
-        this.arbolGenealogico = new BST<>();
-        this.arbolGenealogico.raiz = new Nodo<>(this);
-    }
-    public Estudiante(int id) {
-        this.id = id;
-        this.arbolGenealogico = new BST<>();
-        this.arbolGenealogico.raiz = new Nodo<>(this);
+        actualizarTiempoDeVidaProperty();
+        colaDeOperaciones.add(STR."Acción: nacer, turno: \{turno}");
+        log.debug(STR."Ha nacido el estudiante \{id}");
     }
 
-    public Estudiante(int id, int tiempoDeVida) {
-        this.id = id;
-        this.tiempoDeVida = tiempoDeVida;
-        this.arbolGenealogico = new BST<>();
-        this.arbolGenealogico.raiz = new Nodo<>(this);
-    }
-
-    public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
+    public Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
         this.id = id;
         this.generacion = generacion;
         this.tiempoDeVida = tiempoDeVida;
         this.probReproduccion = probReproduccion;
         this.probClonacion = probClonacion;
-        this.probMuerte = 1-probReproduccion;
-        this.arbolGenealogico = new BST<>();
-        this.arbolGenealogico.raiz = new Nodo<>(this);
+        this.probMuerte = 100-probReproduccion;
+        if (probReproduccion < 0 || probReproduccion > 100 || probClonacion < 0 || probClonacion > 100) throw new ProbabilidadNoValida();
+        actualizarTiempoDeVidaProperty();
+        colaDeOperaciones.add(STR."Acción: nacer, turno: \{turno}");
+        log.debug(STR."Ha nacido el estudiante \{id}");
     }
     public Estudiante(){}
     public Estudiante(Estudiante estudiante) {
@@ -97,9 +79,11 @@ public abstract class Estudiante {
         this.tiempoDeVida = estudiante.getTiempoDeVida();
         this.probReproduccion = estudiante.getProbReproduccion();
         this.probClonacion = estudiante.getProbClonacion();
-        this.probMuerte = 1 - probReproduccion;
-        this.arbolGenealogico = new BST<>();
-        this.arbolGenealogico.raiz = new Nodo<>(this);
+        this.probMuerte = 100 - probReproduccion;
+        actualizarTiempoDeVidaProperty();
+        this.isVivo = estudiante.isVivo();
+        this.colaDeOperaciones = estudiante.getColaDeOperaciones();
+        log.debug(STR."Se ha creado una copia del estudiante \{id}");
     }
 
     public int getPosicionN() {
@@ -126,7 +110,7 @@ public abstract class Estudiante {
     }
     public void setPosicion(int[] posicion) throws TamañoArrayInvalido{
         try {
-                if (posicion.length != 2) throw new TamañoArrayInvalido();
+            if (posicion.length != 2) throw new TamañoArrayInvalido();
             posicionN = posicion[0];
             posicionM = posicion[1];
         } catch (TamañoArrayInvalido e) {
@@ -134,7 +118,7 @@ public abstract class Estudiante {
         }
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -156,9 +140,10 @@ public abstract class Estudiante {
         return tiempoDeVida;
     }
 
-    public void setTiempoDeVida(int tiempoDeVida) {
+    public void setTiempoDeVida(int tiempoDeVida, int turno) {
         this.tiempoDeVida = tiempoDeVida;
         actualizarTiempoDeVidaProperty();
+        colaDeOperaciones.add(STR."Acción: actualizarTV (\{getTiempoDeVida()}), turno: \{turno}");
         log.info("El tiempo de vida se ha modificado");
     }
 
@@ -166,9 +151,11 @@ public abstract class Estudiante {
         return probReproduccion;
     }
 
-    public void setProbReproduccion(double probReproduccion) {
+    public void setProbReproduccion(double probReproduccion, int turno) {
         this.probReproduccion = probReproduccion;
+        this.probMuerte = 100 - probReproduccion;
         if (probReproduccion < 0 || probReproduccion > 100) throw new ProbabilidadNoValida();
+        colaDeOperaciones.add(STR."Acción: actualizar la probabilidad de reproducción (\{getProbReproduccion()}), turno: \{turno}");
         log.info("La probabilidad de reproducción ha sido modificada");
     }
 
@@ -176,9 +163,10 @@ public abstract class Estudiante {
         return probClonacion;
     }
 
-    public void setProbClonacion(double probClonacion) {
+    public void setProbClonacion(double probClonacion, int turno) {
         this.probClonacion = probClonacion;
         if (probClonacion < 0 || probClonacion > 100) throw new ProbabilidadNoValida();
+        colaDeOperaciones.add(STR."Acción: actualizar la probabilidad de clonación (\{getProbClonacion()}), turno: \{turno}");
         log.info("La probabilidad de clonación ha sido modificada");
     }
 
@@ -192,6 +180,19 @@ public abstract class Estudiante {
 
     public void setTiempoDeVidaProperty(IntegerProperty tiempoDeVidaProperty) {
         this.tiempoDeVidaProperty = tiempoDeVidaProperty;
+    }
+    public void addOperacion(String operacion) {
+        colaDeOperaciones.add(operacion);
+    }
+    public ListaSimple<Estudiante> getPadres() {
+        return padres;
+    }
+    public void setPadres(Estudiante padre1, Estudiante padre2) {
+        this.padres.setElemento(0, padre1);
+        this.padres.setElemento(1, padre2);
+    }
+    protected void setPadres(ListaSimple<Estudiante> padres) {
+        this.padres = padres;
     }
     public void actualizarTiempoDeVidaProperty () {
         tiempoDeVidaProperty.set(tiempoDeVida);
@@ -248,26 +249,21 @@ public abstract class Estudiante {
         celda.getListaEstudiantes().del(this);
         dato.getEstudiantes().del(this);
         isVivo = false;
+        colaDeOperaciones.add(STR."Acción: morir, turno: \{dato.getTurnoActual()}");
+        log.debug(STR."El estudiante \{this.getId()} ha muerto");
     }
-    public abstract void mover(DatosJuego dato, Tablero tablero) throws MasDe3Estudiantes;
+    public abstract void mover(DatosJuego dato, Tablero tablero);
     protected void cambiarDePosicion (int nuevaPosicionN, int nuevaPosicionM, Tablero tablero) {
         Celda celdaNueva = tablero.getCelda(nuevaPosicionN, nuevaPosicionM);
-        Celda celdaActual = tablero.getCelda(getPosicionN(), getPosicionM());
-        if (celdaActual != null) {
-            // Eliminar el estudiante de la celda actual
-            celdaActual.eliminarEstudiante(this);
-        }
-
-        // Actualizar la posición del estudiante
+        Celda celda = tablero.getCelda(getPosicionN(), getPosicionM());
+        celda.getListaEstudiantes().del(this);
+        celda.restablecerInterfazVisual();
         setPosicionN(nuevaPosicionN);
         setPosicionM(nuevaPosicionM);
-
-        if (celdaNueva != null) {
-            // Agregar el estudiante a la nueva celda
-            celdaNueva.agregarEstudiante(this, true);
-        }
+        celdaNueva.getListaEstudiantes().add(this);
+        celdaNueva.restablecerInterfazVisual();
     }
-    protected void moverseAleatorio(Tablero tablero) {
+    protected void moverseAleatorio(Tablero tablero, int turno) {
         log.info("Inicio de un movimiento aleatorio");
         Random a = new Random();
         int movimiento = a.nextInt(1, 8);
@@ -275,55 +271,38 @@ public abstract class Estudiante {
             switch (movimiento) {
                 case 1:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM(), tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 2:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM() - 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 3:
                     cambiarDePosicion(getPosicionN(), getPosicionM() - 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 4:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM() - 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 5:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM(), tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 6:
                     cambiarDePosicion(getPosicionN() - 1, getPosicionM() + 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 7:
                     cambiarDePosicion(getPosicionN(), getPosicionM() + 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 case 8:
                     cambiarDePosicion(getPosicionN() + 1, getPosicionM() + 1, tablero);
-                    colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
                     break;
                 default:
                     log.error("Se ha intentado hacer un movimiento aleatorio inválido");
             }
+            this.getColaDeOperaciones().add(STR."Acción: moverse (\{getPosicionN()}, \{getPosicionM()}), turno: \{turno}");
+            log.debug(STR."El estudiante se ha movido a \{getPosicionN()}, \{getPosicionM()}");
         } catch (IndexOutOfBoundsException e) {
-            moverseAleatorio(tablero);
+            moverseAleatorio(tablero, turno);
         }
     }
-    private boolean estudianteYaMovido(Estudiante estudiante, ListaSimple<Integer> lista) {
-        int contador = 0;
-        boolean estudianteMovido = false;
-        while (contador < lista.getNumeroElementos() && !estudianteMovido) {
-            if (estudiante.getId() == lista.getDato(contador)) {
-                estudianteMovido = true;
-            }
-            contador++;
-        }
-        return estudianteMovido;
-    }
-    public <Tipo extends Estudiante> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda) {
+    public <TipoDeDatos extends Estudiante> boolean reproducirse (Estudiante pareja, DatosJuego dato, Celda celda, int turno) {
         int num = getNumTipo();
         int numPareja = pareja.getNumTipo();
         Random a = new Random();
@@ -342,10 +321,8 @@ public abstract class Estudiante {
             } else {
                 probMejora = 100;
             }
-
             Random b = new Random();
             int m = b.nextInt(1, 100);
-
             Class<?> hijoTipo;
             if (m <= probMejora) {
                 hijoTipo = estudiante1.getTipo();
@@ -353,14 +330,16 @@ public abstract class Estudiante {
                 hijoTipo = estudiante2.getTipo();
             }
             try {
-                Constructor<?> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, double.class, double.class);
+                Constructor<?> constructor = hijoTipo.getConstructor(int.class, int.class, int.class, int.class, int.class, double.class, double.class, int.class);
                 int id = dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1;
-                Tipo hijo = (Tipo) constructor.newInstance(id, getPosicionN(), getPosicionM(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
+                TipoDeDatos hijo = (TipoDeDatos) constructor.newInstance(id, getPosicionN(), getPosicionM(), this.getGeneracion()+1, dato.getTurnosVidaIniciales(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante(), dato.getTurnoActual());
+                hijo.setPadres(this, pareja);
                 hijo.add(dato, celda);
+                colaDeOperaciones.add(STR."Acción: reproducirse (con estudiante\{pareja.getId()}), turno: \{turno}");
+                log.debug(STR."El estudiante \{this} se ha reproducido con el estudiante \{pareja.getId()}");
                 return false; //No mueren
             } catch (Exception e) {
                 log.error("No se ha podido crear una instancia para el estudiante hijo");
-                e.printStackTrace();
                 return false; //No mueren
             }
         } else {
@@ -371,50 +350,36 @@ public abstract class Estudiante {
         try {
             Constructor<? extends Estudiante> constructor = getClass().getConstructor(Estudiante.class);
             Estudiante clon = constructor.newInstance(this);
+            clon.setId(dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1);
+            colaDeOperaciones.add(STR."Acción: clonarse, turno: \{dato.getTurnoActual()}");
+            log.debug(STR."El estudiante \{this.getId()} se ha clonado");
             clon.add(dato, celda);
+            clon.getColaDeOperaciones().add(STR."Acción: nacer, turno: \{dato.getTurnoActual()}");
+            log.debug(STR."El estudiante \{clon.getId()} ha nacido");
         } catch (Exception e) {
             log.error("No se ha podido crear un clon del estudiante");
         }
     }
-    public boolean actualizarTiempoDeVida(DatosJuego dato, Celda celda){
-        tiempoDeVida--;
+    public boolean actualizarTiempoDeVida(Celda celda, int turno){
+        tiempoDeVida-=1;
         actualizarTiempoDeVidaProperty();
-        log.info("El tiempo de vida ha sido actualizado");
+        probReproduccion -= 10;
+        if (probReproduccion < 0) probReproduccion = 0;
+        probClonacion -= 10;
+        if (probClonacion < 0) probClonacion = 0;
+        colaDeOperaciones.add(STR."Acción: actualizar tiempo de vida (\{getTiempoDeVida()}), turno: \{turno}");
+        log.debug("El tiempo de vida ha sido actualizado");
         if (tiempoDeVida<=0){
             celda.eliminarEstudiante(this);
             return true;
         }
         return false;
     }
-    public BST<Estudiante> getArbolGenealogico() {
-        return arbolGenealogico;
-    }
-
-    public void setArbolGenealogico(BST<Estudiante> arbolGenealogico) {
-        this.arbolGenealogico = arbolGenealogico;
-    }
-    public Cola getColaDeOperaciones() {
+    public Cola<String> getColaDeOperaciones() {
         return colaDeOperaciones;
     }
 
-    public void setColaOperaciones(Cola colaDeOperaciones) {
+    public void setColaOperaciones(Cola<String> colaDeOperaciones) {
         this.colaDeOperaciones = colaDeOperaciones;
     }
-
-    public int getContRepro() {
-        return contRepro;
-    }
-
-    public void setContRepro(int contRepro) {
-        this.contRepro = contRepro;
-    }
-
-    public int getContClon() {
-        return contClon;
-    }
-
-    public void setContClon(int contClon) {
-        this.contClon = contClon;
-    }
-
 }

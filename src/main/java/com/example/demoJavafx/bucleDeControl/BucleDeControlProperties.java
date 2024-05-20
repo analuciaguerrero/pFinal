@@ -1,7 +1,6 @@
 package com.example.demoJavafx.bucleDeControl;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.SeleccionarPartidaController;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
 import com.example.demoJavafx.tablero.Celda;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -68,15 +67,12 @@ public class BucleDeControlProperties {
         return tableroFilas;
     }
 
-    public void actualizarTurnoProperty () {
-        setTurnoProperty(dato.getTurnoActual());
-    }
     public IntegerProperty getTurnoProperty() {
         return turnoProperty;
     }
 
-    public void setTurnoProperty(Integer turnoProperty) {
-        this.turnoProperty.set(turnoProperty);
+    public void setTurnoProperty(IntegerProperty turnoProperty) {
+        this.turnoProperty = turnoProperty;
     }
     public int getFilas() {
         return dato.getFilasDelTablero();

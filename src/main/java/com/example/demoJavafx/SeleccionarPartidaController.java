@@ -35,13 +35,15 @@ public class SeleccionarPartidaController implements Initializable {
     }
 
     @FXML
-    protected void onBotonCargarFicheroClick (ActionEvent event) {
+    protected void onBotonCargarFicheroClick (ActionEvent event) throws IOException {
         if (!listaDeFicheros.getSelectionModel().isEmpty()) {
             Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stageActual.close();
             String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
             DatosJuego datosJuego = DatosJuego.cargarArchivo(archivo);
-            TableroController controlador = new TableroController(datosJuego);
+            ZombieStudentsLife juego = new ZombieStudentsLife(datosJuego, false);
+            TableroController controlador = new TableroController(datosJuego, juego);
+            controlador.crearTablero(juego.getTablero());
         }
     }
 
@@ -79,7 +81,7 @@ public class SeleccionarPartidaController implements Initializable {
 
     @FXML
     protected void onBotonCargarPartidaClick(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("Loading.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("CargarJuego.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

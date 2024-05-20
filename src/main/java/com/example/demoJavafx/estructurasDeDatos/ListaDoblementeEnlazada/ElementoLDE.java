@@ -1,23 +1,23 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada;
 
-public class ElementoLDE<Tipo> {
-    private Tipo data;
-    private ElementoLDE<Tipo> siguiente;
-    private ElementoLDE<Tipo> anterior;
+public class ElementoLDE<TipoDeDatos> {
+    private TipoDeDatos data;
+    private ElementoLDE<TipoDeDatos> siguiente;
+    private ElementoLDE<TipoDeDatos> anterior;
     public ElementoLDE(ElementoLDE anterior) {
         this.anterior = anterior;
     }
-    public ElementoLDE(ElementoLDE anterior, ElementoLDE siguiente,Tipo data) {
+    public ElementoLDE(ElementoLDE anterior, ElementoLDE siguiente,TipoDeDatos data) {
         this.data = data;
         this.anterior = anterior;
         this.siguiente = siguiente;
     }
-    public ElementoLDE(Tipo data) {
+    public ElementoLDE(TipoDeDatos data) {
         this.data = data;
     }
     public ElementoLDE(){}
 
-    public void insertarmeEn(ElementoLDE<Tipo> el) {
+    public void insertarmeEn(ElementoLDE<TipoDeDatos> el) {
         this.siguiente = el.siguiente;
         this.anterior = el;
         el.siguiente = this;
@@ -25,28 +25,28 @@ public class ElementoLDE<Tipo> {
             this.siguiente.anterior = this;
     }
 
-    public ElementoLDE<Tipo> getSiguiente() {
+    public ElementoLDE<TipoDeDatos> getSiguiente() {
         return siguiente;
     }
 
-    public ElementoLDE<Tipo> getAnterior() {
+    public ElementoLDE<TipoDeDatos> getAnterior() {
         return anterior;
     }
 
-    public void setSiguiente(ElementoLDE<Tipo> el) {
+    public void setSiguiente(ElementoLDE<TipoDeDatos> el) {
         this.siguiente = el;
     }
 
-    public void setAnterior(ElementoLDE<Tipo> el) {
+    public void setAnterior(ElementoLDE<TipoDeDatos> el) {
         this.anterior = el;
     }
 
 
-    public Tipo getData() {
+    public TipoDeDatos getData() {
         return this.data;
     }
 
-    public void setData(Tipo dato) {
+    public void setData(TipoDeDatos dato) {
         this.data = dato;
     }
 }

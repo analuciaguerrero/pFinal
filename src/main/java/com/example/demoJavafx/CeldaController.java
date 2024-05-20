@@ -26,11 +26,11 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 public class CeldaController implements Initializable {
-    private static final Logger log = LogManager.getLogger(CeldaController.class);
-    private static Parent nodo;
+    private static final Logger log = LogManager.getLogger();
+    private Parent root;
     private boolean isListenerActive = true;
     private DatosJuego dato;
-    private Celda celda;
+    Celda celda;
 
     @FXML
     private VBox estudiantesVBox;
@@ -42,7 +42,6 @@ public class CeldaController implements Initializable {
     private ChoiceBox<String> estudiantesAddBox = new ChoiceBox<>();
     @FXML
     private ChoiceBox<String> recursosAddBox = new ChoiceBox<>();
-
     private final String[] tiposEstudiantes = {"+ Básico", "+ Normal", "+ Avanzado"};
     private final String[] tiposRecursos = {"+ Agua", "+ Comida", "+ Montaña", "+ Tesoro", "+ Biblioteca", "+ Pozo"};
 
@@ -54,9 +53,9 @@ public class CeldaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Celda.fxml"));
         loader.setController(this);
         Parent root = loader.load();
-        estudiantesVBox = (VBox) ((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(1);
-        recursosVBox = (VBox) ((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(3);
-        CeldaController.nodo = root;
+        estudiantesVBox = (VBox)((GridPane) ((VBox) root).getChildren().getFirst()).getChildren().get(1);
+        recursosVBox = (VBox)((GridPane) ((VBox) root).getChildren().getFirst()).getChildren().get(3);
+        this.root = root;
         if (!celda.getListaEstudiantes().isVacia()) {
             for (int i = 0; i != celda.getListaEstudiantes().getNumeroElementos(); i++) {
                 addEstudiantePrinc(celda.getListaEstudiantes().getElemento(i).getData().getTipo(), false, celda.getListaEstudiantes().getElemento(i).getData());
@@ -68,23 +67,25 @@ public class CeldaController implements Initializable {
             }
         }
     }
-
+    public Parent getRoot() {
+        return root;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            alertaCeldaLabel.setText(String.format("Celda %d, %d", celda.getPosicionN(), celda.getPosicionM()));
+            alertaCeldaLabel.setText(STR."Casilla \{celda.getPosicionN()}, \{celda.getPosicionM()}");
             estudiantesAddBox.getItems().setAll(tiposEstudiantes);
             recursosAddBox.getItems().setAll(tiposRecursos);
             estudiantesAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
             recursosAddBox.setStyle("-fx-font-family: 'Bookman Old Style'; -fx-font-size: 12px;");
             estudiantesAddBox.setValue("Estudiante");
             recursosAddBox.setValue("Recurso");
-            estudiantesAddBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            estudiantesAddBox.valueProperty().addListener((_, _, newValue) -> {
                 if (isListenerActive) {
                     this.addEstudiante(newValue);
                 }
             });
-            recursosAddBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            recursosAddBox.valueProperty().addListener((_, _, newValue) -> {
                 if (isListenerActive) {
                     this.addRecurso(newValue);
                 }
@@ -138,30 +139,26 @@ public class CeldaController implements Initializable {
         try {
             T estudiante;
             if (nuevoEstudiante) {
-                Constructor<?> constructor = claseEstudiante.getConstructor(int.class, int.class, int.class, double.class, double.class);
+                Constructor<?> constructor = claseEstudiante.getConstructor(int.class, int.class, int.class, double.class, double.class, int.class);
                 int id;
                 if (dato.getHistorialEstudiantes().isVacia()) {
                     id = 1;
                 } else {
                     id = dato.getHistorialEstudiantes().getUltimo().getData().getId() + 1;
                 }
-                estudiante = (T) constructor.newInstance(id, dato.getTurnoActual(), dato.getTurnosVidaIniciales(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante());
+                estudiante = (T) constructor.newInstance(id, 1, dato.getTurnosVidaIniciales(), dato.getProbReproduccionEstudiante(), dato.getProbClonacionEstudiante(), dato.getTurnoActual());
                 celda.agregarEstudiante(estudiante, true);
             } else {
                 estudiante = (T) estudianteAñadir;
             }
             HBox estudianteCelda = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
-            Label estudianteLabel = (Label) estudianteCelda.getChildren().get(0);
+            Label estudianteLabel = (Label) estudianteCelda.getChildren().getFirst();
             Font font = new Font("Bookman Old Style", 12);
             estudianteLabel.setFont(font);
             String tipoEstudiante = claseEstudiante.getSimpleName().replace("Estudiante", "");
-            estudianteLabel.textProperty().bind(estudiante.getTiempoDeVidaProperty().asString(
-                    tipoEstudiante + ": Vida: %d Id: " + estudiante.getId() + " Gen: " + estudiante.getGeneracion()));
-
-            Button botonQuitar = (Button) ((AnchorPane) estudianteCelda.getChildren().get(1)).getChildren().get(0);
-
+            estudianteLabel.textProperty().bind(estudiante.getTiempoDeVidaProperty().asString(tipoEstudiante + ": Vida: %d Id: " + estudiante.getId() + " Gen: " + estudiante.getGeneracion()));
+            Button botonQuitar = (Button) ((AnchorPane) estudianteCelda.getChildren().get(1)).getChildren().getFirst();
             botonQuitar.setOnAction(this::delEstudiante);
-
             estudiantesVBox.getChildren().add(estudianteCelda);
         } catch (Exception e) {
             log.error("No se ha creado una instancia del tipo solicitado de estudiante");
@@ -172,7 +169,7 @@ public class CeldaController implements Initializable {
         int i = 0;
         boolean eliminado = false;
         while (i != dato.getEstudiantes().getNumeroElementos() && !eliminado) {
-            String labelEstudianteText = ((Label) ((HBox) ((Button) event.getSource()).getParent().getParent()).getChildren().get(0)).getText();
+            String labelEstudianteText = ((Label) ((HBox) ((Button) event.getSource()).getParent().getParent()).getChildren().getFirst()).getText();
             int indexOfIdLabel = labelEstudianteText.indexOf("Id:") + 4;
             int idLabel = (int) labelEstudianteText.charAt(indexOfIdLabel) - '0';
             int idEstudiante = dato.getEstudiantes().getElemento(i).getData().getId();
@@ -191,7 +188,7 @@ public class CeldaController implements Initializable {
             if (celda.getListaRecursos().getNumeroElementos() >= 3) {
                 alertaCeldaLabel.setText("¡Ya hay 3 recursos!");
                 PauseTransition pausa = new PauseTransition(Duration.millis(2500));
-                pausa.setOnFinished(event -> alertaCeldaLabel.setText(String.format("Celda %d, %d", celda.getPosicionN(), celda.getPosicionM())));
+                pausa.setOnFinished(event -> alertaCeldaLabel.setText("Celda " + celda.getPosicionN() + ", " + celda.getPosicionM()));
                 pausa.play();
                 log.debug("Se ha intentado crear un recurso cuando ya habían 3 en la celda");
             } else {
@@ -243,12 +240,12 @@ public class CeldaController implements Initializable {
                 recurso = recursoAñadir;
             }
             HBox cajaRecurso = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
-            Label labelRecurso = (Label) cajaRecurso.getChildren().get(0);
+            Label labelRecurso = (Label) cajaRecurso.getChildren().getFirst();
             Font font = new Font("Bookman Old Style", 12);
             labelRecurso.setFont(font);
             String tipoRecurso = Character.toUpperCase(claseRecurso.getSimpleName().charAt(0)) + claseRecurso.getSimpleName().substring(1);
-            labelRecurso.textProperty().bind(recurso.getTurnosRestantesProperty().asString(String.format("%s: Vida: %%d Id: %d", tipoRecurso, recurso.getId())));
-            Button botonQuitar = (Button) ((AnchorPane) cajaRecurso.getChildren().get(1)).getChildren().get(0);
+            labelRecurso.textProperty().bind(recurso.getTurnosRestantesProperty().asString(STR."\{tipoRecurso}: Vida: %d Id: \{recurso.getId()}"));
+            Button botonQuitar = (Button) ((AnchorPane) cajaRecurso.getChildren().get(1)).getChildren().getFirst();
             botonQuitar.setOnAction(this::delRecurso);
             recursosVBox.getChildren().add(cajaRecurso);
         } catch (Exception e) {
@@ -257,7 +254,7 @@ public class CeldaController implements Initializable {
     }
 
     public void delRecurso(ActionEvent event) {
-        String labelRecursoText = ((Label) ((HBox) ((Button) event.getSource()).getParent().getParent()).getChildren().get(0)).getText();
+        String labelRecursoText = ((Label) ((HBox) ((Button) event.getSource()).getParent().getParent()).getChildren().getFirst()).getText();
         int indexOfId = labelRecursoText.indexOf("Id:") + 4;
         int id = labelRecursoText.charAt(indexOfId) - '0';
         int i = 0;
@@ -271,9 +268,5 @@ public class CeldaController implements Initializable {
             }
             i++;
         }
-    }
-
-    public static Parent getNodo() {
-        return nodo;
     }
 }

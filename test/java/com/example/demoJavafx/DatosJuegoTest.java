@@ -5,9 +5,7 @@ import com.example.demoJavafx.entorno.Comida;
 import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estudiante.Estudiante;
 import com.example.demoJavafx.estudiante.EstudianteBasico;
-import com.example.demoJavafx.excepciones.MasDe3Estudiantes;
 import com.example.demoJavafx.tablero.Celda;
-import com.example.demoJavafx.tablero.Tablero;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

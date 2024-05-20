@@ -8,6 +8,7 @@ public class EstudianteProperties {
     private DoubleProperty probReproduccion = new SimpleDoubleProperty();
     private DoubleProperty probClonacion = new SimpleDoubleProperty();
     private DoubleProperty probMuerte = new SimpleDoubleProperty();
+    private int turno;
 
     public EstudianteProperties(Estudiante origen) {
         setOrigen(origen);
@@ -31,9 +32,9 @@ public class EstudianteProperties {
     }
 
     public void commit() {
-        origen.setTiempoDeVida(tiempoDeVida.get());
-        origen.setProbReproduccion(probReproduccion.get());
-        origen.setProbClonacion(probClonacion.get());
+        origen.setTiempoDeVida(tiempoDeVida.get(), turno);
+        origen.setProbReproduccion(probReproduccion.get(), turno);
+        origen.setProbClonacion(probClonacion.get(), turno);
     }
     public IntegerProperty tiempoDeVidaProperty() {
         return tiempoDeVida;
@@ -47,5 +48,6 @@ public class EstudianteProperties {
     public DoubleProperty probMuerteProperty() {
         return probMuerte;
     }
+    public int getTurno(){return turno;}
 
 }

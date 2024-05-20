@@ -3,10 +3,10 @@ package com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ListaDoblementeEnlazada<Tipo>{
+public class ListaDoblementeEnlazada<TipoDeDatos>{
     private static final Logger log = LogManager.getLogger();
-    private ElementoLDE<Tipo> primero;
-    private ElementoLDE<Tipo> ultimo;
+    private ElementoLDE<TipoDeDatos> primero;
+    private ElementoLDE<TipoDeDatos> ultimo;
 
     public ListaDoblementeEnlazada() {
         this.primero = null;
@@ -22,14 +22,14 @@ public class ListaDoblementeEnlazada<Tipo>{
         this.ultimo = null;
     }
 
-    protected int add(ElementoLDE<Tipo> el) {
+    protected int add(ElementoLDE<TipoDeDatos> el) {
         int pos = 1;
         if (isVacia()) {
             this.primero = el;
             this.ultimo = el;
             return 0;
         } else {
-            ElementoLDE<Tipo> actual = this.primero;
+            ElementoLDE<TipoDeDatos> actual = this.primero;
             while (actual != this.ultimo) {
                 actual = actual.getSiguiente();
                 pos += 1;
@@ -40,14 +40,14 @@ public class ListaDoblementeEnlazada<Tipo>{
         }
     }
 
-    public void add(Tipo o) {
-        ElementoLDE<Tipo> e = new ElementoLDE<>();
+    public void add(TipoDeDatos o) {
+        ElementoLDE<TipoDeDatos> e = new ElementoLDE<>();
         e.setData(o);
         add(e);
     }
 
-    public void insert(Tipo o, int posicion) {
-        ElementoLDE<Tipo> objeto = new ElementoLDE<>();
+    public void insert(TipoDeDatos o, int posicion) {
+        ElementoLDE<TipoDeDatos> objeto = new ElementoLDE<>();
         objeto.setData(o);
         if (posicion == 0) {
             objeto.setSiguiente(this.primero);
@@ -58,11 +58,10 @@ public class ListaDoblementeEnlazada<Tipo>{
             }
             this.primero = objeto;
         } else {
-            ElementoLDE<Tipo> anterior = getElemento(posicion - 1);
-            if (anterior == null) {
-                log.error("No existen tantos elementos en la lista para insertar en la posición {}", posicion);
+            if (getElemento(posicion - 1) == null){
+                System.out.println("No hay los elementos suficientes en la lista");
             } else {
-                objeto.insertarmeEn(anterior);
+                objeto.insertarmeEn(getElemento(posicion - 1));
             }
         }
     }
@@ -73,7 +72,7 @@ public class ListaDoblementeEnlazada<Tipo>{
                 this.primero.setAnterior(null);
             }
         } else {
-            ElementoLDE<Tipo> actual = this.primero;
+            ElementoLDE<TipoDeDatos> actual = this.primero;
             for (int i = 0; i != posicion ; i++) {
                 actual = actual.getSiguiente();
                 if (actual == this.ultimo) {
@@ -86,7 +85,7 @@ public class ListaDoblementeEnlazada<Tipo>{
         }
         return this.getNumeroElementos();
     }
-    public void del (Tipo elemento) {
+    public void del (TipoDeDatos elemento) {
         Integer indiceAEliminar = null;
         for (int i=0; i != getNumeroElementos(); i++) {
             if (getElemento(i).getData() == elemento) {
@@ -105,7 +104,7 @@ public class ListaDoblementeEnlazada<Tipo>{
             return 0;
         } else {
             int elms = 1;
-            ElementoLDE<Tipo> actual = this.primero;
+            ElementoLDE<TipoDeDatos> actual = this.primero;
             while (actual != this.ultimo) {
                 elms += 1;
                 actual = actual.getSiguiente();
@@ -114,9 +113,9 @@ public class ListaDoblementeEnlazada<Tipo>{
         }
     }
 
-    public int getPosicion(ElementoLDE<Tipo> e) {
+    public int getPosicion(ElementoLDE<TipoDeDatos> e) {
         int pos = 0;
-        ElementoLDE<Tipo> actual = this.primero;
+        ElementoLDE<TipoDeDatos> actual = this.primero;
         while (actual != e) {
             if (actual == null) {
                 log.error("El elemento no pertenece a la lista");
@@ -128,7 +127,7 @@ public class ListaDoblementeEnlazada<Tipo>{
         return pos;
     }
 
-    public ElementoLDE<Tipo> getPrimero() {
+    public ElementoLDE<TipoDeDatos> getPrimero() {
         if (isVacia()){
             return null;
         } else {
@@ -136,7 +135,7 @@ public class ListaDoblementeEnlazada<Tipo>{
         }
     }
 
-    public ElementoLDE<Tipo> getUltimo () {
+    public ElementoLDE<TipoDeDatos> getUltimo () {
         if (isVacia()){
             return null;
         } else {
@@ -144,24 +143,24 @@ public class ListaDoblementeEnlazada<Tipo>{
         }
     }
 
-    public ElementoLDE<Tipo> getSiguiente (ElementoLDE<Tipo> el){
+    public ElementoLDE<TipoDeDatos> getSiguiente (ElementoLDE<TipoDeDatos> el){
         return el.getSiguiente();
     }
 
-    public ElementoLDE<Tipo> getElemento(int posicion) {
+    public ElementoLDE<TipoDeDatos> getElemento(int posicion) {
         if (isVacia()) {
             log.error("La lista está vacía, no contiene elementos");
             return null;
         } else {
-            ElementoLDE<Tipo> actual = this.primero;
+            ElementoLDE<TipoDeDatos> actual = this.primero;
             for (int i = 0; i != posicion; i++) {
                 actual = actual.getSiguiente();
             }
             return actual;
         }
     }
-    public void setElemento (int posicion, Tipo elemento) {
-        ElementoLDE<Tipo> elementoActual = this.primero;
+    public void setElemento (int posicion, TipoDeDatos elemento) {
+        ElementoLDE<TipoDeDatos> elementoActual = this.primero;
         for (int i = 0; i != posicion; i++) {
             elementoActual = elementoActual.getSiguiente();
         }
@@ -171,7 +170,7 @@ public class ListaDoblementeEnlazada<Tipo>{
         String salida = "";
         return "["+ toStringAux(this.primero,salida)+"]";
     }
-    public String toStringAux(ElementoLDE<Tipo> n, String salida){
+    public String toStringAux(ElementoLDE<TipoDeDatos> n, String salida){
         if((n != null)&&(n != this.ultimo)){
             salida= salida + n.getData() + ", "+toStringAux(n.getSiguiente(),salida);
         } else if (n== this.ultimo){

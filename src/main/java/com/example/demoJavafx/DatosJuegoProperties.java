@@ -29,6 +29,9 @@ public class DatosJuegoProperties {
     private DoubleProperty AumentoProbClon = new SimpleDoubleProperty();
     private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
 
+    public DatosJuegoProperties(DatosJuego dato){
+        setDatoInitialize(dato);
+    }
     public DatosJuego getDato(){
         return dato;
     }
@@ -40,9 +43,6 @@ public class DatosJuegoProperties {
     public void setDatoInitialize(DatosJuego dato){
         this.dato = dato;
         rollback(null);
-    }
-    public DatosJuegoProperties(DatosJuego dato){
-        setDatoInitialize(dato);
     }
     public void commit(){
         dato.setFilasDelTablero(FilasDelTablero.get());

@@ -17,12 +17,16 @@ import org.apache.logging.log4j.Logger;
 
 public class EstudianteAvanzado extends Estudiante {
     private static final Logger log = LogManager.getLogger();
-    public EstudianteAvanzado(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion) {
-        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion);
-    }
     public EstudianteAvanzado(Estudiante estudiante){
         super(estudiante);
     }
+    public EstudianteAvanzado(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
+        super(id, posicionN, posicionM, generacion, tiempoDeVida, probReproduccion, probClonacion, turno);
+    }
+    public EstudianteAvanzado(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno) {
+        super(id, generacion, tiempoDeVida, probReproduccion, probClonacion, turno);
+    }
+    public EstudianteAvanzado(){super();}
     @Override
     public Class<EstudianteAvanzado> getTipo () {
         return EstudianteAvanzado.class;
@@ -58,14 +62,6 @@ public class EstudianteAvanzado extends Estudiante {
         }
         return grafoTab;
     }
-
-    protected int calcularPesoArista(Celda vertice1, Celda vertice2, int reduccionMontaña) {
-        int peso = 1;
-        peso = addPesoObs(peso, vertice1, reduccionMontaña);
-        peso = addPesoObs(peso, vertice2, reduccionMontaña);
-        return peso;
-    }
-
     private int addPesoObs(int peso, Celda vertice, int reduccionMontaña) {
         for (int i = 0; i < vertice.getListaRecursos().getNumeroElementos(); i++) {
             switch (vertice.getListaRecursos().getElemento(i).getData().getTipo().getSimpleName()) {
@@ -83,6 +79,12 @@ public class EstudianteAvanzado extends Estudiante {
         }
         return peso;
     }
+    protected int calcularPesoArista(Celda vertice1, Celda vertice2, int reduccionMontaña) {
+        int peso = 1;
+        peso = addPesoObs(peso, vertice1, reduccionMontaña);
+        peso = addPesoObs(peso, vertice2, reduccionMontaña);
+        return peso;
+    }
     @Override
     public void mover(DatosJuego dato, Tablero tablero) throws RecursosNoUtilizados {
         ListaDoblementeEnlazada<Recursos> recursoDeseado = new ListaDoblementeEnlazada<>();
@@ -93,10 +95,9 @@ public class EstudianteAvanzado extends Estudiante {
             }
         }
         if (recursoDeseado.isVacia()) {
-            this.moverseAleatorio(tablero);
+            this.moverseAleatorio(tablero, dato.getTurnoActual());
         } else {
             Grafo<Celda> grafoTablero = getGrafoTab(dato, tablero);
-
             Camino<Celda> caminoMin = new Camino<>(new ListaDoblementeEnlazada<>(), Integer.MAX_VALUE);
             for (int m = 0; m < recursoDeseado.getNumeroElementos(); m++) {
                 NodoGrafo<Celda> nodoCelda = grafoTablero.getNodoGrafo(tablero.getCelda(getPosicionN(), getPosicionM() ));
@@ -111,7 +112,9 @@ public class EstudianteAvanzado extends Estudiante {
             }
             Celda celda= caminoMin.getCamino().getElemento(1).getData().getDato();
             cambiarDePosicion(celda.getPosicionN(), celda.getPosicionM(), tablero);
-            colaDeOperaciones.push(new ElementoLDE<>("movimiento"));
+            this.getColaDeOperaciones().add(STR."Acción: moverse (\{celda.getPosicionN()}, \{celda.getPosicionM()}), turno: \{dato.getTurnoActual()}");
+            log.debug(STR."El estudiante se ha movido a \{celda.getPosicionN()}, \{celda.getPosicionM()}");
+
         }
     }
 }

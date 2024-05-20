@@ -1,8 +1,10 @@
 package com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.excepciones.NonexistentElement;
 
 public class BST<TipoDeDatos>{
-    public Nodo<TipoDeDatos> raiz;
+    private Nodo<TipoDeDatos> raiz;
     public BST(Nodo<TipoDeDatos> raiz, Nodo<TipoDeDatos> derecha, Nodo<TipoDeDatos> izquierda) {
         this.raiz = raiz;
         this.raiz.setDerecha(derecha);
@@ -14,79 +16,83 @@ public class BST<TipoDeDatos>{
     }
 
     public BST() {
-        Nodo<TipoDeDatos> nodo = new Nodo<>(null);
-        this.raiz = nodo;
     }
     public BST(TipoDeDatos dato) {
         this.raiz = new Nodo<>(dato);
     }
-
-    public boolean isVacia() {
-        return this.raiz.dato == null;
+    public void add (TipoDeDatos dato) {
+        Nodo<TipoDeDatos> nodo = new Nodo<>(dato);
+        add(nodo);
+    }
+    public void add(Nodo<TipoDeDatos> nodo) {
+        if (getAltura() == -1) {
+            raiz = nodo;
+        } else {
+            addAux(raiz, nodo);
+        }
     }
 
-    public void add(TipoDeDatos a1, Nodo<TipoDeDatos> raiz) {
-        Nodo<TipoDeDatos> n1 = new Nodo<>(a1);
-        Comparable c = (Comparable) raiz.getDato();
-        if (isVacia()) {
-            this.raiz.setDato(a1);
-            this.raiz.setDerecha(null);
-            this.raiz.setIzquierda(null);
-        } else {
-            if (c.compareTo(a1) <= 0) {
-                if (raiz.getDerecha() == null) {
-                    raiz.setDerecha(n1);
-                } else {
-                    add(a1, raiz.getDerecha());
-                }
+    private void addAux(Nodo<TipoDeDatos> raiz, Nodo<TipoDeDatos> dato) {
+        Comparable r = (Comparable) raiz.getDato();
+        Comparable d = (Comparable) dato.getDato();
+        if (d.compareTo(r) < 0) {
+            if (raiz.getIzquierda() == null) {
+                raiz.setIzquierda(dato);
             } else {
-                if (raiz.getIzquierda() == null) {
-                    raiz.setIzquierda(n1);
-                } else {
-                    add(a1, raiz.getIzquierda());
-                }
+                addAux(raiz.getIzquierda(), dato);
+            }
+        } else {
+            if (raiz.getDerecha() == null) {
+                raiz.setDerecha(dato);
+            } else {
+                addAux(raiz.getDerecha(), dato);
             }
         }
     }
 
-    public void add(TipoDeDatos a1) {
-        add(a1, this.raiz);
-    }
-
-    public int getGrado(Nodo<TipoDeDatos> n, int result) {
-        if (result < n.gradoNodo()) {
-            result = n.gradoNodo();
+    public int getGradoN(Nodo<TipoDeDatos> n) {
+        int izquierdo = 0;
+        int derecho = 0;
+        int nodo = 0;
+        if (n.getIzquierda() != null && n.getDerecha() != null) {
+            nodo = 2;
+            izquierdo = getGradoN(n.getIzquierda());
+            derecho = getGradoN(n.getDerecha());
+        } else if (n.getIzquierda() != null && n.getDerecha() == null) {
+            nodo = 1;
+            izquierdo = getGradoN(n.getIzquierda());
+        } else if (n.getIzquierda() == null && n.getDerecha() != null) {
+            nodo = 1;
+            derecho = getGradoN(n.getDerecha());
         }
-        if (n.getIzquierda() != null) {
-            getGrado(n.getIzquierda(), result);
+        return Math.max(izquierdo, Math.max(derecho, nodo));
+    }
+
+    public int getGrado() {
+        if (getAltura() == -1) return 0;
+        else {
+            return getGradoN(this.raiz);
         }
-        if (n.getDerecha() != null) {
-            getGrado(n.getDerecha(), result);
+    }
+    public ListaDoblementeEnlazada<Nodo<TipoDeDatos>> getCamino(TipoDeDatos dato) {
+        try {
+            ListaDoblementeEnlazada<Nodo<TipoDeDatos>> camino = new ListaDoblementeEnlazada<>();
+            ListaDoblementeEnlazada<Nodo<TipoDeDatos>> caminoNuevo = getCaminoPrinc(this.raiz, dato, camino);
+            if (caminoNuevo.isVacia()) throw new NonexistentElement();
+            else return caminoNuevo;
+        } catch (NonexistentElement e) {
+            System.out.println("El dato que estas buscando no existe");
+            return null;
         }
-        return result;
     }
 
-    public ListaEnlazada<TipoDeDatos> getCamino(Nodo<TipoDeDatos> n, Nodo<TipoDeDatos> raiz, ListaEnlazada<TipoDeDatos> lista) {
-        Comparable c = (Comparable) n.getDato();
-        lista.add(raiz.getDato());
-        if (c.compareTo(raiz.getDato()) < 0) {
-            getCamino(n, raiz.getIzquierda(), lista);
-        } else if (c.compareTo(raiz.getDato()) > 0) {
-            getCamino(n, raiz.getDerecha(), lista);
-        }
-        return lista;
+    private ListaDoblementeEnlazada<Nodo<TipoDeDatos>> getCaminoPrinc(Nodo<TipoDeDatos> raiz, TipoDeDatos dato, ListaDoblementeEnlazada<Nodo<TipoDeDatos>> camino) {
+        if (raiz == null) return camino;
+        getCaminoPrinc(raiz.getIzquierda(), dato, camino);
+        if (camino.isVacia()) getCaminoPrinc(raiz.getDerecha(), dato, camino);
+        if (raiz.getDato() == dato || !camino.isVacia()) camino.insert(raiz, 0);
+        return camino;
     }
-
-    public ListaEnlazada<TipoDeDatos> getCamino(Nodo<TipoDeDatos> n) {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        ListaEnlazada<TipoDeDatos> lista1 = getCamino(n, this.raiz, lista);
-        return lista1.invertir();
-    }
-
-    public int getLongitud(Nodo<TipoDeDatos> nodo){
-        return (getCamino(nodo).getNumeroElementos()-1);
-    }
-
     public BST<TipoDeDatos> getSubArbolDcha() {
         BST<TipoDeDatos> subArbol = new BST<>(this.raiz.getDerecha());
         return subArbol;
@@ -97,189 +103,137 @@ public class BST<TipoDeDatos>{
         return subArbol;
     }
 
-    public ListaEnlazada<TipoDeDatos> preorden(Nodo<TipoDeDatos> n, ListaEnlazada<TipoDeDatos> lista) {
-        lista.add(n.dato);
-        //System.out.println(n.dato);
-        if (n.getIzquierda() != null) {
-            preorden(n.getIzquierda(), lista);
+    public ListaDoblementeEnlazada<TipoDeDatos> preOrden() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getPreOrden(this.raiz, lista);
+        return lista;
+    }
+
+    public ListaDoblementeEnlazada<TipoDeDatos> getPreOrden(Nodo<TipoDeDatos> nodo, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodo != null)) {
+            lista.add(nodo.getDato());
+            getPreOrden(nodo.getIzquierda(), lista);
+            getPreOrden(nodo.getDerecha(), lista);
         }
-        if (n.getDerecha() != null) {
-            preorden(n.getDerecha(), lista);
+        return lista;
+    }
+    public ListaDoblementeEnlazada<TipoDeDatos> ordenCentral() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getOrdenCentral(this.raiz, lista);
+        return lista;
+    }
+
+    public ListaDoblementeEnlazada<TipoDeDatos> getOrdenCentral(Nodo<TipoDeDatos> nodo, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodo != null)) {
+            getOrdenCentral(nodo.getIzquierda(), lista);
+            lista.add(nodo.getDato());
+            getOrdenCentral(nodo.getDerecha(), lista);
         }
         return lista;
     }
 
-    public ListaEnlazada<TipoDeDatos> preorden() {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        return preorden(this.raiz, lista).invertir();
-    }
-
-    public ListaEnlazada<TipoDeDatos> ordenCentral(Nodo<TipoDeDatos> n, ListaEnlazada<TipoDeDatos> lista) {
-        if (n.getIzquierda() != null) {
-            ordenCentral(n.getIzquierda(), lista);
-        }
-        //System.out.println(n.dato);
-        lista.add(n.dato);
-        if (n.getDerecha() != null) {
-            ordenCentral(n.derecha, lista);
-        }
+    public ListaDoblementeEnlazada<TipoDeDatos> postOrden() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getPostOrden(this.raiz, lista);
         return lista;
     }
 
-    public ListaEnlazada<TipoDeDatos> ordenCentral() {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        return ordenCentral(this.raiz, lista).invertir();
-    }
-
-    public ListaEnlazada<TipoDeDatos> postOrder(Nodo<TipoDeDatos> n, ListaEnlazada<TipoDeDatos> lista) {
-        if (n.getIzquierda() != null) {
-            postOrder(n.getIzquierda(), lista);
+    public ListaDoblementeEnlazada<TipoDeDatos> getPostOrden(Nodo<TipoDeDatos> nodo, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodo != null)) {
+            getPostOrden(nodo.getIzquierda(), lista);
+            getPostOrden(nodo.getDerecha(), lista);
+            lista.add(nodo.getDato());
         }
-        if (n.getDerecha() != null) {
-            postOrder(n.getDerecha(), lista);
-        }
-        //System.out.println(n.dato);
-        lista.add(n.dato);
         return lista;
     }
-
-    public ListaEnlazada<TipoDeDatos> postOrder() {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        return postOrder(this.raiz, lista).invertir();
+    public int getAlturaN(Nodo<TipoDeDatos> nodo) {
+        if (nodo == null) return - 1;
+        int altIzq = getAlturaN(nodo.getIzquierda()) + 1;
+        int altDcha = getAlturaN(nodo.getDerecha()) + 1;
+        return Math.max(altIzq, altDcha);
     }
-
-    public int getAltura(Nodo<TipoDeDatos> n, int p) {
-        int x = 0;
-        int y = 0;
-        if (n.getDerecha() != null) {
-            y = getAltura(n.getDerecha(), p + 1);
-        }
-        if (n.getIzquierda() != null) {
-            x = getAltura(n.getIzquierda(), p + 1);
-        }
-        if(x>=y && x>p){
-            return x;
-        } else if (x<y && y>p) {
-            return y;
-        }
-        return p;
-    }
-
     public int getAltura() {
-        return 1 + getAltura(this.raiz, 0);
+        return getAlturaN(this.raiz);
     }
-
-    boolean aux = true;
-    boolean aux2 = true;
-
-    public boolean isArbolCompleto(Nodo<TipoDeDatos> n, int numero) {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        if (n.getIzquierda() == null && n.getDerecha() == null) {
-            lista = getCamino(n, this.raiz, lista);
-            int num = lista.getNumeroElementos();
-            if (num != numero) {
-                aux = false;
-            }
-        }
-        if (n.getIzquierda() != null) {
-            isArbolCompleto(n.getIzquierda(), numero);
-        }
-        if (n.getDerecha() != null) {
-            isArbolCompleto(n.getDerecha(), numero);
-        }
-        return aux;
-    }
-
-    public boolean isArbolCompleto() {
-        aux = true;
-        int num = 1;
-        Nodo<TipoDeDatos> nodo = this.raiz;
-        while (nodo.getIzquierda() != null) {
-            num++;
-            nodo = nodo.getIzquierda();
-        }
-        return isArbolCompleto(this.raiz, num);
-    }
-
-    public boolean isArbolHomogeneo(Nodo<TipoDeDatos> n) {
-        int num = n.gradoNodo();
-        if (num != 2 && num != 0) {
-            aux = false;
-        }
-        if (n.getIzquierda() != null) {
-            isArbolHomogeneo(n.getIzquierda());
-        }
-        if (n.getDerecha() != null) {
-            isArbolHomogeneo(n.getDerecha());
-        }
-        return aux;
-    }
-
-    public boolean isArbolHomogeneo() {
-        aux = true;
-        return isArbolHomogeneo(this.raiz);
-    }
-
-    public ListaEnlazada<TipoDeDatos> getListaDatosNivel(int nivel, Nodo<TipoDeDatos> n, ListaEnlazada<TipoDeDatos> lista) {
-        int num = this.getCamino(n).getNumeroElementos();
-        if (num == nivel) {
-            lista.add(n.dato);
-        }
-        if (n.getIzquierda() != null) {
-            getListaDatosNivel(nivel, n.getIzquierda(), lista);
-        }
-        if (n.getDerecha() != null) {
-            getListaDatosNivel(nivel, n.getDerecha(), lista);
-        }
+    public ListaDoblementeEnlazada<Nodo<TipoDeDatos>> getDatos(int nivel) {
+        ListaDoblementeEnlazada<Nodo<TipoDeDatos>> lista = new ListaDoblementeEnlazada<>();
+        getDatosAux(this.raiz, nivel, lista);
         return lista;
     }
-
-    public ListaEnlazada<TipoDeDatos> getListaDatosNivel(int nivel) {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        return getListaDatosNivel(nivel, this.raiz, lista).invertir();
+    private void getDatosAux(Nodo<TipoDeDatos> nodo, int nivel, ListaDoblementeEnlazada<Nodo<TipoDeDatos>> lista) {
+        if (nodo == null) return;
+        if (nivel == 1) {
+            lista.add(nodo);
+            return;
+        }
+        getDatosAux(nodo.getIzquierda(), nivel - 1, lista);
+        getDatosAux(nodo.getDerecha(), nivel - 1, lista);
     }
 
-    public boolean isArbolCasiCompleto(Nodo<TipoDeDatos> n, int numero) {
-        ListaEnlazada<TipoDeDatos> lista = new ListaEnlazada<>();
-        if (n.getIzquierda() == null && n.getDerecha() == null) {
-            lista = getCamino(n, this.raiz, lista);
-            int num = lista.getNumeroElementos();
-            if (num == numero - 1) {
-                aux = false;
-            } else if (num <= numero - 1) {
-                aux2 = false;
-            }
-            if (!aux) {
-                if (num != numero - 1) {
-                    aux2 = false;
-                }
-            }
-        }
-        if (n.getIzquierda() != null) {
-            isArbolCasiCompleto(n.getIzquierda(), numero);
-        }
-        if (n.getDerecha() != null) {
-            isArbolCasiCompleto(n.getDerecha(), numero);
-        }
-        return aux2;
+    public Boolean isArbolHomogeneo() {
+        return isArbolHomogeneoPrinc(this.raiz);
     }
 
-    public boolean isArbolCasiCompleto() {
-        int num = 1;
-        Nodo<TipoDeDatos> nodo = this.raiz;
-        while (nodo.getIzquierda() != null) {
-            num++;
-            nodo = nodo.getIzquierda();
+    private Boolean isArbolHomogeneoPrinc(Nodo<TipoDeDatos> nodo) {
+        if (nodo == null || (nodo.getDerecha() != null && nodo.getIzquierda() != null)) {
+            return true;
         }
-        if (isArbolCompleto()) {
-            aux = true;
-            aux2 = true;
+        if (nodo.getDerecha() == null || nodo.getIzquierda() == null) {
+            return false;
+        }
+        return isArbolHomogeneoPrinc(nodo.getDerecha()) && isArbolHomogeneoPrinc(nodo.getIzquierda());
+    }
+
+    public Boolean isArbolCompleto() {
+        return isArbolCompletoPrinc(getAltura());
+    }
+
+    private Boolean isArbolCompletoPrinc(int nivel) {
+        if (nivel == 0) {
+            return true;
+        }
+        if (getDatos(nivel).getNumeroElementos() != Math.pow(2, nivel - 1)) {
+            return false;
+        }
+        return isArbolCompletoPrinc(nivel - 1);
+    }
+
+    public Boolean isArbolCasiCompleto() {
+        if (!isArbolCompletoPrinc(getAltura() - 1)) {
             return false;
         } else {
-            aux = true;
-            aux2 = true;
-            return isArbolCasiCompleto(this.raiz, num);
+            ListaDoblementeEnlazada<Nodo<TipoDeDatos>> lista = getDatos(getAltura() - 1);
+            return isArbolCasiCompleto1(lista);
         }
+    }
+
+    private Boolean isArbolCasiCompleto1(ListaDoblementeEnlazada<Nodo<TipoDeDatos>> lista) {
+        if (lista.isVacia()) {
+            return false;
+        }
+        BST<TipoDeDatos> arbol = new BST<>(lista.getPrimero().getData());
+        if (arbol.getGrado() == 2) {
+            lista.del(0);
+            return isArbolCasiCompleto1(lista);
+        } else if (arbol.getGrado() == 1) {
+            lista.del(0);
+            return isArbolCasiCompleto2(lista);
+        } else return false;
+    }
+
+    private Boolean isArbolCasiCompleto2(ListaDoblementeEnlazada<Nodo<TipoDeDatos>> lista) {
+        if (lista.isVacia()) return true;
+        BST<TipoDeDatos> arbol = new BST<>(lista.getPrimero().getData().getDato());
+        if (arbol.getGrado() != 0) {
+            return false;
+        } else {
+            lista.del(0);
+            return isArbolCasiCompleto2(lista);
+        }
+    }
+
+    public Nodo<TipoDeDatos> getRaiz() {
+        return raiz;
     }
 }
 

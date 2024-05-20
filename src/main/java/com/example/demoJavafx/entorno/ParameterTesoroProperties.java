@@ -7,9 +7,6 @@ public class ParameterTesoroProperties {
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
     private DoubleProperty aumentoPorcentajeRep = new SimpleDoubleProperty();
-    private DoubleProperty probTesoro = new SimpleDoubleProperty();
-
-
     public ParameterTesoroProperties(Tesoro original) {
         setOriginal(original);
     }
@@ -17,13 +14,11 @@ public class ParameterTesoroProperties {
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
         original.setAumentoProbReproduccion(aumentoPorcentajeRep.get());
-        original.setProbTesoro(probTesoro.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
         aumentoPorcentajeRep.set(original.getAumentoProbReproduccion());
-        probTesoro.set(original.getProbTesoro());
     }
 
     public Tesoro getOriginal() {
@@ -43,6 +38,5 @@ public class ParameterTesoroProperties {
         return aumentoPorcentajeRep;
     }
 
-    public DoubleProperty probTesoroProperty() {return probTesoro;}
 }
 

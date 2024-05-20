@@ -1,282 +1,323 @@
 package com.example.demoJavafx.estructurasDeDatos.ArbolAVL;
 
+import com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda.BST;
+import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
+import com.example.demoJavafx.excepciones.BalanceExcepcion;
 import com.example.demoJavafx.excepciones.DuplicateElement;
 import com.example.demoJavafx.excepciones.NonexistentElement;
 import com.example.demoJavafx.excepciones.VoidLevel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class ArbolAVL<TipoDelDato>{
-    private NodoAVL<TipoDelDato> raiz;
+public class ArbolAVL<TipoDeDatos> extends BST<TipoDeDatos> {
+    private NodoAVL<TipoDeDatos> raiz;
+    private static final Logger log = LogManager.getLogger();
+
     public ArbolAVL() {
-        this.raiz = null;
+        super();
     }
 
-    public ArbolAVL(TipoDelDato raiz) {
+    public ArbolAVL(TipoDeDatos raiz) {
         this.raiz = new NodoAVL<>(raiz);
     }
 
-    public ArbolAVL(NodoAVL<TipoDelDato> nodo) {
+    public ArbolAVL(NodoAVL<TipoDeDatos> nodo) {
         this.raiz = nodo;
     }
-    public NodoAVL<TipoDelDato> getRaiz() {
+
+    @Override
+    public NodoAVL<TipoDeDatos> getRaiz() {
         return raiz;
     }
 
-    public ArbolAVL<TipoDelDato> getSubArbolIzquierda() {
-        if ((this.raiz != null) && (this.raiz.getNodoIzq() != null)) {
-            return new ArbolAVL<>(this.raiz.getNodoIzq());
-        } else {
-            return null;
-        }
-    }
-
-    public ArbolAVL<TipoDelDato> getSubArbolDerecha() {
-        if ((this.raiz != null) && (this.raiz.getNodoDch() != null)) {
-            return new ArbolAVL<>(this.getRaiz().getNodoDch());
-        } else {
-            return null;
-        }
-    }
-
-    private Integer compararDatos(TipoDelDato a, TipoDelDato b) {
-        Comparable dato1 = (Comparable) a;
-        Comparable dato2 = (Comparable) b;
-        return dato1.compareTo(dato2);
-    }
-    public void add(TipoDelDato a) throws DuplicateElement {
-        if (this.raiz == null) {
-            this.raiz = new NodoAVL<>(a);
-        } else {
-            raiz.add(raiz, a);
-        }
-    }
-
-    public void del(TipoDelDato a) throws NonexistentElement {
-        if (raiz != null) {
-            raiz.del(null, raiz, a);
-        } else {
-            throw (new NonexistentElement("La raíz del arbol seleccionado es nula"));
-        }
-    }
-
-    private int gradoRecursivo(NodoAVL<TipoDelDato> actual) {
-        int grado = actual.getGrado();
-        int gradoizq;
-        int gradodch;
-        if (actual.getNodoIzq() == null) {
-            gradoizq = 0;
-        } else {
-            gradoizq = this.gradoRecursivo(actual.getNodoIzq());
-        }
-        if (actual.getNodoDch() == null) {
-            gradodch = 0;
-        } else {
-            gradodch = this.gradoRecursivo(actual.getNodoDch());
-        }
-        return Math.max(grado, Math.max(gradoizq, gradodch));
-    }
-
-    public Integer getGradoMaximo() {
-        if (this.raiz == null) {
+    @Override
+    public ArbolAVL<TipoDeDatos> getSubArbolIzq() {
+        if (this.raiz.getIzquierda() == null) {
             return null;
         } else {
-            return gradoRecursivo(raiz);
+            return new ArbolAVL<>(this.raiz.getIzquierda());
         }
     }
 
-    public Integer getAltura() {
-        if (this.raiz == null) {
-            return 0;
-        }
-        return raiz.alturaNodo(raiz);
-    }
-
-    public ListaEnlazada<TipoDelDato> getListaDatosNivel(int nivel) throws VoidLevel {
-        if ((nivel > 0) && (nivel <= this.getAltura())) {
-            ListaEnlazada<TipoDelDato> datosNivel = new ListaEnlazada<>();
-            return listaDatosNivelRecursivo(this.raiz, nivel, datosNivel);
+    @Override
+    public ArbolAVL<TipoDeDatos> getSubArbolDcha() {
+        if (this.raiz.getDerecha() == null) {
+            return null;
         } else {
-            throw (new VoidLevel("Nivel erróneo"));
+            return new ArbolAVL<>(this.raiz.getDerecha());
         }
     }
 
-    private ListaEnlazada<TipoDelDato> listaDatosNivelRecursivo(NodoAVL<TipoDelDato> nodo, int nivel, ListaEnlazada<TipoDelDato> lista) {
+    public int getGradoN(NodoAVL<TipoDeDatos> nodo) {
+        return super.getGradoN(nodo);
+    }
+
+    @Override
+    public int getAltura() {
+        return raiz.getAltura();
+    }
+
+    public int getAlturaN(NodoAVL<TipoDeDatos> nodo) {
+        return nodo.getAltura();
+    }
+
+    private void actAltura(NodoAVL<TipoDeDatos> nodo) {
         if (nodo != null) {
-            if (nivel == 1) {
-                lista.add(new ElementoLE<>(nodo.getDato()));
-            } else if (nivel > 1) {
-                listaDatosNivelRecursivo(nodo.getNodoIzq(), nivel - 1, lista);
-                listaDatosNivelRecursivo(nodo.getNodoDch(), nivel - 1, lista);
+            int alturaIzq;
+            int alturaDcha;
+            if (nodo.getIzquierda() != null) {
+                alturaIzq = nodo.getIzquierda().getAltura();
+            } else {
+                alturaIzq = -1;
             }
+            if (nodo.getDerecha() != null) {
+                alturaDcha = nodo.getDerecha().getAltura();
+            } else {
+                alturaDcha = -1;
+            }
+            nodo.setAltura(Math.max(alturaIzq, alturaDcha) + 1);
+        }
+    }
+
+    @Override
+    public ListaDoblementeEnlazada<TipoDeDatos> preOrden() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getPreOrden(this.raiz, lista);
+        return lista;
+    }
+
+    public ListaDoblementeEnlazada<TipoDeDatos> getPreOrden(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodoAVL != null)) {
+            lista.add(nodoAVL.getDato());
+            getPreOrden(nodoAVL.getIzquierda(), lista);
+            getPreOrden(nodoAVL.getDerecha(), lista);
         }
         return lista;
     }
 
-    // En el siguiente método hemos añadido una excepción para el caso en que el elemento no exista en el árbol
-    public ListaEnlazada<TipoDelDato> getCamino(TipoDelDato dato) throws NonexistentElement {
-        ListaEnlazada<TipoDelDato> camino = new ListaEnlazada<>();
-        boolean contenido = false;
-        ListaEnlazada<TipoDelDato> listaElementos = this.getListaOrdenCentral();
-        int contador = 0;
-        while (contador < listaElementos.getNumeroElementos()) {
-            if (this.compararDatos(dato, listaElementos.getElemento(contador).getData()) == 0) {
-                contenido = true;
+    @Override
+    public ListaDoblementeEnlazada<TipoDeDatos> ordenCentral() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getOrdenCentral(this.raiz, lista);
+        return lista;
+    }
+
+    public ListaDoblementeEnlazada<TipoDeDatos> getOrdenCentral(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodoAVL != null)) {
+            getOrdenCentral(nodoAVL.getIzquierda(), lista);
+            lista.add(nodoAVL.getDato());
+            getOrdenCentral(nodoAVL.getDerecha(), lista);
+        }
+        return lista;
+    }
+
+    @Override
+    public ListaDoblementeEnlazada<TipoDeDatos> postOrden() {
+        ListaDoblementeEnlazada<TipoDeDatos> lista = new ListaDoblementeEnlazada<>();
+        lista = getPostOrden(this.raiz, lista);
+        return lista;
+    }
+
+    public ListaDoblementeEnlazada<TipoDeDatos> getPostOrden(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista) {
+        if ((nodoAVL != null)) {
+            getPostOrden(nodoAVL.getIzquierda(), lista);
+            getPostOrden(nodoAVL.getDerecha(), lista);
+            lista.add(nodoAVL.getDato());
+        }
+        return lista;
+    }
+
+    private NodoAVL<TipoDeDatos> rotar_s(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
+        if (izq) {
+            NodoAVL<TipoDeDatos> nodoDcha = new NodoAVL<>(raiz.getDato());
+            nodoDcha.setIzquierda(raiz.getIzquierda().getDerecha());
+            nodoDcha.setDerecha(raiz.getDerecha());
+            raiz = raiz.getIzquierda();
+            raiz.setDerecha(nodoDcha);
+        } else {
+            NodoAVL<TipoDeDatos> nodoIzq = new NodoAVL<>(raiz.getDato());
+            nodoIzq.setDerecha(raiz.getDerecha().getIzquierda());
+            nodoIzq.setIzquierda(raiz.getIzquierda());
+            raiz = raiz.getDerecha();
+            raiz.setIzquierda(nodoIzq);
+        }
+        actAltura(raiz);
+        actAltura(raiz.getIzquierda());
+        return raiz;
+    }
+
+    private NodoAVL<TipoDeDatos> rotar_d(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
+        if (izq) {
+            raiz.setIzquierda(rotar_s(raiz.getIzquierda(), false));
+            raiz = rotar_s(raiz, true);
+        } else {
+            raiz.setDerecha(rotar_s(raiz.getDerecha(), true));
+            raiz = rotar_s(raiz, false);
+        }
+        return raiz;
+    }
+
+    public void balanceo() {
+        try {
+            if (getAltura() > -1) {
+                int alturaIzq;
+                int alturaDcha;
+                if (getSubArbolIzq() != null) {
+                    alturaIzq = getSubArbolIzq().getAltura();
+                } else {
+                    alturaIzq = -1;
+                }
+                if (getSubArbolDcha() != null) {
+                    alturaDcha = getSubArbolDcha().getAltura();
+                } else {
+                    alturaDcha = -1;
+                }
+                if (alturaIzq - alturaDcha == 2) {
+                    if (getSubArbolIzq().getSubArbolDcha() == null) {
+                        raiz = rotar_s(raiz, true);
+                    } else if (getSubArbolIzq().getSubArbolIzq() == null) {
+                        raiz = rotar_d(raiz, true);
+                    } else if (getSubArbolIzq().getSubArbolIzq().getAltura() >= getSubArbolIzq().getSubArbolDcha().getAltura()) {
+                        raiz = rotar_s(raiz, true);
+                    } else {
+                        raiz = rotar_d(raiz, true);
+                    }
+                } else if (alturaDcha - alturaIzq == 2) {
+                    if (getSubArbolDcha().getSubArbolIzq() == null) {
+                        raiz = rotar_s(raiz, false);
+                    } else if (getSubArbolDcha().getSubArbolDcha() == null) {
+                        raiz = rotar_d(raiz, true);
+                    } else if (getSubArbolDcha().getSubArbolDcha().getAltura() >= getSubArbolDcha().getSubArbolIzq().getAltura()) {
+                        raiz = rotar_s(raiz, false);
+                    } else {
+                        raiz = rotar_d(raiz, false);
+                    }
+                } else if (Math.abs(alturaDcha - alturaIzq) > 2) throw new BalanceExcepcion();
             }
-            contador++;
+        } catch (BalanceExcepcion e) {
+            log.error("No se ha podido equilibrar el balance ya que es más de dos de altura");
         }
-        if (contenido) {
-            this.getCaminoRecursivo(dato, this.raiz, camino);
-        } else { // Lanzamos excepción
-            throw (new NonexistentElement("Elemento inexistente"));
+    }
+
+    @Override
+    public void add(TipoDeDatos dato) {
+        NodoAVL<TipoDeDatos> nuevoNodoAVL = new NodoAVL<>(dato);
+        add(nuevoNodoAVL);
+    }
+
+    public void add(NodoAVL<TipoDeDatos> nuevoNodoAVL) {
+        if (getAltura() == -1) {
+            raiz = nuevoNodoAVL;
+        } else {
+            addAux(raiz, nuevoNodoAVL);
         }
+    }
+
+    public void addAux(NodoAVL<TipoDeDatos> raiz, NodoAVL<TipoDeDatos> dato) {
+        Comparable r = (Comparable) raiz.getDato();
+        Comparable d = (Comparable) dato.getDato();
+        if (d.compareTo(r) < 0) {
+            if (raiz.getIzquierda() == null) {
+                raiz.setIzquierda(dato);
+            } else {
+                addAux(raiz.getIzquierda(), dato);
+            }
+        } else {
+            if (raiz.getDerecha() == null) {
+                raiz.setDerecha(dato);
+            } else {
+                addAux(raiz.getDerecha(), dato);
+            }
+        }
+        actAltura(raiz);
+        this.balanceo();
+    }
+
+    public void del(TipoDeDatos dato) {
+        raiz = delAux1(raiz, dato);
+    }
+
+    private NodoAVL<TipoDeDatos> delAux1(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato) {
+        Comparable r = (Comparable) raiz.getDato();
+        Comparable d = (Comparable) dato;
+        if (d.compareTo(r) < 0) {
+            raiz.setIzquierda(delAux1(raiz.getIzquierda(), dato));
+        } else if (d.compareTo(r) > 0) {
+            raiz.setDerecha(delAux1(raiz.getDerecha(), dato));
+        } else {
+            if (raiz.getDerecha() == null && raiz.getIzquierda() == null) raiz = null;
+            else if (raiz.getIzquierda() == null) raiz = raiz.getDerecha();
+            else if (raiz.getDerecha() == null) raiz = raiz.getIzquierda();
+            else {
+                raiz = delAux2(raiz.getDerecha());
+            }
+        }
+        actAltura(raiz);
+        this.balanceo();
+        return raiz;
+    }
+
+    private NodoAVL<TipoDeDatos> delAux2(NodoAVL<TipoDeDatos> raiz) {
+        if (raiz.getIzquierda() != null) {
+            NodoAVL<TipoDeDatos> nodo = delAux2(raiz.getIzquierda());
+            ArbolAVL<TipoDeDatos> arbol = new ArbolAVL<>(raiz);
+            arbol.balanceo();
+            actAltura(raiz);
+            return nodo;
+        } else {
+            NodoAVL<TipoDeDatos> nodo = raiz;
+            raiz = raiz.getDerecha();
+            ArbolAVL<TipoDeDatos> arbol = new ArbolAVL<>(raiz);
+            arbol.balanceo();
+            actAltura(raiz);
+            return nodo;
+        }
+    }
+
+    public ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> getcamino(TipoDeDatos dato) {
+        try {
+            ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> camino = new ListaDoblementeEnlazada<>();
+            ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> caminoNuevo = getCaminoPrinc(this.raiz, dato, camino);
+            if (caminoNuevo.isVacia()) throw new NonexistentElement();
+            else return caminoNuevo;
+        } catch (NonexistentElement e) {
+            log.warn("Se esta intentando encontrar un camino y alguno de los nodos no existe");
+            return null;
+        }
+    }
+
+    private ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> getCaminoPrinc(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato, ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> camino) {
+        if (raiz == null) return camino;
+        getCaminoPrinc(raiz.getIzquierda(), dato, camino);
+        if (camino.isVacia()) getCaminoPrinc(raiz.getDerecha(), dato, camino);
+        if (raiz.getDato() == dato || !camino.isVacia()) camino.insert(raiz, 0);
         return camino;
     }
-
-    private void getCaminoRecursivo(TipoDelDato dato, NodoAVL<TipoDelDato> nodo, ListaEnlazada<TipoDelDato> lista) {
-        lista.add(new ElementoLE<>(nodo.getDato()));
-        if ((nodo.getNodoIzq() != null) && (this.compararDatos(dato, nodo.getDato()) == -1)) {
-            getCaminoRecursivo(dato, nodo.getNodoIzq(), lista);
-        } else if ((nodo.getNodoDch() != null) && (this.compararDatos(dato, nodo.getDato()) == 1)) {
-            getCaminoRecursivo(dato, nodo.getNodoDch(), lista);
-        }
-    }
-    private void listaNodosNivelRecursivo(NodoAVL<TipoDelDato> nodo, int nivel, ListaEnlazada<NodoAVL<TipoDelDato>> lista) {
-        if (nodo != null) {
-            if (nivel == 1) {
-                lista.add(new ElementoLE<>(nodo));
-            } else if (nivel > 1) {
-                listaNodosNivelRecursivo(nodo.getNodoIzq(), nivel - 1, lista);
-                listaNodosNivelRecursivo(nodo.getNodoDch(), nivel - 1, lista);
-            }
-        }
-    }
-
-    private ListaEnlazada<NodoAVL<TipoDelDato>> getListaNodosNivel() {
-        ListaEnlazada<NodoAVL<TipoDelDato>> nodosNivel = new ListaEnlazada<>();
-        this.listaNodosNivelRecursivo(this.raiz, this.getAltura() - 1, nodosNivel);
-        return nodosNivel;
-    }
-
-    public boolean isArbolCasiCompleto() {
-        boolean CasiCompleto = false;
-        try {
-            if ((Math.pow(2, this.getAltura() - 2) == this.getListaDatosNivel(this.getAltura() - 1).getNumeroElementos()) && (!this.isArbolCompleto())) {
-                ListaEnlazada<NodoAVL<TipoDelDato>> listaNodos = this.getListaNodosNivel();
-                int contador = 0;
-                int posicionDeCambio = 0;
-                while (contador < listaNodos.getNumeroElementos()) {
-                    if (listaNodos.getElemento(contador).getData().getGrado() == 2) {
-                        contador++;
-                    } else {
-                        posicionDeCambio = contador;
-                        contador = listaNodos.getNumeroElementos() + 1;
-                    }
-
-                }
-                if ((listaNodos.getElemento(posicionDeCambio).getData().getGrado() == 0) || ((listaNodos.getElemento(posicionDeCambio).getData().getNodoIzq() != null) && (listaNodos.getElemento(posicionDeCambio).getData().getNodoDch() == null))) {
-                    if (posicionDeCambio == listaNodos.getNumeroElementos() - 1) {
-                        CasiCompleto = true;
-                    } else {
-                        boolean NodosNulos = false;
-                        while (posicionDeCambio + 1 < listaNodos.getNumeroElementos()) {
-                            if (listaNodos.getElemento(posicionDeCambio + 1).getData().getGrado() == 0) {
-                                NodosNulos = true;
-                            } else {
-                                NodosNulos = false;
-                                posicionDeCambio = listaNodos.getNumeroElementos() + 2;
-                            }
-                            posicionDeCambio++;
-                        }
-                        CasiCompleto = NodosNulos;
-                    }
-                }
-            }
-            // Al ejecutar los tests las dos siguientes lineas de código no son testeadas (el programa nunca va a pasar por ellas pero hay que añadirlas al código para manejar la excepción)
-        } catch (VoidLevel ex) {
-            ex.printStackTrace();
-        }
-        return CasiCompleto;
-    }
-
-    public boolean isArbolHomogeneo() {  //Devuelve si todos los nodos del arbol tienen el mismo grado (0, 1 o 2)
-        if (this.isArbolCompleto()) {
-            return true;
-        } else if (this.nodosGradoUno(this.raiz)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean nodosGradoUno(NodoAVL<TipoDelDato> nodo) {
-        if (nodo.getNodoDch() == null && nodo.getNodoIzq() != null) {
-            return (nodosGradoUno(nodo.getNodoIzq()));
-        } else if (nodo.getNodoDch() != null && nodo.getNodoIzq() == null) {
-            return (nodosGradoUno(nodo.getNodoDch()));
-        } else if (nodo.getNodoDch() != null && nodo.getNodoIzq() != null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public boolean isArbolCompleto() {  //Devuelve si el arbol forma un triangulo (todos los nodos tienen grado 2)
-        Integer contador = 0;
-        while (contador < this.getAltura()) {
-            try {
-                if (Math.pow(2, contador) == this.getListaDatosNivel(contador + 1).getNumeroElementos()) {
-                    contador++;
-                } else {
-                    return false;
-                }
-                // Al ejecutar los tests las dos siguientes lineas de código no son testeadas (el programa nunca va a pasar por ellas pero hay que añadirlas al código para manejar la excepción)
-            } catch (VoidLevel ex) {
-                ex.printStackTrace();
-            }
-        }
-        return true;
-    }
-    public ListaEnlazada<TipoDelDato> getListaOrdenCentral() {
-        ListaEnlazada<TipoDelDato> resultado = new ListaEnlazada<>();
-        recorridoOrdenCentral(raiz, resultado);
-        return resultado;
-    }
-
-    private void recorridoOrdenCentral(NodoAVL<TipoDelDato> nodo, ListaEnlazada<TipoDelDato> lista) {
-        if (nodo != null) {
-            recorridoOrdenCentral(nodo.getNodoIzq(), lista);
-            lista.add(new ElementoLE<>(nodo.getDato()));
-            recorridoOrdenCentral(nodo.getNodoDch(), lista);
-        }
-    }
-
-    public ListaEnlazada<TipoDelDato> getListaPreOrden() {
-        ListaEnlazada<TipoDelDato> resultado = new ListaEnlazada<>();
-        recorridoPreOrden(raiz, resultado);
-        return resultado;
-    }
-
-    private void recorridoPreOrden(NodoAVL<TipoDelDato> nodo, ListaEnlazada<TipoDelDato> lista) {
-        if (nodo != null) {
-            lista.add(new ElementoLE<>(nodo.getDato()));
-            recorridoPreOrden(nodo.getNodoIzq(), lista);
-            recorridoPreOrden(nodo.getNodoDch(), lista);
-        }
-    }
-
-    public ListaEnlazada<TipoDelDato> getListaPostOrden() {
-        ListaEnlazada<TipoDelDato> resultado = new ListaEnlazada<>();
-        recorridoPostOrden(raiz, resultado);
-        return resultado;
-    }
-
-    private void recorridoPostOrden(NodoAVL<TipoDelDato> nodo, ListaEnlazada<TipoDelDato> lista) {
-        if (nodo != null) {
-            recorridoPostOrden(nodo.getNodoIzq(), lista);
-            recorridoPostOrden(nodo.getNodoDch(), lista);
-            lista.add(new ElementoLE<>(nodo.getDato()));
-        }
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -7,7 +7,6 @@ public class ParameterBibliotecaProperties {
 
     private IntegerProperty turnosRestantes = new SimpleIntegerProperty();
     private DoubleProperty aumentoPorentajeClon = new SimpleDoubleProperty();
-    private DoubleProperty probBilio= new SimpleDoubleProperty();
 
 
     public ParameterBibliotecaProperties(Biblioteca original) {
@@ -17,13 +16,11 @@ public class ParameterBibliotecaProperties {
     public void commit(){
         original.setTurnosRestantes(turnosRestantes.get());
         original.setAumentoProbClonacion(aumentoPorentajeClon.get());
-        original.setProbBiblioteca(probBilio.get());
     }
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
         aumentoPorentajeClon.set(original.getAumentoProbClonacion());
-        probBilio.set(original.getProbBiblioteca());
     }
 
     public Biblioteca getOriginal() {
@@ -43,6 +40,5 @@ public class ParameterBibliotecaProperties {
         return aumentoPorentajeClon;
     }
 
-    public DoubleProperty probBibliotecaProperty() {return probBilio; }
 }
 

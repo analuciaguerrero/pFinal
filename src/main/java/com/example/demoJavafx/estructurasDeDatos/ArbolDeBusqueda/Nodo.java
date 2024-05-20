@@ -1,9 +1,9 @@
 package com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda;
 
 public class Nodo<TipoDelDato>{
-    Nodo<TipoDelDato> derecha;
-    Nodo<TipoDelDato> izquierda;
-    TipoDelDato dato;
+    private Nodo<TipoDelDato> derecha;
+    private Nodo<TipoDelDato> izquierda;
+    private TipoDelDato dato;
 
 
     public Nodo(Nodo<TipoDelDato> derecha, Nodo<TipoDelDato> izquierda, TipoDelDato dato) {
@@ -39,21 +39,5 @@ public class Nodo<TipoDelDato>{
 
     public void setDato(TipoDelDato dato) {
         this.dato = dato;
-    }
-
-    public int gradoNodo(){
-        Nodo<TipoDelDato> n = this;
-        int contador =0;
-        if(n.getIzquierda()!=null){
-            contador++;
-        }
-        if (n.getDerecha()!=null){
-            contador++;
-        }
-        return contador;
-    }
-    public boolean esHoja(){
-        Nodo<TipoDelDato> n = this;
-        return n.getDerecha()== null && n.getIzquierda()==null;
     }
 }
