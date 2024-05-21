@@ -1,279 +1,233 @@
 package com.example.demoJavafx;
 
+import com.example.demoJavafx.tablero.Celda;
+import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.awt.event.ActionEvent;
-public class XPersonalizacionController {
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+public class XPersonalizacionController implements Initializable {
+
+    Tab tabActual;
+    @FXML
+    TabPane tabPaneConfiguracion = new TabPane();
+    @FXML
+    private Spinner<Integer> TurnosVidaInicialesSpinner = new Spinner<>();
+    @FXML
+    private Slider ProbReproEstudianteSlider = new Slider();
+    @FXML
+    private Slider ProbClonEstudianteSlider = new Slider();
+    @FXML
+    private Slider ProbMejoraNormalSlider = new Slider();
 
     @FXML
-    private Slider estudiantesProbClonado;
-    @FXML
-    private Spinner<Integer> estudiantesTurnosRestantesSpinner;
-    @FXML
-    private Slider estudiantesProbReproduccion;
-    @FXML
-    private Slider estudiantesProbMuerte;
+    private Slider ProbMejoraAvanzadoSlider = new Slider();
 
     @FXML
-    private Slider aguaProbabilidadSlider;
+    private Spinner<Double> ProbAparRecursoSpinner = new Spinner<>();
     @FXML
-    private Spinner<Integer> aguaTurnosRestantesSpinner;
+    private Slider ProbAparAguaSlider = new Slider();
     @FXML
-    private Slider aguaAumentoVidaSlider;
+    private Slider ProbAparComidaSlider = new Slider();
+    @FXML
+    private Slider ProbAparMontañaSlider = new Slider();
+    @FXML
+    private Slider ProbAparTesoroSlider = new Slider();
+    @FXML
+    private Slider ProbAparBibliotecaSlider = new Slider();
+    @FXML
+    private Slider ProbAparPozoSlider = new Slider();
+    @FXML
+    private Spinner<Integer> TurnosInicialesRecursoSpinner = new Spinner<>();
+    @FXML
+    private Spinner<Integer> AumentoTurnosAguaSpinner = new Spinner<>();
+    @FXML
+    private Spinner<Integer> AumentoTurnosComidaSpinner = new Spinner<>();
+    @FXML
+    private Spinner<Integer> ReduccionTurnosMontañaSpinner = new Spinner<>();
+    @FXML
+    private Slider AumentoProbReproSlider = new Slider();
+    @FXML
+    private Slider AumentoProbClonSlider = new Slider();
+    @FXML
+    private Spinner<Integer> FilasDelTableroSpinner = new Spinner<>();
+    @FXML
+    private Spinner<Integer> ColumnasDelTableroSpinner = new Spinner<>();
 
-    @FXML
-    private Slider bibliotecaProbabilidadSlider;
-    @FXML
-    private Spinner<Integer> bibliotecaTurnosRestantesSpinner;
-    @FXML
-    private Slider bibliotecaAumentoClonSlider;
+    private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
 
-    @FXML
-    private Slider comidaProbabilidadSlider;
-    @FXML
-    private Spinner<Integer> comidaTurnosRestantesSpinner;
-    @FXML
-    private Slider comidaAumentoVidaSlider;
+    private DatosJuego dato = new DatosJuego(10, 50, 20, 50,20, 10,10,30,25,15, 10,15,20,2,10, 2, 35, 20, 10, 10, 0);
+    private DatosJuegoProperties propiedades = new DatosJuegoProperties(dato);
 
-    @FXML
-    private Slider montanaProbabilidadSlider;
-    @FXML
-    private Spinner<Integer> montanaTurnosRestantesSpinner;
-    @FXML
-    private Slider montanaDisminucionVidaSlider;
-
-    @FXML
-    private Slider pozoProbabilidadSlider;
-    @FXML
-    private Spinner<Integer> pozoTurnosRestantesSpinner;
-
-    @FXML
-    private Slider tesoroProbabilidadSlider;
-    @FXML
-    private Spinner<Integer> tesoroTurnosRestantesSpinner;
-    @FXML
-    private Slider tesoroAumentoRepSlider;
-
-    @FXML
-    private Slider filasSlider;
-    @FXML
-    private Slider columnasSlider;
-
-    @FXML
-    private Text labelValorSliderestudiantesProbClonado;
-    @FXML
-    private Text labelValorSliderestudiantesProbReproduccion;
-    @FXML
-    private Text labelValorSliderestudiantesProbMuerte;
-    @FXML
-    private Text labelValorSlideraguaProbabilidad;
-    @FXML
-    private Text labelValorSlideraguaAumentoVida;
-    @FXML
-    private Text labelValorSliderbibliotecaProbabilidad;
-    @FXML
-    private Text labelValorSliderbibliotecaAumentoClon;
-    @FXML
-    private Text labelValorSlidercomidaProbabilidad;
-    @FXML
-    private Text labelValorSlidercomidaAumentoVida;
-    @FXML
-    private Text labelValorSlidermontanaProbabilidad;
-    @FXML
-    private Text labelValorSlidermontanaDisminucionVida;
-    @FXML
-    private Text labelValorSliderpozoProbabilidad;
-    @FXML
-    private Text labelValorSlidertesoroProbabilidad;
-    @FXML
-    private Text labelValorSlidertesoroAumentoRep;
-    @FXML
-    private Text labelValorSliderFilas;
-    @FXML
-    private Text labelValorSliderColumnas;
-
-    protected IntegerProperty ProbClonado = new SimpleIntegerProperty(0);
-    protected IntegerProperty ProbReproduccion = new SimpleIntegerProperty(0);
-    protected IntegerProperty ProbMuerte = new SimpleIntegerProperty(0);
-    protected IntegerProperty aguaAumentoVida = new SimpleIntegerProperty(0);
-    protected IntegerProperty aguaProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty bibliotecaProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty bibliotecaAumentoClon = new SimpleIntegerProperty(0);
-    protected IntegerProperty comidaProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty comidaAumentoVida = new SimpleIntegerProperty(0);
-    protected IntegerProperty montanaProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty montanaDisminucionVida = new SimpleIntegerProperty(0);
-    protected IntegerProperty pozoProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty tesoroProbabilidad = new SimpleIntegerProperty(0);
-    protected IntegerProperty tesoroAumentoRep = new SimpleIntegerProperty(0);
-    protected IntegerProperty filas = new SimpleIntegerProperty(1);
-    protected IntegerProperty columnas = new SimpleIntegerProperty(1);
-
-    @FXML
-    private Button buttonReestablecer;
-    @FXML
-    private Button buttonGuardar;
-
-    private static final Logger log = LogManager.getLogger(XPersonalizacionController.class);
-
-    private DatosJuego datosJuego;
-
-    public DatosJuego getDatosJuego(){
-        return datosJuego;
+    public XPersonalizacionController() {}
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        tabPaneConfiguracion.getSelectionModel().selectedItemProperty().addListener((_, _, newTab) -> {
+            log.debug("Se ha detectado un cambio en el tabPane");
+            if (newTab != null) tabActual = newTab;
+        });
+        initializeController();
+    }
+    private void initializeController () {
+        initializeSpinners();
+        if (propiedades != null) {
+            this.actualizarDato();
+        }
+    }
+    public DatosJuego getDato() {
+        return dato;
     }
 
-    public void setDatosJuego(DatosJuego datos){
-        this.datosJuego = datos;
+    public void setDato(DatosJuego dato) {
+        this.dato = dato;
     }
 
-
-    @FXML
-    void initialize() {
-        // Enlazar sliders y labels para estudiantes
-        initializeSliderAndLabel(estudiantesProbClonado, labelValorSliderestudiantesProbClonado, ProbClonado);
-        initializeSliderAndLabel(estudiantesProbReproduccion, labelValorSliderestudiantesProbReproduccion, ProbReproduccion);
-        initializeSliderAndLabel(estudiantesProbMuerte, labelValorSliderestudiantesProbMuerte, ProbMuerte);
-
-        // Enlazar sliders y labels para agua
-        initializeSliderAndLabel(aguaProbabilidadSlider, labelValorSlideraguaProbabilidad, aguaProbabilidad);
-        initializeSliderAndLabel(aguaAumentoVidaSlider, labelValorSlideraguaAumentoVida, aguaAumentoVida);
-
-        // Enlazar sliders y labels para biblioteca
-        initializeSliderAndLabel(bibliotecaProbabilidadSlider, labelValorSliderbibliotecaProbabilidad, bibliotecaProbabilidad);
-        initializeSliderAndLabel(bibliotecaAumentoClonSlider, labelValorSliderbibliotecaAumentoClon, bibliotecaAumentoClon);
-
-        // Enlazar sliders y labels para comida
-        initializeSliderAndLabel(comidaProbabilidadSlider, labelValorSlidercomidaProbabilidad, comidaProbabilidad);
-        initializeSliderAndLabel(comidaAumentoVidaSlider, labelValorSlidercomidaAumentoVida, comidaAumentoVida);
-
-        // Enlazar sliders y labels para montaña
-        initializeSliderAndLabel(montanaProbabilidadSlider, labelValorSlidermontanaProbabilidad, montanaProbabilidad);
-        initializeSliderAndLabel(montanaDisminucionVidaSlider, labelValorSlidermontanaDisminucionVida, montanaDisminucionVida);
-
-        // Enlazar sliders y labels para pozo
-        initializeSliderAndLabel(pozoProbabilidadSlider, labelValorSliderpozoProbabilidad, pozoProbabilidad);
-
-        // Enlazar sliders y labels para tesoro
-        initializeSliderAndLabel(tesoroProbabilidadSlider, labelValorSlidertesoroProbabilidad, tesoroProbabilidad);
-        initializeSliderAndLabel(tesoroAumentoRepSlider, labelValorSlidertesoroAumentoRep, tesoroAumentoRep);
-
-        // Enlazar sliders y labels para tamaño del tablero
-        initializeSliderAndLabel(filasSlider, labelValorSliderFilas, filas);
-        initializeSliderAndLabel(columnasSlider, labelValorSliderColumnas, columnas);
-
+    protected void initializeSpinners() {
+        SpinnerValueFactory<Integer> TurnosVidaInicialesVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
+        SpinnerValueFactory<Double> ProbAparRecursoVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Integer> TurnosInicialesRecursoVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
+        SpinnerValueFactory<Integer> IncrementoAguaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> IncrementoComidaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> IncrementoMontañaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> FilasTableroVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        SpinnerValueFactory<Integer> ColumnasTableroVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        TurnosVidaInicialesSpinner.setValueFactory(TurnosVidaInicialesVF);
+        ProbAparRecursoSpinner.setValueFactory(ProbAparRecursoVF);
+        TurnosInicialesRecursoSpinner.setValueFactory(TurnosInicialesRecursoVF);
+        AumentoTurnosAguaSpinner.setValueFactory(IncrementoAguaVF);
+        AumentoTurnosComidaSpinner.setValueFactory(IncrementoComidaVF);
+        ReduccionTurnosMontañaSpinner.setValueFactory(IncrementoMontañaVF);
+        FilasDelTableroSpinner.setValueFactory(FilasTableroVF);
+        ColumnasDelTableroSpinner.setValueFactory(ColumnasTableroVF);
+        addFiltroSpinner(TurnosVidaInicialesSpinner);
+        addFiltroSpinner2(ProbAparRecursoSpinner);
+        addFiltroSpinner(TurnosInicialesRecursoSpinner);
+        addFiltroSpinner(AumentoTurnosAguaSpinner);
+        addFiltroSpinner(AumentoTurnosComidaSpinner);
+        addFiltroSpinner(ReduccionTurnosMontañaSpinner);
+        addFiltroSpinner(TurnosVidaInicialesSpinner);
+        addFiltroSpinner(FilasDelTableroSpinner);
+        addFiltroSpinner(ColumnasDelTableroSpinner);
+    }
+    protected void actualizarDato() {
+        ProbReproEstudianteSlider.valueProperty().bindBidirectional(propiedades.ProbReproEstudianteProperty());
+        ProbClonEstudianteSlider.valueProperty().bindBidirectional(propiedades.ProbClonEstudianteProperty());
+        ProbMejoraNormalSlider.valueProperty().bindBidirectional(propiedades.ProbMejorarANormalProperty());
+        ProbMejoraAvanzadoSlider.valueProperty().bindBidirectional(propiedades.ProbMejorarAAvanzadoProperty());
+        ProbAparAguaSlider.valueProperty().bindBidirectional(propiedades.ProbAguaProperty());
+        ProbAparComidaSlider.valueProperty().bindBidirectional(propiedades.ProbComidaProperty());
+        ProbAparMontañaSlider.valueProperty().bindBidirectional(propiedades.ProbMontañaProperty());
+        ProbAparTesoroSlider.valueProperty().bindBidirectional(propiedades.ProbTesoroProperty());
+        ProbAparBibliotecaSlider.valueProperty().bindBidirectional(propiedades.ProbBibliotecaProperty());
+        ProbAparPozoSlider.valueProperty().bindBidirectional(propiedades.ProbPozoProperty());
+        AumentoProbReproSlider.valueProperty().bindBidirectional(propiedades.AumentoProbReproProperty());
+        AumentoProbClonSlider.valueProperty().bindBidirectional(propiedades.AumentoProbClonProperty());
+        TurnosVidaInicialesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosVidaInicialesProperty());
+        ProbAparRecursoSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ProbRecursoProperty());
+        TurnosInicialesRecursoSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosInicialesRecursoProperty());
+        AumentoTurnosAguaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.AumentoTurnosAguaProperty());
+        AumentoTurnosComidaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.AumentoTurnosComidaProperty());
+        ReduccionTurnosMontañaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ReduccionTurnosMontañaProperty());
+        FilasDelTableroSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.FilasDelTableroProperty());
+        ColumnasDelTableroSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ColumnasDelTableroProperty());
     }
 
-    private void initializeSliderAndLabel(Slider slider, Text label, IntegerProperty valorEstablecido) {
-        // Enlazar slider y label
-        slider.valueProperty().bindBidirectional(valorEstablecido);
-        label.textProperty().bind(valorEstablecido.asString());
-
-        // Configurar event handler para el slider
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            label.setText(String.valueOf(newValue.intValue()));
-            valorEstablecido.set(newValue.intValue());
+    private void addFiltroSpinner (Spinner<Integer> spinner) {
+        spinner.getEditor().addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("[0-9]")) {
+                event.consume();
+            }
         });
     }
-
+    private void addFiltroSpinner2 (Spinner<Double> spinner) {
+        spinner.getEditor().addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (!event.getCharacter().matches("[0-9.]")) {
+                event.consume();
+            }
+        });
+    }
+    public void setControllerValues(DatosJuego dato) {
+        this.dato = dato;
+        this.propiedades = new DatosJuegoProperties(dato);
+        initializeController();
+    }
     @FXML
-    protected void guardarConfiguracion() {
-        int estudiantesClonado = (int) estudiantesProbClonado.getValue();
-        int estudiantesTurnosRestantes = estudiantesTurnosRestantesSpinner.getValue();
-        int estudiantesReproduccion = (int) estudiantesProbReproduccion.getValue();
-        int estudiantesMuerte = (int) estudiantesProbMuerte.getValue();
-
-        int aguaTurnosRestantes = aguaTurnosRestantesSpinner.getValue();
-        int aguaAumentoVida = (int) aguaAumentoVidaSlider.getValue();
-        float aguaProbabilidad = (float) aguaProbabilidadSlider.getValue();
-
-        int bibliotecaTurnosRestantes = bibliotecaTurnosRestantesSpinner.getValue();
-        float bibliotecaAumentoVida = (float) bibliotecaAumentoClonSlider.getValue();
-        float bibliotecaProbabilidad = (float) bibliotecaProbabilidadSlider.getValue();
-
-        int comidaTurnosRestantes = comidaTurnosRestantesSpinner.getValue();
-        int comidaAumentoVida = (int) comidaAumentoVidaSlider.getValue();
-        float comidaProbabilidad = (float) comidaProbabilidadSlider.getValue();
-
-        int montañaTurnosRestantes = montanaTurnosRestantesSpinner.getValue();
-        int montañaAumentoVida = (int) montanaDisminucionVidaSlider.getValue();
-        float montañaProbabilidad = (float) montanaProbabilidadSlider.getValue();
-
-        int pozoTurnosRestantes = pozoTurnosRestantesSpinner.getValue();
-        float pozoProbabilidad = (float) pozoProbabilidadSlider.getValue();
-
-        int tesoroTurnosRestantes = tesoroTurnosRestantesSpinner.getValue();
-        int tesoroAumentoVida = (int) tesoroAumentoRepSlider.getValue();
-        float tesoroProbabilidad = (float) tesoroProbabilidadSlider.getValue();
-
-        int alto = (int) filasSlider.getValue();
-        int ancho = (int) columnasSlider.getValue();
-
-        // Aquí podrías guardar la configuración en un archivo XML, en una base de datos, etc.
-        System.out.println("Configuración guardada:");
-        System.out.println("Estudiantes - Turnos Restantes: " + estudiantesTurnosRestantes + ", ProbClonado: " + estudiantesClonado + ", ProbReproduccion: " + estudiantesReproduccion + ", PropMuerte: " + estudiantesMuerte);
-        System.out.println("Agua - Turnos Restantes: " + aguaTurnosRestantes + ", Aumento de Vida: " + aguaAumentoVida + ", Probabilidad: " + aguaProbabilidad);
-        System.out.println("Biblioteca - Turnos Restantes: " + bibliotecaTurnosRestantes + ", Aumento de Vida: " + bibliotecaAumentoVida + ", Probabilidad: " + bibliotecaProbabilidad);
-        System.out.println("Comida - Turnos Restantes: " + comidaTurnosRestantes + ", Aumento de Vida: " + comidaAumentoVida + ", Probabilidad: " + comidaProbabilidad);
-        System.out.println("Montaña - Turnos Restantes: " + montañaTurnosRestantes + ", Aumento de Vida: " + montañaAumentoVida + ", Probabilidad: " + montañaProbabilidad);
-        System.out.println("Pozo - Turnos Restantes: " + pozoTurnosRestantes + ", Probabilidad: " + pozoProbabilidad);
-        System.out.println("Tesoro - Turnos Restantes: " + tesoroTurnosRestantes + ", Aumento de Vida: " + tesoroAumentoVida + ", Probabilidad: " + tesoroProbabilidad);
-        System.out.println("Tamaño del Tablero: " + alto + "x" + ancho);
-
-        // Instanciar un objeto DatosJuego
-        this.datosJuego = new DatosJuego(
-                estudiantesTurnosRestantes,               // turnosVidaIniciales
-                estudiantesReproduccion,                  // probReproduccionEstudiante
-                estudiantesClonado,                       // probClonacionEstudiante
-                estudiantesMuerte,                        // probMejorarANormal
-                0,                                        // probMejorarAAvanzado (asumiendo valor 0 ya que no hay dato)
-                0,                                        // probRecurso (asumiendo valor 0 ya que no hay dato)
-                0,                                        // turnosIniciales (asumiendo valor 0 ya que no hay dato)
-                aguaProbabilidad,                         // probAgua
-                comidaProbabilidad,                       // probComida
-                montañaProbabilidad,                      // probMontaña
-                tesoroProbabilidad,                       // probTesoro
-                bibliotecaProbabilidad,                   // probBiblioteca
-                pozoProbabilidad,                         // probPozo
-                aguaAumentoVida,                          // aumentoVidaAgua
-                comidaAumentoVida,                        // aumentoVidaComida
-                montañaAumentoVida,                       // reduccionVidaMontaña
-                tesoroAumentoVida,                        // aumentoProbReproduccion
-                bibliotecaAumentoVida,                    // aumentoProbClonacion
-                alto,                                     // filasDelTablero
-                ancho,                                    // columnasDelTablero
-                0                                         // turno (asumiendo valor 0 ya que no hay dato)
-        );
-        // Cerrar la ventana
-        Stage stage = (Stage) buttonGuardar.getScene().getWindow();
-        stage.close();
+    protected void onBottonGuardarClick(javafx.event.ActionEvent event) throws IOException {
+        if (Window.getWindows().getFirst() != ((Node) event.getSource()).getScene().getWindow()) {
+            Stage ventana = (Stage) Window.getWindows().getFirst();
+            Celda celda = ((Celda) ((GridPane) ((AnchorPane) ventana.getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+            dato = celda.getDatos();
+            propiedades.setDato(dato);
+        }
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        if (!dato.isPausado()) {
+            confirmacion.initOwner(Stage.getWindows().getFirst());
+            confirmacion.setTitle("Iniciar un juego nuevo");
+            confirmacion.setHeaderText("Estás a punto de guardar los ajustes y empezar una nueva partida");
+            confirmacion.setContentText("¿Seguro que quieres continuar?");
+        } else {
+            confirmacion.initOwner(Stage.getWindows().get(1));
+            confirmacion.setTitle("Continuar");
+            confirmacion.setHeaderText("Estás a punto de guardar los ajustes para continuar la partida");
+            confirmacion.setContentText("¿Seguro que quieres continuar?");
+        }
+        if(confirmacion.showAndWait().get() == ButtonType.OK) {
+            continuarZombieStudentsLife(event);
+        }
     }
 
-
+    private void continuarZombieStudentsLife(javafx.event.ActionEvent event) throws IOException {
+        if (!dato.isPausado()) {
+            propiedades.commit();
+            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stageActual.close();
+            comenzarNuevoJuego();
+            log.debug("Ha sido iniciada una partida nueva");
+        } else {
+            propiedades.commit();
+            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stageActual.close();
+            log.debug("Se han guardado los ajustes");
+        }
+    }
+    private void comenzarNuevoJuego () throws IOException {
+        dato.setTurnoActual(0);
+        ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato, false);
+        TableroController controlador = new TableroController(dato, zombieStudentsLife);
+        controlador.crearTablero(zombieStudentsLife.getTablero());
+        dato.setPausado(true);
+    }
     @FXML
-    private void reiniciarConfiguracion() {
-        estudiantesProbClonado.setValue(0);
-        estudiantesProbReproduccion.setValue(0);
-        estudiantesProbMuerte.setValue(0);
-        aguaProbabilidadSlider.setValue(0);
-        aguaAumentoVidaSlider.setValue(0);
-        comidaProbabilidadSlider.setValue(0);
-        comidaAumentoVidaSlider.setValue(0);
-        montanaProbabilidadSlider.setValue(0);
-        montanaDisminucionVidaSlider.setValue(0);
-        bibliotecaProbabilidadSlider.setValue(0);
-        bibliotecaAumentoClonSlider.setValue(0);
-        pozoProbabilidadSlider.setValue(0);
-        tesoroProbabilidadSlider.setValue(0);
-        tesoroAumentoRepSlider.setValue(0);
-        filasSlider.setValue(1);
-        columnasSlider.setValue(1);
+    protected void onBottonReiniciarClick() {
+        propiedades.rollback(tabActual);
+        log.debug("Los valores por defecto han sido reestablecidos");
+    }
+    @FXML
+    protected void onBottonVolverClick (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SeleccionarPartida.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

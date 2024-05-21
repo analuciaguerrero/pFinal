@@ -12,7 +12,7 @@ public class ApplicationMenuInicial extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuInicial.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("MenuInicial.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 1835, 1032);
 

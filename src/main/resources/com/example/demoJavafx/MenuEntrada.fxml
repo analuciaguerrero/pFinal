@@ -56,11 +56,6 @@
                         <Font size="40.0" />
                     </font>
                 </Button>
-                <Button fx:id="buttonAjustes" layoutX="827.0" layoutY="674.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="30.0" prefWidth="182.0" text="Ajustes">
-                    <font>
-                        <Font size="40.0" />
-                    </font>
-                </Button>
                 <Button fx:id="buttonSalir" layoutX="1392.0" layoutY="834.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="87.0" prefWidth="230.0" text="Salir">
                     <font>
                         <Font size="40.0" />

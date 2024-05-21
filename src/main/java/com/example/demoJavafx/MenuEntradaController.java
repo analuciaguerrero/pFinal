@@ -218,26 +218,6 @@ public class MenuEntradaController {
         }
     }
 
-    @FXML
-    private void goToSettings(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Personalizacion.fxml"));
-            Parent root = fxmlLoader.load();
-
-            XPersonalizacionController controller = new XPersonalizacionController();
-            fxmlLoader.setController(controller);
-            controller.setDatosJuego(datosJuego);
-
-            Scene scene = new Scene(root, 840.0, 803.0);
-            Stage stage = new Stage();
-            stage.setTitle("Ajustes");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("ALERTA");

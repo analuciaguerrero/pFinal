@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
@@ -10,7 +9,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.TableroController">
     <StackPane prefHeight="150.0" prefWidth="200.0">
-        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="600.0" text="Zombie Students Life" textFill="#0777d9">
+        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="600.0" text="Simulador de Vida" textFill="#0777d9">
             <font>
                 <Font name="Bookman Old Style" size="75.0" />
             </font>

@@ -60,14 +60,6 @@
                                 <Font size="40.0" />
                             </font>
                         </Button>
-                        <Button fx:id="buttonAjustes" onAction="#goToSettings" prefHeight="126.0" prefWidth="275.0" text="AJUSTES" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                            <font>
-                                <Font size="40.0" />
-                            </font>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                        </Button>
                     </children>
                 </GridPane>
             </children>

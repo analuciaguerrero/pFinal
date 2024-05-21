@@ -101,9 +101,9 @@ public class TableroController {
         Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
         datos = celda.getDatos();
         datos.setPausado(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Ajustes.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Personalizacion2.fxml"));
         Parent root = loader.load();
-        MenuAjustesController controller = loader.getController();
+        XPersonalizacionController controller = loader.getController();
         controller.setControllerValues(datos);
         Stage stage = new Stage();
         Stage ventanaTablero = ((Stage) Window.getWindows().getFirst());
@@ -231,7 +231,7 @@ public class TableroController {
                 Scene scene = new Scene(celdaController.getRoot());
                 Stage stage = new Stage();
                 stage.setResizable(false);
-                Stage ventana = ((Stage) Window.getWindows().get(0));
+                Stage ventana = ((Stage) Window.getWindows().getFirst());
                 stage.initOwner(ventana);
                 stage.setScene(scene);
                 int numeroVentanasAbiertas = 0;
@@ -240,7 +240,7 @@ public class TableroController {
                 }
                 if (numeroVentanasAbiertas > 1) {
                     Stage ventanaPreviaCelda = ((Stage) Window.getWindows().get(1));
-                    String textoLabelVentana = ((Label) ((GridPane) ((VBox) ventanaPreviaCelda.getScene().getRoot()).getChildren().get(0)).getChildren().get(0)).getText();
+                    String textoLabelVentana = ((Label) ((GridPane) ((VBox) ventanaPreviaCelda.getScene().getRoot()).getChildren().getFirst()).getChildren().getFirst()).getText();
                     log.debug("Se ha cerrado la ventana de la celda " + textoLabelVentana.charAt(8) + ", " + textoLabelVentana.charAt(11));
                     ventanaPreviaCelda.close();
                 }
@@ -337,7 +337,32 @@ public class TableroController {
     }
     @FXML
     protected void onBottonFinalizarPartidaClick (ActionEvent event) {
-        volverAlMenuInicial(event);
+        Celda celda = ((Celda) ((GridPane) ((AnchorPane) ((Node) event.getSource()).getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
+        datos = celda.getDatos();
+        if (!getDatos().isSave() && datos.isPausado()) {
+            if (Window.getWindows().size() > 1) ((Stage) Window.getWindows().get(1)).close();
+            Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+            conf.initOwner(Stage.getWindows().getFirst());
+            conf.setTitle("Finalizar partida");
+            conf.setHeaderText("Estás a punto de salir de la partida, perderás el progreso");
+            conf.setContentText("¿Quieres guardar la partida antes de salir?");
+            ButtonType botonGuardar = new ButtonType("Guardar");
+            ButtonType botonNoGuardar = new ButtonType("No guardar");
+            ButtonType botonCancelar = new ButtonType("Cancelar");
+            conf.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
+            conf.showAndWait().ifPresent(ans -> {
+                if (ans == botonGuardar) {
+                    guardarPartida(event);
+                    terminarPartida(datos);
+                } else if (ans == botonNoGuardar) {
+                    terminarPartida(datos);
+                } else {
+                    conf.close();
+                }
+            });
+        } else {
+            terminarPartida(datos);
+        }
     }
     public static void terminarPartida (DatosJuego dato) {
         ZombieStudentsLife juego = new ZombieStudentsLife(dato, true);
@@ -392,5 +417,9 @@ public class TableroController {
         } catch (IOException e) {
             log.error("No se ha podido encontrar el menú inicial");
         }
+    }
+    @FXML
+    protected void onBottonSalirClick (ActionEvent event) {
+        volverAlMenuInicial(event);
     }
 }

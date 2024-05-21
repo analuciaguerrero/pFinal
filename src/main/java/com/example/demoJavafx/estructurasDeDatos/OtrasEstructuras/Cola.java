@@ -1,10 +1,6 @@
 package com.example.demoJavafx.estructurasDeDatos.OtrasEstructuras;
 
-import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
-import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
-import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ListaEnlazada;
-import javafx.scene.layout.TilePane;
 
 public class Cola<TipoDeDatos> {
     private ListaEnlazada<TipoDeDatos> datos = new ListaEnlazada<>();
