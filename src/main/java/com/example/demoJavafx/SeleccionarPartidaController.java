@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SeleccionarPartidaController implements Initializable {
@@ -50,15 +51,25 @@ public class SeleccionarPartidaController implements Initializable {
             stageActual.close();
             String archivo = listaDeFicheros.getSelectionModel().getSelectedItem();
             DatosJuego datosJuego = DatosJuego.cargarArchivo(archivo);
+            assert datosJuego != null;
             ZombieStudentsLife juego = new ZombieStudentsLife(datosJuego, false);
             TableroController controlador = new TableroController(datosJuego, juego);
             controlador.crearTablero(juego.getTablero());
         }
     }
+    @FXML
+    protected void onBottonNuevoClick(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Tablero.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     protected void onBotonVolverMenuClick (ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("SeleccionarPartida.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SeleccionarPartida.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -78,19 +89,10 @@ public class SeleccionarPartidaController implements Initializable {
         }
         throw new NoHayFicherosIniciales();
     }
-    @FXML
-    protected void onBotonNuevoClick(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("Ajustes.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
 
     @FXML
     protected void onBotonCargarPartidaClick(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("CargarJuego.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("CargarJuego.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

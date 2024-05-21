@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MenuAjustesController implements Initializable {
@@ -216,7 +217,7 @@ public class MenuAjustesController implements Initializable {
     }
     @FXML
     protected void onBottonVolverClick (ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MenuInicial.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MenuInicial.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

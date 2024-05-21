@@ -23,34 +23,23 @@ public class MenuInicialController {
     private Button buttonCargar;
 
     @FXML
-    private void goNewPlay(ActionEvent event) {
-        try {
-            // Cargar el archivo FXML del MenuEntrada
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) buttonPlay.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void goNewPlay(ActionEvent event) throws IOException {
+        // Cargar el archivo FXML del MenuEntrada
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuEntrada.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) buttonPlay.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML
-    private void goToSettings(ActionEvent event) {
+    private void goToSettings(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("Personalizacion.fxml"));
-
-        try {
-            Scene scene = new Scene((Parent)fxmlLoader.load(), 840.0, 803.0);
-            stage.setTitle("Ajustes");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception var4) {
-            Exception e = var4;
-            e.printStackTrace();
-        }
+        Scene scene = new Scene((Parent)fxmlLoader.load(), 840.0, 803.0);
+        stage.setTitle("Ajustes");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
