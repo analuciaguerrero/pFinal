@@ -297,3 +297,4 @@
 2024-05-21 18:37:19.434 - DEBUG - com.example.demoJavafx.estudiante.Estudiante - Ha nacido el estudiante 1
 2024-05-21 18:37:19.435 - DEBUG - com.example.demoJavafx.estudiante.Estudiante - Ha nacido el estudiante 3
 2024-05-21 18:37:19.436 - DEBUG - com.example.demoJavafx.estudiante.Estudiante - Ha nacido el estudiante 1
+2024-05-22 00:12:26.099 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Se ha detectado un cambio en el tabPane

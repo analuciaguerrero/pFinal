@@ -82,7 +82,7 @@ public class XPersonalizacionController implements Initializable {
     public XPersonalizacionController() {}
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tabPaneConfiguracion.getSelectionModel().selectedItemProperty().addListener((_, _, newTab) -> {
+        tabPaneConfiguracion.getSelectionModel().selectedItemProperty().addListener((observableValue, oldTab, newTab) -> {
             log.debug("Se ha detectado un cambio en el tabPane");
             if (newTab != null) tabActual = newTab;
         });

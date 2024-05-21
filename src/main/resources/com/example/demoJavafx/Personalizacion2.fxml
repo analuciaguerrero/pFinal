@@ -9,7 +9,7 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Label prefHeight="24.0" prefWidth="169.0" text="Configuración" textAlignment="CENTER" textFill="#078e66">
+    <Label prefHeight="24.0" prefWidth="169.0" text="Personalización" textAlignment="CENTER" textFill="#078e66">
         <font>
             <Font name="Baskerville Old Face" size="30.0" />
         </font>
