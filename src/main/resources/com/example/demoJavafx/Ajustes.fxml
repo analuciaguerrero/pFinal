@@ -63,7 +63,7 @@
                                                       </AnchorPane>
                                                       <AnchorPane layoutX="79.0" layoutY="167.0" prefHeight="60.0" prefWidth="642.0">
                                                          <children>
-                                                            <Slider fx:id="aguaProbabilidadSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Slider fx:id="ProbAparAguaSlider" layoutX="295.0" layoutY="26.0" minorTickCount="5" prefHeight="34.0" prefWidth="246.0" showTickLabels="true" showTickMarks="true" />
                                                             <Label layoutX="14.0" layoutY="22.0" text="Probabilidad Agua">
                                                                <font>
                                                                   <Font size="18.0" />
@@ -101,7 +101,7 @@
                                                                   </Text>
                                                                </children>
                                                             </AnchorPane>
-                                                            <Slider fx:id="aguaAumentoVidaSlider" layoutX="7.0" layoutY="5.0" majorTickUnit="10.0" max="10.0" minorTickCount="5" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" showTickMarks="true" />
+                                                            <Spinner fx:id="AumentoTurnosAguaSpinner" layoutX="7.0" layoutY="5.0" majorTickUnit="10.0" max="10.0" minorTickCount="5" orientation="VERTICAL" prefHeight="138.0" prefWidth="30.0" showTickLabels="true" showTickMarks="true" />
                                                             <Text fx:id="labelValorSlideraguaAumentoVida" layoutX="93.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="31.039059817790985">
                                                                <font>
                                                                   <Font size="20.0" />

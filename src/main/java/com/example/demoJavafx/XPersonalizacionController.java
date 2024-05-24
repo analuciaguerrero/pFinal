@@ -4,6 +4,7 @@ import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,13 +16,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -82,7 +83,7 @@ public class XPersonalizacionController implements Initializable {
     public XPersonalizacionController() {}
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tabPaneConfiguracion.getSelectionModel().selectedItemProperty().addListener((observableValue, oldTab, newTab) -> {
+        tabPaneConfiguracion.getSelectionModel().selectedItemProperty().addListener((_, _, newTab) -> {
             log.debug("Se ha detectado un cambio en el tabPane");
             if (newTab != null) tabActual = newTab;
         });
@@ -172,49 +173,115 @@ public class XPersonalizacionController implements Initializable {
         initializeController();
     }
     @FXML
-    protected void onBottonGuardarClick(javafx.event.ActionEvent event) throws IOException {
-        if (Window.getWindows().getFirst() != ((Node) event.getSource()).getScene().getWindow()) {
+    protected void onBottonGuardarClick(ActionEvent event) throws IOException {
+        try {
+            if (Window.getWindows().isEmpty()) {
+                System.err.println("No hay ventanas abiertas.");
+                return;
+            }
+
             Stage ventana = (Stage) Window.getWindows().getFirst();
-            Celda celda = ((Celda) ((GridPane) ((AnchorPane) ventana.getScene().getRoot().getChildrenUnmodifiable().get(1)).getChildrenUnmodifiable().getFirst()).getChildren().getFirst());
-            dato = celda.getDatos();
-            propiedades.setDato(dato);
-        }
-        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-        if (!dato.isPausado()) {
-            confirmacion.initOwner(Stage.getWindows().getFirst());
-            confirmacion.setTitle("Iniciar un juego nuevo");
-            confirmacion.setHeaderText("Estás a punto de guardar los ajustes y empezar una nueva partida");
-            confirmacion.setContentText("¿Seguro que quieres continuar?");
-        } else {
-            confirmacion.initOwner(Stage.getWindows().get(1));
-            confirmacion.setTitle("Continuar");
-            confirmacion.setHeaderText("Estás a punto de guardar los ajustes para continuar la partida");
-            confirmacion.setContentText("¿Seguro que quieres continuar?");
-        }
-        if(confirmacion.showAndWait().get() == ButtonType.OK) {
-            continuarZombieStudentsLife(event);
+            System.out.println("Ventana obtenida: " + ventana);
+
+            // Verificar que la escena no sea nula
+            if (ventana.getScene() == null || ventana.getScene().getRoot() == null) {
+                System.err.println("La escena o la raíz de la escena es nula.");
+                return;
+            }
+
+            // Verificar que haya al menos dos hijos en el root
+            ObservableList<Node> rootChildren = ventana.getScene().getRoot().getChildrenUnmodifiable();
+            if (rootChildren.size() > 1) {
+                AnchorPane anchorPane = (AnchorPane) rootChildren.get(1);
+                System.out.println("AnchorPane obtenida: " + anchorPane);
+
+                // Verificar que el AnchorPane tenga al menos un hijo
+                ObservableList<Node> anchorPaneChildren = anchorPane.getChildrenUnmodifiable();
+                if (!anchorPaneChildren.isEmpty()) {
+                    GridPane gridPane = (GridPane) anchorPaneChildren.get(0);
+                    System.out.println("GridPane obtenida: " + gridPane);
+
+                    // Verificar que el GridPane tenga al menos un hijo
+                    ObservableList<Node> gridPaneChildren = gridPane.getChildren();
+                    if (!gridPaneChildren.isEmpty()) {
+                        Celda celda = (Celda) gridPaneChildren.get(0);
+                        System.out.println("Celda obtenida: " + celda);
+
+                        dato = celda.getDatos();
+                        if (dato == null) {
+                            System.err.println("Los datos obtenidos de la celda son nulos.");
+                            return;
+                        }
+                        System.out.println("Dato obtenido de la celda: " + dato);
+
+                        propiedades.setDato(dato);
+                    } else {
+                        System.err.println("El GridPane no tiene hijos.");
+                    }
+                } else {
+                    System.err.println("El AnchorPane no tiene hijos.");
+                }
+            } else {
+                System.err.println("El root no tiene suficientes hijos.");
+            }
+
+            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            if (!dato.isPausado()) {
+                confirmacion.initOwner(Stage.getWindows().getFirst());
+                confirmacion.setTitle("Iniciar un juego nuevo");
+                confirmacion.setHeaderText("Estás a punto de guardar los ajustes y empezar una nueva partida");
+                confirmacion.setContentText("¿Seguro que quieres continuar?");
+            } else {
+                confirmacion.initOwner(Stage.getWindows().get(1));
+                confirmacion.setTitle("Continuar");
+                confirmacion.setHeaderText("Estás a punto de guardar los ajustes para continuar la partida");
+                confirmacion.setContentText("¿Seguro que quieres continuar?");
+            }
+
+            if (confirmacion.showAndWait().get() == ButtonType.OK) {
+                continuarZombieStudentsLife(event);
+            }
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+            System.err.println("Error de conversión de tipo: " + e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.err.println("Error de índice fuera de rango: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error inesperado: " + e.getMessage());
         }
     }
 
-    private void continuarZombieStudentsLife(javafx.event.ActionEvent event) throws IOException {
+    private void continuarZombieStudentsLife(ActionEvent event) throws IOException {
+        propiedades.commit();
+        Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stageActual.close();
+
         if (!dato.isPausado()) {
-            propiedades.commit();
-            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stageActual.close();
             comenzarNuevoJuego();
             log.debug("Ha sido iniciada una partida nueva");
         } else {
-            propiedades.commit();
-            Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stageActual.close();
             log.debug("Se han guardado los ajustes");
         }
     }
-    private void comenzarNuevoJuego () throws IOException {
+
+    private void comenzarNuevoJuego() throws IOException {
         dato.setTurnoActual(0);
         ZombieStudentsLife zombieStudentsLife = new ZombieStudentsLife(dato, false);
-        TableroController controlador = new TableroController(dato, zombieStudentsLife);
-        controlador.crearTablero(zombieStudentsLife.getTablero());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
+        Parent root = loader.load();
+
+        // Configurar el controlador del tablero
+        TableroController controlador = loader.getController();
+        controlador.inicializar(dato, zombieStudentsLife);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Tablero");
+        stage.show();
+
         dato.setPausado(true);
     }
     @FXML

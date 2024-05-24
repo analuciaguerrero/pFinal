@@ -20,8 +20,8 @@ public class BucleDeControlProperties {
     }
     public BucleDeControlProperties(){}
     public void commit() {
-        original.getTablero().setColumnas(tableroColumnas.get());
-        original.getTablero().setFilas(tableroFilas.get());
+        //original.getTablero().setColumnas(tableroColumnas.get());
+        //original.getTablero().setFilas(tableroFilas.get());
         log.trace("Enviando una traza de ejecución");
         log.debug("Enviado un debug");
         log.info("Enviando un info");
@@ -32,8 +32,8 @@ public class BucleDeControlProperties {
     }
 
     public void rollback() {
-        tableroColumnas.set(original.getTablero().getColumnas());
-        tableroFilas.set(original.getTablero().getFilas());
+        //tableroColumnas.set(original.getTablero().getColumnas());
+        //tableroFilas.set(original.getTablero().getFilas());
         log.trace("Enviando una traza de ejecución");
         log.debug("Enviado un debug");
         log.info("Enviando un info");

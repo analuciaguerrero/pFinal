@@ -34,8 +34,8 @@ public class EstudianteAvanzado extends Estudiante {
     protected Grafo<Celda> getGrafoTab(DatosJuego dato, Tablero tablero) {
         Grafo<Celda> grafoTab = new Grafo<>(false);
         int reduccionMontaña = dato.getReduccionVidaMontaña();
-        for (int i = 0; i < tablero.getFilas(); i++) {
-            for (int j = 0; j < tablero.getColumnas(); j++) {
+        for (int i = 0; i < tablero.getNumFilas(); i++) {
+            for (int j = 0; j < tablero.getNumColumnas(); j++) {
                 Celda celda= tablero.getCelda(i, j);
                 grafoTab.addNodo(celda);
                 if (i > 0) {
@@ -53,7 +53,7 @@ public class EstudianteAvanzado extends Estudiante {
                     int pesoArco3 = calcularPesoArista(celda, vert3, reduccionMontaña);
                     grafoTab.addArista(pesoArco3, celda, vert3);
                 }
-                if (i > 0 && j < tablero.getColumnas() - 1) {
+                if (i > 0 && j < tablero.getNumColumnas() - 1) {
                     Celda vert4 = tablero.getCelda(i - 1, j + 1);
                     int pesoArco4 = calcularPesoArista(celda, vert4, reduccionMontaña);
                     grafoTab.addArista(pesoArco4, celda, vert4);

@@ -60,20 +60,11 @@ public class MenuEntradaController {
      * Creates new form MenuEntradaController
      */
     public MenuEntradaController() {
-        loadRanking();
     }
 
     /**
      * Method responsible for loading the ranking from the .dat file
      */
-    public void loadRanking() {
-        try (FileInputStream fileRanking = new FileInputStream("ranking.dat");
-             ObjectInputStream streamRanking = new ObjectInputStream(fileRanking)) {
-            jugadores = (HashMap<String, Jugador>) streamRanking.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(MenuEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /**
      * Get the desired player

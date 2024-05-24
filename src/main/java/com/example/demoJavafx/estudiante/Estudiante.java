@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
@@ -101,7 +102,6 @@ public abstract class Estudiante {
     public void setPosicionM(int posicionM) {
         this.posicionM = posicionM;
     }
-
     public int[] getPosicion () {
         int[] posicion = new int[2];
         posicion[0] = posicionN;

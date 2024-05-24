@@ -152,8 +152,8 @@ public class BucleDeControl implements Runnable {
     }
     public void evaluarReproduccion() {
         if (!estudiantes.isVacia()) {
-            for (int i = 0; i != tablero.getFilas(); i++) {
-                for (int j = 0; j != tablero.getColumnas(); j++) {
+            for (int i = 0; i != tablero.getNumFilas(); i++) {
+                for (int j = 0; j != tablero.getNumColumnas(); j++) {
                     Celda celda = tablero.getCelda(i, j);
                     ListaEnlazada<Estudiante> estudianteListaEnlazada = celda.getListaEstudiantes();
                     int numEstudiantes = estudianteListaEnlazada.getNumeroElementos();

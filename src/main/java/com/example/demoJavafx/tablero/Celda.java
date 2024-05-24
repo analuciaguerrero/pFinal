@@ -3,7 +3,6 @@ package com.example.demoJavafx.tablero;
 import com.example.demoJavafx.DatosJuego;
 import com.example.demoJavafx.entorno.Recursos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import com.example.demoJavafx.estructurasDeDatos.ListaEnlazada.ElementoLE;
@@ -68,8 +67,8 @@ public class Celda extends AnchorPane {
         AnchorPane.setRightAnchor(gridElms, 0.0);
         AnchorPane.setTopAnchor(gridElms, 0.0);
         AnchorPane.setBottomAnchor(gridElms, 0.0);
-        gridElms.setHgap(8);
         gridElms.setVgap(3);
+        gridElms.setHgap(8);
         gridElms.setMouseTransparent(true);
         getChildren().setAll(botonCelda, gridElms);
     }
@@ -141,14 +140,14 @@ public class Celda extends AnchorPane {
     }
     private void addIcEstudiante(ImageView vistaIc) {
         vistaIc.setPreserveRatio(true);
-        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 2));
+        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight() / (((GridPane) this.getParent()).getColumnCount() * 2));
         int numIcEstudiante = 0;
-        for (Node node : gridElms.getChildren() ) {
-            if (GridPane.getRowIndex(node) == 0){
+        for (Node node : gridElms.getChildren()) {
+            if (GridPane.getRowIndex(node) == 0) {
                 numIcEstudiante++;
             }
         }
-        gridElms.add(vistaIc, numIcEstudiante , 0);
+        gridElms.add(vistaIc, numIcEstudiante, 0);
     }
     public void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente {
         try {
@@ -174,10 +173,10 @@ public class Celda extends AnchorPane {
     }
     private void addIcRecurso (ImageView vistaIc) {
         vistaIc.setPreserveRatio(true);
-        vistaIc.setFitWidth(((GridPane) this.getParent()).getWidth()/(((GridPane) this.getParent()).getColumnCount() * 2));
-        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight()/(((GridPane) this.getParent()).getColumnCount() * 3));
+        vistaIc.setFitWidth(((GridPane) this.getParent()).getWidth() / (((GridPane) this.getParent()).getColumnCount() * 2));
+        vistaIc.setFitHeight(((GridPane) this.getParent()).getHeight() / (((GridPane) this.getParent()).getColumnCount() * 3));
         int numIcRecurso = 0;
-        for (Node node : gridElms.getChildren() ) {
+        for (Node node : gridElms.getChildren()) {
             if (GridPane.getRowIndex(node) == 1) numIcRecurso++;
         }
         gridElms.add(vistaIc, numIcRecurso, 1);
@@ -215,7 +214,7 @@ public class Celda extends AnchorPane {
     }
 
     public void eliminarEstudiante(Estudiante estudiante) {
-        for (int i = 0; i != listaEstudiantes.getNumeroElementos(); i++) {
+        for (int i = 0; i < listaEstudiantes.getNumeroElementos(); i++) {
             if (estudiante == listaEstudiantes.getElemento(i).getData()) {
                 estudiante.morir(dato, this);
                 restablecerInterfazVisual();
@@ -226,7 +225,7 @@ public class Celda extends AnchorPane {
     }
 
     public void eliminarRecurso(Recursos recurso) {
-        for (int i = 0; i != listaRecursos.getNumeroElementos(); i++) {
+        for (int i = 0; i < listaRecursos.getNumeroElementos(); i++) {
             if (recurso == listaRecursos.getElemento(i).getData()) {
                 recurso.del(dato, this);
                 restablecerInterfazVisual();
@@ -311,10 +310,10 @@ public class Celda extends AnchorPane {
         gridElms.getChildren().clear();
         gridElms.getColumnConstraints().clear();
         gridElms.getRowConstraints().clear();
-        for (int i=0; i != listaEstudiantes.getNumeroElementos(); i++) {
+        for (int i = 0; i < listaEstudiantes.getNumeroElementos(); i++) {
             agregarEstudiante(listaEstudiantes.getElemento(i).getData(), false);
         }
-        for (int i=0; i != listaRecursos.getNumeroElementos(); i++) {
+        for (int i = 0; i < listaRecursos.getNumeroElementos(); i++) {
             agregarRecurso(listaRecursos.getElemento(i).getData(), false);
         }
     }
