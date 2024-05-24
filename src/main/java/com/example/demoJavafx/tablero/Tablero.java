@@ -14,6 +14,7 @@ public class Tablero {
     private DatosJuego dato;
     private ListaSimple<ListaSimple<Celda>> celdas; //Matriz de celdas mediante lista enlazada
     private static final Logger log = LogManager.getLogger("com.example");
+    public Tablero(){}
     public Tablero(int filas, int columnas, DatosJuego dato) {
         celdas = new ListaSimple<>(filas);
         for (int i = 0; i < filas; i++) {
