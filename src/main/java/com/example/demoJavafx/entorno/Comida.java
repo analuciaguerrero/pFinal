@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Comida extends Recursos{
-    private int aumentoVida;
+    private double aumentoVida;
     private static final Logger log = LogManager.getLogger();
 
     public Comida(int id, int posicionN, int posicionM, DatosJuego dato) {
@@ -21,7 +21,7 @@ public class Comida extends Recursos{
         super(id,dato);
         aumentoVida = dato.getAumentoVidaComida();
     }
-    public int getAumentoVida() {
+    public double getAumentoVida() {
         return aumentoVida;
     }
 
@@ -36,7 +36,7 @@ public class Comida extends Recursos{
 
     @Override
     public void aplicarEfecto(Estudiante estudiante, Celda celda, int turno) {
-        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() + aumentoVida, turno);
+        estudiante.setTiempoDeVida((int) (estudiante.getTiempoDeVida() + aumentoVida), turno);
         estudiante.getColaDeOperaciones().add(STR."Acción: efecto Comida, turno: \{turno}");
         log.debug(STR."Efecto de comida aplicado a \{estudiante.getId()}");
     }

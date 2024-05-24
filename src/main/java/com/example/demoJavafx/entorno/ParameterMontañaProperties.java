@@ -18,7 +18,7 @@ public class ParameterMontañaProperties {
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        disminucionVida.set(original.getReduccionVida());
+        disminucionVida.set((int) original.getReduccionVida());
     }
 
     public Montaña getOriginal() {

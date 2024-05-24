@@ -159,6 +159,7 @@ public class MenuEntradaController {
             Stage stage = new Stage();
             Scene scene = new Scene(stackPane, 650.0, 450.0);
             stage.setScene(scene);
+            stage.setTitle("Seleccionar Partida");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

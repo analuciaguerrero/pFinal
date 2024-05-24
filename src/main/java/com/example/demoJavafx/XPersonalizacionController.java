@@ -2,8 +2,6 @@ package com.example.demoJavafx;
 
 import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -30,6 +27,7 @@ import java.util.ResourceBundle;
 public class XPersonalizacionController implements Initializable {
 
     Tab tabActual;
+    @FXML private Button buttonGuardar;
     @FXML
     TabPane tabPaneConfiguracion = new TabPane();
     @FXML
@@ -45,35 +43,49 @@ public class XPersonalizacionController implements Initializable {
     private Slider ProbMejoraAvanzadoSlider = new Slider();
 
     @FXML
-    private Spinner<Double> ProbAparRecursoSpinner = new Spinner<>();
+    private Spinner<Integer> aguaTurnosRestantesSpinner = new Spinner<>();
     @FXML
     private Slider ProbAparAguaSlider = new Slider();
     @FXML
+    private Slider aguaAumentoVidaSlider = new Slider();
+
+    @FXML
+    private Spinner<Integer> comidaTurnosRestantesSpinner = new Spinner<>();
+    @FXML
     private Slider ProbAparComidaSlider = new Slider();
+    @FXML
+    private Slider comidaAumentoVidaSlider = new Slider();
+
+    @FXML
+    private Spinner<Integer> montanaTurnosRestantesSpinner = new Spinner<>();
     @FXML
     private Slider ProbAparMontañaSlider = new Slider();
     @FXML
+    private Slider montanaDisminucionVidaSlider = new Slider();
+
+    @FXML
+    private Spinner<Integer> tesoroTurnosRestantesSpinner = new Spinner<>();
+    @FXML
     private Slider ProbAparTesoroSlider = new Slider();
+    @FXML
+    private Slider AumentoProbReproSlider = new Slider();
+
+    @FXML
+    private Spinner<Integer> bibliotecaTurnosRestantesSpinner = new Spinner<>();
     @FXML
     private Slider ProbAparBibliotecaSlider = new Slider();
     @FXML
-    private Slider ProbAparPozoSlider = new Slider();
-    @FXML
-    private Spinner<Integer> TurnosInicialesRecursoSpinner = new Spinner<>();
-    @FXML
-    private Spinner<Integer> AumentoTurnosAguaSpinner = new Spinner<>();
-    @FXML
-    private Spinner<Integer> AumentoTurnosComidaSpinner = new Spinner<>();
-    @FXML
-    private Spinner<Integer> ReduccionTurnosMontañaSpinner = new Spinner<>();
-    @FXML
-    private Slider AumentoProbReproSlider = new Slider();
-    @FXML
     private Slider AumentoProbClonSlider = new Slider();
+
     @FXML
-    private Spinner<Integer> FilasDelTableroSpinner = new Spinner<>();
+    private Spinner<Integer> pozoTurnosRestantesSpinner = new Spinner<>();
     @FXML
-    private Spinner<Integer> ColumnasDelTableroSpinner = new Spinner<>();
+    private Slider ProbAparPozoSlider = new Slider();
+
+    @FXML
+    private Slider filasSlider = new Slider();
+    @FXML
+    private Slider columnasSlider = new Slider();
 
     private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
 
@@ -105,34 +117,32 @@ public class XPersonalizacionController implements Initializable {
 
     protected void initializeSpinners() {
         SpinnerValueFactory<Integer> TurnosVidaInicialesVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
-        SpinnerValueFactory<Double> ProbAparRecursoVF = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100);
-        SpinnerValueFactory<Integer> TurnosInicialesRecursoVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
-        SpinnerValueFactory<Integer> IncrementoAguaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
-        SpinnerValueFactory<Integer> IncrementoComidaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
-        SpinnerValueFactory<Integer> IncrementoMontañaVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
-        SpinnerValueFactory<Integer> FilasTableroVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
-        SpinnerValueFactory<Integer> ColumnasTableroVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        SpinnerValueFactory<Integer> TurnosRestantesAgua = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100);
+        SpinnerValueFactory<Integer> TurnosRestantesComida = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
+        SpinnerValueFactory<Integer> TurnosRestantesMontana = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> TurnosRestantesBiblioteca = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> TurnosRestantesTesoro = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000);
+        SpinnerValueFactory<Integer> TurnosRestantesPozo = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         TurnosVidaInicialesSpinner.setValueFactory(TurnosVidaInicialesVF);
-        ProbAparRecursoSpinner.setValueFactory(ProbAparRecursoVF);
-        TurnosInicialesRecursoSpinner.setValueFactory(TurnosInicialesRecursoVF);
-        AumentoTurnosAguaSpinner.setValueFactory(IncrementoAguaVF);
-        AumentoTurnosComidaSpinner.setValueFactory(IncrementoComidaVF);
-        ReduccionTurnosMontañaSpinner.setValueFactory(IncrementoMontañaVF);
-        FilasDelTableroSpinner.setValueFactory(FilasTableroVF);
-        ColumnasDelTableroSpinner.setValueFactory(ColumnasTableroVF);
+        aguaTurnosRestantesSpinner.setValueFactory(TurnosRestantesAgua);
+        comidaTurnosRestantesSpinner.setValueFactory(TurnosRestantesComida);
+        montanaTurnosRestantesSpinner.setValueFactory(TurnosRestantesMontana);
+        bibliotecaTurnosRestantesSpinner.setValueFactory(TurnosRestantesBiblioteca);
+        tesoroTurnosRestantesSpinner.setValueFactory(TurnosRestantesTesoro);
+        pozoTurnosRestantesSpinner.setValueFactory(TurnosRestantesPozo);
         addFiltroSpinner(TurnosVidaInicialesSpinner);
-        addFiltroSpinner2(ProbAparRecursoSpinner);
-        addFiltroSpinner(TurnosInicialesRecursoSpinner);
-        addFiltroSpinner(AumentoTurnosAguaSpinner);
-        addFiltroSpinner(AumentoTurnosComidaSpinner);
-        addFiltroSpinner(ReduccionTurnosMontañaSpinner);
-        addFiltroSpinner(TurnosVidaInicialesSpinner);
-        addFiltroSpinner(FilasDelTableroSpinner);
-        addFiltroSpinner(ColumnasDelTableroSpinner);
+        addFiltroSpinner(aguaTurnosRestantesSpinner);
+        addFiltroSpinner(comidaTurnosRestantesSpinner);
+        addFiltroSpinner(montanaTurnosRestantesSpinner);
+        addFiltroSpinner(bibliotecaTurnosRestantesSpinner);
+        addFiltroSpinner(tesoroTurnosRestantesSpinner);
+        addFiltroSpinner(pozoTurnosRestantesSpinner);
     }
     protected void actualizarDato() {
         ProbReproEstudianteSlider.valueProperty().bindBidirectional(propiedades.ProbReproEstudianteProperty());
         ProbClonEstudianteSlider.valueProperty().bindBidirectional(propiedades.ProbClonEstudianteProperty());
+        AumentoProbReproSlider.valueProperty().bindBidirectional(propiedades.AumentoProbReproProperty());
+        AumentoProbClonSlider.valueProperty().bindBidirectional(propiedades.AumentoProbClonProperty());
         ProbMejoraNormalSlider.valueProperty().bindBidirectional(propiedades.ProbMejorarANormalProperty());
         ProbMejoraAvanzadoSlider.valueProperty().bindBidirectional(propiedades.ProbMejorarAAvanzadoProperty());
         ProbAparAguaSlider.valueProperty().bindBidirectional(propiedades.ProbAguaProperty());
@@ -141,16 +151,21 @@ public class XPersonalizacionController implements Initializable {
         ProbAparTesoroSlider.valueProperty().bindBidirectional(propiedades.ProbTesoroProperty());
         ProbAparBibliotecaSlider.valueProperty().bindBidirectional(propiedades.ProbBibliotecaProperty());
         ProbAparPozoSlider.valueProperty().bindBidirectional(propiedades.ProbPozoProperty());
-        AumentoProbReproSlider.valueProperty().bindBidirectional(propiedades.AumentoProbReproProperty());
-        AumentoProbClonSlider.valueProperty().bindBidirectional(propiedades.AumentoProbClonProperty());
+        aguaAumentoVidaSlider.valueProperty().bindBidirectional(propiedades.AumentoTurnosAguaProperty());
+        comidaAumentoVidaSlider.valueProperty().bindBidirectional(propiedades.AumentoTurnosComidaProperty());
+        montanaDisminucionVidaSlider.valueProperty().bindBidirectional(propiedades.ReduccionTurnosMontañaProperty());
+        filasSlider.valueProperty().bindBidirectional(propiedades.FilasDelTableroProperty());
+        columnasSlider.valueProperty().bindBidirectional(propiedades.ColumnasDelTableroProperty());
+
+
         TurnosVidaInicialesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosVidaInicialesProperty());
-        ProbAparRecursoSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ProbRecursoProperty());
-        TurnosInicialesRecursoSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosInicialesRecursoProperty());
-        AumentoTurnosAguaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.AumentoTurnosAguaProperty());
-        AumentoTurnosComidaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.AumentoTurnosComidaProperty());
-        ReduccionTurnosMontañaSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ReduccionTurnosMontañaProperty());
-        FilasDelTableroSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.FilasDelTableroProperty());
-        ColumnasDelTableroSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.ColumnasDelTableroProperty());
+        aguaTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesAguaProperty());
+        comidaTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesComidaProperty());
+        montanaTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesMontanaProperty());
+        bibliotecaTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesBibliotecaProperty());
+        tesoroTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesTesoroProperty());
+        pozoTurnosRestantesSpinner.getValueFactory().valueProperty().bindBidirectional(propiedades.TurnosRestantesPozoProperty());
+
     }
 
     private void addFiltroSpinner (Spinner<Integer> spinner) {
@@ -277,12 +292,23 @@ public class XPersonalizacionController implements Initializable {
         TableroController controlador = loader.getController();
         controlador.inicializar(dato, zombieStudentsLife);
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Tablero");
-        stage.show();
+        // Cerrar todas las ventanas abiertas excepto la nueva que vamos a abrir
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+        newStage.setTitle("Tablero");
+
+        // Mostrar la nueva ventana antes de cerrar las otras para evitar que no haya ninguna ventana abierta en algún momento
+        newStage.show();
+
+        // Cerrar todas las demás ventanas
+        for (Window window : Window.getWindows()) {
+            if (window != newStage) {
+                ((Stage) window).close();
+            }
+        }
 
         dato.setPausado(true);
+
     }
     @FXML
     protected void onBottonReiniciarClick() {

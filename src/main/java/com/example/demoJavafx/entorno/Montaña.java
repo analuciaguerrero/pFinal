@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Montaña extends Recursos{
-    private int reduccionVida;
+    private double reduccionVida;
     private static final Logger log = LogManager.getLogger();
 
     public Montaña(int id, DatosJuego dato){
@@ -21,7 +21,7 @@ public class Montaña extends Recursos{
         reduccionVida = dato.getReduccionVidaMontaña();
     }
     public Montaña(){}
-    public int getReduccionVida(){
+    public double getReduccionVida(){
         return reduccionVida;
     }
     public void setReduccionVida(int reduccionVida) throws IncrementoNoValido{
@@ -39,7 +39,7 @@ public class Montaña extends Recursos{
         if (estudiante.getTiempoDeVida() <= 0) {
             celda.eliminarEstudiante(estudiante);
         }else {
-            estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() - reduccionVida, turno);
+            estudiante.setTiempoDeVida((int) (estudiante.getTiempoDeVida() - reduccionVida), turno);
         }
     }
 }

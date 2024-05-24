@@ -7,24 +7,30 @@ import org.apache.logging.log4j.Logger;
 public class DatosJuegoProperties {
 
     protected DatosJuego dato;
-    private ObjectProperty<Integer> FilasDelTablero = new SimpleIntegerProperty().asObject();
-    private ObjectProperty<Integer> ColumnasDelTablero = new SimpleIntegerProperty().asObject();
+    private IntegerProperty FilasDelTablero = new SimpleIntegerProperty();
+    private IntegerProperty ColumnasDelTablero = new SimpleIntegerProperty();
+
     private ObjectProperty<Integer> TurnosVidaIniciales = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesAgua = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesComida = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesMontana = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesBiblioteca = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesTesoro = new SimpleIntegerProperty().asObject();
+    private ObjectProperty<Integer> TurnosRestantesPozo = new SimpleIntegerProperty().asObject();
+
     private DoubleProperty ProbReproEstudiante = new SimpleDoubleProperty();
     private DoubleProperty ProbClonEstudiante= new SimpleDoubleProperty();
     private DoubleProperty ProbMejoraToNormal = new SimpleDoubleProperty();
     private DoubleProperty ProbMejoraToAvanzado = new SimpleDoubleProperty();
-    private ObjectProperty<Double> ProbRecurso = new SimpleDoubleProperty().asObject();
-    private ObjectProperty<Integer> TurnosInicialesRecurso = new SimpleIntegerProperty().asObject();
     private DoubleProperty ProbAgua = new SimpleDoubleProperty();
     private DoubleProperty ProbComida = new SimpleDoubleProperty();
     private DoubleProperty ProbMontaña = new SimpleDoubleProperty();
     private DoubleProperty ProbTesoro = new SimpleDoubleProperty();
     private DoubleProperty ProbBiblioteca = new SimpleDoubleProperty();
     private DoubleProperty ProbPozo = new SimpleDoubleProperty();
-    private ObjectProperty<Integer> AumentoTurnosAgua = new SimpleIntegerProperty().asObject();
-    private ObjectProperty<Integer> AumentoTurnosComida = new SimpleIntegerProperty().asObject();
-    private ObjectProperty<Integer> ReduccionTurnosMontaña = new SimpleIntegerProperty().asObject();
+    private DoubleProperty AumentoTurnosAgua = new SimpleDoubleProperty();
+    private DoubleProperty AumentoTurnosComida = new SimpleDoubleProperty();
+    private DoubleProperty ReduccionTurnosMontaña = new SimpleDoubleProperty();
     private DoubleProperty AumentoProbRepro = new SimpleDoubleProperty();
     private DoubleProperty AumentoProbClon = new SimpleDoubleProperty();
     private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
@@ -48,12 +54,16 @@ public class DatosJuegoProperties {
         dato.setFilasDelTablero(FilasDelTablero.get());
         dato.setColumnasDelTablero(ColumnasDelTablero.get());
         dato.setTurnosVidaIniciales(TurnosVidaIniciales.get());
+        dato.setTurnosRestantesAgua(TurnosRestantesAgua.get());
+        dato.setTurnosRestantesComida(TurnosRestantesComida.get());
+        dato.setTurnosRestantesMontana(TurnosRestantesMontana.get());
+        dato.setTurnosRestantesBiblioteca(TurnosRestantesBiblioteca.get());
+        dato.setTurnosRestantesTesoro(TurnosRestantesTesoro.get());
+        dato.setTurnosRestantesPozo(TurnosRestantesPozo.get());
         dato.setProbReproduccionEstudiante(ProbReproEstudiante.get());
         dato.setProbClonacionEstudiante(ProbClonEstudiante.get());
         dato.setProbMejorarANormal(ProbMejoraToNormal.get());
         dato.setProbMejorarAAvanzado(ProbMejoraToAvanzado.get());
-        dato.setProbRecurso(ProbRecurso.get());
-        dato.setTurnosIniciales(TurnosInicialesRecurso.get());
         dato.setProbAgua(ProbAgua.get());
         dato.setProbComida(ProbComida.get());
         dato.setProbMontaña(ProbMontaña.get());
@@ -75,8 +85,6 @@ public class DatosJuegoProperties {
     }
 
     private void rollbackRecursos () {
-        ProbRecurso.set(dato.getProbRecurso());
-        TurnosInicialesRecurso.set(dato.getTurnosIniciales());
         ProbAgua.set(dato.getProbAgua());
         ProbComida.set(dato.getProbComida());
         ProbMontaña.set(dato.getProbMontaña());
@@ -88,6 +96,12 @@ public class DatosJuegoProperties {
         ReduccionTurnosMontaña.set(dato.getReduccionVidaMontaña());
         AumentoProbRepro.set(dato.getAumentoProbReproduccion());
         AumentoProbClon.set(dato.getAumentoProbClonacion());
+        TurnosRestantesAgua.set(dato.getTurnosRestantesAgua());
+        TurnosRestantesComida.set(dato.getTurnosRestantesComida());
+        TurnosRestantesMontana.set(dato.getTurnosRestantesMontana());
+        TurnosRestantesBiblioteca.set(dato.getTurnosRestantesBiblioteca());
+        TurnosRestantesTesoro.set(dato.getTurnosRestantesTesoro());
+        TurnosRestantesPozo.set(dato.getTurnosRestantesPozo());
     }
 
     private void rollbackTablero () {
@@ -135,10 +149,6 @@ public class DatosJuegoProperties {
 
     public Property<Number> ProbMejorarAAvanzadoProperty() { return ProbMejoraToAvanzado; }
 
-    public ObjectProperty<Double> ProbRecursoProperty() {
-        return ProbRecurso;
-    }
-
     public Property<Number> ProbAguaProperty() {
         return ProbAgua;
     }
@@ -163,19 +173,39 @@ public class DatosJuegoProperties {
         return ProbPozo;
     }
 
-    public ObjectProperty<Integer> TurnosInicialesRecursoProperty() {
-        return TurnosInicialesRecurso;
+    public ObjectProperty<Integer> TurnosRestantesAguaProperty() {
+        return TurnosRestantesAgua;
     }
 
-    public ObjectProperty<Integer> AumentoTurnosAguaProperty() {
+    public ObjectProperty<Integer> TurnosRestantesComidaProperty() {
+        return TurnosRestantesComida;
+    }
+
+    public ObjectProperty<Integer> TurnosRestantesMontanaProperty() {
+        return TurnosRestantesMontana;
+    }
+
+    public ObjectProperty<Integer> TurnosRestantesBibliotecaProperty() {
+        return TurnosRestantesBiblioteca;
+    }
+
+    public ObjectProperty<Integer> TurnosRestantesTesoroProperty() {
+        return TurnosRestantesTesoro;
+    }
+
+    public ObjectProperty<Integer> TurnosRestantesPozoProperty() {
+        return TurnosRestantesPozo;
+    }
+
+    public Property<Number> AumentoTurnosAguaProperty() {
         return AumentoTurnosAgua;
     }
 
-    public ObjectProperty<Integer> AumentoTurnosComidaProperty() {
+    public Property<Number> AumentoTurnosComidaProperty() {
         return AumentoTurnosComida;
     }
 
-    public ObjectProperty<Integer> ReduccionTurnosMontañaProperty() {
+    public Property<Number> ReduccionTurnosMontañaProperty() {
         return ReduccionTurnosMontaña;
     }
 
@@ -187,11 +217,11 @@ public class DatosJuegoProperties {
         return AumentoProbClon;
     }
 
-    public ObjectProperty<Integer> FilasDelTableroProperty() {
+    public Property<Number> FilasDelTableroProperty() {
         return FilasDelTablero;
     }
 
-    public ObjectProperty<Integer> ColumnasDelTableroProperty() {
+    public Property<Number> ColumnasDelTableroProperty() {
         return ColumnasDelTablero;
     }
 }

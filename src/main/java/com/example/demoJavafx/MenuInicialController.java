@@ -21,6 +21,7 @@ public class MenuInicialController {
         Parent root = loader.load();
         Stage stage = (Stage) buttonPlay.getScene().getWindow();
         stage.setScene(new Scene(root));
+        stage.setTitle("Menu de Entrada");
         stage.show();
     }
     @FXML

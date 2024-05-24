@@ -72,15 +72,27 @@ public class DatosJuego {
     @Expose
     private double ProbPozo;
     @Expose
-    private int AumentoVidaAgua;
+    private double AumentoVidaAgua;
     @Expose
-    private int AumentoVidaComida;
+    private double AumentoVidaComida;
     @Expose
-    private int ReduccionVidaMontaña;
+    private double ReduccionVidaMontaña;
     @Expose
     private double AumentoProbReproduccion;
     @Expose
     private double AumentoProbClonacion;
+    @Expose
+    private int TurnosRestantesAgua;
+    @Expose
+    private int TurnosRestantesComida;
+    @Expose
+    private int TurnosRestantesMontana;
+    @Expose
+    private int TurnosRestantesBiblioteca;
+    @Expose
+    private int TurnosRestantesTesoro;
+    @Expose
+    private int TurnosRestantesPozo;
 
     //Datos del estudiante
     @Expose
@@ -137,6 +149,60 @@ public class DatosJuego {
 
     public void setTurnosVidaIniciales(int turnosVidaIniciales) {
         TurnosVidaIniciales = turnosVidaIniciales;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesAgua() {
+        return TurnosRestantesAgua;
+    }
+
+    public void setTurnosRestantesAgua(int turnosRestantesAgua) {
+        TurnosRestantesAgua = turnosRestantesAgua;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesComida() {
+        return TurnosRestantesComida;
+    }
+
+    public void setTurnosRestantesComida(int turnosRestantesComida) {
+        TurnosRestantesComida = turnosRestantesComida;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesMontana() {
+        return TurnosRestantesMontana;
+    }
+
+    public void setTurnosRestantesMontana(int turnosRestantesMontana) {
+        TurnosRestantesMontana = turnosRestantesMontana;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesBiblioteca() {
+        return TurnosRestantesBiblioteca;
+    }
+
+    public void setTurnosRestantesBiblioteca(int turnosRestantesBiblioteca) {
+        TurnosRestantesBiblioteca = turnosRestantesBiblioteca;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesTesoro() {
+        return TurnosRestantesTesoro;
+    }
+
+    public void setTurnosRestantesTesoro(int turnosRestantesTesoro) {
+        TurnosRestantesTesoro = turnosRestantesTesoro;
+        setSave(false);
+    }
+
+    public int getTurnosRestantesPozo() {
+        return TurnosRestantesPozo;
+    }
+
+    public void setTurnosRestantesPozo(int turnosRestantesPozo) {
+        TurnosRestantesPozo = turnosRestantesPozo;
         setSave(false);
     }
 
@@ -233,29 +299,29 @@ public class DatosJuego {
         setSave(false);
     }
 
-    public int getAumentoVidaAgua() {
+    public double getAumentoVidaAgua() {
         return AumentoVidaAgua;
     }
 
-    public void setAumentoVidaAgua(int aumentoVidaAgua) {
+    public void setAumentoVidaAgua(double aumentoVidaAgua) {
         AumentoVidaAgua = aumentoVidaAgua;
         setSave(false);
     }
 
-    public int getAumentoVidaComida() {
+    public double getAumentoVidaComida() {
         return AumentoVidaComida;
     }
 
-    public void setAumentoVidaComida(int aumentoVidaComida) {
+    public void setAumentoVidaComida(double aumentoVidaComida) {
         AumentoVidaComida = aumentoVidaComida;
         setSave(false);
     }
 
-    public int getReduccionVidaMontaña() {
+    public double getReduccionVidaMontaña() {
         return ReduccionVidaMontaña;
     }
 
-    public void setReduccionVidaMontaña(int reduccionVidaMontaña) {
+    public void setReduccionVidaMontaña(double reduccionVidaMontaña) {
         ReduccionVidaMontaña = reduccionVidaMontaña;
         setSave(false);
     }

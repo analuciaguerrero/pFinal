@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.MenuEntradaController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoJavafx.MenuEntradaController">
     <children>
         <AnchorPane fx:id="anchorPane" prefHeight="337.0" prefWidth="600.0">
             <children>
@@ -51,7 +51,7 @@
                         </TextField>
                     </children>
                 </AnchorPane>
-                <Button fx:id="buttonContinuar" layoutX="1097.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleContinuar" prefHeight="87.0" prefWidth="230.0" text="¡A jugar!">
+                <Button fx:id="buttonContinuar" layoutX="893.0" layoutY="676.0" mnemonicParsing="false" onAction="#handleContinuar" prefHeight="87.0" prefWidth="230.0" text="¡A jugar!">
                     <font>
                         <Font size="40.0" />
                     </font>

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +24,9 @@ import java.util.ResourceBundle;
 public class SeleccionarPartidaController implements Initializable {
     private static final Logger log = LogManager.getLogger(SeleccionarPartidaController.class);
     private DatosJuego datosJuego;
+
+    @FXML
+    private Button btnNuevaPartida;
 
     @FXML
     private ListView<String> listaDeFicheros = new ListView<>();
@@ -59,12 +63,19 @@ public class SeleccionarPartidaController implements Initializable {
     }
     @FXML
     protected void onBottonNuevoClick(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("Personalizacion.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("Personalizacion.fxml"));
+
+        try {
+            Scene scene = new Scene((Parent)fxmlLoader.load(), 840.0, 803.0);
+            stage.setTitle("Ajustes");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception var4) {
+            Exception e = var4;
+            e.printStackTrace();
+        }
     }
 
     @FXML

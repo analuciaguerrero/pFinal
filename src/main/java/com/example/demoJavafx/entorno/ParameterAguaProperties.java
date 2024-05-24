@@ -19,7 +19,7 @@ public class ParameterAguaProperties {
 
     public void rollback(){
         turnosRestantes.set(originalAgua.getTurnosRestantes());
-        aumentoVida.set(originalAgua.getAumentoVida());
+        aumentoVida.set((int) originalAgua.getAumentoVida());
     }
 
     public Agua getOriginalAgua() {

@@ -7,7 +7,6 @@ import com.example.demoJavafx.entorno.Recursos;
 import com.example.demoJavafx.estructurasDeDatos.Grafo.Camino;
 import com.example.demoJavafx.estructurasDeDatos.Grafo.Grafo;
 import com.example.demoJavafx.estructurasDeDatos.Grafo.NodoGrafo;
-import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ElementoLDE;
 import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
 import com.example.demoJavafx.excepciones.RecursosNoUtilizados;
 import com.example.demoJavafx.tablero.Celda;
@@ -33,7 +32,7 @@ public class EstudianteAvanzado extends Estudiante {
     }
     protected Grafo<Celda> getGrafoTab(DatosJuego dato, Tablero tablero) {
         Grafo<Celda> grafoTab = new Grafo<>(false);
-        int reduccionMontaña = dato.getReduccionVidaMontaña();
+        double reduccionMontaña = dato.getReduccionVidaMontaña();
         for (int i = 0; i < tablero.getNumFilas(); i++) {
             for (int j = 0; j < tablero.getNumColumnas(); j++) {
                 Celda celda= tablero.getCelda(i, j);
@@ -62,7 +61,7 @@ public class EstudianteAvanzado extends Estudiante {
         }
         return grafoTab;
     }
-    private int addPesoObs(int peso, Celda vertice, int reduccionMontaña) {
+    private int addPesoObs(int peso, Celda vertice, double reduccionMontaña) {
         for (int i = 0; i < vertice.getListaRecursos().getNumeroElementos(); i++) {
             switch (vertice.getListaRecursos().getElemento(i).getData().getTipo().getSimpleName()) {
                 case "Montaña":
@@ -79,7 +78,7 @@ public class EstudianteAvanzado extends Estudiante {
         }
         return peso;
     }
-    protected int calcularPesoArista(Celda vertice1, Celda vertice2, int reduccionMontaña) {
+    protected int calcularPesoArista(Celda vertice1, Celda vertice2, double reduccionMontaña) {
         int peso = 1;
         peso = addPesoObs(peso, vertice1, reduccionMontaña);
         peso = addPesoObs(peso, vertice2, reduccionMontaña);

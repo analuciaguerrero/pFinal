@@ -19,7 +19,7 @@ public class ParameterComidaProperties {
 
     public void rollback(){
         turnosRestantes.set(original.getTurnosRestantes());
-        aumentoVida.set(original.getAumentoVida());
+        aumentoVida.set((int) original.getAumentoVida());
     }
 
     public Comida getOriginal() {

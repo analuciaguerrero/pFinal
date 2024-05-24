@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Agua extends Recursos {
-    private int aumentoVida;
+    private double aumentoVida;
     private static final Logger log = LogManager.getLogger();
     public Agua(int id, int posicionN, int posicionM, DatosJuego dato) {
         super (id, posicionN, posicionM, dato);
@@ -21,7 +21,7 @@ public class Agua extends Recursos {
         super(id,dato);
         aumentoVida = dato.getAumentoVidaAgua();
     }
-    public int getAumentoVida() {
+    public double getAumentoVida() {
         return aumentoVida;
     }
 
@@ -37,7 +37,7 @@ public class Agua extends Recursos {
     public void aplicarEfecto(Estudiante estudiante, Celda celda, int turno) {
         estudiante.getColaDeOperaciones().add(STR."Acción: efecto Agua, turno: \{turno}");
         log.debug(STR."Efecto de agua aplicado a \{estudiante.getId()}");
-        estudiante.setTiempoDeVida(estudiante.getTiempoDeVida() + aumentoVida, turno);
+        estudiante.setTiempoDeVida((int) (estudiante.getTiempoDeVida() + aumentoVida), turno);
     }
 }
 
