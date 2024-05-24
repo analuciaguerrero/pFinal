@@ -43,21 +43,8 @@
                                 <fill>
                                     <LinearGradient startX="1.0">
                                         <stops>
-                                            <Stop>
-                                                <color>
-                                                    <Color red="0.8627451062202454" green="0.8627451062202454" blue="0.8627451062202454" />
-                                                </color>
-                                            </Stop>
-                                            <Stop offset="0.007680491551459294">
-                                                <color>
-                                                    <Color red="0.8627451062202454" green="0.8627451062202454" blue="0.8627451062202454" />
-                                                </color>
-                                            </Stop>
-                                            <Stop offset="1.0">
-                                                <color>
-                                                    <Color red="0.8666666746139526" green="0.8666666746139526" blue="0.8666666746139526" />
-                                                </color>
-                                            </Stop>
+                                            <Stop offset="0.0" color="rgba(220, 220, 220, 1.0)" />
+                                            <Stop offset="1.0" color="rgba(220, 220, 220, 1.0)" />
                                         </stops>
                                     </LinearGradient>
                                 </fill>
@@ -96,7 +83,12 @@
                 </HBox>
             </children>
         </StackPane>
-        <AnchorPane prefHeight="845.0" prefWidth="1920.0" />
+        <AnchorPane prefHeight="845.0" prefWidth="1920.0">
+            <children>
+                <!-- Añadir aquí el GridPane que contendrá las celdas -->
+                <GridPane fx:id="gridTablero"/>
+            </children>
+        </AnchorPane>
         <HBox alignment="CENTER_RIGHT" prefHeight="118.0" prefWidth="1920.0" spacing="35.0">
             <padding>
                 <Insets left="15.0" right="15.0" />

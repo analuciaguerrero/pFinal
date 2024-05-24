@@ -37,11 +37,15 @@ public class CeldaController implements Initializable {
     @FXML
     private VBox recursosVBox;
     @FXML
-    private Label alertaCasillaLabel; // Usamos el mismo ID que en el FXML
+    private Label alertaCasillaLabel;
     @FXML
     private ChoiceBox<String> estudiantesAddBox;
     @FXML
     private ChoiceBox<String> recursosAddBox;
+    @FXML
+    private Label elementoLabel;
+    @FXML
+    private Button botonQuitar;
 
     private final String[] tiposEstudiantes = {"+ Básico", "+ Normal", "+ Avanzado"};
     private final String[] tiposRecursos = {"+ Agua", "+ Comida", "+ Montaña", "+ Tesoro", "+ Biblioteca", "+ Pozo"};
@@ -54,8 +58,8 @@ public class CeldaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Celda.fxml"));
         loader.setController(this);
         Parent root = loader.load();
-        estudiantesVBox = (VBox)((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(1);
-        recursosVBox = (VBox)((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(2);
+        estudiantesVBox = (VBox) ((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(1);
+        recursosVBox = (VBox) ((GridPane) ((VBox) root).getChildren().get(0)).getChildren().get(2);
         this.root = root;
         if (!celda.getListaEstudiantes().isVacia()) {
             for (int i = 0; i != celda.getListaEstudiantes().getNumeroElementos(); i++) {
@@ -154,17 +158,18 @@ public class CeldaController implements Initializable {
             } else {
                 estudiante = (T) estudianteAñadir;
             }
-            HBox estudianteCelda = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
-            Label estudianteLabel = (Label) estudianteCelda.getChildren().get(0);
-            Font font = new Font("Bookman Old Style", 12);
-            estudianteLabel.setFont(font);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ElementoCelda.fxml"));
+            loader.setController(this);
+            HBox estudianteCelda = loader.load();
+            Label estudianteLabel = (Label) estudianteCelda.lookup("#elementoLabel");
+            estudianteLabel.setFont(new Font("Bookman Old Style", 12));
             String tipoEstudiante = claseEstudiante.getSimpleName().replace("Estudiante", "");
             estudianteLabel.textProperty().bind(estudiante.getTiempoDeVidaProperty().asString(tipoEstudiante + ": Vida: %d Id: " + estudiante.getId() + " Gen: " + estudiante.getGeneracion()));
-            Button botonQuitar = (Button) ((AnchorPane) estudianteCelda.getChildren().get(1)).getChildren().get(0);
+            Button botonQuitar = (Button) estudianteCelda.lookup("#botonQuitar");
             botonQuitar.setOnAction(this::delEstudiante);
             estudiantesVBox.getChildren().add(estudianteCelda);
         } catch (Exception e) {
-            log.error("No se ha creado una instancia del tipo solicitado de estudiante");
+            log.error("No se ha creado una instancia del tipo solicitado de estudiante", e);
         }
     }
 
@@ -242,17 +247,18 @@ public class CeldaController implements Initializable {
             } else {
                 recurso = recursoAñadir;
             }
-            HBox cajaRecurso = FXMLLoader.load(getClass().getResource("ElementoCelda.fxml"));
-            Label labelRecurso = (Label) cajaRecurso.getChildren().get(0);
-            Font font = new Font("Bookman Old Style", 12);
-            labelRecurso.setFont(font);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ElementoCelda.fxml"));
+            loader.setController(this);
+            HBox cajaRecurso = loader.load();
+            Label labelRecurso = (Label) cajaRecurso.lookup("#elementoLabel");
+            labelRecurso.setFont(new Font("Bookman Old Style", 12));
             String tipoRecurso = claseRecurso.getSimpleName();
             labelRecurso.textProperty().bind(recurso.getTurnosRestantesProperty().asString(String.format("%s: Vida: %d Id: %d", tipoRecurso, recurso.getTurnosRestantes(), recurso.getId())));
-            Button botonQuitar = (Button) ((AnchorPane) cajaRecurso.getChildren().get(1)).getChildren().get(0);
+            Button botonQuitar = (Button) cajaRecurso.lookup("#botonQuitar");
             botonQuitar.setOnAction(this::delRecurso);
             recursosVBox.getChildren().add(cajaRecurso);
         } catch (Exception e) {
-            log.error("No se ha creado una instancia del tipo solicitado de recurso");
+            log.error("No se ha creado una instancia del tipo solicitado de recurso", e);
         }
     }
 

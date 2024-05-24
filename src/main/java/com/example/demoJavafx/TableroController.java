@@ -8,6 +8,7 @@ import com.example.demoJavafx.tablero.Celda;
 import com.example.demoJavafx.tablero.Tablero;
 import com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -35,6 +36,8 @@ public class TableroController {
 
     @FXML
     private Label turnoLabel = new Label();
+    @FXML
+    private GridPane gridTablero; // Añadir referencia al GridPane
 
     private static final Logger log = LogManager.getLogger();
 
@@ -79,49 +82,65 @@ public class TableroController {
     @FXML
     protected void onBottonPausarClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        datos.setPausado(true);
+        if (celda != null) {
+            datos = celda.getDatos();
+            datos.setPausado(true);
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
+        }
     }
 
     @FXML
     protected void onBottonPasarDeTurnoClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        if (datos.isPausado()) {
-            avanzarZombieStudentsLife(true, celda);
+        if (celda != null) {
+            datos = celda.getDatos();
+            if (datos.isPausado()) {
+                avanzarZombieStudentsLife(true, celda);
+            }
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
         }
     }
 
     @FXML
     protected void onBottonReanudarClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        if (getDatos().isPausado()) {
-            datos.setPausado(false);
-            avanzarZombieStudentsLife(false, celda);
+        if (celda != null) {
+            datos = celda.getDatos();
+            if (getDatos().isPausado()) {
+                datos.setPausado(false);
+                avanzarZombieStudentsLife(false, celda);
+            }
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
         }
     }
 
     @FXML
     protected void onBottonConfiguracionToClick(ActionEvent event) throws IOException {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        datos.setPausado(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Personalizacion2.fxml"));
-        Parent root = loader.load();
-        XPersonalizacionController controller = loader.getController();
-        controller.setControllerValues(datos);
-        Stage stage = new Stage();
-        Stage ventanaTablero = ((Stage) Stage.getWindows().get(0));
-        stage.initOwner(ventanaTablero);
-        stage.setResizable(false);
-        if (Stage.getWindows().size() > 1) {
-            Stage ventanaCelda = (Stage) Stage.getWindows().get(1);
-            ventanaCelda.close();
+        if (celda != null) {
+            datos = celda.getDatos();
+            datos.setPausado(true);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Personalizacion2.fxml"));
+            Parent root = loader.load();
+            XPersonalizacionController controller = loader.getController();
+            controller.setControllerValues(datos);
+            Stage stage = new Stage();
+            Stage ventanaTablero = ((Stage) Stage.getWindows().get(0));
+            stage.initOwner(ventanaTablero);
+            stage.setResizable(false);
+            if (Stage.getWindows().size() > 1) {
+                Stage ventanaCelda = (Stage) Stage.getWindows().get(1);
+                ventanaCelda.close();
+            }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
@@ -143,30 +162,34 @@ public class TableroController {
     @FXML
     protected void onBottonMenuInicialClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        if (!getDatos().isSave() && datos.isPausado()) {
-            if (Stage.getWindows().size() > 1) ((Stage) Stage.getWindows().get(1)).close();
-            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.initOwner(Stage.getWindows().get(0));
-            confirmacion.setTitle("Volver al menú inicial");
-            confirmacion.setHeaderText("Estás a punto de volver al menú inicial y perderás todo tu progreso guardado");
-            confirmacion.setContentText("¿Deseas guardar la partida antes de salir?");
-            ButtonType botonGuardar = new ButtonType("Guardar");
-            ButtonType botonNoGuardar = new ButtonType("No guardar");
-            ButtonType botonCancelar = new ButtonType("Cancelar");
-            confirmacion.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
-            confirmacion.showAndWait().ifPresent(answ -> {
-                if (answ == botonGuardar) {
-                    guardarPartida(event);
-                    volverAlMenuInicial(event);
-                } else if (answ == botonNoGuardar) {
-                    volverAlMenuInicial(event);
-                } else {
-                    confirmacion.close();
-                }
-            });
+        if (celda != null) {
+            datos = celda.getDatos();
+            if (!getDatos().isSave() && datos.isPausado()) {
+                if (Stage.getWindows().size() > 1) ((Stage) Stage.getWindows().get(1)).close();
+                Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmacion.initOwner(Stage.getWindows().get(0));
+                confirmacion.setTitle("Volver al menú inicial");
+                confirmacion.setHeaderText("Estás a punto de volver al menú inicial y perderás todo tu progreso guardado");
+                confirmacion.setContentText("¿Deseas guardar la partida antes de salir?");
+                ButtonType botonGuardar = new ButtonType("Guardar");
+                ButtonType botonNoGuardar = new ButtonType("No guardar");
+                ButtonType botonCancelar = new ButtonType("Cancelar");
+                confirmacion.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
+                confirmacion.showAndWait().ifPresent(answ -> {
+                    if (answ == botonGuardar) {
+                        guardarPartida(event);
+                        volverAlMenuInicial(event);
+                    } else if (answ == botonNoGuardar) {
+                        volverAlMenuInicial(event);
+                    } else {
+                        confirmacion.close();
+                    }
+                });
+            } else {
+                volverAlMenuInicial(event);
+            }
         } else {
-            volverAlMenuInicial(event);
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
         }
     }
 
@@ -187,15 +210,23 @@ public class TableroController {
     @FXML
     protected void onBottonGuardarPartidaClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        guardarPartida(event);
+        if (celda != null) {
+            datos = celda.getDatos();
+            guardarPartida(event);
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
+        }
     }
 
     @FXML
     protected void onBottonGuardarComoClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        guardarComo(event);
+        if (celda != null) {
+            datos = celda.getDatos();
+            guardarComo(event);
+        } else {
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
+        }
     }
 
     protected void guardarPartida(ActionEvent event) {
@@ -264,8 +295,8 @@ public class TableroController {
         for (int i = 0; i != filas; i++) {
             for (int j = 0; j != columnas; j++) {
                 Celda celda = tablero.getCelda(i, j);
-                celda.setPrefHeight(((AnchorPane) root.getChildrenUnmodifiable().get(1)).getPrefHeight() / columnas);
-                celda.setPrefWidth(((AnchorPane) root.getChildrenUnmodifiable().get(1)).getPrefWidth() / filas);
+                celda.setPrefHeight(((AnchorPane) root).getPrefHeight() / columnas);
+                celda.setPrefWidth(((AnchorPane) root).getPrefWidth() / filas);
                 celda.getBotonCelda().setOnAction(event -> mostrarElementosCelda(celda));
                 gridTablero.add(celda, i, j);
             }
@@ -276,13 +307,18 @@ public class TableroController {
     protected void crearTablero(Tablero tablero) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Tablero.fxml"));
         Parent root = loader.load();
+        TableroController controller = loader.getController();
+        controller.setDatos(datos);
+        controller.setZombieStudentsLife(zombieStudentsLife);
         GridPane gridTablero = this.crearGridTablero(tablero, root);
-        ((AnchorPane) root.getChildrenUnmodifiable().get(1)).getChildren().add(gridTablero);
+        gridTablero.setId("gridTablero");
+        this.gridTablero = gridTablero;
+        ((AnchorPane) root).getChildren().add(gridTablero);
         AnchorPane.setTopAnchor(gridTablero, 0.0);
         AnchorPane.setRightAnchor(gridTablero, 0.0);
         AnchorPane.setBottomAnchor(gridTablero, 0.0);
         AnchorPane.setLeftAnchor(gridTablero, 0.0);
-        turnoLabel = (Label) ((AnchorPane) root.getChildrenUnmodifiable().get(2)).getChildren().get(0);
+        turnoLabel = (Label) ((HBox) ((AnchorPane) root).getChildren().get(1)).getChildren().get(0);
         zombieStudentsLife.getBucle().actualizarTurnoProperty();
         turnoLabel.textProperty().bind(zombieStudentsLife.getBucle().getTurnoProperty().asString("Turno: %d"));
         Stage stage = new Stage();
@@ -330,30 +366,34 @@ public class TableroController {
     @FXML
     protected void onBottonFinalizarPartidaClick(ActionEvent event) {
         Celda celda = obtenerCeldaDeEvento(event);
-        datos = celda.getDatos();
-        if (!getDatos().isSave() && datos.isPausado()) {
-            if (Stage.getWindows().size() > 1) ((Stage) Stage.getWindows().get(1)).close();
-            Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
-            conf.initOwner(Stage.getWindows().get(0));
-            conf.setTitle("Finalizar partida");
-            conf.setHeaderText("Estás a punto de salir de la partida, perderás el progreso");
-            conf.setContentText("¿Quieres guardar la partida antes de salir?");
-            ButtonType botonGuardar = new ButtonType("Guardar");
-            ButtonType botonNoGuardar = new ButtonType("No guardar");
-            ButtonType botonCancelar = new ButtonType("Cancelar");
-            conf.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
-            conf.showAndWait().ifPresent(ans -> {
-                if (ans == botonGuardar) {
-                    guardarPartida(event);
-                    terminarPartida(datos);
-                } else if (ans == botonNoGuardar) {
-                    terminarPartida(datos);
-                } else {
-                    conf.close();
-                }
-            });
+        if (celda != null) {
+            datos = celda.getDatos();
+            if (!getDatos().isSave() && datos.isPausado()) {
+                if (Stage.getWindows().size() > 1) ((Stage) Stage.getWindows().get(1)).close();
+                Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+                conf.initOwner(Stage.getWindows().get(0));
+                conf.setTitle("Finalizar partida");
+                conf.setHeaderText("Estás a punto de salir de la partida, perderás el progreso");
+                conf.setContentText("¿Quieres guardar la partida antes de salir?");
+                ButtonType botonGuardar = new ButtonType("Guardar");
+                ButtonType botonNoGuardar = new ButtonType("No guardar");
+                ButtonType botonCancelar = new ButtonType("Cancelar");
+                conf.getButtonTypes().setAll(botonGuardar, botonNoGuardar, botonCancelar);
+                conf.showAndWait().ifPresent(ans -> {
+                    if (ans == botonGuardar) {
+                        guardarPartida(event);
+                        terminarPartida(datos);
+                    } else if (ans == botonNoGuardar) {
+                        terminarPartida(datos);
+                    } else {
+                        conf.close();
+                    }
+                });
+            } else {
+                terminarPartida(datos);
+            }
         } else {
-            terminarPartida(datos);
+            mostrarAlertaError("Error", "No se pudo obtener la celda del evento. Inténtalo de nuevo.");
         }
     }
 
@@ -363,7 +403,7 @@ public class TableroController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMenuInicial.class.getResource("PantallaFinal.fxml"));
             Parent root = fxmlLoader.load();
-            HBox paneGan = (HBox) ((AnchorPane) ((ScrollPane) ((VBox) root).getChildren().get(2)).getContent()).getChildren().getFirst();
+            HBox paneGan = (HBox) ((AnchorPane) ((ScrollPane) ((VBox) root).getChildren().get(2)).getContent()).getChildren().get(0);
             HBox.setHgrow(paneGan, Priority.ALWAYS);
             AnchorPane.setTopAnchor(paneGan, 0.0);
             AnchorPane.setBottomAnchor(paneGan, 0.0);
@@ -417,12 +457,59 @@ public class TableroController {
         volverAlMenuInicial(event);
     }
 
-    private Celda obtenerCeldaDeEvento(ActionEvent event) {
-        return (Celda) ((GridPane) ((AnchorPane) ((Parent) event.getSource()).getScene().getRoot()).getChildren().get(1)).getChildren().get(0);
+    private Celda obtenerCeldaDeEvento(Event event) {
+        try {
+            Node source = (Node) event.getSource();
+            Scene scene = source.getScene();
+            Parent root = scene.getRoot();
+            GridPane gridPane = (GridPane) root.lookup("#gridTablero");
+
+            if (gridPane != null) {
+                // Usar un identificador único en cada Celda
+                for (Node node : gridPane.getChildren()) {
+                    if (node.getId() != null && node.getId().startsWith("celda")) {
+                        Celda celda = (Celda) node;
+                        if (isDescendant(source, celda)) {
+                            return celda;
+                        }
+                    }
+                }
+            } else {
+                log.error("El GridPane con fx:id 'gridTablero' no se encontró.");
+            }
+        } catch (Exception e) {
+            log.error("Error al obtener la celda del evento: ", e);
+        }
+        return null;
+    }
+
+    private boolean isDescendant(Node source, Node target) {
+        Node parent = source;
+        while (parent != null) {
+            if (parent == target) {
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        return false;
     }
 
     public void inicializar(DatosJuego datos, ZombieStudentsLife zombieStudentsLife) {
         this.datos = datos;
         this.zombieStudentsLife = zombieStudentsLife;
+        log.debug("gridTablero initialized: " + (gridTablero != null));
+        if (gridTablero != null) {
+            log.debug("gridTablero children count: " + gridTablero.getChildren().size());
+        } else {
+            log.error("gridTablero is null in initialize");
+        }
+    }
+
+    private void mostrarAlertaError(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

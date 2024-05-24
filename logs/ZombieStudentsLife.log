@@ -1,1 +1,112 @@
 2024-05-24 17:10:32.674 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 17:17:52.562 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 17:20:49.158 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 17:28:46.486 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 17:28:49.025 - ERROR - com.example.demoJavafx.TableroController - No se pudo obtener la celda del evento
+2024-05-24 17:58:18.704 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 17:58:26.007 - ERROR - com.example.demoJavafx.TableroController - No se pudo obtener la celda del evento
+2024-05-24 18:05:51.766 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:05:54.132 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@41fc28d8[styleClass=button]'Finalizar
+ partida'
+2024-05-24 18:05:54.132 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@5153dcac
+2024-05-24 18:05:54.132 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@2cb8e7b0[styleClass=root]
+2024-05-24 18:05:54.133 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@4efce74d
+2024-05-24 18:05:54.133 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:05:59.883 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@67c8ccee[styleClass=button]'  Menú
+inicial'
+2024-05-24 18:05:59.883 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@5153dcac
+2024-05-24 18:05:59.883 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@2cb8e7b0[styleClass=root]
+2024-05-24 18:05:59.884 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@4efce74d
+2024-05-24 18:05:59.888 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:06:02.182 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@6811a7a0[styleClass=button]'Guardar
+  como'
+2024-05-24 18:06:02.183 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@5153dcac
+2024-05-24 18:06:02.183 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@2cb8e7b0[styleClass=root]
+2024-05-24 18:06:02.183 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@4efce74d
+2024-05-24 18:06:02.184 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:06:04.810 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@4ab8620[styleClass=button]''
+2024-05-24 18:06:04.810 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@5153dcac
+2024-05-24 18:06:04.811 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@2cb8e7b0[styleClass=root]
+2024-05-24 18:06:04.811 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@4efce74d
+2024-05-24 18:06:04.811 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:06:06.594 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@67fecb5f[styleClass=button]''
+2024-05-24 18:06:06.595 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@5153dcac
+2024-05-24 18:06:06.595 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@2cb8e7b0[styleClass=root]
+2024-05-24 18:06:06.596 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@4efce74d
+2024-05-24 18:06:06.596 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:20:44.593 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:20:46.638 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@13b347ac[styleClass=button]'Finalizar
+ partida'
+2024-05-24 18:20:46.639 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@41ca5d77
+2024-05-24 18:20:46.639 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@35ac2bac[styleClass=root]
+2024-05-24 18:20:46.639 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@7c5c6503
+2024-05-24 18:20:46.639 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:20:48.628 - DEBUG - com.example.demoJavafx.TableroController - Source: Button@25aa9918[styleClass=button]''
+2024-05-24 18:20:48.628 - DEBUG - com.example.demoJavafx.TableroController - Scene: javafx.scene.Scene@41ca5d77
+2024-05-24 18:20:48.628 - DEBUG - com.example.demoJavafx.TableroController - Root: VBox@35ac2bac[styleClass=root]
+2024-05-24 18:20:48.629 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@7c5c6503
+2024-05-24 18:20:48.629 - ERROR - com.example.demoJavafx.TableroController - No se pudo encontrar la celda del evento
+2024-05-24 18:37:34.384 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:37:35.905 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@656ef21e
+2024-05-24 18:37:35.908 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:37:57.311 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@656ef21e
+2024-05-24 18:37:57.312 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:50:22.019 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:50:23.768 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@3ac32f0f
+2024-05-24 18:50:23.770 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:50:26.703 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@3ac32f0f
+2024-05-24 18:50:26.704 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:50:29.012 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@3ac32f0f
+2024-05-24 18:50:29.013 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:50:55.210 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@3ac32f0f
+2024-05-24 18:50:55.212 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:53:33.253 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:53:34.622 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@46cdb92a
+2024-05-24 18:53:34.624 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:53:36.968 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@46cdb92a
+2024-05-24 18:53:36.969 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:53:38.981 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@46cdb92a
+2024-05-24 18:53:38.982 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:54:35.112 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:54:36.529 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@2b3a513c
+2024-05-24 18:54:36.532 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:54:39.577 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@2b3a513c
+2024-05-24 18:54:39.578 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:56:03.851 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:56:05.554 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@388d4f5f
+2024-05-24 18:56:05.557 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:58:21.777 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 18:58:23.563 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@5eba0fc4
+2024-05-24 18:58:23.568 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:58:26.149 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@5eba0fc4
+2024-05-24 18:58:26.150 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 18:59:35.035 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:00:26.589 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@e01c8ec
+2024-05-24 19:00:29.640 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 19:02:55.929 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:03:31.036 - DEBUG - com.example.demoJavafx.TableroController - Found VBox: VBox@4a76ca6d[styleClass=root]
+2024-05-24 19:03:34.182 - DEBUG - com.example.demoJavafx.TableroController - VBox child: StackPane@334231ae
+2024-05-24 19:03:42.549 - DEBUG - com.example.demoJavafx.TableroController - VBox child: AnchorPane@6ceabcbe
+2024-05-24 19:03:45.430 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@6ceabcbe
+2024-05-24 19:03:47.851 - DEBUG - com.example.demoJavafx.TableroController - AnchorPane child: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 19:03:50.169 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 19:03:55.244 - DEBUG - com.example.demoJavafx.TableroController - VBox child: HBox@40794c42
+2024-05-24 19:31:49.759 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:32:11.283 - DEBUG - com.example.demoJavafx.TableroController - Found AnchorPane: AnchorPane@3c0a7d85
+2024-05-24 19:32:15.090 - DEBUG - com.example.demoJavafx.TableroController - Found GridPane: Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT
+2024-05-24 19:39:21.308 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:40:40.925 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:48:24.621 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-24 19:48:24.696 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:54:22.743 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-24 19:54:22.750 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-24 19:54:22.779 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 19:57:43.101 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-24 19:57:43.104 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-24 19:57:43.126 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 20:00:34.975 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-24 20:00:34.982 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-24 20:00:35.004 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-24 20:03:51.211 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-24 20:03:51.221 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-24 20:03:51.253 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
