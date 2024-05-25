@@ -73,13 +73,11 @@ public abstract class Recursos {
 
 
     public void setPosicion (int[] posicion) throws TamañoArrayInvalido {
-        try {
-            if (posicion.length != 2) throw new TamañoArrayInvalido();
-            posicionN = posicion[0];
-            posicionM = posicion[1];
-        } catch (TamañoArrayInvalido e) {
-            log.error("El array no contiene 2 elementos y por tanto, no se ha podido establecer la posición del recurso");
+        if (posicion.length != 2) {
+            throw new TamañoArrayInvalido();
         }
+        this.posicionN = posicion[0];
+        this.posicionM = posicion[1];
     }
 
     public int getTurnosRestantes() {

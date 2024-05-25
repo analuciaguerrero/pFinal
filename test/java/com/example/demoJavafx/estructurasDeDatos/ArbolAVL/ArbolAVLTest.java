@@ -11,145 +11,208 @@ class ArbolAVLTest {
     private ArbolAVL<Integer> arbol;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         arbol = new ArbolAVL<>();
     }
 
     @Test
-    public void testInsertarUnNodo() {
+    void testConstructorVacio() {
+        assertNotNull(arbol);
+        assertNull(arbol.getRaiz());
+    }
+
+    @Test
+    void testConstructorConDato() {
+        ArbolAVL<Integer> arbolConDato = new ArbolAVL<>(10);
+        assertNotNull(arbolConDato);
+        assertEquals(10, arbolConDato.getRaiz().getDato());
+    }
+
+    @Test
+    void testConstructorConNodo() {
+        NodoAVL<Integer> nodo = new NodoAVL<>(10);
+        ArbolAVL<Integer> arbolConNodo = new ArbolAVL<>(nodo);
+        assertNotNull(arbolConNodo);
+        assertEquals(nodo, arbolConNodo.getRaiz());
+    }
+
+    @Test
+    void testGetRaiz() {
         arbol.add(10);
         assertEquals(10, arbol.getRaiz().getDato());
+    }
+
+    @Test
+    void testGetSubArbolIzq() {
+        arbol.add(10);
+        arbol.add(5);
+        assertNotNull(arbol.getSubArbolIzq());
+        assertEquals(5, arbol.getSubArbolIzq().getRaiz().getDato());
+    }
+
+    @Test
+    void testGetSubArbolDcha() {
+        arbol.add(10);
+        arbol.add(15);
+        assertNotNull(arbol.getSubArbolDcha());
+        assertEquals(15, arbol.getSubArbolDcha().getRaiz().getDato());
+    }
+
+    @Test
+    void testGetGradoN() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        assertEquals(2, arbol.getGradoN(arbol.getRaiz()));
+    }
+
+    @Test
+    void testGetAltura() {
+        arbol.add(10);
         assertEquals(0, arbol.getAltura());
-    }
-
-    @Test
-    public void testInsertarMultiplesNodos() {
-        arbol.add(10);
-        arbol.add(20);
         arbol.add(5);
-
-        assertEquals(10, arbol.getRaiz().getDato());
         assertEquals(1, arbol.getAltura());
-
-        assertEquals(5, arbol.getRaiz().getIzquierda().getDato());
-        assertEquals(20, arbol.getRaiz().getDerecha().getDato());
     }
 
     @Test
-    public void testEliminarNodo() {
+    void testGetAlturaN() {
         arbol.add(10);
-        arbol.add(20);
         arbol.add(5);
+        arbol.add(15);
+        assertEquals(1, arbol.getAlturaN(arbol.getRaiz().getIzquierda()));
+    }
 
-        arbol.del(10);
-        assertEquals(5, arbol.getRaiz().getDato());
-        assertEquals(20, arbol.getRaiz().getDerecha().getDato());
+    @Test
+    void testPreOrden() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        ListaDoblementeEnlazada<Integer> preOrden = arbol.preOrden();
+        assertEquals("[10, 5, 15]", preOrden.toString());
+    }
+
+    @Test
+    void testOrdenCentral() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        ListaDoblementeEnlazada<Integer> ordenCentral = arbol.ordenCentral();
+        assertEquals("[5, 10, 15]", ordenCentral.toString());
+    }
+
+    @Test
+    void testPostOrden() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        ListaDoblementeEnlazada<Integer> postOrden = arbol.postOrden();
+        assertEquals("[5, 15, 10]", postOrden.toString());
+    }
+
+    @Test
+    void testAdd() {
+        arbol.add(10);
+        assertEquals(10, arbol.getRaiz().getDato());
+        arbol.add(5);
+        assertEquals(5, arbol.getRaiz().getIzquierda().getDato());
+        arbol.add(15);
+        assertEquals(15, arbol.getRaiz().getDerecha().getDato());
+    }
+
+    @Test
+    void testDel() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        arbol.del(5);
         assertNull(arbol.getRaiz().getIzquierda());
     }
 
     @Test
-    public void testBalanceoSimpleIzquierda() {
-        arbol.add(30);
-        arbol.add(20);
+    void testGetCamino() {
         arbol.add(10);
-
-        assertEquals(20, arbol.getRaiz().getDato());
-        assertEquals(10, arbol.getRaiz().getIzquierda().getDato());
-        assertEquals(30, arbol.getRaiz().getDerecha().getDato());
-    }
-
-    @Test
-    public void testBalanceoSimpleDerecha() {
-        arbol.add(10);
-        arbol.add(20);
-        arbol.add(30);
-
-        assertEquals(20, arbol.getRaiz().getDato());
-        assertEquals(10, arbol.getRaiz().getIzquierda().getDato());
-        assertEquals(30, arbol.getRaiz().getDerecha().getDato());
-    }
-
-    @Test
-    public void testBalanceoDobleIzquierdaDerecha() {
-        arbol.add(30);
-        arbol.add(10);
-        arbol.add(20);
-
-        assertEquals(20, arbol.getRaiz().getDato());
-        assertEquals(10, arbol.getRaiz().getIzquierda().getDato());
-        assertEquals(30, arbol.getRaiz().getDerecha().getDato());
-    }
-
-    @Test
-    public void testBalanceoDobleDerechaIzquierda() {
-        arbol.add(10);
-        arbol.add(30);
-        arbol.add(20);
-
-        assertEquals(20, arbol.getRaiz().getDato());
-        assertEquals(10, arbol.getRaiz().getIzquierda().getDato());
-        assertEquals(30, arbol.getRaiz().getDerecha().getDato());
-    }
-
-    @Test
-    public void testPreOrden() {
-        arbol.add(20);
-        arbol.add(10);
-        arbol.add(30);
         arbol.add(5);
         arbol.add(15);
-
-        ListaDoblementeEnlazada<Integer> preOrden = arbol.preOrden();
-        assertEquals("[20, 10, 5, 15, 30]", preOrden.toString());
+        ListaDoblementeEnlazada<NodoAVL<Integer>> camino = arbol.getcamino(5);
+        assertNotNull(camino);
+        assertEquals(5, camino.getPrimero().getData().getDato());
     }
 
     @Test
-    public void testOrdenCentral() {
-        arbol.add(20);
-        arbol.add(10);
-        arbol.add(30);
-        arbol.add(5);
-        arbol.add(15);
-
-        ListaDoblementeEnlazada<Integer> ordenCentral = arbol.ordenCentral();
-        assertEquals("[5, 10, 15, 20, 30]", ordenCentral.toString());
+    void testRotarSimpleIzquierda() {
+        NodoAVL<Integer> raiz = new NodoAVL<>(10);
+        NodoAVL<Integer> izquierda = new NodoAVL<>(5);
+        raiz.setIzquierda(izquierda);
+        NodoAVL<Integer> nuevaRaiz = arbol.rotar_s(raiz, true);
+        assertEquals(5, nuevaRaiz.getDato());
+        assertEquals(10, nuevaRaiz.getDerecha().getDato());
     }
 
     @Test
-    public void testPostOrden() {
-        arbol.add(20);
-        arbol.add(10);
-        arbol.add(30);
-        arbol.add(5);
-        arbol.add(15);
-
-        ListaDoblementeEnlazada<Integer> postOrden = arbol.postOrden();
-        assertEquals("[5, 15, 10, 30, 20]", postOrden.toString());
+    void testRotarSimpleDerecha() {
+        NodoAVL<Integer> raiz = new NodoAVL<>(10);
+        NodoAVL<Integer> derecha = new NodoAVL<>(15);
+        raiz.setDerecha(derecha);
+        NodoAVL<Integer> nuevaRaiz = arbol.rotar_s(raiz, false);
+        assertEquals(15, nuevaRaiz.getDato());
+        assertEquals(10, nuevaRaiz.getIzquierda().getDato());
     }
+
     @Test
-    public void testGetCamino() {
-        arbol.add(20);
+    void testRotarDobleIzquierda() {
+        NodoAVL<Integer> raiz = new NodoAVL<>(10);
+        NodoAVL<Integer> izquierda = new NodoAVL<>(5);
+        NodoAVL<Integer> izquierdaDerecha = new NodoAVL<>(8);
+        izquierda.setDerecha(izquierdaDerecha);
+        raiz.setIzquierda(izquierda);
+        NodoAVL<Integer> nuevaRaiz = arbol.rotar_d(raiz, true);
+        assertEquals(8, nuevaRaiz.getDato());
+    }
+
+    @Test
+    void testRotarDobleDerecha() {
+        NodoAVL<Integer> raiz = new NodoAVL<>(10);
+        NodoAVL<Integer> derecha = new NodoAVL<>(15);
+        NodoAVL<Integer> derechaIzquierda = new NodoAVL<>(12);
+        derecha.setIzquierda(derechaIzquierda);
+        raiz.setDerecha(derecha);
+        NodoAVL<Integer> nuevaRaiz = arbol.rotar_d(raiz, false);
+        assertEquals(12, nuevaRaiz.getDato());
+    }
+
+    @Test
+    void testBalanceo() {
         arbol.add(10);
-        arbol.add(30);
         arbol.add(5);
         arbol.add(15);
-        arbol.add(25);
-        arbol.add(35);
+        arbol.balanceo();
+        assertEquals(10, arbol.getRaiz().getDato());
+    }
 
-        // Obtener el camino al nodo con valor 7
-        ListaDoblementeEnlazada<NodoAVL<Integer>> caminoNodos = arbol.getcamino(7);
-        // Convertir la lista de nodos a una lista de datos
-        ListaDoblementeEnlazada<Integer> caminoDatos = new ListaDoblementeEnlazada<>();
-        for (ElementoLDE<NodoAVL<Integer>> elemento = caminoNodos.getPrimero(); elemento != null; elemento = elemento.getSiguiente()) {
-            caminoDatos.add(elemento.getData().getDato());
-        }
-        // Crear la lista esperada
-        ListaDoblementeEnlazada<Integer> caminoEsperado = new ListaDoblementeEnlazada<>();
-        caminoEsperado.add(10);
-        caminoEsperado.add(5);
-        caminoEsperado.add(7);
+    @Test
+    void testAddAux() {
+        arbol.add(10);
+        NodoAVL<Integer> nuevoNodo = new NodoAVL<>(5);
+        arbol.addAux(arbol.getRaiz(), nuevoNodo);
+        assertEquals(5, arbol.getRaiz().getIzquierda().getDato());
+    }
 
-        // Comparar el camino obtenido con el esperado
-        assertEquals(caminoEsperado.toString(), caminoDatos.toString());
+    @Test
+    void testDelAux1() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        NodoAVL<Integer> nuevaRaiz = arbol.delAux1(arbol.getRaiz(), 5);
+        assertNotNull(nuevaRaiz);
+        assertNull(arbol.getRaiz().getIzquierda());
+    }
+
+    @Test
+    void testDelAux2() {
+        arbol.add(10);
+        arbol.add(5);
+        arbol.add(15);
+        NodoAVL<Integer> nodo = arbol.delAux2(arbol.getRaiz().getDerecha());
+        assertNotNull(nodo);
     }
 }

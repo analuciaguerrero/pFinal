@@ -1,105 +1,170 @@
 package com.example.demoJavafx.estructurasDeDatos.ArbolDeBusqueda;
 
 import com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada.ListaDoblementeEnlazada;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BSTTest {
-    public void testConstructorWithNodes() {
-        // Arrange
-        Nodo<Integer> leftChild = new Nodo<>(5);
-        Nodo<Integer> rightChild = new Nodo<>(15);
-        Nodo<Integer> raiz = new Nodo<>(10);
-        raiz.setIzquierda(leftChild);
-        raiz.setDerecha(rightChild);
-        BST<Integer> bst = new BST<>(raiz);
+    private BST<Integer> bst;
 
-        // Act
-        int gradoRaiz = bst.getGradoN(raiz);
-        int gradoIzquierda = bst.getGradoN(leftChild);
-        int gradoDerecha = bst.getGradoN(rightChild);
-
-        // Assert
-        assertEquals(2, gradoRaiz);
-        assertEquals(1, gradoIzquierda);
-        assertEquals(1, gradoDerecha);
+    @BeforeEach
+    void setUp() {
+        bst = new BST<>();
     }
-    @Test
-    public void testAdd() {
-        // Arrange
-        BST<Integer> bst = new BST<>();
 
-        // Act
+    @Test
+    void testConstructorConNodo() {
+        Nodo<Integer> nodo = new Nodo<>(10);
+        BST<Integer> bstConNodo = new BST<>(nodo);
+        assertEquals(10, bstConNodo.getRaiz().getDato());
+    }
+
+    @Test
+    void testConstructorConDato() {
+        BST<Integer> bstConDato = new BST<>(10);
+        assertEquals(10, bstConDato.getRaiz().getDato());
+    }
+
+    @Test
+    void testAddDato() {
         bst.add(10);
         bst.add(5);
         bst.add(15);
-
-        // Assert
-        assertEquals(10, (int) bst.getRaiz().getDato());
-        assertEquals(5, (int) bst.getRaiz().getIzquierda().getDato());
-        assertEquals(15, (int) bst.getRaiz().getDerecha().getDato());
+        assertEquals(10, bst.getRaiz().getDato());
+        assertEquals(5, bst.getRaiz().getIzquierda().getDato());
+        assertEquals(15, bst.getRaiz().getDerecha().getDato());
     }
 
     @Test
-    public void testGetCamino() {
-        // Arrange
-        Nodo<Integer> leftChild = new Nodo<>(5);
-        Nodo<Integer> rightChild = new Nodo<>(15);
-        Nodo<Integer> raiz = new Nodo<>(rightChild, leftChild, 10);
-        BST<Integer> bst = new BST<>(raiz);
+    void testAddNodo() {
+        Nodo<Integer> nodo = new Nodo<>(10);
+        bst.add(nodo);
+        assertEquals(10, bst.getRaiz().getDato());
+    }
 
-        // Act
-        ListaDoblementeEnlazada<Nodo<Integer>> camino = bst.getCamino(15);
+    @Test
+    void testGetGradoN() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertEquals(2, bst.getGradoN(bst.getRaiz()));
+    }
 
-        // Assert
+    @Test
+    void testGetGrado() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertEquals(2, bst.getGrado());
+    }
+
+    @Test
+    void testGetCamino() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        ListaDoblementeEnlazada<Nodo<Integer>> camino = bst.getCamino(5);
         assertNotNull(camino);
-        assertEquals(3, camino.getNumeroElementos());
+        assertEquals(5, camino.getUltimo().getData().getDato());
     }
 
     @Test
-    public void testPreOrden() {
-        // Arrange
-        Nodo<Integer> leftChild = new Nodo<>(5);
-        Nodo<Integer> rightChild = new Nodo<>(15);
-        Nodo<Integer> raiz = new Nodo<>(rightChild, leftChild, 10);
-        BST<Integer> bst = new BST<>(raiz);
-
-        // Act
-        ListaDoblementeEnlazada<Integer> preOrden = bst.preOrden();
-
-        // Assert
-        assertEquals(3, preOrden.getNumeroElementos());
+    void testGetSubArbolDcha() {
+        bst.add(10);
+        bst.add(15);
+        BST<Integer> subArbolDcha = bst.getSubArbolDcha();
+        assertEquals(15, subArbolDcha.getRaiz().getDato());
     }
 
     @Test
-    public void testOrdenCentral() {
-        // Arrange
-        Nodo<Integer> leftChild = new Nodo<>(5);
-        Nodo<Integer> rightChild = new Nodo<>(15);
-        Nodo<Integer> raiz = new Nodo<>(rightChild, leftChild, 10);
-        BST<Integer> bst = new BST<>(raiz);
-
-        // Act
-        ListaDoblementeEnlazada<Integer> ordenCentral = bst.ordenCentral();
-
-        // Assert
-        assertEquals(3, ordenCentral.getNumeroElementos());
+    void testGetSubArbolIzq() {
+        bst.add(10);
+        bst.add(5);
+        BST<Integer> subArbolIzq = bst.getSubArbolIzq();
+        assertEquals(5, subArbolIzq.getRaiz().getDato());
     }
 
     @Test
-    public void testPostOrden() {
-        // Arrange
-        Nodo<Integer> leftChild = new Nodo<>(5);
-        Nodo<Integer> rightChild = new Nodo<>(15);
-        Nodo<Integer> raiz = new Nodo<>(rightChild, leftChild, 10);
-        BST<Integer> bst = new BST<>(raiz);
+    void testPreOrden() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        ListaDoblementeEnlazada<Integer> lista = bst.preOrden();
+        assertEquals("[10, 5, 15]", lista.toString());
+    }
 
-        // Act
-        ListaDoblementeEnlazada<Integer> postOrden = bst.postOrden();
+    @Test
+    void testOrdenCentral() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        ListaDoblementeEnlazada<Integer> lista = bst.ordenCentral();
+        assertEquals("[5, 10, 15]", lista.toString());
+    }
 
-        // Assert
-        assertEquals(3, postOrden.getNumeroElementos());
+    @Test
+    void testPostOrden() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        ListaDoblementeEnlazada<Integer> lista = bst.postOrden();
+        assertEquals("[5, 15, 10]", lista.toString());
+    }
+
+    @Test
+    void testGetAlturaN() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertEquals(1, bst.getAlturaN(bst.getRaiz().getIzquierda()));
+    }
+
+    @Test
+    void testGetAltura() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertEquals(1, bst.getAltura());
+    }
+
+    @Test
+    void testGetDatos() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        ListaDoblementeEnlazada<Nodo<Integer>> lista = bst.getDatos(1);
+        assertEquals("[10]", lista.toString());
+    }
+
+    @Test
+    void testIsArbolHomogeneo() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertTrue(bst.isArbolHomogeneo());
+    }
+
+    @Test
+    void testIsArbolCompleto() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertTrue(bst.isArbolCompleto());
+    }
+
+    @Test
+    void testIsArbolCasiCompleto() {
+        bst.add(10);
+        bst.add(5);
+        bst.add(15);
+        assertTrue(bst.isArbolCasiCompleto());
+    }
+
+    @Test
+    void testGetRaiz() {
+        bst.add(10);
+        assertEquals(10, bst.getRaiz().getDato());
     }
 }

@@ -191,7 +191,7 @@ public abstract class Estudiante {
         this.padres.setElemento(0, padre1);
         this.padres.setElemento(1, padre2);
     }
-    protected void setPadres(ListaSimple<Estudiante> padres) {
+    public void setPadres(ListaSimple<Estudiante> padres) {
         this.padres = padres;
     }
     public void actualizarTiempoDeVidaProperty () {

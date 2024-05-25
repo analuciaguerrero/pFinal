@@ -7,59 +7,62 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CeldaPropertiesTest {
+    private CeldaProperties celdaProperties;
     private ListaEnlazada<Celda> originalList;
     private ListaEnlazada<Celda> propertiesList;
-    private CeldaProperties celdaProperties;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         originalList = new ListaEnlazada<>();
         propertiesList = new ListaEnlazada<>();
 
-        // Add some mock Celda objects to the lists
-        originalList.add(new Celda());
-        originalList.add(new Celda());
+        Celda celda1 = new Celda(1, 1);
+        Celda celda2 = new Celda(2, 2);
 
-        propertiesList.add(new Celda());
-        propertiesList.add(new Celda());
+        originalList.add(celda1);
+        propertiesList.add(celda2);
 
         celdaProperties = new CeldaProperties(originalList);
     }
 
     @Test
-    public void testGetOriginal() {
+    void testGetOriginal() {
         assertEquals(originalList, celdaProperties.getOriginal());
     }
 
     @Test
-    public void testSetOriginal() {
-        ListaEnlazada<Celda> newOriginalList = new ListaEnlazada<>();
-        celdaProperties.setOriginal(newOriginalList);
-        assertEquals(newOriginalList, celdaProperties.getOriginal());
+    void testSetOriginal() {
+        ListaEnlazada<Celda> newOriginal = new ListaEnlazada<>();
+        Celda celda = new Celda(3, 3);
+        newOriginal.add(celda);
+        celdaProperties.setOriginal(newOriginal);
+        assertEquals(newOriginal, celdaProperties.getOriginal());
     }
 
     @Test
-    public void testGetProperties() {
+    void testGetProperties() {
         celdaProperties.setProperties(propertiesList);
         assertEquals(propertiesList, celdaProperties.getProperties());
     }
 
     @Test
-    public void testSetProperties() {
-        ListaEnlazada<Celda> newPropertiesList = new ListaEnlazada<>();
-        celdaProperties.setProperties(newPropertiesList);
-        assertEquals(newPropertiesList, celdaProperties.getProperties());
+    void testSetProperties() {
+        ListaEnlazada<Celda> newProperties = new ListaEnlazada<>();
+        Celda celda = new Celda(4, 4);
+        newProperties.add(celda);
+        celdaProperties.setProperties(newProperties);
+        assertEquals(newProperties, celdaProperties.getProperties());
     }
 
     @Test
-    public void testCommit() {
+    void testCommit() {
         celdaProperties.setProperties(propertiesList);
         celdaProperties.commit();
         assertEquals(propertiesList, celdaProperties.getOriginal());
     }
 
     @Test
-    public void testRollback() {
+    void testRollback() {
         celdaProperties.setProperties(propertiesList);
         celdaProperties.rollback();
         assertEquals(originalList, celdaProperties.getProperties());

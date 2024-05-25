@@ -34,6 +34,7 @@ public class ZombieStudentsLife {
         dato.setZombieStudentsLife(this);
         bucle = new BucleDeControl(tablero, dato);
     }
+    public ZombieStudentsLife(){}
     public DatosJuego getDato() {
         return dato;
     }

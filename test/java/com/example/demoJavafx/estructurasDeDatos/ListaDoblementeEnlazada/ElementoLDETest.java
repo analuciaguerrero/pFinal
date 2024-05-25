@@ -1,65 +1,98 @@
 package com.example.demoJavafx.estructurasDeDatos.ListaDoblementeEnlazada;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ElementoLDETest {
-    @Test
-    public void testInsertarmeEn() {
-        ElementoLDE<Integer> elemento1 = new ElementoLDE<>(5);
-        ElementoLDE<Integer> elemento2 = new ElementoLDE<>(10);
-        elemento1.insertarmeEn(elemento2);
-        assertEquals(elemento2, elemento1.getSiguiente());
-        assertEquals(elemento1, elemento2.getAnterior());
+    private ElementoLDE<Integer> elemento;
+
+    @BeforeEach
+    void setUp() {
+        elemento = new ElementoLDE<>();
     }
 
     @Test
-    public void testGetSiguiente() {
-        ElementoLDE<Integer> elemento1 = new ElementoLDE<>(5);
-        ElementoLDE<Integer> elemento2 = new ElementoLDE<>(10);
-        assertNull(elemento1.getSiguiente());
-        elemento1.setSiguiente(elemento2);
-        assertEquals(elemento2, elemento1.getSiguiente());
+    void testConstructorWithAnterior() {
+        ElementoLDE<Integer> anterior = new ElementoLDE<>(1);
+        ElementoLDE<Integer> newElemento = new ElementoLDE<>(anterior);
+        assertEquals(anterior, newElemento.getAnterior());
     }
 
     @Test
-    public void testGetAnterior() {
-        ElementoLDE<Integer> elemento1 = new ElementoLDE<>(5);
-        ElementoLDE<Integer> elemento2 = new ElementoLDE<>(10);
-        assertNull(elemento1.getAnterior());
-        elemento1.setAnterior(elemento2);
-        assertEquals(elemento2, elemento1.getAnterior());
+    void testConstructorWithData() {
+        Integer data = 5;
+        ElementoLDE<Integer> newElemento = new ElementoLDE<>(data);
+        assertEquals(data, newElemento.getData());
     }
 
     @Test
-    public void testSetSiguiente() {
-        ElementoLDE<Integer> elemento1 = new ElementoLDE<>(5);
-        ElementoLDE<Integer> elemento2 = new ElementoLDE<>(10);
-        assertNull(elemento1.getSiguiente());
-        elemento1.setSiguiente(elemento2);
-        assertEquals(elemento2, elemento1.getSiguiente());
+    void testConstructorWithAnteriorSiguienteData() {
+        ElementoLDE<Integer> anterior = new ElementoLDE<>(1);
+        ElementoLDE<Integer> siguiente = new ElementoLDE<>(3);
+        Integer data = 2;
+        ElementoLDE<Integer> newElemento = new ElementoLDE<>(anterior, siguiente, data);
+        assertEquals(anterior, newElemento.getAnterior());
+        assertEquals(siguiente, newElemento.getSiguiente());
+        assertEquals(data, newElemento.getData());
     }
 
     @Test
-    public void testSetAnterior() {
-        ElementoLDE<Integer> elemento1 = new ElementoLDE<>(5);
-        ElementoLDE<Integer> elemento2 = new ElementoLDE<>(10);
-        assertNull(elemento1.getAnterior());
-        elemento1.setAnterior(elemento2);
-        assertEquals(elemento2, elemento1.getAnterior());
+    void testInsertarmeEn() {
+        ElementoLDE<Integer> el = new ElementoLDE<>(1);
+        ElementoLDE<Integer> siguiente = new ElementoLDE<>(3);
+        el.setSiguiente(siguiente);
+        siguiente.setAnterior(el);
+
+        ElementoLDE<Integer> newElemento = new ElementoLDE<>(2);
+        newElemento.insertarmeEn(el);
+
+        assertEquals(el, newElemento.getAnterior());
+        assertEquals(siguiente, newElemento.getSiguiente());
+        assertEquals(newElemento, el.getSiguiente());
+        assertEquals(newElemento, siguiente.getAnterior());
     }
 
     @Test
-    public void testGetData() {
-        ElementoLDE<Integer> elemento = new ElementoLDE<>(5);
-        assertEquals(5, elemento.getData());
+    void testGetSiguiente() {
+        ElementoLDE<Integer> siguiente = new ElementoLDE<>(3);
+        elemento.setSiguiente(siguiente);
+        assertEquals(siguiente, elemento.getSiguiente());
     }
 
     @Test
-    public void testSetData() {
-        ElementoLDE<Integer> elemento = new ElementoLDE<>();
-        elemento.setData(10);
-        assertEquals(10, elemento.getData());
+    void testGetAnterior() {
+        ElementoLDE<Integer> anterior = new ElementoLDE<>(1);
+        elemento.setAnterior(anterior);
+        assertEquals(anterior, elemento.getAnterior());
+    }
+
+    @Test
+    void testSetSiguiente() {
+        ElementoLDE<Integer> siguiente = new ElementoLDE<>(3);
+        elemento.setSiguiente(siguiente);
+        assertEquals(siguiente, elemento.getSiguiente());
+    }
+
+    @Test
+    void testSetAnterior() {
+        ElementoLDE<Integer> anterior = new ElementoLDE<>(1);
+        elemento.setAnterior(anterior);
+        assertEquals(anterior, elemento.getAnterior());
+    }
+
+    @Test
+    void testGetData() {
+        Integer data = 5;
+        elemento.setData(data);
+        assertEquals(data, elemento.getData());
+    }
+
+    @Test
+    void testSetData() {
+        Integer data = 5;
+        elemento.setData(data);
+        assertEquals(data, elemento.getData());
     }
 }

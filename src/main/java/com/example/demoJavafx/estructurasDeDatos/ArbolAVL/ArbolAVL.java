@@ -129,7 +129,7 @@ public class ArbolAVL<TipoDeDatos> extends BST<TipoDeDatos> {
         return lista;
     }
 
-    private NodoAVL<TipoDeDatos> rotar_s(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
+    public NodoAVL<TipoDeDatos> rotar_s(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
         if (izq) {
             NodoAVL<TipoDeDatos> nodoDcha = new NodoAVL<>(raiz.getDato());
             nodoDcha.setIzquierda(raiz.getIzquierda().getDerecha());
@@ -148,7 +148,7 @@ public class ArbolAVL<TipoDeDatos> extends BST<TipoDeDatos> {
         return raiz;
     }
 
-    private NodoAVL<TipoDeDatos> rotar_d(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
+    public NodoAVL<TipoDeDatos> rotar_d(NodoAVL<TipoDeDatos> raiz, Boolean izq) {
         if (izq) {
             raiz.setIzquierda(rotar_s(raiz.getIzquierda(), false));
             raiz = rotar_s(raiz, true);
@@ -239,7 +239,7 @@ public class ArbolAVL<TipoDeDatos> extends BST<TipoDeDatos> {
         raiz = delAux1(raiz, dato);
     }
 
-    private NodoAVL<TipoDeDatos> delAux1(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato) {
+    public NodoAVL<TipoDeDatos> delAux1(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato) {
         Comparable r = (Comparable) raiz.getDato();
         Comparable d = (Comparable) dato;
         if (d.compareTo(r) < 0) {
@@ -259,7 +259,7 @@ public class ArbolAVL<TipoDeDatos> extends BST<TipoDeDatos> {
         return raiz;
     }
 
-    private NodoAVL<TipoDeDatos> delAux2(NodoAVL<TipoDeDatos> raiz) {
+    public NodoAVL<TipoDeDatos> delAux2(NodoAVL<TipoDeDatos> raiz) {
         if (raiz.getIzquierda() != null) {
             NodoAVL<TipoDeDatos> nodo = delAux2(raiz.getIzquierda());
             ArbolAVL<TipoDeDatos> arbol = new ArbolAVL<>(raiz);
