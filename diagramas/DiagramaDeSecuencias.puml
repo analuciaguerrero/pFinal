@@ -1,0 +1,119 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class ApplicationMenuInicial {
+--
++start
+}
+class MenuInicialController{
+-goNewPlay
+-exitGame
+}
+class MenuEntradaController{
++handleContinuar
++handleVolver
++handleSalir
+}
+class SeleccionarPartidaController{
+-listaDeFicheros
+# onBottonNuevoClick
+# onBotonCargarPartidaClick
+# onBotonVolverMenuClick
+# onBotonCargarFicheroClick
++ initialize
+}
+
+
+class MenuInicialFXML{}
+class MenuEntradaFXML{}
+class SeleccionarPartidaFXML{}
+
+
+class XPersonalizacionController{
++initialize
+-initializeControllers
+#actualizarDato
+#initializeSpinners
+-addFiltroSpinner
+#onBottonGuardarClick
+-continuarZombieStudentsLife
+-comenzarNuevoJuego
+#onBottonReiniciarClick
+#onBottonVolverClick
+}
+
+
+class PersonalizacionFXML{}
+class Personalizacion2FXML{}
+
+
+class TableroController{
++inicializar
+# onBottonPausarClick
+-avanzarZombieStudentsLife
+# onBottonPasarDeTurnoClick
+# onBottonReanudarClick
+# onBottonConfiguracionToClick
+#onBottonCerrarClick
+#onBottonPantallaCompletaToClick
+#onBottonMinimizarClick
+-volverAlMenuInicial
+#onBottonMenuInicialClick
+#onBottonGuardarPartidaClick
+#onBottonGuardarComoClick
+#guardarPartida
+#guardarComo
+#mostrarElementosCelda
+#crearTablero
+-crearGridTablero
+-crearArbolGenealogico
+-crearArbolGenealogicoPrinc
+#onBottonFinalizarPartidaClick
++terminarPartida
+#onBottonSalirClick
+-obtenerCeldaDeEvento
+-isDescendant
+}
+
+
+class TableroFXML{}
+
+
+class CeldaController{
++initialize
++addEstudiante
++delEstudiante
++addRecurso
++delRecurso
+}
+
+
+class CeldaFXML{}
+class CargarJuegoFXML{}
+class ElementoCeldaFXML{}
+class PantallaFinalFXML{}
+
+ApplicationMenuInicial-->MenuInicialController:start
+MenuInicialController-->MenuEntradaController:goNewPlay
+MenuInicialController-->MenuInicialFXML
+MenuEntradaController-->SeleccionarPartidaController:handleContinuar
+MenuEntradaController-->MenuInicialController:handleVolver
+MenuEntradaController-->MenuEntradaFXML
+SeleccionarPartidaController-->XPersonalizacionController:onBottonNuevoClick
+SeleccionarPartidaController-->TableroController:onBotonCargarPartidaClick
+SeleccionarPartidaController-->SeleccionarPartidaController:onBotonVolverMenuClick
+SeleccionarPartidaController-->SeleccionarPartidaFXML
+XPersonalizacionController-->TableroController:#onBottonGuardarClick
+XPersonalizacionController-->XPersonalizacionController:#onBottonReiniciarClick
+XPersonalizacionController-->SeleccionarPartidaController:#onBottonVolverClick
+XPersonalizacionController-->PersonalizacionFXML
+XPersonalizacionController-->Personalizacion2FXML
+TableroController-->XPersonalizacionController:onBottonConfiguracionToClick
+TableroController-->MenuInicialController:#onBottonMenuInicialClick
+TableroController-->TableroFXML
+TableroController-->CeldaController
+TableroController-->PantallaFinalFXML:#onBottonFinalizarPartidaClick
+CeldaController-->CeldaFXML
+CeldaController-->ElementoCeldaFXML
+
+@enduml
