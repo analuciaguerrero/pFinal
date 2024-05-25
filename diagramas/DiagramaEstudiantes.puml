@@ -1,79 +1,6 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-
-
-package entorno {
-    class Agua extends Recursos {
-        - double aumentoVida
-        - static final Logger log
-        + Agua(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + Agua()
-        + Agua(id: int, dato: DatosJuego)
-        + getAumentoVida(): double
-        + setAumentoVida(aumentoVida: int): void
-        + getTipo(): Class<Agua>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-
-    class Biblioteca extends Recursos {
-        - double aumentoProbClonacion
-        - static final Logger log
-        + Biblioteca(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + Biblioteca()
-        + Biblioteca(id: int, dato: DatosJuego)
-        + getAumentoProbClonacion(): double
-        + setAumentoProbClonacion(aumentoProbClonacion: double): void
-        + getTipo(): Class<Biblioteca>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-
-    class Comida extends Recursos {
-        - double aumentoVida
-        - static final Logger log
-        + Comida(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + Comida()
-        + Comida(id: int, dato: DatosJuego)
-        + getAumentoVida(): double
-        + setAumentoVida(aumentoVida: int): void
-        + getTipo(): Class<Comida>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-
-    class Montaña extends Recursos {
-        - double reduccionVida
-        - static final Logger log
-        + Montaña(id: int, dato: DatosJuego)
-        + Montaña(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + Montaña()
-        + getReduccionVida(): double
-        + setReduccionVida(reduccionVida: int): void
-        + getTipo(): Class<Montaña>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-
-    class Pozo extends Recursos {
-        - static final Logger log
-        + Pozo(id: int, dato: DatosJuego)
-        + Pozo()
-        + Pozo(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + getTipo(): Class<Pozo>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-
-    class Tesoro extends Recursos {
-        - double aumentoProbReproduccion
-        - static final Logger log
-        + Tesoro(id: int, dato: DatosJuego)
-        + Tesoro()
-        + Tesoro(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
-        + getAumentoProbReproduccion(): double
-        + setAumentoProbReproduccion(aumentoProbReproduccion: double): void
-        + getTipo(): Class<Tesoro>
-        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
-    }
-}
-
 package estudiante {
     abstract class Estudiante {
         @Expose
@@ -187,18 +114,5 @@ package estudiante {
     }
 }
 
-
-
-
-Estudiante <|-- EstudianteBasico
-Estudiante <|-- EstudianteNormal
-Estudiante <|-- EstudianteAvanzado
-
-Agua --> Recursos
-Biblioteca --> Recursos
-Comida --> Recursos
-Montaña --> Recursos
-Pozo --> Recursos
-Tesoro --> Recursos
 
 @enduml
