@@ -1,0 +1,191 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package excepciones{
+    class BalanceExcepcion extends RuntimeException {
+    }
+    class CaminoNulo extends RuntimeException {
+    }
+    class ClaseErroneaException extends RuntimeException {
+        - static Logger log
+
+        + ClaseErroneaException(String subclase, String superclase)
+    }
+    class DuplicateElement extends Exception {
+    }
+    class EstudianteNoExistente extends RuntimeException {
+    }
+    class IncrementoNoValido extends IllegalArgumentException {
+    }
+    class NoHayFicherosIniciales extends Exception {
+    }
+    class NonexistentElement extends Exception {
+    }
+    class NonValidLink extends Exception {
+    }
+    class PadresException extends RuntimeException {
+    }
+    class ProbabilidadNoValida extends IllegalArgumentException {
+    }
+    class RecursoNoExistente extends RuntimeException {
+    }
+    class RecursosNoUtilizados extends RuntimeException {
+        - Estudiante estudiante
+
+        + RecursosNoUtilizados(Estudiante estudiante)
+        + Estudiante getEstudiante()
+    }
+    class TamañoArrayInvalido extends RuntimeException {
+    }
+    class VentanaNoEsperada extends RuntimeException {
+    }
+    class VoidLevel extends Exception {
+    }
+
+    class IllegalArgumentException {
+    }
+    class Exception {
+    }
+    class RuntimeException {
+    }
+}
+
+package tablero{
+    class Celda extends AnchorPane {
+        - int posicionN
+        - int posicionM
+        - ListaEnlazada<Estudiante> listaEstudiantes
+        - ListaEnlazada<Recursos> listaRecursos
+        - DatosJuego dato
+        - Tablero tablero
+        - Button botonCelda
+        - GridPane gridElms
+        - static Logger log
+
+        + Celda()
+        + Celda(int posicionN, int posicionM)
+        + Celda(int posicionN, int posicionM, ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(int posicionN, int posicionM, DatosJuego dato, Tablero tablero)
+
+        + int getPosicionN()
+        + void setPosicionN(int posicionN)
+        + int getPosicionM()
+        + void setPosicionM(int posicionM)
+        + int[] getPosicion()
+        + ListaEnlazada<Recursos> getListaRecursos()
+        + void setListaRecursos(ListaEnlazada<Recursos> listaRecursos)
+        + ListaEnlazada<Estudiante> getListaEstudiantes()
+        + void setListaEstudiantes(ListaEnlazada<Estudiante> listaEstudiantes)
+        + DatosJuego getDatos()
+        + void setDatos(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + Button getBotonCelda()
+        + GridPane getGridElms()
+        + void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente
+        + void agregarRecurso(Recursos recurso, boolean nuevoRecurso) throws RecursoNoExistente
+        + void eliminarEstudiante(Estudiante estudiante)
+        + void eliminarRecurso(Recursos recurso)
+        + void crearCeldaAleatoria(DatosJuego dato)
+        + void eliminarEstudianteAleatorio()
+        + void eliminarRecursoAleatorio()
+        + void restablecerInterfazVisual()
+    }
+    class CeldaProperties {
+        - ListaEnlazada<Celda> original
+        - ListaEnlazada<Celda> properties
+
+        + CeldaProperties(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getOriginal()
+        + void setOriginal(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getProperties()
+        + void setProperties(ListaEnlazada<Celda> properties)
+        + void commit()
+        + void rollback()
+    }
+    class Tablero {
+        - DatosJuego dato
+        - ListaSimple<ListaSimple<Celda>> celdas
+        - static Logger log
+
+        + Tablero()
+        + Tablero(int filas, int columnas, DatosJuego dato)
+        + Celda getCelda(int[] posicion)
+        + Celda getCelda(int fila, int columna)
+        + void setCelda(int fila, int columna, Celda celda)
+        + int getNumFilas()
+        + int getNumColumnas()
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+    }
+}
+
+package usuario{
+    class Jugador implements Serializable {
+        + String nombre
+        + String dni
+        + String dificultad
+        + int puntuacion
+        + int partidasJugadas
+        + int partidasGanadas
+        + int partidasPerdidas
+        - ListaSimple<String> dificultades
+        - ListaSimple<Integer> puntosPartidas
+
+        + Jugador(String dni)
+        + ListaSimple<String> getDificultades()
+        + void addDificultad(String dificultad)
+        + ListaSimple<Integer> getPuntosPartida()
+        + void addPuntos(int puntos)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getDni()
+        + void setDni(String dni)
+        + int getPuntuacion()
+        + void addPuntuacion(int puntos)
+        + void setPuntuacion(int puntuacion)
+        + String getDificultad()
+        + void setDificultad(String dificultad)
+        + int getPartidasJugadas()
+        + void setPartidasJugadas(int partidasJugadas)
+        + void addPartidaJugada()
+        + void addPartidaGanada()
+        + void addPartidaPerdida()
+        + int getPartidasGanadas()
+        + void setPartidasGanadas(int partidasGanadas)
+        + int getPartidasPerdidas()
+        + void setPartidasPerdidas(int partidasPerdidas)
+    }
+}
+
+package zombieStudentsLife{
+    class ZombieStudentsLife {
+        - static Logger log
+        - DatosJuego dato
+        - Tablero tablero
+        - BucleDeControl bucle
+        - Mapa<Estudiante, BST<Estudiante>> arbolGenealogico
+        - Grafo<String> grafoDeOperaciones
+
+        + ZombieStudentsLife(DatosJuego dato, boolean selec)
+        + ZombieStudentsLife(DatosJuego dato, Tablero tablero)
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + BucleDeControl getBucle()
+        + void setBucle(BucleDeControl bucle)
+        + Mapa<Estudiante, BST<Estudiante>> getArbolGenealogico()
+        + Grafo<String> getGrafoDeOperaciones()
+        + void start(boolean turno)
+        - void addPadres(Nodo<Estudiante> hijo)
+        - Mapa<Estudiante, BST<Estudiante>> crearArbolGenealogico()
+        - Grafo<String> crearGrafoDeOperaciones()
+        + void informacion()
+        + void finalizarPartida()
+    }
+}
+
+
+@enduml

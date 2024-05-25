@@ -1,0 +1,436 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package bucleDeControl {
+    class BucleDeControl {
+        - static final Logger log
+        - DatosJuego dato
+        - ListaEnlazada<Estudiante> estudiantes
+        - ListaEnlazada<Recursos> recursos
+        - Tablero tablero
+        - Celda celda
+        - boolean turno
+        - final IntegerProperty turnoProperty
+        + BucleDeControl(tablero: Tablero, dato: DatosJuego)
+        + getCelda(): Celda
+        + setCelda(celda: Celda): void
+        + getDato(): DatosJuego
+        + setDato(dato: DatosJuego): void
+        + getTurnoProperty(): IntegerProperty
+        + setTurnoProperty(turnoProperty: IntegerProperty): void
+        + getTablero(): Tablero
+        + setTablero(tablero: Tablero): void
+        + getEstudiantes(): ListaEnlazada<Estudiante>
+        + setEstudiantes(estudiantes: ListaEnlazada<Estudiante>): void
+        + getRecursos(): ListaEnlazada<Recursos>
+        + setRecursos(recursos: ListaEnlazada<Recursos>): void
+        + isTurno(): boolean
+        + setTurno(turno: boolean): void
+        + actualizarTurnoProperty(): void
+        + evaluarMejoras(): void
+        + actualizarTiempoDeVidaEstudiante(): void
+        + actualizarTiempoDeAparicionDeRecursos(): void
+        + moverEstudiantes(): void
+        + evaluarReproduccion(): void
+        + evaluarClonacion(): void
+        + evaluarDesaparicionEstudiantes(): void
+        + evaluarAparicionRecursos(): void
+        + ejecuteBucle(): void
+        + run(): void
+    }
+
+    class BucleDeControlProperties {
+        - static final Logger log
+        - BucleDeControl original
+        - DatosJuego dato
+        - IntegerProperty tableroColumnas
+        - IntegerProperty tableroFilas
+        - IntegerProperty turnoProperty
+        + BucleDeControlProperties(original: BucleDeControl)
+        + BucleDeControlProperties()
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): BucleDeControl
+        + setOriginal(original: BucleDeControl): void
+        + tableroColumnasProperty(): IntegerProperty
+        + tableroFilasProperty(): IntegerProperty
+        + getTurnoProperty(): IntegerProperty
+        + setTurnoProperty(turnoProperty: IntegerProperty): void
+        + getFilas(): int
+        + getColumnas(): int
+        + getCelda(): Celda
+    }
+}
+
+package entorno {
+    class Agua extends Recursos {
+        - double aumentoVida
+        - static final Logger log
+        + Agua(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Agua()
+        + Agua(id: int, dato: DatosJuego)
+        + getAumentoVida(): double
+        + setAumentoVida(aumentoVida: int): void
+        + getTipo(): Class<Agua>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+
+    class Biblioteca extends Recursos {
+        - double aumentoProbClonacion
+        - static final Logger log
+        + Biblioteca(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Biblioteca()
+        + Biblioteca(id: int, dato: DatosJuego)
+        + getAumentoProbClonacion(): double
+        + setAumentoProbClonacion(aumentoProbClonacion: double): void
+        + getTipo(): Class<Biblioteca>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+
+    class Comida extends Recursos {
+        - double aumentoVida
+        - static final Logger log
+        + Comida(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Comida()
+        + Comida(id: int, dato: DatosJuego)
+        + getAumentoVida(): double
+        + setAumentoVida(aumentoVida: int): void
+        + getTipo(): Class<Comida>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+
+    class Montaña extends Recursos {
+        - double reduccionVida
+        - static final Logger log
+        + Montaña(id: int, dato: DatosJuego)
+        + Montaña(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + Montaña()
+        + getReduccionVida(): double
+        + setReduccionVida(reduccionVida: int): void
+        + getTipo(): Class<Montaña>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+
+    class Pozo extends Recursos {
+        - static final Logger log
+        + Pozo(id: int, dato: DatosJuego)
+        + Pozo()
+        + Pozo(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + getTipo(): Class<Pozo>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+
+    class Tesoro extends Recursos {
+        - double aumentoProbReproduccion
+        - static final Logger log
+        + Tesoro(id: int, dato: DatosJuego)
+        + Tesoro()
+        + Tesoro(id: int, posicionN: int, posicionM: int, dato: DatosJuego)
+        + getAumentoProbReproduccion(): double
+        + setAumentoProbReproduccion(aumentoProbReproduccion: double): void
+        + getTipo(): Class<Tesoro>
+        + aplicarEfecto(estudiante: Estudiante, celda: Celda, turno: int): void
+    }
+}
+
+package estudiante {
+    abstract class Estudiante {
+        @Expose
+        - int posicionN
+        - int posicionM
+        - int id
+        - int generacion
+        - int tiempoDeVida
+        - double probReproduccion
+        - double probClonacion
+        - double probMuerte
+        - boolean isVivo
+        - Cola colaDeOperaciones
+        - IntegerProperty tiempoDeVidaProperty
+        - ListaSimple padres
+        - static Logger log
+        + Estudiante(id: int, posicionN: int, posicionM: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + Estudiante(id: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + Estudiante()
+        + Estudiante(estudiante: Estudiante)
+        + int getPosicionN()
+        + void setPosicionN(posicionN: int): void
+        + int getPosicionM()
+        + void setPosicionM(posicionM: int): void
+        + int[] getPosicion()
+        + void setPosicion(posicion: int[]): void
+        + Integer getId()
+        + void setId(id: int): void
+        + int getGeneracion()
+        + void setGeneracion(generacion: int): void
+        + int getTiempoDeVida()
+        + void setTiempoDeVida(tiempoDeVida: int, turno: int): void
+        + double getProbReproduccion()
+        + void setProbReproduccion(probReproduccion: double, turno: int): void
+        + double getProbClonacion()
+        + void setProbClonacion(probClonacion: double, turno: int): void
+        + double getProbMuerte()
+        + IntegerProperty getTiempoDeVidaProperty()
+        + void setTiempoDeVidaProperty(tiempoDeVidaProperty: IntegerProperty): void
+        + void addOperacion(operacion: String): void
+        + ListaSimple<Estudiante> getPadres()
+        + void setPadres(padre1: Estudiante, padre2: Estudiante): void
+        + void setPadres(padres: ListaSimple<Estudiante>): void
+        + void actualizarTiempoDeVidaProperty(): void
+        + boolean isVivo()
+        + abstract Class<?> getTipo()
+        + int getNumTipo()
+        + void add(dato: DatosJuego, celda: Celda): void
+        + void morir(dato: DatosJuego, celda: Celda): void
+        + abstract void mover(dato: DatosJuego, tablero: Tablero)
+        + void cambiarDePosicion(nuevaPosicionN: int, nuevaPosicionM: int, tablero: Tablero): void
+        + void moverseAleatorio(tablero: Tablero, turno: int): void
+        + <TipoDeDatos extends Estudiante> boolean reproducirse(pareja: Estudiante, dato: DatosJuego, celda: Celda, turno: int): boolean
+        + void clonar(dato: DatosJuego, celda: Celda): void
+        + boolean actualizarTiempoDeVida(celda: Celda, turno: int): boolean
+        + Cola<String> getColaDeOperaciones()
+        + void setColaOperaciones(colaDeOperaciones: Cola<String>): void
+    }
+
+    class EstudianteAvanzado extends Estudiante {
+        + EstudianteAvanzado(estudiante: Estudiante)
+        + EstudianteAvanzado(id: int, posicionN: int, posicionM: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteAvanzado(id: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteAvanzado()
+        + Class<EstudianteAvanzado> getTipo()
+        + void mover(dato: DatosJuego, tablero: Tablero): void
+    }
+
+    class EstudianteBasico extends Estudiante {
+        + EstudianteBasico(estudiante: Estudiante)
+        + EstudianteBasico(id: int, posicionN: int, posicionM: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteBasico(id: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteBasico()
+        + Class<EstudianteBasico> getTipo()
+        + void mover(dato: DatosJuego, tablero: Tablero): void
+    }
+
+    class EstudianteNormal extends Estudiante {
+        + EstudianteNormal(estudiante: Estudiante)
+        + EstudianteNormal(id: int, posicionN: int, posicionM: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteNormal(id: int, generacion: int, tiempoDeVida: int, probReproduccion: double, probClonacion: double, turno: int)
+        + EstudianteNormal()
+        + Class<EstudianteNormal> getTipo()
+        + void mover(dato: DatosJuego, tablero: Tablero): void
+    }
+
+    class EstudianteProperties {
+        - Estudiante origen
+        - IntegerProperty tiempoDeVida
+        - DoubleProperty probReproduccion
+        - DoubleProperty probClonacion
+        - DoubleProperty probMuerte
+        - int turno
+        + EstudianteProperties(origen: Estudiante)
+        + EstudianteProperties()
+        + Estudiante getOrigen()
+        + void setOrigen(origen: Estudiante)
+        + void rollback()
+        + void commit()
+        + IntegerProperty tiempoDeVidaProperty()
+        + DoubleProperty probReproduccionProperty()
+        + DoubleProperty probClonacionProperty()
+        + DoubleProperty probMuerteProperty()
+        + int getTurno()
+    }
+
+    class GsonEstudiante {
+        - static Logger log
+        + serialize(src: Estudiante, typeOfSrc: Type, context: JsonSerializationContext): JsonElement
+        + deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Estudiante
+    }
+}
+
+GsonEstudiante ..|> JsonSerializer
+GsonEstudiante ..|> JsonDeserializer
+
+Estudiante ..|> JsonSerializer
+Estudiante ..|> JsonDeserializer
+Estudiante --> DatosJuego
+Estudiante --> ListaSimple
+Estudiante --> Cola
+
+Estudiante --> Celda
+Estudiante --> Tablero
+Estudiante --> IntegerProperty
+Estudiante --> SimpleIntegerProperty
+Estudiante ..> Logger : usa
+LogManager --> Logger : retorna
+Estudiante --> Random
+Estudiante --> Constructor
+
+
+EstudianteAvanzado --> DatosJuego
+EstudianteAvanzado --> Montaña
+EstudianteAvanzado --> Pozo
+EstudianteAvanzado --> Recursos
+EstudianteAvanzado --> Grafo
+EstudianteAvanzado --> NodoGrafo
+EstudianteAvanzado --> Camino
+EstudianteAvanzado --> ListaDoblementeEnlazada
+EstudianteAvanzado --> Celda
+EstudianteAvanzado --> Tablero
+EstudianteAvanzado ..> Logger : usa
+EstudianteAvanzado --> RecursosNoUtilizados : throws
+EstudianteAvanzado --|> Estudiante
+
+EstudianteBasico --|> Estudiante
+EstudianteBasico --> DatosJuego
+EstudianteBasico --> Tablero
+
+EstudianteNormal --|> Estudiante
+EstudianteNormal --> DatosJuego
+EstudianteNormal --> Recursos
+EstudianteNormal --> ListaDoblementeEnlazada
+EstudianteNormal --> Tablero
+EstudianteNormal ..> Logger : usa
+EstudianteNormal --> Random
+EstudianteNormal --> RecursosNoUtilizados : throws
+
+EstudianteProperties --> Estudiante
+EstudianteProperties --> IntegerProperty
+EstudianteProperties --> DoubleProperty
+
+GsonEstudiante ..|> JsonSerializer
+GsonEstudiante ..|> JsonDeserializer
+GsonEstudiante --> Estudiante
+GsonEstudiante --> JsonElement
+GsonEstudiante --> JsonSerializationContext
+GsonEstudiante --> JsonDeserializationContext
+GsonEstudiante ..> Logger : usa
+GsonEstudiante --> JsonParseException : throws
+GsonEstudiante --> ClaseErroneaException : throws
+
+ListaSimple --> ElementoLS
+ElementoLS --> Estudiante
+Estudiante <|-- EstudianteBasico
+Estudiante <|-- EstudianteNormal
+Estudiante <|-- EstudianteAvanzado
+
+
+Agua --> Recursos
+Agua --> DatosJuego
+Agua --> Estudiante
+Agua --> Celda
+
+Agua --> Logger
+
+Biblioteca --> Recursos
+Biblioteca --> DatosJuego
+Biblioteca --> Estudiante
+Biblioteca --> Celda
+
+Biblioteca --> Logger
+Biblioteca --> EstudianteBasico
+Biblioteca --> EstudianteNormal
+Biblioteca --> EstudianteAvanzado
+
+Comida --> Recursos
+Comida --> DatosJuego
+Comida --> Estudiante
+Comida --> Celda
+
+Comida --> Logger
+
+GsonRecursos --> Recursos
+GsonRecursos --> Logger
+GsonRecursos --> Agua
+GsonRecursos --> Comida
+GsonRecursos --> Montaña
+GsonRecursos --> Biblioteca
+GsonRecursos --> Tesoro
+GsonRecursos --> Pozo
+
+GsonRecursos --> JsonElement
+GsonRecursos --> JsonSerializationContext
+GsonRecursos --> JsonDeserializationContext
+GsonRecursos --> JsonObject
+GsonRecursos --> JsonParseException
+
+Montaña --> Recursos
+Montaña --> DatosJuego
+Montaña --> Estudiante
+Montaña --> Celda
+
+Montaña --> Logger
+
+ParameterAguaProperties --> Agua
+ParameterAguaProperties --> IntegerProperty
+ParameterAguaProperties --> SimpleIntegerProperty
+
+ParameterBibliotecaProperties --> Biblioteca
+ParameterBibliotecaProperties --> IntegerProperty
+ParameterBibliotecaProperties --> DoubleProperty
+ParameterBibliotecaProperties --> SimpleIntegerProperty
+ParameterBibliotecaProperties --> SimpleDoubleProperty
+
+ParameterComidaProperties --> Comida
+ParameterComidaProperties --> IntegerProperty
+ParameterComidaProperties --> SimpleIntegerProperty
+
+ParameterMontañaProperties --> Montaña
+ParameterMontañaProperties --> IntegerProperty
+ParameterMontañaProperties --> SimpleIntegerProperty
+
+ParameterPozoProperties --> Pozo
+ParameterPozoProperties --> IntegerProperty
+ParameterPozoProperties --> SimpleIntegerProperty
+
+ParameterTesoroProperties --> Tesoro
+ParameterTesoroProperties --> IntegerProperty
+ParameterTesoroProperties --> DoubleProperty
+ParameterTesoroProperties --> SimpleIntegerProperty
+ParameterTesoroProperties --> SimpleDoubleProperty
+
+Pozo --> Recursos
+Pozo --> DatosJuego
+Pozo --> Estudiante
+Pozo --> Celda
+Pozo --> Logger
+
+Recursos --> DatosJuego
+Recursos --> ListaEnlazada
+Recursos --> Estudiante
+Recursos --> Celda
+Recursos --> IntegerProperty
+Recursos --> SimpleIntegerProperty
+
+Recursos --> Logger
+Recursos --> Constructor
+
+
+RecursosProperties --> Recursos
+RecursosProperties --> IntegerProperty
+RecursosProperties --> SimpleIntegerProperty
+RecursosProperties --> Property
+
+Tesoro --> Recursos
+Tesoro --> DatosJuego
+Tesoro --> Estudiante
+Tesoro --> Celda
+
+Tesoro --> Logger
+
+BucleDeControl --> DatosJuego
+BucleDeControl --> ListaEnlazada
+BucleDeControl --> Tablero
+BucleDeControl --> Celda
+BucleDeControl --> IntegerProperty
+BucleDeControl --> Estudiante
+BucleDeControl --> Recursos
+BucleDeControl --> Platform
+
+BucleDeControlProperties --> BucleDeControl
+BucleDeControlProperties --> DatosJuego
+BucleDeControlProperties --> IntegerProperty
+BucleDeControlProperties --> Celda
+BucleDeControlProperties --> Logger
+BucleDeControlProperties --> SeleccionarPartidaController
+
+
+@enduml
