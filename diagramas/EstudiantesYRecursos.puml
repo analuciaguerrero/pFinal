@@ -1,66 +1,7 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-package bucleDeControl {
-    class BucleDeControl {
-        - static final Logger log
-        - DatosJuego dato
-        - ListaEnlazada<Estudiante> estudiantes
-        - ListaEnlazada<Recursos> recursos
-        - Tablero tablero
-        - Celda celda
-        - boolean turno
-        - final IntegerProperty turnoProperty
-        + BucleDeControl(tablero: Tablero, dato: DatosJuego)
-        + getCelda(): Celda
-        + setCelda(celda: Celda): void
-        + getDato(): DatosJuego
-        + setDato(dato: DatosJuego): void
-        + getTurnoProperty(): IntegerProperty
-        + setTurnoProperty(turnoProperty: IntegerProperty): void
-        + getTablero(): Tablero
-        + setTablero(tablero: Tablero): void
-        + getEstudiantes(): ListaEnlazada<Estudiante>
-        + setEstudiantes(estudiantes: ListaEnlazada<Estudiante>): void
-        + getRecursos(): ListaEnlazada<Recursos>
-        + setRecursos(recursos: ListaEnlazada<Recursos>): void
-        + isTurno(): boolean
-        + setTurno(turno: boolean): void
-        + actualizarTurnoProperty(): void
-        + evaluarMejoras(): void
-        + actualizarTiempoDeVidaEstudiante(): void
-        + actualizarTiempoDeAparicionDeRecursos(): void
-        + moverEstudiantes(): void
-        + evaluarReproduccion(): void
-        + evaluarClonacion(): void
-        + evaluarDesaparicionEstudiantes(): void
-        + evaluarAparicionRecursos(): void
-        + ejecuteBucle(): void
-        + run(): void
-    }
 
-    class BucleDeControlProperties {
-        - static final Logger log
-        - BucleDeControl original
-        - DatosJuego dato
-        - IntegerProperty tableroColumnas
-        - IntegerProperty tableroFilas
-        - IntegerProperty turnoProperty
-        + BucleDeControlProperties(original: BucleDeControl)
-        + BucleDeControlProperties()
-        + commit(): void
-        + rollback(): void
-        + getOriginal(): BucleDeControl
-        + setOriginal(original: BucleDeControl): void
-        + tableroColumnasProperty(): IntegerProperty
-        + tableroFilasProperty(): IntegerProperty
-        + getTurnoProperty(): IntegerProperty
-        + setTurnoProperty(turnoProperty: IntegerProperty): void
-        + getFilas(): int
-        + getColumnas(): int
-        + getCelda(): Celda
-    }
-}
 
 package entorno {
     class Agua extends Recursos {
@@ -247,38 +188,7 @@ package estudiante {
 }
 
 
-package zombieStudentsLife{
-    class ZombieStudentsLife {
-        - static Logger log
-        - DatosJuego dato
-        - Tablero tablero
-        - BucleDeControl bucle
-        - Mapa<Estudiante, BST<Estudiante>> arbolGenealogico
-        - Grafo<String> grafoDeOperaciones
 
-        + ZombieStudentsLife(DatosJuego dato, boolean selec)
-        + ZombieStudentsLife(DatosJuego dato, Tablero tablero)
-        + DatosJuego getDato()
-        + void setDato(DatosJuego dato)
-        + Tablero getTablero()
-        + void setTablero(Tablero tablero)
-        + BucleDeControl getBucle()
-        + void setBucle(BucleDeControl bucle)
-        + Mapa<Estudiante, BST<Estudiante>> getArbolGenealogico()
-        + Grafo<String> getGrafoDeOperaciones()
-        + void start(boolean turno)
-        + void informacion()
-        + void finalizarPartida()
-    }
-}
-
-ZombieStudentsLife ..> DatosJuego : uses
-ZombieStudentsLife ..> Tablero : uses
-ZombieStudentsLife ..> BucleDeControl : uses
-ZombieStudentsLife ..> Mapa : uses
-ZombieStudentsLife ..> BST : uses
-ZombieStudentsLife ..> Grafo : uses
-ZombieStudentsLife ..> Estudiante : uses
 
 Estudiante <|-- EstudianteBasico
 Estudiante <|-- EstudianteNormal

@@ -1,0 +1,157 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package tablero{
+    class Celda extends AnchorPane {
+        - int posicionN
+        - int posicionM
+        - ListaEnlazada<Estudiante> listaEstudiantes
+        - ListaEnlazada<Recursos> listaRecursos
+        - DatosJuego dato
+        - Tablero tablero
+        - Button botonCelda
+        - GridPane gridElms
+        - static Logger log
+
+        + Celda()
+        + Celda(int posicionN, int posicionM)
+        + Celda(int posicionN, int posicionM, ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(int posicionN, int posicionM, DatosJuego dato, Tablero tablero)
+
+        + int getPosicionN()
+        + void setPosicionN(int posicionN)
+        + int getPosicionM()
+        + void setPosicionM(int posicionM)
+        + int[] getPosicion()
+        + ListaEnlazada<Recursos> getListaRecursos()
+        + void setListaRecursos(ListaEnlazada<Recursos> listaRecursos)
+        + ListaEnlazada<Estudiante> getListaEstudiantes()
+        + void setListaEstudiantes(ListaEnlazada<Estudiante> listaEstudiantes)
+        + DatosJuego getDatos()
+        + void setDatos(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + Button getBotonCelda()
+        + GridPane getGridElms()
+        + void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente
+        + void agregarRecurso(Recursos recurso, boolean nuevoRecurso) throws RecursoNoExistente
+        + void eliminarEstudiante(Estudiante estudiante)
+        + void eliminarRecurso(Recursos recurso)
+        + void crearCeldaAleatoria(DatosJuego dato)
+        + void eliminarEstudianteAleatorio()
+        + void eliminarRecursoAleatorio()
+        + void restablecerInterfazVisual()
+    }
+    class CeldaProperties {
+        - ListaEnlazada<Celda> original
+        - ListaEnlazada<Celda> properties
+
+        + CeldaProperties(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getOriginal()
+        + void setOriginal(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getProperties()
+        + void setProperties(ListaEnlazada<Celda> properties)
+        + void commit()
+        + void rollback()
+    }
+    class Tablero {
+        - DatosJuego dato
+        - ListaSimple<ListaSimple<Celda>> celdas
+        - static Logger log
+
+        + Tablero()
+        + Tablero(int filas, int columnas, DatosJuego dato)
+        + Celda getCelda(int[] posicion)
+        + Celda getCelda(int fila, int columna)
+        + void setCelda(int fila, int columna, Celda celda)
+        + int getNumFilas()
+        + int getNumColumnas()
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+    }
+}
+
+package usuario{
+    class Jugador implements Serializable {
+        + String nombre
+        + String dni
+        + String dificultad
+        + int puntuacion
+        + int partidasJugadas
+        + int partidasGanadas
+        + int partidasPerdidas
+        - ListaSimple<String> dificultades
+        - ListaSimple<Integer> puntosPartidas
+
+        + Jugador(String dni)
+        + ListaSimple<String> getDificultades()
+        + void addDificultad(String dificultad)
+        + ListaSimple<Integer> getPuntosPartida()
+        + void addPuntos(int puntos)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getDni()
+        + void setDni(String dni)
+        + int getPuntuacion()
+        + void addPuntuacion(int puntos)
+        + void setPuntuacion(int puntuacion)
+        + String getDificultad()
+        + void setDificultad(String dificultad)
+        + int getPartidasJugadas()
+        + void setPartidasJugadas(int partidasJugadas)
+        + void addPartidaJugada()
+        + void addPartidaGanada()
+        + void addPartidaPerdida()
+        + int getPartidasGanadas()
+        + void setPartidasGanadas(int partidasGanadas)
+        + int getPartidasPerdidas()
+        + void setPartidasPerdidas(int partidasPerdidas)
+    }
+}
+
+package excepciones{
+    class BalanceExcepcion  {
+    }
+    class CaminoNulo  {
+    }
+    class ClaseErroneaException  {
+        - static Logger log
+
+        + ClaseErroneaException(String subclase, String superclase)
+    }
+    class DuplicateElement  {
+    }
+    class EstudianteNoExistente  {
+    }
+    class IncrementoNoValido  {
+    }
+    class NoHayFicherosIniciales  {
+    }
+    class NonexistentElement {
+    }
+    class NonValidLink  {
+    }
+    class PadresException  {
+    }
+    class ProbabilidadNoValida  {
+    }
+    class RecursoNoExistente {
+    }
+    class RecursosNoUtilizados {
+        - Estudiante estudiante
+
+        + RecursosNoUtilizados(Estudiante estudiante)
+        + Estudiante getEstudiante()
+    }
+    class TamañoArrayInvalido {
+    }
+    class VentanaNoEsperada  {
+    }
+    class VoidLevel  {
+    }
+}
+
+
+
+@enduml
