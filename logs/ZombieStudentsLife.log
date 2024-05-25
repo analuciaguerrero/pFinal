@@ -1,1 +1,4 @@
 2024-05-24 17:10:32.674 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
+2024-05-25 00:20:14.153 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-25 00:20:14.158 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-25 00:20:14.165 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
