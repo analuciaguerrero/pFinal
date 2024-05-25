@@ -1,0 +1,2195 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package bucleDeControl {
+
+    class BucleDeControl {
+        - static final Logger log
+        - DatosJuego dato
+        - ListaEnlazada<Estudiante> estudiantes
+        - ListaEnlazada<Recursos> recursos
+        - Tablero tablero
+        - Celda celda
+        - boolean turno
+        - final IntegerProperty turnoProperty
+
+        + BucleDeControl(Tablero tablero, DatosJuego dato)
+        + getCelda(): Celda
+        + setCelda(Celda celda): void
+        + getDato(): DatosJuego
+        + setDato(DatosJuego dato): void
+        + getTurnoProperty(): IntegerProperty
+        + setTurnoProperty(Integer turnoProperty): void
+        + getTablero(): Tablero
+        + setTablero(Tablero tablero): void
+        + getEstudiantes(): ListaEnlazada<Estudiante>
+        + setEstudiantes(ListaEnlazada<Estudiante> estudiantes): void
+        + getRecursos(): ListaEnlazada<Recursos>
+        + setRecursos(ListaEnlazada<Recursos> recursos): void
+        + isTurno(): boolean
+        + setTurno(boolean turno): void
+        + actualizarTurnoProperty(): void
+        + evaluarMejoras(): void
+        + actualizarTiempoDeVidaEstudiante(): void
+        + actualizarTiempoDeAparicionDeRecursos(): void
+        + moverEstudiantes(): void
+        + evaluarReproduccion(): void
+        + evaluarClonacion(): void
+        + evaluarDesaparicionEstudiantes(): void
+        + evaluarAparicionRecursos(): void
+        + ejecuteBucle(): void
+        + run(): void
+    }
+
+    class BucleDeControlProperties {
+        - static final Logger log
+        - BucleDeControl original
+        - DatosJuego dato
+        - IntegerProperty tableroColumnas
+        - IntegerProperty tableroFilas
+        - IntegerProperty turnoProperty
+
+        + BucleDeControlProperties(BucleDeControl original)
+        + BucleDeControlProperties()
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): BucleDeControl
+        + setOriginal(BucleDeControl original): void
+        + tableroColumnasProperty(): IntegerProperty
+        + tableroFilasProperty(): IntegerProperty
+        + getTurnoProperty(): IntegerProperty
+        + setTurnoProperty(IntegerProperty turnoProperty): void
+        + getFilas(): int
+        + getColumnas(): int
+        + getCelda(): Celda
+    }
+
+
+
+}
+
+BucleDeControl --> DatosJuego
+BucleDeControl --> ListaEnlazada
+BucleDeControl --> Tablero
+BucleDeControl --> Celda
+BucleDeControl --> IntegerProperty
+BucleDeControl --> Estudiante
+BucleDeControl --> Recursos
+BucleDeControl --> Platform
+
+BucleDeControlProperties --> BucleDeControl
+BucleDeControlProperties --> DatosJuego
+BucleDeControlProperties --> IntegerProperty
+BucleDeControlProperties --> Celda
+BucleDeControlProperties --> Logger
+BucleDeControlProperties --> SeleccionarPartidaController
+
+package entorno {
+    class Agua extends Recursos {
+        - double aumentoVida
+        - static final Logger log
+
+        + Agua(int id, int posicionN, int posicionM, DatosJuego dato)
+        + Agua()
+        + Agua(int id, DatosJuego dato)
+        + getAumentoVida(): double
+        + setAumentoVida(int aumentoVida) throws IncrementoNoValido
+        + getTipo(): Class<Agua>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    class Biblioteca extends Recursos {
+        - double aumentoProbClonacion
+        - static final Logger log
+
+        + Biblioteca(int id, int posicionN, int posicionM, DatosJuego dato)
+        + Biblioteca()
+        + Biblioteca(int id, DatosJuego dato)
+        + getAumentoProbClonacion(): double
+        + setAumentoProbClonacion(double aumentoProbClonacion) throws ProbabilidadNoValida
+        + getTipo(): Class<Biblioteca>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    class Comida extends Recursos {
+        - double aumentoVida
+        - static final Logger log
+
+        + Comida(int id, int posicionN, int posicionM, DatosJuego dato)
+        + Comida()
+        + Comida(int id, DatosJuego dato)
+        + getAumentoVida(): double
+        + setAumentoVida(int aumentoVida) throws IncrementoNoValido
+        + getTipo(): Class<Comida>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    class GsonRecursos {
+        - static final Logger log
+
+        + serialize(Recursos src, Type typeOfSrc, JsonSerializationContext context): JsonElement
+        + deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context): Recursos
+    }
+    class Montaña extends Recursos {
+        - double reduccionVida
+        - static final Logger log
+
+        + Montaña(int id, DatosJuego dato)
+        + Montaña(int id, int posicionN, int posicionM, DatosJuego dato)
+        + Montaña()
+        + getReduccionVida(): double
+        + setReduccionVida(int reduccionVida) throws IncrementoNoValido
+        + getTipo(): Class<Montaña>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    class ParameterAguaProperties {
+        - Agua originalAgua
+        - IntegerProperty turnosRestantes
+        - IntegerProperty aumentoVida
+
+        + ParameterAguaProperties(Agua original)
+        + commit(): void
+        + rollback(): void
+        + getOriginalAgua(): Agua
+        + setOriginalAgua(Agua originalAgua): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoVidaProperty(): IntegerProperty
+    }
+    class ParameterBibliotecaProperties {
+        - Biblioteca original
+        - IntegerProperty turnosRestantes
+        - DoubleProperty aumentoPorentajeClon
+
+        + ParameterBibliotecaProperties(Biblioteca original)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Biblioteca
+        + setOriginal(Biblioteca original): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoPorentajeClonProperty(): DoubleProperty
+    }
+    class ParameterComidaProperties {
+        - Comida original
+        - IntegerProperty turnosRestantes
+        - IntegerProperty aumentoVida
+
+        + ParameterComidaProperties(Comida original)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Comida
+        + setOriginal(Comida original): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoVidaProperty(): IntegerProperty
+    }
+    class ParameterMontañaProperties {
+        - Montaña original
+        - IntegerProperty turnosRestantes
+        - IntegerProperty disminucionVida
+
+        + ParameterMontañaProperties(Montaña original)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Montaña
+        + setOriginal(Montaña original): void
+        + turnosRestantesProperty(): IntegerProperty
+        + disminucionVidaProperty(): IntegerProperty
+    }
+    class ParameterPozoProperties {
+        - Pozo original
+        - IntegerProperty turnosRestantes
+
+        + ParameterPozoProperties(Pozo original)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Pozo
+        + setOriginal(Pozo original): void
+        + turnosRestantesProperty(): IntegerProperty
+    }
+    class ParameterTesoroProperties {
+        - Tesoro original
+        - IntegerProperty turnosRestantes
+        - DoubleProperty aumentoPorcentajeRep
+
+        + ParameterTesoroProperties(Tesoro original)
+        + commit(): void
+        + rollback(): void
+        + getOriginal(): Tesoro
+        + setOriginal(Tesoro original): void
+        + turnosRestantesProperty(): IntegerProperty
+        + aumentoPorcentajeRepProperty(): DoubleProperty
+    }
+    class Pozo extends Recursos {
+        - static final Logger log
+
+        + Pozo(int id, DatosJuego dato)
+        + Pozo()
+        + Pozo(int id, int posicionN, int posicionM, DatosJuego dato)
+        + getTipo(): Class<Pozo>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    abstract class Recursos {
+        - static final Logger log
+        - int id
+        - int posicionN
+        - int posicionM
+        - int turnosRestantes
+        - IntegerProperty TurnosRestantesProperty
+
+        + Recursos(int id, int posicionN, int posicionM, DatosJuego dato)
+        + Recursos()
+        + Recursos(int id, DatosJuego dato)
+        + getId(): int
+        + setId(int id): void
+        + getPosicionN(): int
+        + setPosicionN(int posicionN): void
+        + getPosicionM(): int
+        + setPosicionM(int posicionM): void
+        + getPosicion(): int[]
+        + getTurnosRestantesProperty(): IntegerProperty
+        + actualizarTurnosRestantesProperty(): void
+        + setPosicion(int[] posicion): void
+        + getTurnosRestantes(): int
+        + getTipo(): Class<?>
+        + setTurnosRestantes(int turnosRestantes): void
+        + add(DatosJuego dato, Celda celda): void
+        + del(DatosJuego dato, Celda celda): void
+        + actualizarTurnos(DatosJuego dato, Celda celda): boolean
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+    class RecursosProperties {
+        - Recursos original
+        - IntegerProperty turnosRestantes
+        - IntegerProperty posicionN
+        - IntegerProperty posicionM
+
+        + RecursosProperties(Recursos original)
+        + getOriginal(): Recursos
+        + setOriginal(Recursos original): void
+        + rollback(): void
+        + commit(): void
+        + turnosRestantesProperty(): Property<Number>
+        + posicionNProperty(): Property<Number>
+        + posicionMProperty(): Property<Number>
+    }
+    class Tesoro extends Recursos {
+        - double aumentoProbReproduccion
+        - static final Logger log
+
+        + Tesoro(int id, DatosJuego dato)
+        + Tesoro()
+        + Tesoro(int id, int posicionN, int posicionM, DatosJuego dato)
+        + getAumentoProbReproduccion(): double
+        + setAumentoProbReproduccion(double aumentoProbReproduccion) throws ProbabilidadNoValida
+        + getTipo(): Class<Tesoro>
+        + aplicarEfecto(Estudiante estudiante, Celda celda, int turno): void
+    }
+}
+Agua --> Recursos
+Agua --> DatosJuego
+Agua --> Estudiante
+Agua --> Celda
+Agua --> IncrementoNoValido
+Agua --> Logger
+
+Biblioteca --> Recursos
+Biblioteca --> DatosJuego
+Biblioteca --> Estudiante
+Biblioteca --> Celda
+Biblioteca --> ProbabilidadNoValida
+Biblioteca --> Logger
+Biblioteca --> EstudianteBasico
+Biblioteca --> EstudianteNormal
+Biblioteca --> EstudianteAvanzado
+
+Comida --> Recursos
+Comida --> DatosJuego
+Comida --> Estudiante
+Comida --> Celda
+Comida --> IncrementoNoValido
+Comida --> Logger
+
+GsonRecursos --> Recursos
+GsonRecursos --> Logger
+GsonRecursos --> Agua
+GsonRecursos --> Comida
+GsonRecursos --> Montaña
+GsonRecursos --> Biblioteca
+GsonRecursos --> Tesoro
+GsonRecursos --> Pozo
+GsonRecursos --> ClaseErroneaException
+GsonRecursos --> JsonElement
+GsonRecursos --> JsonSerializationContext
+GsonRecursos --> JsonDeserializationContext
+GsonRecursos --> JsonObject
+GsonRecursos --> JsonParseException
+
+Montaña --> Recursos
+Montaña --> DatosJuego
+Montaña --> Estudiante
+Montaña --> Celda
+Montaña --> IncrementoNoValido
+Montaña --> Logger
+
+ParameterAguaProperties --> Agua
+ParameterAguaProperties --> IntegerProperty
+ParameterAguaProperties --> SimpleIntegerProperty
+
+ParameterBibliotecaProperties --> Biblioteca
+ParameterBibliotecaProperties --> IntegerProperty
+ParameterBibliotecaProperties --> DoubleProperty
+ParameterBibliotecaProperties --> SimpleIntegerProperty
+ParameterBibliotecaProperties --> SimpleDoubleProperty
+
+ParameterComidaProperties --> Comida
+ParameterComidaProperties --> IntegerProperty
+ParameterComidaProperties --> SimpleIntegerProperty
+
+ParameterMontañaProperties --> Montaña
+ParameterMontañaProperties --> IntegerProperty
+ParameterMontañaProperties --> SimpleIntegerProperty
+
+ParameterPozoProperties --> Pozo
+ParameterPozoProperties --> IntegerProperty
+ParameterPozoProperties --> SimpleIntegerProperty
+
+ParameterTesoroProperties --> Tesoro
+ParameterTesoroProperties --> IntegerProperty
+ParameterTesoroProperties --> DoubleProperty
+ParameterTesoroProperties --> SimpleIntegerProperty
+ParameterTesoroProperties --> SimpleDoubleProperty
+
+Pozo --> Recursos
+Pozo --> DatosJuego
+Pozo --> Estudiante
+Pozo --> Celda
+Pozo --> Logger
+
+Recursos --> DatosJuego
+Recursos --> ListaEnlazada
+Recursos --> Estudiante
+Recursos --> Celda
+Recursos --> IntegerProperty
+Recursos --> SimpleIntegerProperty
+Recursos --> TamañoArrayInvalido
+Recursos --> Logger
+Recursos --> Constructor
+Recursos --> InvocationTargetException
+Recursos --> InstantiationException
+Recursos --> IllegalAccessException
+
+RecursosProperties --> Recursos
+RecursosProperties --> IntegerProperty
+RecursosProperties --> SimpleIntegerProperty
+RecursosProperties --> Property
+
+Tesoro --> Recursos
+Tesoro --> DatosJuego
+Tesoro --> Estudiante
+Tesoro --> Celda
+Tesoro --> ProbabilidadNoValida
+Tesoro --> Logger
+
+package estructurasDeDatos.ArbolAVL{
+    class ArbolAVL<TipoDeDatos> {
+        - NodoAVL<TipoDeDatos> raiz
+        - static Logger log
+        + ArbolAVL()
+        + ArbolAVL(TipoDeDatos raiz)
+        + ArbolAVL(NodoAVL<TipoDeDatos> nodo)
+        + NodoAVL<TipoDeDatos> getRaiz()
+        + ArbolAVL<TipoDeDatos> getSubArbolIzq()
+        + ArbolAVL<TipoDeDatos> getSubArbolDcha()
+        + int getGradoN(NodoAVL<TipoDeDatos> nodo)
+        + int getAltura()
+        + int getAlturaN(NodoAVL<TipoDeDatos> nodo)
+        - void actAltura(NodoAVL<TipoDeDatos> nodo)
+        + ListaDoblementeEnlazada<TipoDeDatos> preOrden()
+        + ListaDoblementeEnlazada<TipoDeDatos> getPreOrden(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista)
+        + ListaDoblementeEnlazada<TipoDeDatos> ordenCentral()
+        + ListaDoblementeEnlazada<TipoDeDatos> getOrdenCentral(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista)
+        + ListaDoblementeEnlazada<TipoDeDatos> postOrden()
+        + ListaDoblementeEnlazada<TipoDeDatos> getPostOrden(NodoAVL<TipoDeDatos> nodoAVL, ListaDoblementeEnlazada<TipoDeDatos> lista)
+        - NodoAVL<TipoDeDatos> rotar_s(NodoAVL<TipoDeDatos> raiz, Boolean izq)
+        - NodoAVL<TipoDeDatos> rotar_d(NodoAVL<TipoDeDatos> raiz, Boolean izq)
+        + void balanceo()
+        + void add(TipoDeDatos dato)
+        + void add(NodoAVL<TipoDeDatos> nuevoNodoAVL)
+        + void addAux(NodoAVL<TipoDeDatos> raiz, NodoAVL<TipoDeDatos> dato)
+        + void del(TipoDeDatos dato)
+        - NodoAVL<TipoDeDatos> delAux1(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato)
+        - NodoAVL<TipoDeDatos> delAux2(NodoAVL<TipoDeDatos> raiz)
+        + ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> getcamino(TipoDeDatos dato)
+        - ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> getCaminoPrinc(NodoAVL<TipoDeDatos> raiz, TipoDeDatos dato, ListaDoblementeEnlazada<NodoAVL<TipoDeDatos>> camino)
+    }
+
+    class NodoAVL<TipoDeDatos> {
+        - NodoAVL<TipoDeDatos> izquierda
+        - NodoAVL<TipoDeDatos> derecha
+        - int altura
+        + NodoAVL()
+        + NodoAVL(TipoDeDatos dato)
+        + NodoAVL<TipoDeDatos> getIzquierda()
+        + void setIzquierda(NodoAVL<TipoDeDatos> izquierda)
+        + NodoAVL<TipoDeDatos> getDerecha()
+        + void setDerecha(NodoAVL<TipoDeDatos> derecha)
+        + int getAltura()
+        + void setAltura(int altura)
+    }
+}
+ArbolAVL<TipoDeDatos> --> NodoAVL<TipoDeDatos>
+ArbolAVL<TipoDeDatos> --> BST<TipoDeDatos>
+ArbolAVL<TipoDeDatos> --> ListaDoblementeEnlazada<TipoDeDatos>
+ArbolAVL<TipoDeDatos> --> BalanceExcepcion
+ArbolAVL<TipoDeDatos> --> DuplicateElement
+ArbolAVL<TipoDeDatos> --> NonexistentElement
+ArbolAVL<TipoDeDatos> --> VoidLevel
+
+NodoAVL<TipoDeDatos> --|> Nodo<TipoDeDatos> : Hereda
+NodoAVL<TipoDeDatos> --> NodoAVL<TipoDeDatos> : izquierda
+NodoAVL<TipoDeDatos> --> NodoAVL<TipoDeDatos> : derecha
+
+package estructurasDeDatos.ArbolDeBusqueda{
+    class BST<TipoDeDatos> {
+        - Nodo<TipoDeDatos> raiz
+        + BST(Nodo<TipoDeDatos> raiz, Nodo<TipoDeDatos> derecha, Nodo<TipoDeDatos> izquierda)
+        + BST(Nodo<TipoDeDatos> raiz)
+        + BST()
+        + BST(TipoDeDatos dato)
+        + void add(TipoDeDatos dato)
+        + void add(Nodo<TipoDeDatos> nodo)
+        + int getGradoN(Nodo<TipoDeDatos> n)
+        + int getGrado()
+        + ListaDoblementeEnlazada<Nodo<TipoDeDatos>> getCamino(TipoDeDatos dato)
+        + BST<TipoDeDatos> getSubArbolDcha()
+        + BST<TipoDeDatos> getSubArbolIzq()
+        + ListaDoblementeEnlazada<TipoDeDatos> preOrden()
+        + ListaDoblementeEnlazada<TipoDeDatos> ordenCentral()
+        + ListaDoblementeEnlazada<TipoDeDatos> postOrden()
+        + int getAlturaN(Nodo<TipoDeDatos> nodo)
+        + int getAltura()
+        + ListaDoblementeEnlazada<Nodo<TipoDeDatos>> getDatos(int nivel)
+        + Boolean isArbolHomogeneo()
+        + Boolean isArbolCompleto()
+        + Boolean isArbolCasiCompleto()
+        + Nodo<TipoDeDatos> getRaiz()
+    }
+    class Nodo<TipoDelDato> {
+        - Nodo<TipoDelDato> derecha
+        - Nodo<TipoDelDato> izquierda
+        - TipoDelDato dato
+        + Nodo(Nodo<TipoDelDato> derecha, Nodo<TipoDelDato> izquierda, TipoDelDato dato)
+        + Nodo(TipoDelDato dato)
+        + Nodo()
+        + Nodo<TipoDelDato> getDerecha()
+        + void setDerecha(Nodo<TipoDelDato> derecha)
+        + Nodo<TipoDelDato> getIzquierda()
+        + void setIzquierda(Nodo<TipoDelDato> izquierda)
+        + TipoDelDato getDato()
+        + void setDato(TipoDelDato dato)
+    }
+}
+BST<TipoDeDatos> --> Nodo<TipoDeDatos> : raiz
+BST<TipoDeDatos> --> ListaDoblementeEnlazada<TipoDeDatos> : usa
+BST<TipoDeDatos> ..> NonexistentElement : throws
+BST<TipoDeDatos> --> BST<TipoDeDatos> : subarbol
+
+Nodo<TipoDelDato> --> Nodo<TipoDelDato> : derecha
+Nodo<TipoDelDato> --> Nodo<TipoDelDato> : izquierda
+
+package estructurasDeDatos.Grafo{
+    class Arista<TipoDeDatos> {
+        - NodoGrafo<TipoDeDatos> nodoIni
+        - NodoGrafo<TipoDeDatos> nodoFin
+        - String anotacion
+        - boolean isDirigido
+        - double peso
+        - static Logger log
+        + Arista()
+        + Arista(double peso)
+        + Arista(String anotacion)
+        + Arista(double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin, boolean isDirigido)
+        + Arista(double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin, String anotacion, boolean isDirigido)
+        + boolean isDirigido()
+        + void setDirigido(boolean dirigido)
+        + NodoGrafo<TipoDeDatos> getNodoIni()
+        + void setNodoIni(NodoGrafo<TipoDeDatos> nodoIni)
+        + NodoGrafo<TipoDeDatos> getNodoFin()
+        + void setNodoFin(NodoGrafo<TipoDeDatos> nodoFin)
+        + String getAnotacion()
+        + void setAnotacion(String anotacion)
+        + double getPeso()
+        + void setPeso(double peso)
+        + NodoGrafo<TipoDeDatos> getVertice(NodoGrafo<TipoDeDatos> vertice)
+    }
+    class Camino<TipoDeDatos> {
+        - ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> camino
+        - double peso
+        + Camino(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> camino, double peso)
+        + double getPeso()
+        + ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> getCamino()
+        + String toString()
+    }
+    class ElementoMap<T, E> {
+        - T clave
+        - E dato
+        + ElementoMap(T clave, E dato)
+        + T getClave()
+        + void setClave(T clave)
+        + E getDato()
+        + void setDato(E dato)
+    }
+    class Grafo<TipoDeDatos> {
+        - ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos
+        - ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas
+        - boolean isDirigido
+        - static Logger log
+        + Grafo()
+        + Grafo(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos, ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas)
+        + Grafo(boolean isDirigido)
+        + ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> getNodos()
+        + void setNodos(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> nodos)
+        + ListaDoblementeEnlazada<Arista<TipoDeDatos>> getAristas()
+        + void setAristas(ListaDoblementeEnlazada<Arista<TipoDeDatos>> aristas)
+        + boolean isDirigido()
+        + void setDirigido(boolean dirigido)
+        + void addNodo(NodoGrafo<TipoDeDatos> nodo)
+        + void addNodo(TipoDeDatos dato)
+        + void addNodo(NodoGrafo<TipoDeDatos> nodo, NodoGrafo<TipoDeDatos> nodo2, double pesoArco)
+        + void addArista(double peso, TipoDeDatos datoIni, TipoDeDatos datoFin, String anotacion)
+        + void addArista(double peso, NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin)
+        + void addArista(double peso, TipoDeDatos datoIni, TipoDeDatos datoFin)
+        + void delNodo(TipoDeDatos dato)
+        + void delArista(String anotacion)
+        + NodoGrafo<TipoDeDatos> getNodoGrafo(TipoDeDatos dato)
+        + Arista<TipoDeDatos> getArista(String anotacion)
+        + Camino<TipoDeDatos> getCaminoMinimo(NodoGrafo<TipoDeDatos> nodoIni, NodoGrafo<TipoDeDatos> nodoFin)
+        + Mapa<NodoGrafo<TipoDeDatos>, Camino<TipoDeDatos>> dijkstra(NodoGrafo<TipoDeDatos> nodoIni)
+        + String listaToString(ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> lista)
+    }
+    class Mapa<T, E> {
+        - ListaDoblementeEnlazada<ElementoMap<T, E>> datos
+        + Mapa(ListaDoblementeEnlazada<ElementoMap<T, E>> el)
+        + Mapa()
+        + boolean isVacio()
+        + E get(T clave)
+        + ListaDoblementeEnlazada<T> SetClave()
+        + void put(T clave, E elemento)
+        + void eliminar(T clave)
+    }
+    class NodoGrafo<TipoDelDato> {
+        - TipoDelDato dato
+        - ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada
+        - ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida
+        - String anotacion
+        - double peso
+        + NodoGrafo(TipoDelDato dato)
+        + NodoGrafo(TipoDelDato dato, ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada, ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida)
+        + TipoDelDato getDato()
+        + void setDato(TipoDelDato dato)
+        + ListaDoblementeEnlazada<Arista<TipoDelDato>> getListaEntrada()
+        + void setListaEntrada(ListaDoblementeEnlazada<Arista<TipoDelDato>> listaEntrada)
+        + ListaDoblementeEnlazada<Arista<TipoDelDato>> getListaSalida()
+        + void setListaSalida(ListaDoblementeEnlazada<Arista<TipoDelDato>> listaSalida)
+        + String getAnotacion()
+        + void setAnotacion(String anotacion)
+        + double getPeso()
+        + void setPeso(double peso)
+    }
+
+
+
+}
+Arista<TipoDeDatos> --> NodoGrafo<TipoDeDatos> : nodoIni
+Arista<TipoDeDatos> --> NodoGrafo<TipoDeDatos> : nodoFin
+Arista<TipoDeDatos> ..> LogManager : usa
+LogManager --> Logger : retorna
+Arista<TipoDeDatos> ..> Logger : usa
+
+Camino<TipoDeDatos> --> ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> : camino
+
+Grafo<TipoDeDatos> --> ListaDoblementeEnlazada<NodoGrafo<TipoDeDatos>> : nodos
+Grafo<TipoDeDatos> --> ListaDoblementeEnlazada<Arista<TipoDeDatos>> : aristas
+Grafo<TipoDeDatos> --> NodoGrafo<TipoDeDatos> : contiene
+Grafo<TipoDeDatos> --> Arista<TipoDeDatos> : contiene
+Grafo<TipoDeDatos> ..> NonexistentElement : usa
+Grafo<TipoDeDatos> ..> CaminoNulo : usa
+Grafo<TipoDeDatos> ..> Cola : usa
+Grafo<TipoDeDatos> ..> Mapa : usa
+Grafo<TipoDeDatos> ..> LogManager : usa
+Grafo<TipoDeDatos> ..> Logger : usa
+
+Mapa<T, E> --> ListaDoblementeEnlazada<ElementoMap<T, E>> : datos
+Mapa<T, E> --> ElementoMap<T, E> : usa
+
+NodoGrafo<TipoDelDato> --> ListaDoblementeEnlazada<Arista<TipoDelDato>> : listaEntrada
+NodoGrafo<TipoDelDato> --> ListaDoblementeEnlazada<Arista<TipoDelDato>> : listaSalida
+
+package estructurasDeDatos.ListaDoblementeEnlazada{
+    class ElementoLDE<TipoDeDatos> {
+        - TipoDeDatos data
+        - ElementoLDE<TipoDeDatos> siguiente
+        - ElementoLDE<TipoDeDatos> anterior
+        + ElementoLDE(ElementoLDE<TipoDeDatos> anterior)
+        + ElementoLDE(ElementoLDE<TipoDeDatos> anterior, ElementoLDE<TipoDeDatos> siguiente, TipoDeDatos data)
+        + ElementoLDE(TipoDeDatos data)
+        + ElementoLDE()
+        + void insertarmeEn(ElementoLDE<TipoDeDatos> el)
+        + ElementoLDE<TipoDeDatos> getSiguiente()
+        + ElementoLDE<TipoDeDatos> getAnterior()
+        + void setSiguiente(ElementoLDE<TipoDeDatos> el)
+        + void setAnterior(ElementoLDE<TipoDeDatos> el)
+        + TipoDeDatos getData()
+        + void setData(TipoDeDatos dato)
+    }
+    class ListaDoblementeEnlazada<TipoDeDatos> {
+        - static Logger log
+        - ElementoLDE<TipoDeDatos> primero
+        - ElementoLDE<TipoDeDatos> ultimo
+        + ListaDoblementeEnlazada()
+        + Boolean isVacia()
+        + void vaciar()
+        + int add(ElementoLDE<TipoDeDatos> el)
+        + void add(TipoDeDatos o)
+        + void insert(TipoDeDatos o, int posicion)
+        + int del(int posicion)
+        + void del(TipoDeDatos elemento)
+        + int getNumeroElementos()
+        + int getPosicion(ElementoLDE<TipoDeDatos> e)
+        + ElementoLDE<TipoDeDatos> getPrimero()
+        + ElementoLDE<TipoDeDatos> getUltimo()
+        + ElementoLDE<TipoDeDatos> getSiguiente(ElementoLDE<TipoDeDatos> el)
+        + ElementoLDE<TipoDeDatos> getElemento(int posicion)
+        + void setElemento(int posicion, TipoDeDatos elemento)
+        + String toString()
+        + String toStringAux(ElementoLDE<TipoDeDatos> n, String salida)
+    }
+
+}
+ElementoLDE<TipoDeDatos> --> ElementoLDE<TipoDeDatos> : siguiente
+ElementoLDE<TipoDeDatos> --> ElementoLDE<TipoDeDatos> : anterior
+
+ListaDoblementeEnlazada<TipoDeDatos> --> ElementoLDE<TipoDeDatos> : primero
+ListaDoblementeEnlazada<TipoDeDatos> --> ElementoLDE<TipoDeDatos> : ultimo
+ListaDoblementeEnlazada<TipoDeDatos> ..> Logger : usa
+LogManager --> Logger : retorna
+
+package estructurasDeDatos.ListaEnlazada{
+    class ElementoLE<TipoDeDatos> {
+        @Expose
+        - TipoDeDatos data
+        @Expose
+        - ElementoLE<TipoDeDatos> siguiente
+
+        + ElementoLE(TipoDeDatos dato)
+        + ElementoLE(TipoDeDatos dato, ElementoLE<TipoDeDatos> siguiente)
+        + ElementoLE()
+        + void setSiguiente(ElementoLE<TipoDeDatos> siguiente)
+        + void insertarmeEn(ElementoLE<TipoDeDatos> el)
+        + ElementoLE<TipoDeDatos> getSiguiente()
+        + TipoDeDatos getData()
+        + void setData(TipoDeDatos data)
+    }
+    class ListaEnlazada<TipoDeDatos> {
+        - static Logger log
+        - ElementoLE<TipoDeDatos> primero
+
+        + ListaEnlazada(ElementoLE<TipoDeDatos> primero)
+        + ListaEnlazada()
+        + boolean isVacia()
+        + void vaciar()
+        + ElementoLE<TipoDeDatos> getPrimero()
+        + ElementoLE<TipoDeDatos> getUltimo()
+        + ElementoLE<TipoDeDatos> getElemento(int posicion)
+        + int getNumeroElementos()
+        + Integer getPosicion(ElementoLE<TipoDeDatos> el)
+        + Integer getPosicion(TipoDeDatos el)
+        + ElementoLE<TipoDeDatos> getSiguiente(ElementoLE<TipoDeDatos> el)
+        + void add(TipoDeDatos dato)
+        + void insert(TipoDeDatos objeto, int posicion)
+        + int delete(int pos)
+        + void del(TipoDeDatos el)
+        + ListaEnlazada<TipoDeDatos> reverse(ListaEnlazada<TipoDeDatos> lista)
+        + String toString()
+        + String toStrings(ElementoLE<TipoDeDatos> n)
+    }
+
+}
+ElementoLE<TipoDeDatos> --> ElementoLE<TipoDeDatos> : siguiente
+ElementoLE<TipoDeDatos> ..> Expose : <<use>>
+
+ListaEnlazada<TipoDeDatos> --> ElementoLE<TipoDeDatos> : primero
+ListaEnlazada<TipoDeDatos> ..> Logger : usa
+
+package estructurasDeDatos.ListaSimple{
+    class ElementoLS<TipoDeDatos> {
+        - TipoDeDatos data
+
+        + ElementoLS(TipoDeDatos dato)
+        + ElementoLS()
+        + TipoDeDatos getData()
+        + void setData(TipoDeDatos a)
+    }
+    class GsonListaSimple {
+        + JsonElement serialize(ListaSimple src, Type typeOfSrc, JsonSerializationContext context)
+        + ListaSimple deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+    }
+    class ListaSimple<TipoDedatos> {
+        - ElementoLS<TipoDedatos>[] datos
+        - int maximo
+
+        + ListaSimple()
+        + ListaSimple(int maximo)
+        + boolean isVacia()
+        + void vaciar()
+        + int getMaximo()
+        + void setMaximo(int maximo)
+        # ElementoLS<TipoDedatos>[] getDatos()
+        # void setDatos(ElementoLS<TipoDedatos>[] datos)
+        + ElementoLS<TipoDedatos> getPrimero()
+        + ElementoLS<TipoDedatos> getUltimo()
+        + ElementoLS<TipoDedatos> getElemento(int posicion)
+        + void setElemento(int posicion, TipoDedatos elemento)
+        + int getNumeroElementos()
+        # ElementoLS<TipoDedatos> getSiguiente(ElementoLS<TipoDedatos> el)
+        + int getPosicion(ElementoLS<TipoDedatos> el)
+        + int add(ElementoLS<TipoDedatos> el)
+        + void add(TipoDedatos o)
+        + void insert(TipoDedatos o, int posicion)
+        + int del(int posicion)
+    }
+}
+GsonListaSimple ..|> JsonSerializer
+GsonListaSimple ..|> JsonDeserializer
+GsonListaSimple --> JsonElement
+GsonListaSimple --> JsonObject
+GsonListaSimple --> JsonArray
+GsonListaSimple --> JsonSerializationContext
+GsonListaSimple --> JsonDeserializationContext
+GsonListaSimple ..> JsonParseException : throws
+JsonDeserializer --> JsonParseException : throws
+GsonListaSimple --> ListaSimple
+ListaSimple --> ElementoLS
+
+ListaSimple<TipoDedatos> --> ElementoLS<TipoDedatos> : datos
+
+package estructurasDeDatos.OtrasEstructuras{
+    class Cola<TipoDeDatos> {
+        - ListaEnlazada<TipoDeDatos> datos
+
+        + Cola()
+        + Boolean isVacia()
+        + ListaEnlazada<TipoDeDatos> getDatos()
+        + void setDatos(ListaEnlazada<TipoDeDatos> datos)
+        + void add(TipoDeDatos e)
+        + TipoDeDatos poll()
+        + TipoDeDatos peek()
+        + int getNumeroDatos()
+        + String toString()
+    }
+    class GsonCola implements JsonSerializer<Cola>, JsonDeserializer<Cola> {
+        - static Logger log
+
+        + JsonElement serialize(Cola src, Type typeOfSrc, JsonSerializationContext context)
+        + Cola deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+    }
+}
+Cola<TipoDeDatos> --> ListaEnlazada<TipoDeDatos> : datos
+
+GsonCola ..|> JsonSerializer
+GsonCola ..|> JsonDeserializer
+GsonCola --> Cola
+GsonCola --> JsonElement
+GsonCola --> JsonSerializationContext
+GsonCola --> JsonDeserializationContext
+GsonCola ..> JsonParseException : throws
+JsonDeserializer --> JsonParseException : throws
+GsonCola ..> Logger : usa
+LogManager --> Logger : retorna
+Cola --> ListaEnlazada
+
+package estudiante{
+    abstract class Estudiante {
+        @Expose
+        - int posicionN
+        @Expose
+        - int posicionM
+        @Expose
+        - int id
+        @Expose (serialize = false)
+        - IntegerProperty tiempoDeVidaProperty
+        @Expose
+        - int generacion
+        @Expose
+        - int tiempoDeVida
+        @Expose
+        - double probReproduccion
+        @Expose
+        - double probClonacion
+        @Expose
+        - double probMuerte
+        @Expose
+        - boolean isVivo
+        @Expose
+        - Cola<String> colaDeOperaciones
+        @Expose (serialize = false)
+        - ListaSimple<Estudiante> padres
+        - static Logger log
+
+        + Estudiante(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + Estudiante(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + Estudiante()
+        + Estudiante(Estudiante estudiante)
+        + int getPosicionN()
+        + void setPosicionN(int posicionN)
+        + int getPosicionM()
+        + void setPosicionM(int posicionM)
+        + int[] getPosicion()
+        + void setPosicion(int[] posicion) throws TamañoArrayInvalido
+        + Integer getId()
+        + void setId(int id)
+        + int getGeneracion()
+        + void setGeneracion(int generacion)
+        + int getTiempoDeVida()
+        + void setTiempoDeVida(int tiempoDeVida, int turno)
+        + double getProbReproduccion()
+        + void setProbReproduccion(double probReproduccion, int turno)
+        + double getProbClonacion()
+        + void setProbClonacion(double probClonacion, int turno)
+        + double getProbMuerte()
+        + IntegerProperty getTiempoDeVidaProperty()
+        + void setTiempoDeVidaProperty(IntegerProperty tiempoDeVidaProperty)
+        + void addOperacion(String operacion)
+        + ListaSimple<Estudiante> getPadres()
+        + void setPadres(Estudiante padre1, Estudiante padre2)
+        + void setPadres(ListaSimple<Estudiante> padres)
+        + void actualizarTiempoDeVidaProperty()
+        + boolean isVivo()
+        + abstract Class<?> getTipo()
+        + int getNumTipo()
+        + void add(DatosJuego dato, Celda celda)
+        + void morir(DatosJuego dato, Celda celda)
+        + abstract void mover(DatosJuego dato, Tablero tablero)
+        + void cambiarDePosicion(int nuevaPosicionN, int nuevaPosicionM, Tablero tablero)
+        + void moverseAleatorio(Tablero tablero, int turno)
+        + <TipoDeDatos extends Estudiante> boolean reproducirse(Estudiante pareja, DatosJuego dato, Celda celda, int turno)
+        + void clonar(DatosJuego dato, Celda celda)
+        + boolean actualizarTiempoDeVida(Celda celda, int turno)
+        + Cola<String> getColaDeOperaciones()
+        + void setColaOperaciones(Cola<String> colaDeOperaciones)
+    }
+    class EstudianteAvanzado extends Estudiante {
+        + EstudianteAvanzado(Estudiante estudiante)
+        + EstudianteAvanzado(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteAvanzado(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteAvanzado()
+        + Class<EstudianteAvanzado> getTipo()
+        + void mover(DatosJuego dato, Tablero tablero) throws RecursosNoUtilizados
+        - Grafo<Celda> getGrafoTab(DatosJuego dato, Tablero tablero)
+        - int addPesoObs(int peso, Celda vertice, double reduccionMontaña)
+        - int calcularPesoArista(Celda vertice1, Celda vertice2, double reduccionMontaña)
+    }
+    class EstudianteBasico extends Estudiante {
+        + EstudianteBasico(Estudiante estudiante)
+        + EstudianteBasico(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteBasico(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteBasico()
+        + Class<EstudianteBasico> getTipo()
+        + void mover(DatosJuego dato, Tablero tablero)
+    }
+    class EstudianteNormal extends Estudiante {
+        + EstudianteNormal(Estudiante estudiante)
+        + EstudianteNormal(int id, int posicionN, int posicionM, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteNormal(int id, int generacion, int tiempoDeVida, double probReproduccion, double probClonacion, int turno)
+        + EstudianteNormal()
+        + Class<EstudianteNormal> getTipo()
+        + void mover(DatosJuego dato, Tablero tablero) throws RecursosNoUtilizados
+    }
+    class EstudianteProperties {
+        - Estudiante origen
+        - IntegerProperty tiempoDeVida
+        - DoubleProperty probReproduccion
+        - DoubleProperty probClonacion
+        - DoubleProperty probMuerte
+        - int turno
+
+        + EstudianteProperties(Estudiante origen)
+        + EstudianteProperties()
+        + Estudiante getOrigen()
+        + void setOrigen(Estudiante origen)
+        + void rollback()
+        + void commit()
+        + IntegerProperty tiempoDeVidaProperty()
+        + DoubleProperty probReproduccionProperty()
+        + DoubleProperty probClonacionProperty()
+        + DoubleProperty probMuerteProperty()
+        + int getTurno()
+    }
+    class GsonEstudiante implements JsonSerializer<Estudiante>, JsonDeserializer<Estudiante> {
+        - static Logger log
+
+        + JsonElement serialize(Estudiante src, Type typeOfSrc, JsonSerializationContext context)
+        + Estudiante deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+    }
+}
+Estudiante ..|> JsonSerializer
+Estudiante ..|> JsonDeserializer
+Estudiante --> DatosJuego
+Estudiante --> ListaSimple
+Estudiante --> Cola
+Estudiante --> ProbabilidadNoValida
+Estudiante --> TamañoArrayInvalido
+Estudiante --> Celda
+Estudiante --> Tablero
+Estudiante --> IntegerProperty
+Estudiante --> SimpleIntegerProperty
+Estudiante ..> Logger : usa
+LogManager --> Logger : retorna
+Estudiante --> Random
+Estudiante --> Constructor
+JsonSerializer --> JsonElement
+JsonSerializer --> JsonSerializationContext
+JsonDeserializer --> JsonElement
+JsonDeserializer --> JsonDeserializationContext
+JsonDeserializer --> JsonParseException : throws
+JsonDeserializer --> Type
+
+EstudianteAvanzado --> DatosJuego
+EstudianteAvanzado --> Montaña
+EstudianteAvanzado --> Pozo
+EstudianteAvanzado --> Recursos
+EstudianteAvanzado --> Grafo
+EstudianteAvanzado --> NodoGrafo
+EstudianteAvanzado --> Camino
+EstudianteAvanzado --> ListaDoblementeEnlazada
+EstudianteAvanzado --> Celda
+EstudianteAvanzado --> Tablero
+EstudianteAvanzado ..> Logger : usa
+EstudianteAvanzado --> RecursosNoUtilizados : throws
+LogManager --> Logger : retorna
+EstudianteAvanzado --|> Estudiante
+
+EstudianteBasico --|> Estudiante
+EstudianteBasico --> DatosJuego
+EstudianteBasico --> Tablero
+
+EstudianteNormal --|> Estudiante
+EstudianteNormal --> DatosJuego
+EstudianteNormal --> Recursos
+EstudianteNormal --> ListaDoblementeEnlazada
+EstudianteNormal --> Tablero
+EstudianteNormal ..> Logger : usa
+EstudianteNormal --> Random
+EstudianteNormal --> RecursosNoUtilizados : throws
+
+EstudianteProperties --> Estudiante
+EstudianteProperties --> IntegerProperty
+EstudianteProperties --> DoubleProperty
+
+GsonEstudiante ..|> JsonSerializer
+GsonEstudiante ..|> JsonDeserializer
+GsonEstudiante --> Estudiante
+GsonEstudiante --> JsonElement
+GsonEstudiante --> JsonSerializationContext
+GsonEstudiante --> JsonDeserializationContext
+GsonEstudiante ..> Logger : usa
+GsonEstudiante --> JsonParseException : throws
+GsonEstudiante --> ClaseErroneaException : throws
+LogManager --> Logger : retorna
+JsonDeserializer --> JsonParseException : throws
+ListaSimple --> ElementoLS
+ElementoLS --> Estudiante
+Estudiante <|-- EstudianteBasico
+Estudiante <|-- EstudianteNormal
+Estudiante <|-- EstudianteAvanzado
+JsonElement <|-- JsonObject
+JsonElement <|-- JsonArray
+
+package excepciones{
+    class BalanceExcepcion extends RuntimeException {
+    }
+    class CaminoNulo extends RuntimeException {
+    }
+    class ClaseErroneaException extends RuntimeException {
+        - static Logger log
+
+        + ClaseErroneaException(String subclase, String superclase)
+    }
+    class DuplicateElement extends Exception {
+    }
+    class EstudianteNoExistente extends RuntimeException {
+    }
+    class IncrementoNoValido extends IllegalArgumentException {
+    }
+    class NoHayFicherosIniciales extends Exception {
+    }
+    class NonexistentElement extends Exception {
+    }
+    class NonValidLink extends Exception {
+    }
+    class PadresException extends RuntimeException {
+    }
+    class ProbabilidadNoValida extends IllegalArgumentException {
+    }
+    class RecursoNoExistente extends RuntimeException {
+    }
+    class RecursosNoUtilizados extends RuntimeException {
+        - Estudiante estudiante
+
+        + RecursosNoUtilizados(Estudiante estudiante)
+        + Estudiante getEstudiante()
+    }
+    class TamañoArrayInvalido extends RuntimeException {
+    }
+    class VentanaNoEsperada extends RuntimeException {
+    }
+    class VoidLevel extends Exception {
+    }
+
+    class IllegalArgumentException {
+    }
+    class Exception {
+    }
+    class RuntimeException {
+    }
+}
+BalanceExcepcion --|> RuntimeException
+
+CaminoNulo --|> RuntimeException
+
+ClaseErroneaException --|> RuntimeException
+ClaseErroneaException ..> Logger : usa
+LogManager --> Logger : retorna
+
+DuplicateElement --|> Exception
+
+EstudianteNoExistente --|> RuntimeException
+
+IncrementoNoValido --|> IllegalArgumentException
+
+NoHayFicherosIniciales --|> Exception
+
+NonexistentElement --|> Exception
+
+NonValidLink --|> Exception
+
+PadresException --|> RuntimeException
+
+ProbabilidadNoValida --|> IllegalArgumentException
+
+RecursoNoExistente --|> RuntimeException
+
+RecursosNoUtilizados --|> RuntimeException
+RecursosNoUtilizados --> Estudiante : estudiante
+
+TamañoArrayInvalido --|> RuntimeException
+
+VentanaNoEsperada --|> RuntimeException
+
+VoidLevel --|> Exception
+
+package tablero{
+    class Celda extends AnchorPane {
+        - int posicionN
+        - int posicionM
+        - ListaEnlazada<Estudiante> listaEstudiantes
+        - ListaEnlazada<Recursos> listaRecursos
+        - DatosJuego dato
+        - Tablero tablero
+        - Button botonCelda
+        - GridPane gridElms
+        - static Logger log
+
+        + Celda()
+        + Celda(int posicionN, int posicionM)
+        + Celda(int posicionN, int posicionM, ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(ListaEnlazada<Estudiante> listaEstudiantes, ListaEnlazada<Recursos> listaRecursos)
+        + Celda(int posicionN, int posicionM, DatosJuego dato, Tablero tablero)
+
+        + int getPosicionN()
+        + void setPosicionN(int posicionN)
+        + int getPosicionM()
+        + void setPosicionM(int posicionM)
+        + int[] getPosicion()
+        + ListaEnlazada<Recursos> getListaRecursos()
+        + void setListaRecursos(ListaEnlazada<Recursos> listaRecursos)
+        + ListaEnlazada<Estudiante> getListaEstudiantes()
+        + void setListaEstudiantes(ListaEnlazada<Estudiante> listaEstudiantes)
+        + DatosJuego getDatos()
+        + void setDatos(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + Button getBotonCelda()
+        + GridPane getGridElms()
+        + void agregarEstudiante(Estudiante estudiante, boolean nuevoEstudiante) throws EstudianteNoExistente
+        + void agregarRecurso(Recursos recurso, boolean nuevoRecurso) throws RecursoNoExistente
+        + void eliminarEstudiante(Estudiante estudiante)
+        + void eliminarRecurso(Recursos recurso)
+        + void crearCeldaAleatoria(DatosJuego dato)
+        + void eliminarEstudianteAleatorio()
+        + void eliminarRecursoAleatorio()
+        + void restablecerInterfazVisual()
+    }
+    class CeldaProperties {
+        - ListaEnlazada<Celda> original
+        - ListaEnlazada<Celda> properties
+
+        + CeldaProperties(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getOriginal()
+        + void setOriginal(ListaEnlazada<Celda> original)
+        + ListaEnlazada<Celda> getProperties()
+        + void setProperties(ListaEnlazada<Celda> properties)
+        + void commit()
+        + void rollback()
+    }
+    class Tablero {
+        - DatosJuego dato
+        - ListaSimple<ListaSimple<Celda>> celdas
+        - static Logger log
+
+        + Tablero()
+        + Tablero(int filas, int columnas, DatosJuego dato)
+        + Celda getCelda(int[] posicion)
+        + Celda getCelda(int fila, int columna)
+        + void setCelda(int fila, int columna, Celda celda)
+        + int getNumFilas()
+        + int getNumColumnas()
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+    }
+}
+Celda --|> AnchorPane
+Celda --> DatosJuego
+Celda --> Recursos
+Celda --> Estudiante
+Celda --> EstudianteNoExistente : throws
+Celda --> RecursoNoExistente : throws
+Celda --> Button
+Celda --> GridPane
+Celda ..> Logger : usa
+
+CeldaProperties --> ListaEnlazada : original
+CeldaProperties --> ListaEnlazada : properties
+
+Tablero --> DatosJuego
+Tablero --> ListaSimple
+Tablero --> Celda
+Tablero --> TamañoArrayInvalido : throws
+Tablero ..> Logger : usa
+
+package usuario{
+    class Jugador implements Serializable {
+        + String nombre
+        + String dni
+        + String dificultad
+        + int puntuacion
+        + int partidasJugadas
+        + int partidasGanadas
+        + int partidasPerdidas
+        - ListaSimple<String> dificultades
+        - ListaSimple<Integer> puntosPartidas
+
+        + Jugador(String dni)
+        + ListaSimple<String> getDificultades()
+        + void addDificultad(String dificultad)
+        + ListaSimple<Integer> getPuntosPartida()
+        + void addPuntos(int puntos)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getDni()
+        + void setDni(String dni)
+        + int getPuntuacion()
+        + void addPuntuacion(int puntos)
+        + void setPuntuacion(int puntuacion)
+        + String getDificultad()
+        + void setDificultad(String dificultad)
+        + int getPartidasJugadas()
+        + void setPartidasJugadas(int partidasJugadas)
+        + void addPartidaJugada()
+        + void addPartidaGanada()
+        + void addPartidaPerdida()
+        + int getPartidasGanadas()
+        + void setPartidasGanadas(int partidasGanadas)
+        + int getPartidasPerdidas()
+        + void setPartidasPerdidas(int partidasPerdidas)
+    }
+}
+Jugador --> Serializable
+Jugador --> ListaSimple : dificultades
+Jugador --> ListaSimple : puntosPartidas
+
+package zombieStudentsLife{
+    class ZombieStudentsLife {
+        - static Logger log
+        - DatosJuego dato
+        - Tablero tablero
+        - BucleDeControl bucle
+        - Mapa<Estudiante, BST<Estudiante>> arbolGenealogico
+        - Grafo<String> grafoDeOperaciones
+
+        + ZombieStudentsLife(DatosJuego dato, boolean selec)
+        + ZombieStudentsLife(DatosJuego dato, Tablero tablero)
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + BucleDeControl getBucle()
+        + void setBucle(BucleDeControl bucle)
+        + Mapa<Estudiante, BST<Estudiante>> getArbolGenealogico()
+        + Grafo<String> getGrafoDeOperaciones()
+        + void start(boolean turno)
+        - void addPadres(Nodo<Estudiante> hijo)
+        - Mapa<Estudiante, BST<Estudiante>> crearArbolGenealogico()
+        - Grafo<String> crearGrafoDeOperaciones()
+        + void informacion()
+        + void finalizarPartida()
+    }
+}
+ZombieStudentsLife ..> DatosJuego : uses
+ZombieStudentsLife ..> Tablero : uses
+ZombieStudentsLife ..> BucleDeControl : uses
+ZombieStudentsLife ..> Mapa : uses
+ZombieStudentsLife ..> BST : uses
+ZombieStudentsLife ..> Grafo : uses
+ZombieStudentsLife ..> Nodo : uses
+ZombieStudentsLife ..> NodoGrafo : uses
+ZombieStudentsLife ..> Estudiante : uses
+ZombieStudentsLife ..> Cola : uses
+ZombieStudentsLife ..> PadresException : uses
+ZombieStudentsLife ..> Logger : uses
+
+class ApplicationMenuInicial {
+        + void start(Stage stage) throws IOException
+        + static void main(String[] args)
+    }
+
+    class Application {
+        + void start(Stage stage)
+        + static void launch(String... args)
+    }
+
+    class FXMLLoader {
+        + FXMLLoader(URL location)
+        + Parent load() throws IOException
+    }
+
+    class Parent {
+    }
+
+    class Scene {
+        + Scene(Parent root, double width, double height)
+    }
+
+    class Stage {
+        + void setTitle(String title)
+        + void setScene(Scene scene)
+        + void show()
+    }
+
+    class IOException extends Exception {
+    }
+
+    class URL {
+    }
+
+ApplicationMenuInicial --|> Application
+ApplicationMenuInicial ..> Stage : uses
+ApplicationMenuInicial ..> FXMLLoader : uses
+ApplicationMenuInicial ..> Parent : uses
+ApplicationMenuInicial ..> Scene : uses
+ApplicationMenuInicial ..> IOException : throws
+ApplicationMenuInicial ..> URL : uses
+
+class DatosJuego {
+        - ListaEnlazada<Estudiante> estudiantes
+        - ListaEnlazada<Recursos> recursos
+        - ListaEnlazada<Estudiante> HistorialEstudiantes
+        - ListaEnlazada<Recursos> HistorialRecursos
+        - int numRecursos
+        - int numEstudiantes
+        - int MaximoEstudiantesPorCelda
+        - int MaximoRecursosPorCelda
+        - int FilasDelTablero
+        - int ColumnasDelTablero
+        - double ProbRecurso
+        - int TurnosIniciales
+        - double ProbAgua
+        - double ProbComida
+        - double ProbMontaña
+        - double ProbTesoro
+        - double ProbBiblioteca
+        - double ProbPozo
+        - double AumentoVidaAgua
+        - double AumentoVidaComida
+        - double ReduccionVidaMontaña
+        - double AumentoProbReproduccion
+        - double AumentoProbClonacion
+        - int TurnosRestantesAgua
+        - int TurnosRestantesComida
+        - int TurnosRestantesMontana
+        - int TurnosRestantesBiblioteca
+        - int TurnosRestantesTesoro
+        - int TurnosRestantesPozo
+        - int TurnosVidaIniciales
+        - double ProbReproduccionEstudiante
+        - double ProbClonacionEstudiante
+        - double ProbMejorarANormal
+        - double ProbMejorarAAvanzado
+        - Boolean isPausado
+        - boolean isSave
+        - String rutaArchivo
+        - ZombieStudentsLife zombieStudentsLife
+        - int turnoActual
+        + DatosJuego(int, double, double, double, double, double, int, double, double, double, double, double, double, int, int, double, double, int, int, int)
+        + DatosJuego()
+        + int getTurnosVidaIniciales()
+        + void setTurnosVidaIniciales(int)
+        + int getTurnosRestantesAgua()
+        + void setTurnosRestantesAgua(int)
+        + int getTurnosRestantesComida()
+        + void setTurnosRestantesComida(int)
+        + int getTurnosRestantesMontana()
+        + void setTurnosRestantesMontana(int)
+        + int getTurnosRestantesBiblioteca()
+        + void setTurnosRestantesBiblioteca(int)
+        + int getTurnosRestantesTesoro()
+        + void setTurnosRestantesTesoro(int)
+        + int getTurnosRestantesPozo()
+        + void setTurnosRestantesPozo(int)
+        + double getProbReproduccionEstudiante()
+        + void setProbReproduccionEstudiante(double)
+        + double getProbClonacionEstudiante()
+        + void setProbClonacionEstudiante(double)
+        + double getProbRecurso()
+        + void setProbRecurso(double)
+        + int getNumEstudiantes()
+        + void setNumEstudiantes(int)
+        + int getNumRecursos()
+        + void setNumRecursos(int)
+        + double getProbAgua()
+        + void setProbAgua(double)
+        + double getProbComida()
+        + void setProbComida(double)
+        + double getProbMontaña()
+        + void setProbMontaña(double)
+        + double getProbTesoro()
+        + void setProbTesoro(double)
+        + double getProbBiblioteca()
+        + void setProbBiblioteca(double)
+        + double getProbPozo()
+        + void setProbPozo(double)
+        + double getAumentoVidaAgua()
+        + void setAumentoVidaAgua(double)
+        + double getAumentoVidaComida()
+        + void setAumentoVidaComida(double)
+        + double getReduccionVidaMontaña()
+        + void setReduccionVidaMontaña(double)
+        + double getAumentoProbReproduccion()
+        + void setAumentoProbReproduccion(double)
+        + double getAumentoProbClonacion()
+        + void setAumentoProbClonacion(double)
+        + int getFilasDelTablero()
+        + void setFilasDelTablero(int)
+        + int getColumnasDelTablero()
+        + void setColumnasDelTablero(int)
+        + int getMaximoEstudiantesPorCelda()
+        + void setMaximoEstudiantesPorCelda(int)
+        + int getMaximoRecursosPorCelda()
+        + void setMaximoRecursosPorCelda(int)
+        + double getProbMejorarANormal()
+        + void setProbMejorarANormal(double)
+        + double getProbMejorarAAvanzado()
+        + void setProbMejorarAAvanzado(double)
+        + Boolean isPausado()
+        + void setPausado(Boolean)
+        + ZombieStudentsLife getZombieStudentsLife()
+        + void setZombieStudentsLife(ZombieStudentsLife)
+        + ListaEnlazada<Estudiante> getEstudiantes()
+        + void setEstudiantes(ListaEnlazada<Estudiante>)
+        + ListaEnlazada<Recursos> getRecursos()
+        + void setRecursos(ListaEnlazada<Recursos>)
+        + int getTurnoActual()
+        + void setTurnoActual(int)
+        + int getTurnosIniciales()
+        + void setTurnosIniciales(int)
+        + int generarEnteroAleatorio(int, int)
+        + Celda celdaAleatoria(int, int)
+        + Estudiante obtenerEstudianteAleatorio()
+        + Recursos obtenerRecursoAleatorio()
+        + boolean isSave()
+        + void setSave(boolean)
+        + String getRutaArchivo()
+        + void setRutaArchivo(String)
+        + ListaEnlazada<Estudiante> getHistorialEstudiantes()
+        + void setHistorialEstudiantes(ListaEnlazada<Estudiante>)
+        + ListaEnlazada<Recursos> getHistorialRecursos()
+        + void setHistorialRecursos(ListaEnlazada<Recursos>)
+        + void guardarArchivo(String)
+        + static DatosJuego cargarArchivo(String)
+    }
+
+    class ListaEnlazada<T> {
+        + ElementoLE<T> getPrimero()
+        + int getNumeroElementos()
+        + void add(T)
+        + void delete(int)
+        + void setElemento(int, T)
+        + ElementoLE<T> getElemento(int)
+        + boolean isVacia()
+        + int getPosicion(ElementoLE<T>)
+    }
+
+    class ElementoLE<T> {
+        + T getData()
+        + ElementoLE<T> getSiguiente()
+    }
+
+    class Estudiante {
+        + void add(DatosJuego, Celda)
+        + Cola<String> getColaDeOperaciones()
+        + void morir(DatosJuego, Celda)
+    }
+
+    class Recursos {
+        + void add(DatosJuego, Celda)
+        + void del(DatosJuego, Celda)
+    }
+
+    class Cola<T> {
+    }
+
+    class GsonRecursos {
+    }
+
+    class GsonEstudiante {
+    }
+
+    class GsonListaSimple {
+    }
+
+    class GsonCola {
+    }
+
+    class Celda {
+        + Celda(int, int)
+    }
+
+    class ZombieStudentsLife {
+    }
+
+    class Gson {
+        + static <T> T fromJson(String, Class<T>)
+        + String toJson(Object)
+    }
+
+    class GsonBuilder {
+        + GsonBuilder registerTypeAdapter(Class, Object)
+        + GsonBuilder excludeFieldsWithModifiers(int)
+        + GsonBuilder excludeFieldsWithoutExposeAnnotation()
+        + GsonBuilder setPrettyPrinting()
+        + Gson create()
+    }
+
+    class Random {
+        + int nextInt(int)
+    }
+
+    class FileWriter {
+        + FileWriter(String) throws IOException
+        + void close() throws IOException
+    }
+
+    class FileReader {
+        + FileReader(String) throws IOException
+        + void close() throws IOException
+    }
+
+    class IOException {
+    }
+DatosJuego ..> ListaEnlazada : uses
+DatosJuego ..> ElementoLE : uses
+DatosJuego ..> Estudiante : uses
+DatosJuego ..> Recursos : uses
+DatosJuego ..> Cola : uses
+DatosJuego ..> GsonRecursos : uses
+DatosJuego ..> GsonEstudiante : uses
+DatosJuego ..> GsonListaSimple : uses
+DatosJuego ..> GsonCola : uses
+DatosJuego ..> Celda : uses
+DatosJuego ..> ZombieStudentsLife : uses
+DatosJuego ..> Gson : uses
+DatosJuego ..> GsonBuilder : uses
+DatosJuego ..> Random : uses
+DatosJuego ..> FileWriter : uses
+DatosJuego ..> FileReader : uses
+DatosJuego ..> IOException : throws
+
+class DatosJuegoProperties {
+        - DatosJuego dato
+        - IntegerProperty FilasDelTablero
+        - IntegerProperty ColumnasDelTablero
+        - ObjectProperty<Integer> TurnosVidaIniciales
+        - ObjectProperty<Integer> TurnosRestantesAgua
+        - ObjectProperty<Integer> TurnosRestantesComida
+        - ObjectProperty<Integer> TurnosRestantesMontana
+        - ObjectProperty<Integer> TurnosRestantesBiblioteca
+        - ObjectProperty<Integer> TurnosRestantesTesoro
+        - ObjectProperty<Integer> TurnosRestantesPozo
+        - DoubleProperty ProbReproEstudiante
+        - DoubleProperty ProbClonEstudiante
+        - DoubleProperty ProbMejoraToNormal
+        - DoubleProperty ProbMejoraToAvanzado
+        - DoubleProperty ProbAgua
+        - DoubleProperty ProbComida
+        - DoubleProperty ProbMontaña
+        - DoubleProperty ProbTesoro
+        - DoubleProperty ProbBiblioteca
+        - DoubleProperty ProbPozo
+        - DoubleProperty AumentoTurnosAgua
+        - DoubleProperty AumentoTurnosComida
+        - DoubleProperty ReduccionTurnosMontaña
+        - DoubleProperty AumentoProbRepro
+        - DoubleProperty AumentoProbClon
+        - static final Logger log
+
+        + DatosJuegoProperties(DatosJuego)
+        + DatosJuego getDato()
+        + void setDato(DatosJuego)
+        + void setDatoInitialize(DatosJuego)
+        + void commit()
+        + void rollback(Tab)
+        + ObjectProperty<Integer> TurnosVidaInicialesProperty()
+        + Property<Number> ProbReproEstudianteProperty()
+        + Property<Number> ProbClonEstudianteProperty()
+        + Property<Number> ProbMejorarANormalProperty()
+        + Property<Number> ProbMejorarAAvanzadoProperty()
+        + Property<Number> ProbAguaProperty()
+        + Property<Number> ProbComidaProperty()
+        + Property<Number> ProbMontañaProperty()
+        + Property<Number> ProbTesoroProperty()
+        + Property<Number> ProbBibliotecaProperty()
+        + Property<Number> ProbPozoProperty()
+        + ObjectProperty<Integer> TurnosRestantesAguaProperty()
+        + ObjectProperty<Integer> TurnosRestantesComidaProperty()
+        + ObjectProperty<Integer> TurnosRestantesMontanaProperty()
+        + ObjectProperty<Integer> TurnosRestantesBibliotecaProperty()
+        + ObjectProperty<Integer> TurnosRestantesTesoroProperty()
+        + ObjectProperty<Integer> TurnosRestantesPozoProperty()
+        + Property<Number> AumentoTurnosAguaProperty()
+        + Property<Number> AumentoTurnosComidaProperty()
+        + Property<Number> ReduccionTurnosMontañaProperty()
+        + Property<Number> AumentoProbReproProperty()
+        + Property<Number> AumentoProbClonProperty()
+        + Property<Number> FilasDelTableroProperty()
+        + Property<Number> ColumnasDelTableroProperty()
+        - void rollbackEstudiantes()
+        - void rollbackRecursos()
+        - void rollbackTablero()
+    }
+
+    class DatosJuego {
+        // Aquí sólo se incluyen los métodos y atributos relacionados con DatosJuegoProperties
+        + int getTurnosVidaIniciales()
+        + void setTurnosVidaIniciales(int)
+        + int getTurnosRestantesAgua()
+        + void setTurnosRestantesAgua(int)
+        + int getTurnosRestantesComida()
+        + void setTurnosRestantesComida(int)
+        + int getTurnosRestantesMontana()
+        + void setTurnosRestantesMontana(int)
+        + int getTurnosRestantesBiblioteca()
+        + void setTurnosRestantesBiblioteca(int)
+        + int getTurnosRestantesTesoro()
+        + void setTurnosRestantesTesoro(int)
+        + int getTurnosRestantesPozo()
+        + void setTurnosRestantesPozo(int)
+        + double getProbReproduccionEstudiante()
+        + void setProbReproduccionEstudiante(double)
+        + double getProbClonacionEstudiante()
+        + void setProbClonacionEstudiante(double)
+        + double getProbMejorarANormal()
+        + void setProbMejorarANormal(double)
+        + double getProbMejorarAAvanzado()
+        + void setProbMejorarAAvanzado(double)
+        + double getProbAgua()
+        + void setProbAgua(double)
+        + double getProbComida()
+        + void setProbComida(double)
+        + double getProbMontaña()
+        + void setProbMontaña(double)
+        + double getProbTesoro()
+        + void setProbTesoro(double)
+        + double getProbBiblioteca()
+        + void setProbBiblioteca(double)
+        + double getProbPozo()
+        + void setProbPozo(double)
+        + double getAumentoVidaAgua()
+        + void setAumentoVidaAgua(double)
+        + double getAumentoVidaComida()
+        + void setAumentoVidaComida(double)
+        + double getReduccionVidaMontaña()
+        + void setReduccionVidaMontaña(double)
+        + double getAumentoProbReproduccion()
+        + void setAumentoProbReproduccion(double)
+        + double getAumentoProbClonacion()
+        + void setAumentoProbClonacion(double)
+        + int getFilasDelTablero()
+        + void setFilasDelTablero(int)
+        + int getColumnasDelTablero()
+        + void setColumnasDelTablero(int)
+    }
+
+    class Tab {
+        + String getText()
+    }
+
+    class VentanaNoEsperada extends RuntimeException {
+    }
+
+    class IntegerProperty {
+    }
+
+    class SimpleIntegerProperty extends IntegerProperty {
+        + SimpleIntegerProperty()
+        + ObjectProperty<Integer> asObject()
+    }
+
+    class ObjectProperty<T> {
+    }
+
+    class DoubleProperty {
+    }
+
+    class SimpleDoubleProperty extends DoubleProperty {
+    }
+
+    class Property<T> {
+    }
+
+    class Logger {
+        + static Logger getLogger(Class<?>)
+        + void error(String)
+    }
+
+    class LogManager {
+        + static Logger getLogger(Class<?>)
+    }
+DatosJuegoProperties ..> DatosJuego : uses
+DatosJuegoProperties ..> Tab : uses
+DatosJuegoProperties ..> VentanaNoEsperada : throws
+DatosJuegoProperties ..> IntegerProperty : uses
+DatosJuegoProperties ..> SimpleIntegerProperty : uses
+DatosJuegoProperties ..> ObjectProperty : uses
+DatosJuegoProperties ..> DoubleProperty : uses
+DatosJuegoProperties ..> SimpleDoubleProperty : uses
+DatosJuegoProperties ..> Property : uses
+DatosJuegoProperties ..> Logger : uses
+LogManager ..> Logger : creates
+
+class CeldaController {
+        - static final Logger log
+        - Parent root
+        - boolean isListenerActive
+        - DatosJuego dato
+        - Celda celda
+        - VBox estudiantesVBox
+        - VBox recursosVBox
+        - Label alertaCasillaLabel
+        - ChoiceBox<String> estudiantesAddBox
+        - ChoiceBox<String> recursosAddBox
+        - Label elementoLabel
+        - Button botonQuitar
+        - final String[] tiposEstudiantes
+        - final String[] tiposRecursos
+
+        + CeldaController()
+        + CeldaController(DatosJuego, Celda)
+        + Parent getRoot()
+        + void initialize(URL, ResourceBundle)
+        + void addEstudiante(String)
+        + <T extends Estudiante> void addEstudiante(Class<T>)
+        + <T extends Estudiante> void addEstudiantePrinc(Class<?>, boolean, Estudiante)
+        + void delEstudiante(ActionEvent)
+        + void addRecurso(String)
+        + <T extends Recursos> void addRecursoPrinc(Class<?>, boolean, T)
+        + void delRecurso(ActionEvent)
+    }
+
+    class Logger {
+        + static Logger getLogger()
+        + void trace(String)
+        + void error(String)
+        + void debug(String)
+        + void warn(String)
+    }
+
+    class Parent {
+    }
+
+    class VBox {
+    }
+
+    class Label {
+    }
+
+    class ChoiceBox<T> {
+    }
+
+    class Button {
+    }
+
+    class Estudiante {
+    }
+
+    class Recursos {
+    }
+
+    class ActionEvent {
+    }
+
+    class DatosJuego {
+    }
+
+    class Celda {
+    }
+
+    class String {
+    }
+
+    class ResourceBundle {
+    }
+
+    class URL {
+    }
+
+    class FXMLLoader {
+        + FXMLLoader(URL)
+        + void setController(Object)
+        + Parent load()
+    }
+
+class MenuEntradaController {
+        - Label labelNombre
+        - Button buttonContinuar
+        - Button buttonSalir
+        - Button buttonVolver
+        - TextField textFieldNombre
+        - TextField textFieldDNI
+        - ComboBox<String> comboBoxAcceso
+        - HashMap<String, Jugador> jugadores
+        - Jugador jugador
+        - DatosJuego datosJuego
+        - FileOutputStream ranking
+
+        + setDatosJuego(DatosJuego)
+        + Jugador getJugador()
+        + HashMap<String, Jugador> getJugadores()
+        + DatosJuego getDatosJuego()
+        + void setDatosJuego()
+        + void initialize()
+        + void handleSalir(ActionEvent)
+        + void handleVolver(ActionEvent)
+        + void comprobarAcceso()
+        + void comprobarRegistro()
+        + private void abrirTipoDePartida()
+        + void ComboBox1ActionPerformed(ActionEvent)
+        + void handleContinuar(ActionEvent)
+        + private void handleIniciar(ActionEvent)
+        + private void mostrarAlerta(String)
+    }
+
+    class Jugador {
+        + String getNombre()
+        + void setNombre(String)
+    }
+
+    class DatosJuego {
+    }
+
+    class FileOutputStream {
+    }
+
+    class Label {
+    }
+
+    class Button {
+    }
+
+    class TextField {
+    }
+
+    class ComboBox<T> {
+    }
+
+    class HashMap<K,V> {
+    }
+
+    class ActionEvent {
+    }
+
+    class FXMLLoader {
+        + FXMLLoader(URL)
+        + void setController(Object)
+        + Parent load()
+    }
+
+    class Parent {
+    }
+
+    class Scene {
+    }
+
+    class Stage {
+    }
+
+    class Alert {
+        + static Alert(Alert.AlertType)
+        + setTitle(String)
+        + setHeaderText(String)
+        + setContentText(String)
+        + showAndWait()
+    }
+
+    enum Alert.AlertType {
+        INFORMATION
+    }
+
+class MenuInicialController {
+        - Button buttonPlay
+        + void goNewPlay(ActionEvent) throws IOException
+        + void exitGame()
+    }
+
+    class Button {
+    }
+
+    class ActionEvent {
+    }
+
+    class FXMLLoader {
+        + FXMLLoader(URL)
+        + Parent load()
+    }
+
+    class Parent {
+    }
+
+    class Scene {
+    }
+
+    class Stage {
+        + setScene(Scene)
+        + setTitle(String)
+        + show()
+    }
+
+class SeleccionarPartidaController {
+        - static final Logger log
+        - DatosJuego datosJuego
+        - ListView<String> listaDeFicheros
+        + initialize(URL, ResourceBundle)
+        + getDatosJuego()
+        + setDatosJuego(DatosJuego)
+        + onBotonCargarFicheroClick(ActionEvent)
+        + onBottonNuevoClick(ActionEvent)
+        + onBotonVolverMenuClick(ActionEvent)
+        + getNombreFicheros(): String[]
+        + onBotonCargarPartidaClick(ActionEvent)
+    }
+
+    class Logger {
+        + info(String)
+    }
+
+    class DatosJuego {
+        + cargarArchivo(String): DatosJuego
+    }
+
+    class URL {
+    }
+
+    class ResourceBundle {
+    }
+
+    class ActionEvent {
+    }
+
+    class File {
+    }
+
+    class Stage {
+    }
+
+    class Node {
+    }
+
+    class FXMLLoader {
+        + load(URL)
+        + load()
+    }
+
+    class Parent {
+    }
+
+    class Scene {
+    }
+
+    class Objects {
+        + requireNonNull(Object)
+    }
+
+    class NoHayFicherosIniciales {
+    }
+
+class TableroController {
+        - DatosJuego datos
+        - ZombieStudentsLife zombieStudentsLife
+        - Label turnoLabel
+        - GridPane gridTablero
+        + getDatos(): DatosJuego
+        + setDatos(DatosJuego)
+        + getZombieStudentsLife(): ZombieStudentsLife
+        + setZombieStudentsLife(ZombieStudentsLife)
+        + TableroController(DatosJuego, ZombieStudentsLife)
+        + TableroController()
+        - avanzarZombieStudentsLife(boolean, Celda)
+        + onBottonPausarClick(ActionEvent)
+        + onBottonPasarDeTurnoClick(ActionEvent)
+        + onBottonReanudarClick(ActionEvent)
+        + onBottonConfiguracionToClick(ActionEvent)
+        + onBottonCerrarClick()
+        + onBottonPantallaCompletaToClick()
+        + onBottonMinimizarClick()
+        + onBottonMenuInicialClick(ActionEvent)
+        + onBottonGuardarPartidaClick(ActionEvent)
+        + onBottonGuardarComoClick(ActionEvent)
+        + mostrarElementosCelda(Celda)
+        - crearGridTablero(Tablero, Parent): GridPane
+        + crearTablero(Tablero)
+        - static crearArbolGenealogico(BST<Estudiante>): TreeItem<Estudiante>
+        - static crearArbolGenealogicoPrinc(Nodo<Estudiante>, TreeItem<Estudiante>)
+        + onBottonFinalizarPartidaClick(ActionEvent)
+        + terminarPartida(DatosJuego)
+        + onBottonSalirClick(ActionEvent)
+        - obtenerCeldaDeEvento(Event): Celda
+        - isDescendant(Node, Node): boolean
+        + inicializar(DatosJuego, ZombieStudentsLife)
+        - mostrarAlertaError(String, String)
+    }
+
+    class DatosJuego {
+        + isPausado(): boolean
+        + setPausado(boolean)
+        + getRutaArchivo(): String
+        + setRutaArchivo(String)
+        + guardarArchivo(String)
+        + isSave(): boolean
+        + getEstudiantes(): Lista<Estudiante>
+        + getRecursos(): Lista<Recursos>
+        + getTurnoActual(): int
+        + setTurnoActual(int)
+    }
+
+    class ZombieStudentsLife {
+        + getBucle(): BucleJuego
+        + start(boolean)
+        + finalizarPartida()
+        + getArbolGenealogico(): Mapa<Estudiante, BST<Estudiante>>
+    }
+
+    class Event {
+    }
+
+    class ActionEvent {
+    }
+
+    class Celda {
+        + getDatos(): DatosJuego
+        + getCelda(int, int): Celda
+        + agregarEstudiante(Estudiante, boolean)
+        + agregarRecurso(Recursos, boolean)
+        + getListaEstudiantes(): Lista<Estudiante>
+        + getListaRecursos(): Lista<Recursos>
+    }
+
+    class GridPane {
+    }
+
+    class Label {
+    }
+
+    class FXMLLoader {
+    }
+
+    class Parent {
+    }
+
+    class TreeItem<T> {
+    }
+
+    class BST<T> {
+    }
+
+    class Nodo<T> {
+    }
+
+    class TreeView<T> {
+    }
+
+    class ButtonType {
+    }
+
+    class Alert {
+    }
+
+    class TextInputDialog {
+    }
+
+    class HBox {
+    }
+
+    class AnchorPane {
+    }
+
+    class VBox {
+    }
+
+    class ScrollPane {
+    }
+
+    class Mapa<K, V> {
+    }
+
+    class Estudiante {
+    }
+
+    class Lista<T> {
+    }
+
+    class Recursos {
+    }
+
+    class BucleJuego {
+        + getTurnoProperty(): IntegerProperty
+        + actualizarTurnoProperty()
+    }
+
+    class Window {
+    }
+
+    class Stage {
+    }
+
+    class Rectangle2D {
+    }
+
+    class Screen {
+    }
+
+    class Bounds {
+    }
+
+    class MouseEvent {
+    }
+
+    class File {
+    }
+
+    class IOException {
+    }
+
+    class LogManager {
+    }
+
+    class Logger {
+    }
+
+    class ApplicationMenuInicial {
+    }
+
+    class XPersonalizacionController {
+        + setControllerValues(DatosJuego)
+    }
+
+    class Personalizacion2Controller {
+    }
+
+class XPersonalizacionController {
+        - tabActual: Tab
+        - buttonGuardar: Button
+        - tabPaneConfiguracion: TabPane
+        - TurnosVidaInicialesSpinner: Spinner<Integer>
+        - ProbReproEstudianteSlider: Slider
+        - ProbClonEstudianteSlider: Slider
+        - ProbMejoraNormalSlider: Slider
+        - ProbMejoraAvanzadoSlider: Slider
+        - aguaTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparAguaSlider: Slider
+        - aguaAumentoVidaSlider: Slider
+        - comidaTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparComidaSlider: Slider
+        - comidaAumentoVidaSlider: Slider
+        - montanaTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparMontañaSlider: Slider
+        - montanaDisminucionVidaSlider: Slider
+        - tesoroTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparTesoroSlider: Slider
+        - AumentoProbReproSlider: Slider
+        - bibliotecaTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparBibliotecaSlider: Slider
+        - AumentoProbClonSlider: Slider
+        - pozoTurnosRestantesSpinner: Spinner<Integer>
+        - ProbAparPozoSlider: Slider
+        - filasSlider: Slider
+        - columnasSlider: Slider
+        - log: Logger
+        - dato: DatosJuego
+        - propiedades: DatosJuegoProperties
+        + XPersonalizacionController()
+        + initialize(url: URL, resourceBundle: ResourceBundle): void
+        + initializeController(): void
+        + getDato(): DatosJuego
+        + setDato(dato: DatosJuego): void
+        + initializeSpinners(): void
+        + actualizarDato(): void
+        + addFiltroSpinner(spinner: Spinner<Integer>): void
+        + addFiltroSpinner2(spinner: Spinner<Double>): void
+        + setControllerValues(dato: DatosJuego): void
+        + onBottonGuardarClick(event: ActionEvent): void
+        + continuarZombieStudentsLife(event: ActionEvent): void
+        + comenzarNuevoJuego(): void
+        + onBottonReiniciarClick(): void
+        + onBottonVolverClick(event: ActionEvent): void
+    }
+com.example.demoJavafx <-- com.example.demoJavafx.tablero : import
+com.example.demoJavafx <-- com.example.demoJavafx.zombieStudentsLife : import
+com.example.demoJavafx "1" -- "1" com.example.demoJavafx.tablero.Celda
+com.example.demoJavafx "1" -- "1" com.example.demoJavafx.DatosJuego
+com.example.demoJavafx "1" -- "1" com.example.demoJavafx.DatosJuegoProperties
+com.example.demoJavafx "1" -- "1" com.example.demoJavafx.TableroController
+com.example.demoJavafx "1" -- "1" com.example.demoJavafx.zombieStudentsLife.ZombieStudentsLife
+
+
+package javafx.beans.property {
+    class IntegerProperty {
+        + set(int value): void
+        + get(): int
+    }
+
+    class SimpleIntegerProperty extends IntegerProperty {
+    }
+}
+
+package org.apache.logging.log4j {
+    class Logger {
+        + trace(String message): void
+        + debug(String message): void
+        + info(String message): void
+        + warn(String message): void
+        + error(String message): void
+        + fatal(String message): void
+    }
+
+    class LogManager {
+        + getLogger(Class clazz): Logger
+    }
+}
+
+
+@enduml
