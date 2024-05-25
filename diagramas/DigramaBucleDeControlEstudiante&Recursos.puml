@@ -267,9 +267,6 @@ package zombieStudentsLife{
         + Mapa<Estudiante, BST<Estudiante>> getArbolGenealogico()
         + Grafo<String> getGrafoDeOperaciones()
         + void start(boolean turno)
-        - void addPadres(Nodo<Estudiante> hijo)
-        - Mapa<Estudiante, BST<Estudiante>> crearArbolGenealogico()
-        - Grafo<String> crearGrafoDeOperaciones()
         + void informacion()
         + void finalizarPartida()
     }
@@ -281,198 +278,17 @@ ZombieStudentsLife ..> BucleDeControl : uses
 ZombieStudentsLife ..> Mapa : uses
 ZombieStudentsLife ..> BST : uses
 ZombieStudentsLife ..> Grafo : uses
-ZombieStudentsLife ..> Nodo : uses
-ZombieStudentsLife ..> NodoGrafo : uses
 ZombieStudentsLife ..> Estudiante : uses
-ZombieStudentsLife ..> Cola : uses
-ZombieStudentsLife ..> PadresException : uses
-ZombieStudentsLife ..> Logger : uses
 
-GsonEstudiante ..|> JsonSerializer
-GsonEstudiante ..|> JsonDeserializer
-
-Estudiante ..|> JsonSerializer
-Estudiante ..|> JsonDeserializer
-Estudiante --> DatosJuego
-Estudiante --> ListaSimple
-Estudiante --> Cola
-
-Estudiante --> Celda
-Estudiante --> Tablero
-Estudiante --> IntegerProperty
-Estudiante --> SimpleIntegerProperty
-Estudiante ..> Logger : usa
-LogManager --> Logger : retorna
-Estudiante --> Random
-Estudiante --> Constructor
-
-
-EstudianteAvanzado --> DatosJuego
-EstudianteAvanzado --> Montaña
-EstudianteAvanzado --> Pozo
-EstudianteAvanzado --> Recursos
-EstudianteAvanzado --> Grafo
-EstudianteAvanzado --> NodoGrafo
-EstudianteAvanzado --> Camino
-EstudianteAvanzado --> ListaDoblementeEnlazada
-EstudianteAvanzado --> Celda
-EstudianteAvanzado --> Tablero
-EstudianteAvanzado ..> Logger : usa
-EstudianteAvanzado --> RecursosNoUtilizados : throws
-EstudianteAvanzado --|> Estudiante
-
-EstudianteBasico --|> Estudiante
-EstudianteBasico --> DatosJuego
-EstudianteBasico --> Tablero
-
-EstudianteNormal --|> Estudiante
-EstudianteNormal --> DatosJuego
-EstudianteNormal --> Recursos
-EstudianteNormal --> ListaDoblementeEnlazada
-EstudianteNormal --> Tablero
-EstudianteNormal ..> Logger : usa
-EstudianteNormal --> Random
-EstudianteNormal --> RecursosNoUtilizados : throws
-
-EstudianteProperties --> Estudiante
-EstudianteProperties --> IntegerProperty
-EstudianteProperties --> DoubleProperty
-
-GsonEstudiante ..|> JsonSerializer
-GsonEstudiante ..|> JsonDeserializer
-GsonEstudiante --> Estudiante
-GsonEstudiante --> JsonElement
-GsonEstudiante --> JsonSerializationContext
-GsonEstudiante --> JsonDeserializationContext
-GsonEstudiante ..> Logger : usa
-GsonEstudiante --> JsonParseException : throws
-GsonEstudiante --> ClaseErroneaException : throws
-
-ListaSimple --> ElementoLS
-ElementoLS --> Estudiante
 Estudiante <|-- EstudianteBasico
 Estudiante <|-- EstudianteNormal
 Estudiante <|-- EstudianteAvanzado
 
-
 Agua --> Recursos
-Agua --> DatosJuego
-Agua --> Estudiante
-Agua --> Celda
-
-Agua --> Logger
-
 Biblioteca --> Recursos
-Biblioteca --> DatosJuego
-Biblioteca --> Estudiante
-Biblioteca --> Celda
-
-Biblioteca --> Logger
-Biblioteca --> EstudianteBasico
-Biblioteca --> EstudianteNormal
-Biblioteca --> EstudianteAvanzado
-
 Comida --> Recursos
-Comida --> DatosJuego
-Comida --> Estudiante
-Comida --> Celda
-
-Comida --> Logger
-
-GsonRecursos --> Recursos
-GsonRecursos --> Logger
-GsonRecursos --> Agua
-GsonRecursos --> Comida
-GsonRecursos --> Montaña
-GsonRecursos --> Biblioteca
-GsonRecursos --> Tesoro
-GsonRecursos --> Pozo
-
-GsonRecursos --> JsonElement
-GsonRecursos --> JsonSerializationContext
-GsonRecursos --> JsonDeserializationContext
-GsonRecursos --> JsonObject
-GsonRecursos --> JsonParseException
-
 Montaña --> Recursos
-Montaña --> DatosJuego
-Montaña --> Estudiante
-Montaña --> Celda
-
-Montaña --> Logger
-
-ParameterAguaProperties --> Agua
-ParameterAguaProperties --> IntegerProperty
-ParameterAguaProperties --> SimpleIntegerProperty
-
-ParameterBibliotecaProperties --> Biblioteca
-ParameterBibliotecaProperties --> IntegerProperty
-ParameterBibliotecaProperties --> DoubleProperty
-ParameterBibliotecaProperties --> SimpleIntegerProperty
-ParameterBibliotecaProperties --> SimpleDoubleProperty
-
-ParameterComidaProperties --> Comida
-ParameterComidaProperties --> IntegerProperty
-ParameterComidaProperties --> SimpleIntegerProperty
-
-ParameterMontañaProperties --> Montaña
-ParameterMontañaProperties --> IntegerProperty
-ParameterMontañaProperties --> SimpleIntegerProperty
-
-ParameterPozoProperties --> Pozo
-ParameterPozoProperties --> IntegerProperty
-ParameterPozoProperties --> SimpleIntegerProperty
-
-ParameterTesoroProperties --> Tesoro
-ParameterTesoroProperties --> IntegerProperty
-ParameterTesoroProperties --> DoubleProperty
-ParameterTesoroProperties --> SimpleIntegerProperty
-ParameterTesoroProperties --> SimpleDoubleProperty
-
 Pozo --> Recursos
-Pozo --> DatosJuego
-Pozo --> Estudiante
-Pozo --> Celda
-Pozo --> Logger
-
-Recursos --> DatosJuego
-Recursos --> ListaEnlazada
-Recursos --> Estudiante
-Recursos --> Celda
-Recursos --> IntegerProperty
-Recursos --> SimpleIntegerProperty
-
-Recursos --> Logger
-Recursos --> Constructor
-
-
-RecursosProperties --> Recursos
-RecursosProperties --> IntegerProperty
-RecursosProperties --> SimpleIntegerProperty
-RecursosProperties --> Property
-
 Tesoro --> Recursos
-Tesoro --> DatosJuego
-Tesoro --> Estudiante
-Tesoro --> Celda
-
-Tesoro --> Logger
-
-BucleDeControl --> DatosJuego
-BucleDeControl --> ListaEnlazada
-BucleDeControl --> Tablero
-BucleDeControl --> Celda
-BucleDeControl --> IntegerProperty
-BucleDeControl --> Estudiante
-BucleDeControl --> Recursos
-BucleDeControl --> Platform
-
-BucleDeControlProperties --> BucleDeControl
-BucleDeControlProperties --> DatosJuego
-BucleDeControlProperties --> IntegerProperty
-BucleDeControlProperties --> Celda
-BucleDeControlProperties --> Logger
-BucleDeControlProperties --> SeleccionarPartidaController
-
 
 @enduml
