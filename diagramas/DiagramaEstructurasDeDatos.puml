@@ -1,6 +1,7 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+
 package estructurasDeDatos.arbolAVL {
     class ArbolAVL<TipoDeDatos> {
         - NodoAVL<TipoDeDatos> raiz
