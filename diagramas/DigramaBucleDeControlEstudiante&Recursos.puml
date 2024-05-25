@@ -246,6 +246,48 @@ package estudiante {
     }
 }
 
+
+package zombieStudentsLife{
+    class ZombieStudentsLife {
+        - static Logger log
+        - DatosJuego dato
+        - Tablero tablero
+        - BucleDeControl bucle
+        - Mapa<Estudiante, BST<Estudiante>> arbolGenealogico
+        - Grafo<String> grafoDeOperaciones
+
+        + ZombieStudentsLife(DatosJuego dato, boolean selec)
+        + ZombieStudentsLife(DatosJuego dato, Tablero tablero)
+        + DatosJuego getDato()
+        + void setDato(DatosJuego dato)
+        + Tablero getTablero()
+        + void setTablero(Tablero tablero)
+        + BucleDeControl getBucle()
+        + void setBucle(BucleDeControl bucle)
+        + Mapa<Estudiante, BST<Estudiante>> getArbolGenealogico()
+        + Grafo<String> getGrafoDeOperaciones()
+        + void start(boolean turno)
+        - void addPadres(Nodo<Estudiante> hijo)
+        - Mapa<Estudiante, BST<Estudiante>> crearArbolGenealogico()
+        - Grafo<String> crearGrafoDeOperaciones()
+        + void informacion()
+        + void finalizarPartida()
+    }
+}
+
+ZombieStudentsLife ..> DatosJuego : uses
+ZombieStudentsLife ..> Tablero : uses
+ZombieStudentsLife ..> BucleDeControl : uses
+ZombieStudentsLife ..> Mapa : uses
+ZombieStudentsLife ..> BST : uses
+ZombieStudentsLife ..> Grafo : uses
+ZombieStudentsLife ..> Nodo : uses
+ZombieStudentsLife ..> NodoGrafo : uses
+ZombieStudentsLife ..> Estudiante : uses
+ZombieStudentsLife ..> Cola : uses
+ZombieStudentsLife ..> PadresException : uses
+ZombieStudentsLife ..> Logger : uses
+
 GsonEstudiante ..|> JsonSerializer
 GsonEstudiante ..|> JsonDeserializer
 

@@ -187,5 +187,223 @@ package zombieStudentsLife{
     }
 }
 
+class DatosJuego {
+    -ListaEnlazada<Estudiante> estudiantes
+    -ListaEnlazada<Recursos> recursos
+    -ListaEnlazada<Estudiante> historialEstudiantes
+    -ListaEnlazada<Recursos> historialRecursos
+    -int numRecursos
+    -int numEstudiantes
+    -int maximoEstudiantesPorCelda
+    -int maximoRecursosPorCelda
+    -int filasDelTablero
+    -int columnasDelTablero
+    -double probRecurso
+    -int turnosIniciales
+    -double probAgua
+    -double probComida
+    -double probMontana
+    -double probTesoro
+    -double probBiblioteca
+    -double probPozo
+    -double aumentoVidaAgua
+    -double aumentoVidaComida
+    -double reduccionVidaMontana
+    -double aumentoProbReproduccion
+    -double aumentoProbClonacion
+    -int turnosRestantesAgua
+    -int turnosRestantesComida
+    -int turnosRestantesMontana
+    -int turnosRestantesBiblioteca
+    -int turnosRestantesTesoro
+    -int turnosRestantesPozo
+    -int turnosVidaIniciales
+    -double probReproduccionEstudiante
+    -double probClonacionEstudiante
+    -double probMejorarANormal
+    -double probMejorarAAvanzado
+    -Boolean isPausado
+    -boolean isSave
+    -String rutaArchivo
+    -ZombieStudentsLife zombieStudentsLife
+    -int turnoActual
+    +DatosJuego(int, double, double, double, double, double, int, double, double, double, double, double, double, int, int, double, double, int, int, int)
+    +DatosJuego()
+    // Métodos getter y setter
+    +int getTurnosVidaIniciales()
+    +void setTurnosVidaIniciales(int)
+    +int getTurnosRestantesAgua()
+    +void setTurnosRestantesAgua(int)
+    +int getTurnosRestantesComida()
+    +void setTurnosRestantesComida(int)
+    +int getTurnosRestantesMontana()
+    +void setTurnosRestantesMontana(int)
+    +int getTurnosRestantesBiblioteca()
+    +void setTurnosRestantesBiblioteca(int)
+    +int getTurnosRestantesTesoro()
+    +void setTurnosRestantesTesoro(int)
+    +int getTurnosRestantesPozo()
+    +void setTurnosRestantesPozo(int)
+    +double getProbReproduccionEstudiante()
+    +void setProbReproduccionEstudiante(double)
+    +double getProbClonacionEstudiante()
+    +void setProbClonacionEstudiante(double)
+    +double getProbRecurso()
+    +void setProbRecurso(double)
+    +int getNumEstudiantes()
+    +void setNumEstudiantes(int)
+    +int getNumRecursos()
+    +void setNumRecursos(int)
+    +double getProbAgua()
+    +void setProbAgua(double)
+    +double getProbComida()
+    +void setProbComida(double)
+    +double getProbMontana()
+    +void setProbMontana(double)
+    +double getProbTesoro()
+    +void setProbTesoro(double)
+    +double getProbBiblioteca()
+    +void setProbBiblioteca(double)
+    +double getProbPozo()
+    +void setProbPozo(double)
+    +double getAumentoVidaAgua()
+    +void setAumentoVidaAgua(double)
+    +double getAumentoVidaComida()
+    +void setAumentoVidaComida(double)
+    +double getReduccionVidaMontana()
+    +void setReduccionVidaMontana(double)
+    +double getAumentoProbReproduccion()
+    +void setAumentoProbReproduccion(double)
+    +double getAumentoProbClonacion()
+    +void setAumentoProbClonacion(double)
+    +int getFilasDelTablero()
+    +void setFilasDelTablero(int)
+    +int getColumnasDelTablero()
+    +void setColumnasDelTablero(int)
+    +int getMaximoEstudiantesPorCelda()
+    +void setMaximoEstudiantesPorCelda(int)
+    +int getMaximoRecursosPorCelda()
+    +void setMaximoRecursosPorCelda(int)
+    +double getProbMejorarANormal()
+    +void setProbMejorarANormal(double)
+    +double getProbMejorarAAvanzado()
+    +void setProbMejorarAAvanzado(double)
+    +Boolean isPausado()
+    +void setPausado(Boolean)
+    +ZombieStudentsLife getZombieStudentsLife()
+    +void setZombieStudentsLife(ZombieStudentsLife)
+    +ListaEnlazada<Estudiante> getEstudiantes()
+    +void setEstudiantes(ListaEnlazada<Estudiante>)
+    +ListaEnlazada<Recursos> getRecursos()
+    +void setRecursos(ListaEnlazada<Recursos>)
+    +int getTurnoActual()
+    +void setTurnoActual(int)
+    +int getTurnosIniciales()
+    +void setTurnosIniciales(int)
+    +int generarEnteroAleatorio(int, int)
+    +Celda celdaAleatoria(int, int)
+    +Estudiante obtenerEstudianteAleatorio()
+    +Recursos obtenerRecursoAleatorio()
+    +boolean isSave()
+    +void setSave(boolean)
+    +String getRutaArchivo()
+    +void setRutaArchivo(String)
+    +ListaEnlazada<Estudiante> getHistorialEstudiantes()
+    +void setHistorialEstudiantes(ListaEnlazada<Estudiante>)
+    +ListaEnlazada<Recursos> getHistorialRecursos()
+    +void setHistorialRecursos(ListaEnlazada<Recursos>)
+    +void guardarArchivo(String)
+    +static DatosJuego cargarArchivo(String)
+}
+
+
+DatosJuego ..> ListaEnlazada : uses
+DatosJuego ..> ElementoLE : uses
+DatosJuego ..> Estudiante : uses
+DatosJuego ..> Recursos : uses
+DatosJuego ..> Cola : uses
+DatosJuego ..> GsonRecursos : uses
+DatosJuego ..> GsonEstudiante : uses
+DatosJuego ..> GsonListaSimple : uses
+DatosJuego ..> GsonCola : uses
+DatosJuego ..> Celda : uses
+DatosJuego ..> ZombieStudentsLife : uses
+DatosJuego ..> Gson : uses
+DatosJuego ..> GsonBuilder : uses
+DatosJuego ..> Random : uses
+DatosJuego ..> FileWriter : uses
+DatosJuego ..> FileReader : uses
+DatosJuego ..> IOException : throws
+
+class DatosJuegoProperties {
+    -DatosJuego dato
+    -IntegerProperty filasDelTablero
+    -IntegerProperty columnasDelTablero
+    -ObjectProperty<Integer> turnosVidaIniciales
+    -ObjectProperty<Integer> turnosRestantesAgua
+    -ObjectProperty<Integer> turnosRestantesComida
+    -ObjectProperty<Integer> turnosRestantesMontana
+    -ObjectProperty<Integer> turnosRestantesBiblioteca
+    -ObjectProperty<Integer> turnosRestantesTesoro
+    -ObjectProperty<Integer> turnosRestantesPozo
+    -DoubleProperty probReproEstudiante
+    -DoubleProperty probClonEstudiante
+    -DoubleProperty probMejoraToNormal
+    -DoubleProperty probMejoraToAvanzado
+    -DoubleProperty probAgua
+    -DoubleProperty probComida
+    -DoubleProperty probMontana
+    -DoubleProperty probTesoro
+    -DoubleProperty probBiblioteca
+    -DoubleProperty probPozo
+    -DoubleProperty aumentoTurnosAgua
+    -DoubleProperty aumentoTurnosComida
+    -DoubleProperty reduccionTurnosMontana
+    -DoubleProperty aumentoProbRepro
+    -DoubleProperty aumentoProbClon
+    -static final Logger log
+    +DatosJuegoProperties(DatosJuego)
+    +DatosJuego getDato()
+    +void setDato(DatosJuego)
+    +void setDatoInitialize(DatosJuego)
+    +void commit()
+    +void rollback(Tab)
+    +ObjectProperty<Integer> turnosVidaInicialesProperty()
+    +Property<Number> probReproEstudianteProperty()
+    +Property<Number> probClonEstudianteProperty()
+    +Property<Number> probMejorarANormalProperty()
+    +Property<Number> probMejorarAAvanzadoProperty()
+    +Property<Number> probAguaProperty()
+    +Property<Number> probComidaProperty()
+    +Property<Number> probMontanaProperty()
+    +Property<Number> probTesoroProperty()
+    +Property<Number> probBibliotecaProperty()
+    +Property<Number> probPozoProperty()
+    +ObjectProperty<Integer> turnosRestantesAguaProperty()
+    +ObjectProperty<Integer> turnosRestantesComidaProperty()
+    +ObjectProperty<Integer> turnosRestantesMontanaProperty()
+    +ObjectProperty<Integer> turnosRestantesBibliotecaProperty()
+    +ObjectProperty<Integer> turnosRestantesTesoroProperty()
+    +ObjectProperty<Integer> turnosRestantesPozoProperty()
+    +Property<Number> aumentoTurnosAguaProperty()
+    +Property<Number> aumentoTurnosComidaProperty()
+    +Property<Number> reduccionTurnosMontanaProperty()
+    +Property<Number> aumentoProbReproProperty()
+    +Property<Number> aumentoProbClonProperty()
+    +Property<Number> filasDelTableroProperty()
+    +Property<Number> columnasDelTableroProperty()
+    -void rollbackEstudiantes()
+    -void rollbackRecursos()
+    -void rollbackTablero()
+}
+
+DatosJuegoProperties ..> DatosJuego : uses
+DatosJuegoProperties ..> Tab : uses
+DatosJuegoProperties ..> IntegerProperty : uses
+DatosJuegoProperties ..> ObjectProperty : uses
+DatosJuegoProperties ..> DoubleProperty : uses
+DatosJuegoProperties ..> Property : uses
+DatosJuegoProperties ..> Logger : uses
+
 
 @enduml
