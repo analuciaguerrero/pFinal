@@ -11,7 +11,7 @@
     <children>
         <StackPane prefHeight="150.0" prefWidth="200.0">
             <children>
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="600.0" text="Simulador de Vida" textFill="#0777d9">
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="103.0" prefWidth="600.0" text="Zombie Students Life" textFill="#0777d9">
                     <font>
                         <Font name="Bookman Old Style" size="75.0" />
                     </font>
@@ -64,7 +64,7 @@
                         <Insets left="10.0" />
                     </StackPane.margin>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#onBottonMenuInicialClick" prefHeight="70.0" prefWidth="120.0" text="  Menú&#10;principal">
+                        <Button mnemonicParsing="false" onAction="#onBottonMenuInicialClick" prefHeight="70.0" prefWidth="120.0" text="  Menú&#10;inicial">
                             <font>
                                 <Font name="Bookman Old Style" size="20.0" />
                             </font>

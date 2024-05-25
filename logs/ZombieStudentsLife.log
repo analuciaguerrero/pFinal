@@ -397,3 +397,6 @@
 2024-05-25 04:59:09.194 - DEBUG - com.example.demoJavafx.estudiante.Estudiante - Ha nacido el estudiante 1
 2024-05-25 04:59:09.540 - WARN  - com.example.demoJavafx.estructurasDeDatos.Grafo.Grafo - Se intentó asignar un nodo nulo como el punto de inicio del arco: com.example.demoJavafx.estructurasDeDatos.Grafo.Arista@b16e202
 2024-05-25 04:59:09.551 - WARN  - com.example.demoJavafx.estructurasDeDatos.Grafo.Grafo - Se intentó asignar un nodo nulo como el punto de fin del arco: com.example.demoJavafx.estructurasDeDatos.Grafo.Arista@339a3670
+2024-05-25 05:19:48.860 - DEBUG - com.example.demoJavafx.TableroController - gridTablero initialized: true
+2024-05-25 05:19:48.863 - DEBUG - com.example.demoJavafx.TableroController - gridTablero children count: 0
+2024-05-25 05:19:48.891 - DEBUG - com.example.demoJavafx.SeleccionarPartidaController - Ha sido iniciada una partida nueva
