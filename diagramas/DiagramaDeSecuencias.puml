@@ -89,7 +89,6 @@ class CeldaController{
 
 
 class CeldaFXML{}
-class CargarJuegoFXML{}
 class ElementoCeldaFXML{}
 class PantallaFinalFXML{}
 
